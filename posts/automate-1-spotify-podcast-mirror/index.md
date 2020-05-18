@@ -5,6 +5,7 @@ tags:
   - automate
   - posts
 layout: post
+description: How I created an Automator application, which records the latest episode of a Spotify podcast, fills out metadata and generates a file for metadata for a podcast client to subscribe to.
 ---
 
 This is the first post of my series _Automate_. [All posts in this series](/tags/automate).

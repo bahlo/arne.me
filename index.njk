@@ -5,8 +5,12 @@ layout: layouts/base.njk
 <ul>
 {% for post in collections.posts | reverse %}
   <li>
-    <a href="{{ post.url | url }}">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
     <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+    <a href="{{ post.url | url }}">
+      <h2>{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
+      </h2>
+    </a>
+    <p>{{ post.data.description }}</p>
   </li>
 {% endfor %}
 </ul>

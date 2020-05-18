@@ -3,6 +3,7 @@ title: "Announcing the Automate Series"
 date: 2019-01-04T18:40:44+01:00
 tags: posts
 layout: post
+description: "The start of a series of blog posts, all related to one of my yearly themes: automation."
 ---
 
 I listen to a lot of podcasts every day, e.g. when doing chores or commuting. 

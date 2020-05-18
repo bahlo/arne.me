@@ -5,6 +5,7 @@ tags:
   - automate
   - posts
 layout: post
+description: How to use checklists in TaskPaper-Format with Things.
 ---
 
 This is the second post of my series _Automate_.  [All posts in this series](/tags/automate).
