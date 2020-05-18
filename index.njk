@@ -1,16 +1,13 @@
 ---
 layout: layouts/base.njk
-eleventyNavigation:
-  key: Home
-  order: 1
 ---
 
-<li>
-{% for post in postslist | reverse %}
+<ul>
+{% for post in collections.posts | reverse %}
   <li>
     <a href="{{ post.url | url }}">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
     <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
   </li>
 {% endfor %}
-</li>
+</ul>
 
