@@ -76,7 +76,7 @@ the separation of concerns.
 
 Here's how our `main.go` would look like, simplified:
 
-{{< highlight go "linenos=table" >}}
+```go
 package main
 
 import (
@@ -99,7 +99,7 @@ func main() {
 
 	http.ListenAndServe(":8080", nil)
 }
-{{< / highlight >}}
+```
 
 ## Problems
 

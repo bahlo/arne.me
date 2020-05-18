@@ -95,7 +95,7 @@ We need the following attributes of the latest episode:
 We use Bash to get the data, so drag a new _Run Shell Script_ onto your workflow 
 with the following contents:
 
-{{< highlight bash "linenos=table" >}}
+```bash
 #!/bin/bash
 
 # Exit the script if any command returns an error code.
@@ -132,7 +132,7 @@ echo "$ITEM" | /usr/local/bin/jq -r .duration_ms
 echo "$ITEM" | /usr/local/bin/jq -r .name
 echo "$ITEM" | /usr/local/bin/jq -r .description
 echo "$RELEASE_DATE"
-{{< / highlight >}}
+```
 
 We need the metadata again later, so save it in a variable by dragging 
 the _Set value of variable_ below the Bash action and giving it a name 
@@ -149,7 +149,7 @@ Make sure the checkbox next to Automator in System Settings →
 Security & Privacy → Accessibility) is checked, otherwise you will get an error
 and the keyboard shortcuts won't work.
 
-{{< highlight applescript "linenos=table" >}}
+```applescript
 on run {input, parameters}
 	set uri to item 1 of input
 	set duration_ms to item 2 of input
@@ -227,7 +227,7 @@ on run {input, parameters}
 		quit
 	end tell
 end run
-{{< / highlight >}}
+```
 
 ### 4. Save release date to it's own variable
 
@@ -237,13 +237,13 @@ Drag the action _Get Value of Variable_ into your workflow and select the
 After that, drag a _Run AppleScript_ action at the end with the following 
 contents.
 
-{{< highlight applescript "linenos=table" >}}
+```applescript
 on run {input, parameters}
 	-- Return the fifth parameter of our Metadata variable, 
 	-- which is the release date
 	return item 5 of input
 end run
-{{< / highlight >}}
+```
 
 Set the variable `ReleaseDate` using a _Set Value of Variable_ action.
 
@@ -257,12 +257,12 @@ Audio Hijack session for files with all of the following attributes:
 
 Then drag a _Run AppleScript_ with the following contents into your workflow to get the first item (which will be the latest).
 
-{{< highlight applescript "linenos=table" >}}
+```applescript
 on run {input, parameters}
 	# Get latest item
 	return item 1 of input
 end run
-{{< / highlight >}}
+```
 
 After that, rename the file using _Rename Finder Items_. 
 Choose `Name Single Item` and set `Basename only` to `ReleaseDate`.
@@ -286,7 +286,7 @@ deploy it and the newly recorded episode to an AWS S3 bucket.
 
 Add a _Run Shell Script_ action with the following contents:
 
-{{< highlight bash "linenos=table" >}}
+```bash
 #!/bin/bash
 
 set -e
@@ -325,7 +325,7 @@ export AWS_SECRET_ACCESS_KEY="GHIJKL"
 cd dist/
 /usr/local/bin/aws s3 sync episodes s3://fuf-mirror/episodes
 /usr/local/bin/aws s3 cp --cache-control max-age=600 feed.xml s3://fuf-mirror/feed.xml
-{{< / highlight >}}
+```
 
 I use a `Cache-Control` header because I serve the podcast via a CloudFront, the
 AWS CDN and I want the `feed.xml` to be at most 10 minutes old.
