@@ -2,13 +2,13 @@
 title: "Automate #2: Checklists with Things"
 date: 2019-02-09T18:46:20+01:00
 tags: 
-  - automate
+  - automate-series
   - posts
 layout: post
 description: How to use checklists in TaskPaper-Format with Things.
 ---
 
-This is the second post of my series _Automate_.  [All posts in this series](/tags/automate).
+This is the second post of my series _Automate_.  [All posts in this series](/tags/automate-series).
 
 On the [Cortex](https://www.relay.fm/cortex) podcast (which inspired the whole series), CGP Grey and Myke Hurley sometimes talk about their checklists; whole projects that can be invoked by a tap if needed. These lists are for things that are important to get right, but you do them not often enough to remember every step, examples are an Airport or a YouTube checklist.
 They mostly use [OmniFocus](https://www.omnigroup.com/omnifocus) for this, which can export _and_ import projects as [TaskPaper](https://taskpaper.com). 

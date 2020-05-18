@@ -2,13 +2,13 @@
 title: "Automate #1: Spotify Podcast Mirror"
 date: 2019-01-05T11:18:00+01:00
 tags: 
-  - automate
+  - automate-series
   - posts
 layout: post
 description: How I created an Automator application, which records the latest episode of a Spotify podcast, fills out metadata and generates a file for metadata for a podcast client to subscribe to.
 ---
 
-This is the first post of my series _Automate_. [All posts in this series](/tags/automate).
+This is the first post of my series _Automate_. [All posts in this series](/tags/automate-series).
 
 In this post I describe how I created an Automator application, which will 
 record the latest episode of a Spotify podcast, fill out metadata like title and 

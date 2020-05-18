@@ -1,7 +1,9 @@
 ---
 title: "Announcing the Automate Series"
 date: 2019-01-04T18:40:44+01:00
-tags: posts
+tags: 
+  - posts
+  - automate-series
 layout: post
 description: "The start of a series of blog posts, all related to one of my yearly themes: automation."
 ---
@@ -23,5 +25,5 @@ everything I can in my private as well as professional life.
 
 I will try and documente all bigger efforts (you don't want to see all my email 
 rules) in this blog series.
-You will find all episodes under the tag [automate](/tags/automate).
+You will find all episodes under the tag [automate-series](/tags/automate-series).
 
