@@ -1,8 +1,8 @@
 ---
 title: "Announcing the Automate Series"
 date: 2019-01-04T18:40:44+01:00
-tags: ["automate"]
-layout: layouts/post.njk
+tags: posts
+layout: post
 ---
 
 I listen to a lot of podcasts every day, e.g. when doing chores or commuting. 

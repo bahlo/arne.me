@@ -2,7 +2,6 @@
 title: "Automate #1: Spotify Podcast Mirror"
 date: 2019-01-05T11:18:00+01:00
 tags: ["automate"]
-layout: layouts/post.njk
 ---
 
 This is the first post of my series _Automate_. [All posts in this series](/tags/automate).

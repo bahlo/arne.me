@@ -2,7 +2,6 @@
 title: "Automate #2: Checklists with Things"
 date: 2019-02-09T18:46:20+01:00
 tags: [automate]
-layout: layouts/post.njk
 ---
 
 This is the second post of my series _Automate_.  [All posts in this series](/tags/automate).

@@ -1,8 +1,8 @@
 ---
 title: "I18n in Node.js"
 date: 2018-11-15T17:47:30+01:00
-tags: ["javascript", "node", "i18n"]
-layout: layouts/post.njk
+tags: posts
+layout: post
 ---
 
 Yesterday we added unit tests for a component that uses the

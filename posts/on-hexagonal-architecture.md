@@ -1,8 +1,8 @@
 ---
 title: "On Hexagonal Architecture"
 date: 2018-09-02T13:20:45+02:00
-tags: ["architecture", "golang"]
-layouts/post.njk
+tags: posts
+layout: post
 ---
 
 > A good architect maximises the number of decisions not made

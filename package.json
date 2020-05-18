@@ -1,0 +1,18 @@
+{
+  "name": "arne.codes",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bahlo/arne.codes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bahlo/arne.codes/issues"
+  },
+  "homepage": "https://github.com/bahlo/arne.codes#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.11.0",
+    "@11ty/eleventy-plugin-rss": "^1.0.7"
+  },
+  "dependencies": {
+    "@11ty/eleventy-navigation": "^0.1.5"
+  }
+}

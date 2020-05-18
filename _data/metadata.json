@@ -1,0 +1,15 @@
+{
+  "title": "arne.codes",
+  "url": "https://arne.codes",
+  "description": "Mostly tech",
+  "feed": {
+    "subtitle": "Mostly tech",
+    "filename": "feed.xml",
+    "path": "/feed.xml",
+    "id": "https://arne.codes/"
+  },
+  "author": {
+    "name": "Arne Bahlo",
+    "email": "hallo@arne.me"
+  }
+}
