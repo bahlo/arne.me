@@ -113,7 +113,7 @@ pre {
 
 code:not([class*=language]) {
   background: var(--lightgray);
-  padding: 4px 8px;
+  padding: 1px 2px;
   border-radius: 4px;
   font-family: 'Iosevka Web', mono-space;
 }
