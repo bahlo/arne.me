@@ -25,6 +25,9 @@ html, body {
 
 body {
   font-family: 'Rubik', sans-serif;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 h1, h2, h3, h4, h5, h6 { 
@@ -60,28 +63,38 @@ main {
 }
 
 article {
-  text-align: justify;
   margin-bottom: 256px;
+}
+
+article:last-child {
+  margin-bottom: 128px;
 }
 
 article h1 {
   margin-top: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 article h1 a {
   text-decoration: none;
 }
 
-article > * {
-  margin-left: 160px;
-  margin-right: 160px;
-  max-width: 960px;
+article p {
+  text-align: justify;
 }
 
-article img {
-  max-width: 960px;
-  margin-left: -160px; /* We need to break out of the parent p */
+article img,
+article pre[class*="language-"] {
+  width: 960px;
+  margin-left: -176px; /* Hackety hack hack */
+}
+
+@media screen and (max-width: 960px) {
+  article img,
+  article pre[class*="language-"] {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 footer {
@@ -93,9 +106,7 @@ footer {
 header {
   display: flex;
   align-items: baseline;
-  max-width: 640px;
   margin: 64px auto;
-  padding: 0 64px;
   justify-content: center;
 }
 
@@ -124,7 +135,8 @@ time {
 
 blockquote {
   padding: 4px 20px;
-  margin: 0 192px;
+  max-width: 640px;
+  margin: 0 auto;
   text-align: left;
   background: var(--offwhite);
   border-radius: 8px;
