@@ -1,12 +1,12 @@
 {
-  "title": "arne.codes",
-  "url": "https://arne.codes",
-  "description": "Mostly tech",
+  "title": "arne.me",
+  "url": "https://arne.me",
+  "description": "A human, interested in software development, automation and sustainability",
   "feed": {
-    "subtitle": "Mostly tech",
+    "subtitle": "A human, interested in software development, automation and sustainability",
     "filename": "feed.xml",
     "path": "/feed.xml",
-    "id": "https://arne.codes/"
+    "id": "https://arne.me/"
   },
   "author": {
     "name": "Arne Bahlo",

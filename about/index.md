@@ -10,12 +10,9 @@ eleventyNavigation:
 Hey! 👋🏻
 
 I’m Arne Bahlo, a Software Engineer from Frankfurt, Germany. 
-I’m interested in modern software architecture, all things Golang, Rust, 
-modern Web and iOS development/ecosystem. 
+I’m interested in software development, automation and sustainability. 
 
 ### You can find me here:
 
 GitHub:   [@bahlo](https://github.com/bahlo)  
-Mastodon: [@ab@chaos.social](https://chaos.social/@ab)  
-Birdsite: [@arnebahlo](https://twitter.com/arnebahlo)  
 Email:    <hallo@arne.me>  
