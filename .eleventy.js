@@ -18,5 +18,7 @@ module.exports = function(eleventyConfig) {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat('yyyy-LL-dd');
   });
 
+  eleventyConfig.addPassthroughCopy("posts/**/*.{png,jpg}");
+
   eleventyConfig.addLayoutAlias('post', 'layouts/post.njk');
 }

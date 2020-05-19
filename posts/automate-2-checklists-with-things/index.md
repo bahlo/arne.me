@@ -41,9 +41,7 @@ Sadly you cannot get a directory listing from an iCloud folder, so for now if I 
 
 This is how the Shortcut looks:
 
-{{< figure src="/post/automate-2-checklists-with-things/shortcut-1.png" class="one-third" >}}
-{{< figure src="/post/automate-2-checklists-with-things/shortcut-2.png" class="one-third" >}}
-{{< figure src="/post/automate-2-checklists-with-things/shortcut-3.png" class="one-third" >}}
+![Shortcut screenshots](/posts/automate-2-checklists-with-things/shortcut.png)
 
 After a checklist was chosen, the shortcut gets the file from iCloud Drive (it has to be in the Shortcuts application folder to be accessible).  
 Then it copies the file contents to the Clipboard and runs the script (the Scriptable action should appear automatically in your Shortcuts app once you created it). After that, it retrieves the Things JSON from the clipboard, url-encodes it and opens Things with its URL scheme.

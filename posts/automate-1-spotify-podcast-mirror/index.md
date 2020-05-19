@@ -45,7 +45,7 @@ I recommend disabling the Output Device, but it's helpful if you want to debug
 something. 
 After saving, it should look similar to this:
 
-{{< figure src="/post/automate-1-spotify-podcast-mirror/audio_hijack_session.png" >}}
+![Audio-Hijack Session](/posts/automate-1-spotify-podcast-mirror/audio_hijack_session.png)
 
 ### Spotify credentials
 
