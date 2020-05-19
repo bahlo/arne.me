@@ -2,7 +2,7 @@
 layout: layouts/base.njk
 ---
 
-<ul>
+<ul class="collection-list">
 {% for post in collections.posts | reverse %}
   <li>
     <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>

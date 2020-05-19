@@ -6,8 +6,9 @@
 :root {
   --darkgray: #222;
   --black: #000;
-  --gray: #999;
+  --gray: #555;
   --lightgray: #eee;
+  --offwhite: #f5f5f5;
 }
 
 * {
@@ -93,4 +94,34 @@ code:not([class*=language]) {
   padding: 4px 8px;
   border-radius: 4px;
   font-family: 'Iosevka Web', mono-space;
+}
+
+time {
+  color: var(--gray);
+}
+
+.collection-list {
+  margin: 0 160px;
+  list-style: none;
+}
+
+.collection-list li {
+  margin-bottom: 64px;
+}
+
+.collection-list h2 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.collection-list a {
+  text-decoration: none;
+}
+
+blockquote {
+  padding: 4px 32px;
+  margin: 0 192px;
+  text-align: left;
+  background: var(--offwhite);
+  border-radius: 8px;
 }
