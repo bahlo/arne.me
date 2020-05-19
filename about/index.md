@@ -1,7 +1,7 @@
 ---
 title: About
 date: 2018-08-29T20:58:36+02:00
-layout: post
+layout: page
 eleventyNavigation:
   key: About
   order: 1

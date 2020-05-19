@@ -24,6 +24,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('fonts');
 
   eleventyConfig.addLayoutAlias('post', 'layouts/post.njk');
+  eleventyConfig.addLayoutAlias('page', 'layouts/page.njk');
 
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
