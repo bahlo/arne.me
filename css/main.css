@@ -1,5 +1,14 @@
-@import url('/css/rubik.css');
-@import url('/css/dosis.css');
+@import url('/fonts/rubik-v9-latin/rubik.css');
+@import url('/fonts/dosis-v17-latin/dosis.css');
+@import url('/fonts/iosevka-3.0.0/iosevka.css');
+@import url('/css/prism-atom-dark.css');
+
+:root {
+  --darkgray: #222;
+  --black: #000;
+  --gray: #999;
+  --lightgray: #eee;
+}
 
 * {
   box-sizing: border-box;
@@ -8,6 +17,9 @@
 html, body {
   padding: 0;
   margin: 0;
+  color: var(--darkgray);
+  line-height: 1.4;
+  font-size: 20px;
 }
 
 body {
@@ -16,4 +28,69 @@ body {
 
 h1, h2, h3, h4, h5, h6 { 
   font-family: 'Dosis', sans-serif;
+  color: var(--black);
+}
+
+a {
+  text-decoration: underline;
+  color: var(--black);
+}
+
+a:hover, 
+a:active {
+  text-decoration: none;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+article {
+  text-align: justify;
+}
+
+article > * {
+  margin-left: 160px;
+  margin-right: 160px;
+  max-width: 960px;
+}
+
+article img {
+  max-width: 960px;
+  margin-left: -160px; /* We need to break out of the parent p */
+}
+
+footer {
+  margin: 64px auto;
+  text-align: center;
+  color: var(--gray);
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  max-width: 640px;
+  margin: 64px auto;
+  padding: 0 64px;
+  justify-content: center;
+}
+
+header h1 a {
+  text-decoration: none;
+}
+
+header ul {
+  list-style: none;
+}
+
+pre {
+  font-size: 16px;
+}
+
+code:not([class*=language]) {
+  background: var(--lightgray);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Iosevka Web', mono-space;
 }
