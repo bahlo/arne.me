@@ -20,7 +20,7 @@ html, body {
   margin: 0;
   color: var(--darkgray);
   line-height: 1.4;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 body {
@@ -30,6 +30,18 @@ body {
 h1, h2, h3, h4, h5, h6 { 
   font-family: 'Dosis', sans-serif;
   color: var(--black);
+}
+
+h2 {
+  font-size: 1.3em;
+}
+
+h3 {
+  font-size: 1.1em;
+}
+
+h4, h5, h6 {
+  font-size: 1em;
 }
 
 a {
@@ -49,6 +61,16 @@ main {
 
 article {
   text-align: justify;
+  margin-bottom: 256px;
+}
+
+article h1 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+article h1 a {
+  text-decoration: none;
 }
 
 article > * {
@@ -100,28 +122,15 @@ time {
   color: var(--gray);
 }
 
-.collection-list {
-  margin: 0 160px;
-  list-style: none;
-}
-
-.collection-list li {
-  margin-bottom: 64px;
-}
-
-.collection-list h2 {
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-.collection-list a {
-  text-decoration: none;
-}
-
 blockquote {
-  padding: 4px 32px;
+  padding: 4px 20px;
   margin: 0 192px;
   text-align: left;
   background: var(--offwhite);
   border-radius: 8px;
+}
+
+blockquote cite {
+  text-align: right;
+  display: block;
 }

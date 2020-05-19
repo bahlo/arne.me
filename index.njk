@@ -2,17 +2,14 @@
 layout: layouts/base.njk
 ---
 
-<ul class="collection-list">
 {% for post in collections.posts | reverse %}
-  <li>
-    <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
-    <h2>
-      <a href="{{ post.url | url }}">
-        {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
-      </a>
-    </h2>
-    <p>{{ post.data.description }}</p>
-  </li>
+<article>
+  <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+  <h1>
+    <a href="{{ post.url | url }}">
+    {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
+    </a>
+  </h1>
+  {{ post.templateContent | safe }}
+</article>
 {% endfor %}
-</ul>
-
