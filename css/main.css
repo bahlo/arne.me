@@ -1,7 +1,7 @@
 @import url('/fonts/rubik-v9-latin/rubik.css');
 @import url('/fonts/dosis-v17-latin/dosis.css');
 @import url('/fonts/iosevka-3.0.0/iosevka.css');
-@import url('/css/prism-atom-dark.css');
+@import url('/css/prism-material-light.css');
 
 :root {
   --darkgray: #222;
