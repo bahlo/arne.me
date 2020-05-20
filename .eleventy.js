@@ -1,5 +1,6 @@
 const fs = require('fs')
 const { DateTime } = require('luxon');
+const htmlmin = require("html-minifier");
 const pluginNavigation = require('@11ty/eleventy-navigation');
 const pluginRss = require('@11ty/eleventy-plugin-rss');
 const pluginSyntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
@@ -26,6 +27,18 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addLayoutAlias('post', 'layouts/post.njk');
   eleventyConfig.addLayoutAlias('page', 'layouts/page.njk');
+
+  eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
+    if (outputPath.indexOf(".html") > -1) {
+      let minified = htmlmin.minify(content, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true
+      });
+      return minified;
+    }
+    return content;
+  });
 
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
