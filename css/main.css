@@ -141,17 +141,30 @@ footer {
 
 header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   margin: 64px auto;
   justify-content: center;
+  flex-direction: column;
 }
 
-header h1 a {
-  text-decoration: none;
+header a img {
+  border: 1px solid var(--base03);
+  border-radius: 100%;
+  width: 128px;
 }
 
 header ul {
   list-style: none;
+  padding: 0;
+}
+
+header ul li {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+header ul li:last-child {
+  margin-right: 0;
 }
 
 pre {

@@ -10,7 +10,9 @@
   </head>
   <body>
     <header>
-      <h1><a href="{{ '/' | url }}">{{ metadata.title }}</a></h1>
+      <a href="{{ '/' | url }}">
+        <img src="/images/me.jpg" alt="A photo of me" />
+      </a>
 
       <ul>
       {%- for entry in collections.all | eleventyNavigation %}
