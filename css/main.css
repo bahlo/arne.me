@@ -1,10 +1,10 @@
-@import url('/fonts/rubik-v9-latin/rubik.css');
-@import url('/fonts/dosis-v17-latin/dosis.css');
-@import url('/fonts/iosevka-3.0.0/iosevka.css');
+@import url('/fonts/rubik/rubik.css');
+@import url('/fonts/iosevka/iosevka.css');
+@import url('/fonts/capriola/capriola.css');
 @import url('/css/prism-solarized.css');
 
 :root {
-  --background: none;
+  --background: #fff;
   --foreground: #222;
   --link: #000;
   --faded: #555;
@@ -20,7 +20,9 @@
   --base2: #eee8d5;
   --base3: #fdf6e3;
 
+  --font: 'Rubik';
   --code-font: 'Iosevka Web';
+  --heading-font: 'Capriola', serif;
 }
 
 
@@ -58,14 +60,14 @@ html, body {
 }
 
 body {
-  font-family: 'Rubik', sans-serif;
+  font-family: var(--font), sans-serif;
   max-width: 640px;
   margin: 0 auto;
   padding: 0 16px;
 }
 
 h1, h2, h3, h4, h5, h6 { 
-  font-family: 'Dosis', sans-serif;
+  font-family: var(--heading-font), sans-serif;
   color: var(--link);
 }
 
