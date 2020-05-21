@@ -73,6 +73,8 @@ body {
 h1, h2, h3, h4, h5, h6 { 
   font-family: var(--heading-font), sans-serif;
   color: var(--link);
+  margin-top: 32px;
+  margin-bottom: 0px;
 }
 
 h2 {
@@ -111,16 +113,11 @@ article:last-child {
 }
 
 article h1 {
-  margin-top: 8px;
-  margin-bottom: 16px;
+  margin: 0px;
 }
 
 article h1 a {
   text-decoration: none;
-}
-
-article p {
-  text-align: justify;
 }
 
 article img {
@@ -156,7 +153,6 @@ header {
 }
 
 header a img {
-  border: 1px solid var(--base03);
   border-radius: 100%;
   width: 128px;
 }
@@ -194,7 +190,6 @@ blockquote {
   padding: 4px 20px;
   max-width: 640px;
   margin: 0 auto;
-  text-align: initial;
   background: var(--bg-highlight);
   border-radius: 8px;
 }

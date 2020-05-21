@@ -31,6 +31,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('images/**/*.{png,jpg}');
   eleventyConfig.addPassthroughCopy('*.{png,ico,webmanifest}');
 
+  // Combined in style.njk, but we need to watch those files.
+  eleventyConfig.addWatchTarget('css/**/*.css');
+
   eleventyConfig.addLayoutAlias('post', 'layouts/post.njk');
   eleventyConfig.addLayoutAlias('page', 'layouts/page.njk');
 
