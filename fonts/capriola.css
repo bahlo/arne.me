@@ -3,6 +3,7 @@
   font-family: 'Capriola';
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src: url('/fonts/capriola/capriola-v7-latin-regular.eot'); /* IE9 Compat Modes */
   src: local('Capriola Regular'), local('Capriola-Regular'),
        url('/fonts/capriola/capriola-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
