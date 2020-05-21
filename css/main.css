@@ -7,6 +7,7 @@
   --fg: #222;
   --fg-faded: #555;
   --fg-link: #2c4588;
+  --fg-divider: #b9c9f2;
   --bg: #fff;
   --bg-header: #f4f7ff;
   --bg-highlight: #f4f7ff;
@@ -106,8 +107,13 @@ main {
   padding: 0 16px;
 }
 
-article {
-  margin-bottom: 256px;
+article:not(:last-child)::after {
+  content: '————';
+  margin: 128px 0;
+  display: block;
+  text-align: center;
+  letter-spacing: -3px;
+  color: var(--fg-divider);
 }
 
 article:last-child {
@@ -132,7 +138,8 @@ article pre[class*="language-"] {
   margin-left: -176px; /* Hackety hack hack */
 }
 
-@media screen and (max-width: 960px) {
+/* 960 + 2*16 */
+@media screen and (max-width: 992px) {
   article img,
   article pre[class*="language-"] {
     width: 100%;
