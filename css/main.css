@@ -1,7 +1,7 @@
 @import url('/fonts/rubik/rubik.css');
 @import url('/fonts/fira-code/fira-code.css');
 @import url('/fonts/capriola/capriola.css');
-@import url('/css/prism-solarized.css');
+@import url('/css/prism.css');
 
 :root {
   --fg: #222;
