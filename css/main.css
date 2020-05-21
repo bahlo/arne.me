@@ -65,9 +65,6 @@ html, body {
 
 body {
   font-family: var(--font), sans-serif;
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 0 16px;
 }
 
 h1, h2, h3, h4, h5, h6 { 
@@ -100,8 +97,9 @@ a:active {
 }
 
 main {
-  max-width: 960px;
+  max-width: 640px;
   margin: 0 auto;
+  padding: 0 16px;
 }
 
 article {
@@ -147,9 +145,12 @@ footer {
 header {
   display: flex;
   align-items: center;
-  margin: 64px auto;
+  margin: 0 auto 48px;
   justify-content: center;
   flex-direction: column;
+  background: var(--base3);
+  border-bottom: 1px solid var(--base2);
+  padding: 48px 0 24px;
 }
 
 header a img {
@@ -189,7 +190,7 @@ time {
 blockquote {
   padding: 4px 20px;
   max-width: 640px;
-  margin: 0 auto;
+  margin: 16px auto 0;
   background: var(--bg-highlight);
   border-radius: 8px;
 }
