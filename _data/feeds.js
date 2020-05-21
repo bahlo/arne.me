@@ -4,6 +4,6 @@ const USERNAME = process.env.FEEDBIN_USERNAME;
 const PASSWORD = process.env.FEEDBIN_PASSWORD;
 
 module.exports = Cache(`https://${USERNAME}:${PASSWORD}@api.feedbin.com/v2/subscriptions.json`, {
-  duration: '1d',
+  duration: '1h',
   type: 'json',
 });
