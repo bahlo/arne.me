@@ -135,7 +135,8 @@ article h1 {
   margin: 0px;
 }
 
-article h1 a {
+article h1 a,
+article h3 a {
   text-decoration: none;
 }
 

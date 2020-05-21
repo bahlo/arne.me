@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs');
 const { DateTime } = require('luxon');
 const htmlmin = require("html-minifier");
 const CleanCSS = require("clean-css");
@@ -25,6 +25,18 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('htmlDateString', dateObj => {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat('yyyy-LL-dd');
   });
+
+  eleventyConfig.addFilter('urlHost', url => {
+    return new URL(url).host;
+  });
+
+  eleventyConfig.addFilter('urlBase', url => {
+    let u = new URL(url);
+    u.search = '';
+    u.pathname = '';
+    return u.toString();
+  });
+
 
   eleventyConfig.addPassthroughCopy('posts/**/*.{png,jpg}');
   eleventyConfig.addPassthroughCopy('fonts');

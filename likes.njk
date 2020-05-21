@@ -17,9 +17,8 @@ tagged with <code>like</code>:</p>
 <h3>
   <a href="{{ like.href }}">{{ like.description }}</a>
 </h3>
+<a href="{{ like.href | urlBase }}">{{ like.href | urlHost }}</a>
+<span>&middot;</span>
 <time datetime="{{ like.time | parseDate | htmlDateString }}">{{ like.time | parseDate | readableDate }}</time>
-{% if like.extended %}
-<span>&middot; {{ like.extended }}</span>
-{% endif %}
 </li>
 {% endfor %}
