@@ -4,10 +4,13 @@
 @import url('/css/prism-solarized.css');
 
 :root {
-  --foreground: #222;
-  --link: #000;
-  --faded: #555;
-  --background: #fffbee;
+  --fg: #222;
+  --fg-faded: #555;
+  --fg-link: #2c4588;
+  --bg: #fff;
+  --bg-header: #f4f7ff;
+  --bg-highlight: #f4f7ff;
+  --border-header: rgb(230, 234, 246);
 
   /* Syntax theme */
   --base03: #002b36;
@@ -19,8 +22,6 @@
   --base2: #eee8d5;
   --base3: #fdf6e3;
 
-  --bg-highlight: var(--base3);
-
   --font: 'Rubik';
   --code-font: 'Fira Code';
   --heading-font: 'Capriola', serif;
@@ -31,10 +32,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground: #eee;
-    --background: #003b4a;
-    --link: #ff;
-    --faded: #999;
+    --fg: #eee;
+    --bg: #222;
+    --fg-link: #5b7acf;
+    --fg-faded: #999;
+    --bg-header: #282828;
+    --border-header: #181818;
+    --bg-highlight: #333;
 
     /* Switch base00-base03 with base0-base3 */
     --base03: #fdf6e3;
@@ -46,7 +50,7 @@
     --base2: #073642;
     --base3: #002b36;
 
-    --image-opacity: 0.9;
+    --image-opacity: 0.8;
   }
 }
 
@@ -57,10 +61,10 @@
 html, body {
   padding: 0;
   margin: 0;
-  color: var(--foreground);
+  color: var(--fg);
   line-height: 1.4;
   font-size: 18px;
-  background: var(--background);
+  background: var(--bg);
 }
 
 body {
@@ -69,7 +73,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 { 
   font-family: var(--heading-font), sans-serif;
-  color: var(--link);
+  color: var(--fg-link);
   margin-top: 32px;
   margin-bottom: 0px;
 }
@@ -88,7 +92,7 @@ h4, h5, h6 {
 
 a {
   text-decoration: underline;
-  color: var(--base02);
+  color: var(--fg-link);
 }
 
 a:hover, 
@@ -139,7 +143,7 @@ article pre[class*="language-"] {
 footer {
   margin: 64px auto;
   text-align: center;
-  color: var(--faded);
+  color: var(--fg-faded);
 }
 
 header {
@@ -148,8 +152,8 @@ header {
   margin: 0 auto 48px;
   justify-content: center;
   flex-direction: column;
-  background: var(--base3);
-  border-bottom: 1px solid var(--base2);
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border-header);
   padding: 48px 0 24px;
 }
 
@@ -184,7 +188,7 @@ code:not([class*=language]) {
 }
 
 time {
-  color: var(--faded);
+  color: var(--fg-faded);
 }
 
 blockquote {
