@@ -4,11 +4,10 @@
 @import url('/css/prism-solarized.css');
 
 :root {
-  --background: #fff;
   --foreground: #222;
   --link: #000;
   --faded: #555;
-  --bg-highlight: #f5f5f5;
+  --background: #fffbee;
 
   /* Syntax theme */
   --base03: #002b36;
@@ -20,6 +19,8 @@
   --base2: #eee8d5;
   --base3: #fdf6e3;
 
+  --bg-highlight: var(--base3);
+
   --font: 'Rubik';
   --code-font: 'Iosevka Web';
   --heading-font: 'Capriola', serif;
@@ -30,11 +31,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #111;
     --foreground: #eee;
+    --background: #003b4a;
     --link: #ff;
     --faded: #999;
-    --bg-highlight: #333;
 
     /* Switch base00-base03 with base0-base3 */
     --base03: #fdf6e3;
@@ -46,7 +46,7 @@
     --base2: #073642;
     --base3: #002b36;
 
-    --image-opacity: 0.8;
+    --image-opacity: 0.9;
   }
 }
 
@@ -177,7 +177,7 @@ pre {
 
 code:not([class*=language]) {
   background: var(--bg-highlight);
-  padding: 1px 2px;
+  padding: 2px 4px;
   border-radius: 4px;
   font-family: 'Iosevka Web', mono-space;
 }
