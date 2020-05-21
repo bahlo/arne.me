@@ -140,6 +140,10 @@ article h3 a {
   text-decoration: none;
 }
 
+article li {
+  margin: 12px 0;
+}
+
 article li h3 {
   margin: 0;
 }
