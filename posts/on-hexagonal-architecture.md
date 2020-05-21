@@ -14,7 +14,7 @@ Most web services I worked with use a MVC-style architecture, with a
 `handlers` package and, if at all, a `repository` package.
 While this may be great for small services, the `handlers` package
 introduces a big problem: It mixes transport logic with business logic.
-This makes refactoring hard (just imagine switching your HTTP framework)
+This makes refactoring hard (imagine switching your HTTP framework)
 and therefore forces you to make decisions about these kind of things
 before even starting the project.
 So when I started a new project recently, I decided to use the hexagonal
@@ -27,7 +27,7 @@ All outer layers like transport, storage or logging depend on the business
 logic, but never the other way around.
 The business logic is _agnostic_ of any other layer, it doesn't care,
 how it's served or how data is stored, it's pure code.
-This makes changing it super easy.
+This makes changing it super simple.
 
 ### You can defer decisions
 
@@ -36,17 +36,17 @@ them.
 You could, for example, start out with an `inmem` package for storage and
 only decide which database to use when you really need persistence.
 
-### Refactorings are easy
+### Refactorings are simple
 
 Since everything is contained in it's domain, refactoring the transport
-package, for example, is _just_ refactoring transport code.
+package, for example, is refactoring only transport code.
 There is pure separation of concerns and everything has a clear place.
 
-### Testing business logic is easy
+### Testing business logic is simple
 
 Since you only have pure code without layer dependencies, you can easily
 inject an `inmem` package as storage for example.
-No need for mocking complex database structs, which just cost time.
+No need for mocking complex database structs, which cost time.
 
 ## Why a hexagon
 
@@ -58,7 +58,7 @@ Adapters_).
 
 ## A real-world example
 
-For this post let's just assume that we're building an API to manage an
+For this post let's assume that we're building an API to manage an
 inventory of some sort – it's still similar to the application I'm building.
 You should be able to list all items in the inventory and logged-in users
 should have basic CRUD access.
@@ -138,7 +138,7 @@ I found a better solution.
 I'm really happy with my application and I don't think I'll go back to
 MVC-style applications any time soon.  
 I encourage you to try and build a service using a hexagonal architecture
-and share your experience – obviously doesn't have to be Go.
+and share your experience – doesn't have to be Go.
 If you want to read more on hexagonal architecture, I recommend checking
 out [go-kit](https://gokit.io).
 There is also a GopherCon 2018 talk by Matt King, here is

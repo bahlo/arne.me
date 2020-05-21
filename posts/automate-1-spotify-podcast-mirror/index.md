@@ -281,7 +281,7 @@ Use _Get Value of Variable_ to get the `Metadata` variable again.
 
 To generate the `feed.xml`, we append the metadata of an episode to a simple 
 TOML file.
-I wrote a small tool just for this, which you can find here: [toml-podcast](https://github.com/bahlo/toml-podcast).
+I wrote a small tool for this, which you can find here: [toml-podcast](https://github.com/bahlo/toml-podcast).
 After generating the `feed.xml`, we use the [AWS CLI](https://aws.amazon.com/cli) 
 deploy it and the newly recorded episode to an AWS S3 bucket.
 
@@ -333,7 +333,6 @@ AWS CDN and I want the `feed.xml` to be at most 10 minutes old.
 
 ## Conclusion
 
-Now recording the latest episode of your favourite Spotify podcast takes just 
-one click. 
+Now recording the latest episode of your favourite Spotify podcast takes one click. 
 If you have a spare Mac you could even start it automatically matching the 
 release cycle of the podcast.

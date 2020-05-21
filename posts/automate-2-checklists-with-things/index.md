@@ -21,7 +21,7 @@ Then I remembered playing around with [Scriptable](https://scriptable.app), whic
 
 ## The script
 
-I ended up writing a 300-line script ([it's on GitHub](https://github.com/bahlo/scriptable-scripts/blob/master/TaskPaperToThings.js)) with just enough functionality to fit my needs (e.g. it only supports tabbed indentation and may break on the slightest deviation).  
+I ended up writing a 300-line script ([it's on GitHub](https://github.com/bahlo/scriptable-scripts/blob/master/TaskPaperToThings.js)) with only enough functionality to fit my needs (e.g. it only supports tabbed indentation and may break on the slightest deviation).  
 
 Since I wanted to run this script from Apples Shortcuts app, I needed to use a hack for input/output data. Many apps face these problems and use the clipboard (e.g. [AutoSleep](http://autosleep.tantsissa.com/shortcutsapp#TOC-How-do-I-use-AutoSleep-dictionaries-in-the-shortcuts-app-)), so that's what I did as well.  If you run the script in the Scriptable app, it will get the clipboard contents expecting text in TaskPaper format, convert it to the Things JSON and copy it.
 
