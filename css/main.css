@@ -8,6 +8,7 @@
   --fg-faded: #555;
   --fg-link: #2c4588;
   --fg-divider: #b9c9f2;
+  --fg-selection: #eee;
   --bg: #fff;
   --bg-header: #f4f7ff;
   --bg-highlight: #f4f7ff;
@@ -70,6 +71,16 @@ html, body {
 
 body {
   font-family: var(--font), sans-serif;
+}
+
+::selection {
+  background: var(--fg-link);
+  color: var(--fg-selection);
+}
+
+::-moz-selection {
+  background: var(--fg-link);
+  color: var(--fg-selection);
 }
 
 h1, h2, h3, h4, h5, h6 { 
