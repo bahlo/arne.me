@@ -23,13 +23,15 @@
   --font: 'Rubik';
   --code-font: 'Iosevka Web';
   --heading-font: 'Capriola', serif;
+
+  --image-opacity: 1;
 }
 
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #111;
-    --foreground: #f5f5f5;
+    --foreground: #eee;
     --link: #ff;
     --faded: #999;
     --bg-highlight: #333;
@@ -43,6 +45,8 @@
     --base1: #586e75;
     --base2: #073642;
     --base3: #002b36;
+
+    --image-opacity: 0.8;
   }
 }
 
@@ -117,6 +121,10 @@ article h1 a {
 
 article p {
   text-align: justify;
+}
+
+article img {
+  opacity: var(--image-opacity);
 }
 
 article img,
