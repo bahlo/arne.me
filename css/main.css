@@ -140,6 +140,10 @@ article h3 a {
   text-decoration: none;
 }
 
+article li h3 {
+  margin: 0;
+}
+
 article img {
   opacity: var(--image-opacity);
 }
