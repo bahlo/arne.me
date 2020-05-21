@@ -1,5 +1,5 @@
 @import url('/fonts/rubik/rubik.css');
-@import url('/fonts/iosevka/iosevka.css');
+@import url('/fonts/fira-code/fira-code.css');
 @import url('/fonts/capriola/capriola.css');
 @import url('/css/prism-solarized.css');
 
@@ -22,7 +22,7 @@
   --bg-highlight: var(--base3);
 
   --font: 'Rubik';
-  --code-font: 'Iosevka Web';
+  --code-font: 'Fira Code';
   --heading-font: 'Capriola', serif;
 
   --image-opacity: 1;
@@ -179,7 +179,7 @@ code:not([class*=language]) {
   background: var(--bg-highlight);
   padding: 2px 4px;
   border-radius: 4px;
-  font-family: 'Iosevka Web', mono-space;
+  font-family: var(--code-font), mono-space;
 }
 
 time {
