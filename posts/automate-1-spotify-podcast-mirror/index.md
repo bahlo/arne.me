@@ -268,7 +268,7 @@ end run
 After that, rename the file using _Rename Finder Items_. 
 Choose `Name Single Item` and set `Basename only` to `ReleaseDate`.
 
-Then move the renamed file to `/path/to/podcast/folder/dist/episodes/` with a 
+Then move the renamed file to `podcast-folder/dist/episodes/` with a 
 _Move Finder Items_ action. 
 
 ### 6. Metadata and deployment
