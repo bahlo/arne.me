@@ -29,6 +29,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy('posts/**/*.{png,jpg}');
   eleventyConfig.addPassthroughCopy('fonts');
   eleventyConfig.addPassthroughCopy('images/**/*.{png,jpg}');
+  eleventyConfig.addPassthroughCopy('*.{png,ico,webmanifest}');
 
   eleventyConfig.addLayoutAlias('post', 'layouts/post.njk');
   eleventyConfig.addLayoutAlias('page', 'layouts/page.njk');
