@@ -89,7 +89,7 @@ h4, h5, h6 {
 
 a {
   text-decoration: underline;
-  color: var(--black);
+  color: var(--base02);
 }
 
 a:hover, 

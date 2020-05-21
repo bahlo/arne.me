@@ -1,0 +1,25 @@
+---
+permalink: /likes/index.html
+layout: page
+title: Likes
+eleventyNavigation:
+  key: Likes
+  order: 2
+---
+
+<p> These are my last 20 bookmarks on
+<a href="https://pinboard.in/u:bahlo" alt="bahlo on Pinboard">Pinboard</a>,
+tagged with <code>like</code>:</p>
+
+<ul>
+{% for like in likes %}
+<li>
+<h3>
+  <a href="{{ like.href }}">{{ like.description }}</a>
+</h3>
+<time datetime="{{ like.time | parseDate | htmlDateString }}">{{ like.time | parseDate | readableDate }}</time>
+{% if like.extended %}
+<span>&middot; {{ like.extended }}</span>
+{% endif %}
+</li>
+{% endfor %}
