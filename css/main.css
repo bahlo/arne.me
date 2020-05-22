@@ -176,12 +176,14 @@ footer {
 header {
   display: flex;
   align-items: center;
-  margin: 0 auto 48px;
+  margin: 0 auto 32px;
   justify-content: center;
   flex-direction: column;
   background: var(--bg-header);
-  border-bottom: 1px solid var(--border-header);
-  padding: 48px 0 24px;
+}
+
+header > a {
+  margin: 32px 0;
 }
 
 header a img {
@@ -189,14 +191,31 @@ header a img {
   width: 128px;
 }
 
+header nav {
+  background: var(--border-header);
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
 header ul {
   list-style: none;
-  padding: 0;
+  padding: 0 16px;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 header ul li {
   display: inline-block;
-  margin-right: 12px;
+  padding: 12px 0;
+}
+
+header ul li a {
+  padding: 12px;
+}
+
+header ul li:last-child {
+  margin-right: 0;
 }
 
 header ul li:last-child {
@@ -212,6 +231,7 @@ code:not([class*=language]) {
   padding: 2px 4px;
   border-radius: 4px;
   font-family: var(--code-font), mono-space;
+  word-wrap: break-word;
 }
 
 time {

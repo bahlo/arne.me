@@ -18,11 +18,13 @@
         <img src="/images/me.jpg" alt="A photo of me" />
       </a>
 
-      <ul>
-      {%- for entry in collections.all | eleventyNavigation %}
-        <li><a href="{{ entry.url | url }}">{{ entry.title }}</a></li>
-      {%- endfor %}
-      </ul>
+      <nav>
+        <ul>
+        {%- for entry in collections.all | eleventyNavigation %}
+          <li{% if entry.url == page.url %} class="active"{% endif %}><a href="{{ entry.url | url }}">{{ entry.title }}</a></li>
+        {%- endfor %}
+        </ul>
+      </nav>
     </header>
 
     <main>
