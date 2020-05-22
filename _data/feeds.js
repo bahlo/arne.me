@@ -1,4 +1,7 @@
+const dotenv = require('dotenv');
 const Cache = require('@11ty/eleventy-cache-assets');
+
+dotenv.config();
 
 const USERNAME = process.env.FEEDBIN_USERNAME;
 const PASSWORD = process.env.FEEDBIN_PASSWORD;
