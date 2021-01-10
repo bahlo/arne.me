@@ -1,0 +1,25 @@
+{
+  "name": "arne.me",
+  "version": "2.0.0",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "ELEVENTY_PRODUCTION=true eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bahlo/arne.me.git"
+  },
+  "author": "Arne Bahlo <hallo@arne.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bahlo/arne.me/issues"
+  },
+  "homepage": "https://github.com/bahlo/arne.me#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.11.1",
+    "@11ty/eleventy-cache-assets": "^2.0.4",
+    "@11ty/eleventy-plugin-rss": "^1.0.9",
+    "dotenv": "^8.2.0",
+    "html-minifier": "^4.0.0"
+  }
+}
