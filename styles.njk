@@ -1,8 +1,0 @@
----
-permalink: /main.css
-eleventyExcludeFromCollections: true
----
-{% set css %}
-    {% include "css/main.css" %}
-{% endset %}
-{{ css | cssmin | safe }}
