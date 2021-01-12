@@ -2,6 +2,6 @@
 
 {% block content %}
   <h1>{{ title }}</h1>
-  <time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time>
+  <i><time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></i>
   {{ content | safe }}
 {% endblock %}
