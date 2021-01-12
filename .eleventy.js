@@ -14,7 +14,11 @@ module.exports = function (eleventyConfig) {
     return String(now.getFullYear());
   });
 
+  // Favicons
   eleventyConfig.addPassthroughCopy('*.{png,ico,webmanifest}');
+
+  // Post images
+  eleventyConfig.addPassthroughCopy('posts/**/*.{png,jpg}');
 
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     if (

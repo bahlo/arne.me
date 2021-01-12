@@ -1,1 +1,7 @@
 <h1>Arne Bahlo</h1>
+<p>As you can probably see, this site is under construction. You can still access the content though:</p>
+<ul>
+  {% for post in collections.posts | reverse %}
+    <li><a href="{{ post.url | url }}">{{ post.data.title }}</a></href>
+  {% endfor %}
+</ul>
