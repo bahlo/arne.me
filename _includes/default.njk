@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}Arne Bahlo{% endblock %}</title>
+    <meta charset="UTF-8"/>
+    {% if description %}<meta name="description" content="{{description}}"/>{% endif %}
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <a href="/"><h1>Arne Bahlo</h1></a>
+    {% block content %}
+      {{ content | safe }}
+    {% endblock %}
+    <footer>
+      <p>Copyright &copy; {% year %} Arne Bahlo</p>
+    </footer>
+  </body>
+</html>

@@ -1,2 +1,6 @@
-<h1>{{ title }}</h1>
-{{ content | safe }}
+{% extends "_includes/default.njk" %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+  {{ content | safe }}
+{% endblock %}
