@@ -2,7 +2,9 @@
   "name": "arne.me",
   "version": "2.0.0",
   "scripts": {
-    "start": "eleventy --serve",
+    "start": "run-p start:admin start:eleventy",
+    "start:eleventy": "eleventy --serve",
+    "start:admin": "netlify-cms-proxy-server",
     "build": "ELEVENTY_PRODUCTION=true eleventy"
   },
   "repository": {
