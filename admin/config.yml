@@ -1,0 +1,26 @@
+backend:
+  name: github
+  repo: bahlo/arne.me
+media_folder: "static/img"
+public_folder: "/static/img"
+
+# Run "npx netlify-cms-proxy-server" for local backend
+local_backend: true
+# publish_mode: editorial_workflow
+collections:
+  - label: "Blog"
+    name: "blog"
+    folder: "posts"
+    create: true
+    editor:
+      preview: false
+    fields:
+      - widget: "string"
+        label: "Title"
+        name: "title"
+      - widget: "datetime"
+        label: "Publish Date"
+        name: "date"
+      - label: "Body"
+        name: "body"
+        widget: "markdown"

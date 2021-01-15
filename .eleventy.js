@@ -30,6 +30,9 @@ module.exports = function (eleventyConfig) {
   // Post images
   eleventyConfig.addPassthroughCopy('posts/**/*.{png,jpg}');
 
+  // Netlify CMS config.yml
+  eleventyConfig.addPassthroughCopy('admin/config.yml');
+
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     if (
       process.env.ELEVENTY_PRODUCTION &&
