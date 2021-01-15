@@ -1,17 +1,15 @@
 ---
 title: "Automate #2: Checklists with Things"
 date: 2019-02-09T18:46:20+01:00
-tags: 
+tags:
   - automate-series
-  - posts
-layout: post
 description: How to use checklists in TaskPaper-Format with Things.
+draft: false
 ---
-
-This is the second post of my series _Automate_.  [All posts in this series](/tags/automate-series).
+This is the second post of my series *Automate*.  [All posts in this series](/tags/automate-series).
 
 On the [Cortex](https://www.relay.fm/cortex) podcast (which inspired the whole series), CGP Grey and Myke Hurley sometimes talk about their checklists; whole projects that can be invoked by a tap if needed. These lists are for things that are important to get right, but you do them not often enough to remember every step, examples are an Airport or a YouTube checklist.
-They mostly use [OmniFocus](https://www.omnigroup.com/omnifocus) for this, which can export _and_ import projects as [TaskPaper](https://taskpaper.com). 
+They mostly use [OmniFocus](https://www.omnigroup.com/omnifocus) for this, which can export *and* import projects as [TaskPaper](https://taskpaper.com). 
 
 When thinking about this, I found more and more usecases for checklists and really wanted to have this set up, but I personally can't deal with the way some things work in OmniFocus. 
 I use [Things](https://culturedcode.com) for my todos, which doesn't support TaskPaper, but supports its own [JSON format](https://support.culturedcode.com/customer/en/portal/articles/2803573). 
@@ -41,9 +39,9 @@ Sadly you cannot get a directory listing from an iCloud folder, so for now if I 
 
 This is how the Shortcut looks:
 
-![Shortcut screenshots](/posts/automate-2-checklists-with-things/shortcut.png)
+![Shortcut screenshots](/static/img/shortcut.png)
 
-After a checklist was chosen, the shortcut gets the file from iCloud Drive (it has to be in the Shortcuts application folder to be accessible).  
+After a checklist was chosen, the shortcut gets the file from iCloud Drive (it has to be in the Shortcuts application folder to be accessible).\
 Then it copies the file contents to the Clipboard and runs the script (the Scriptable action should appear automatically in your Shortcuts app once you created it). After that, it retrieves the Things JSON from the clipboard, url-encodes it and opens Things with its URL scheme.
 
 ## Conclusion

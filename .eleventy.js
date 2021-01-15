@@ -36,6 +36,14 @@ module.exports = function (eleventyConfig) {
   // Netlify CMS config.yml
   eleventyConfig.addPassthroughCopy('admin/config.yml');
 
+  const now = new Date();
+  eleventyConfig.addCollection("posts", (collection) => {
+    return collection
+	.getFilteredByGlob("./posts/*.md")
+	.filter((post) => post.date <= now && !post.data.draft);
+  });
+
+
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     if (
       process.env.ELEVENTY_PRODUCTION &&

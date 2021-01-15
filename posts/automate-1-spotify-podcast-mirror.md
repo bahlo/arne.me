@@ -1,14 +1,14 @@
 ---
 title: "Automate #1: Spotify Podcast Mirror"
 date: 2019-01-05T11:18:00+01:00
-tags: 
+tags:
   - automate-series
-  - posts
-layout: post
-description: How I created an Automator application, which records the latest episode of a Spotify podcast, fills out metadata and generates a file for metadata for a podcast client to subscribe to.
+description: How I created an Automator application, which records the latest
+  episode of a Spotify podcast, fills out metadata and generates a file for
+  metadata for a podcast client to subscribe to.
+draft: false
 ---
-
-This is the first post of my series _Automate_. [All posts in this series](/tags/automate-series).
+This is the first post of my series *Automate*. [All posts in this series](/tags/automate-series).
 
 In this post I describe how I created an Automator application, which will 
 record the latest episode of a Spotify podcast, fill out metadata like title and 
@@ -33,7 +33,7 @@ comfortable in a terminal.
 Audio Hijack is an application that can do complex audio pipelines, often used 
 for recording podcasts or live streaming. 
 We use this to capture the output of Spotify to a file.
-Audio Hijack has a concept of _sessions_, meaning various saved pipelines.
+Audio Hijack has a concept of *sessions*, meaning various saved pipelines.
 
 To prepare things, start Audio Hijack and create a new session based on 
 the `Application Audio` template.
@@ -45,7 +45,7 @@ I recommend disabling the Output Device, but it's helpful if you want to debug
 something. 
 After saving, it should look similar to this:
 
-![Audio-Hijack Session](/posts/automate-1-spotify-podcast-mirror/audio_hijack_session.png)
+![Audio-Hijack Session](/static/img/audio_hijack_session.png)
 
 ### Spotify credentials
 
@@ -80,7 +80,7 @@ There also needs to be an empty subfolder called `dist/`.
 
 ### 1. Create an automator project
 
-Open the Automator app and choose _New Document_. 
+Open the Automator app and choose *New Document*. 
 Then click on Application to build a .app file you can launch later.
 
 ### 2. Get latest episode metadata
@@ -93,7 +93,7 @@ We need the following attributes of the latest episode:
 * Description
 * Release date
 
-We use Bash to get the data, so drag a new _Run Shell Script_ onto your workflow 
+We use Bash to get the data, so drag a new *Run Shell Script* onto your workflow 
 with the following contents:
 
 ```bash
@@ -136,13 +136,13 @@ echo "$RELEASE_DATE"
 ```
 
 We need the metadata again later, so save it in a variable by dragging 
-the _Set value of variable_ below the Bash action and giving it a name 
+the *Set value of variable* below the Bash action and giving it a name 
 (e.g. `Metadata`).
 
 ### 3. Start recording process
 
 Now we get to the messy part. 
-Drag a _Run AppleScript_ action to the end of the workflow and paste the 
+Drag a *Run AppleScript* action to the end of the workflow and paste the 
 following code.
 
 Read the comments (lines starting with `--`) to know what it's doing.
@@ -233,9 +233,9 @@ end run
 ### 4. Save release date to it's own variable
 
 We use the publish date of the episode as filename, so we need to get this first. 
-Drag the action _Get Value of Variable_ into your workflow and select the 
+Drag the action *Get Value of Variable* into your workflow and select the 
 `Metadata` variable (or whatever you called it).
-After that, drag a _Run AppleScript_ action at the end with the following 
+After that, drag a *Run AppleScript* action at the end with the following 
 contents.
 
 ```applescript
@@ -246,17 +246,17 @@ on run {input, parameters}
 end run
 ```
 
-Set the variable `ReleaseDate` using a _Set Value of Variable_ action.
+Set the variable `ReleaseDate` using a *Set Value of Variable* action.
 
 ### 5. Move file to destination
 
-Use a _Find Finder items_ action to search the destination folder of your 
+Use a *Find Finder items* action to search the destination folder of your 
 Audio Hijack session for files with all of the following attributes:
 
 * Kind is music
 * Date created is today
 
-Then drag a _Run AppleScript_ with the following contents into your workflow to get the first item (which will be the latest).
+Then drag a *Run AppleScript* with the following contents into your workflow to get the first item (which will be the latest).
 
 ```applescript
 on run {input, parameters}
@@ -265,11 +265,11 @@ on run {input, parameters}
 end run
 ```
 
-After that, rename the file using _Rename Finder Items_. 
+After that, rename the file using *Rename Finder Items*. 
 Choose `Name Single Item` and set `Basename only` to `ReleaseDate`.
 
 Then move the renamed file to `podcast-folder/dist/episodes/` with a 
-_Move Finder Items_ action. 
+*Move Finder Items* action. 
 
 ### 6. Metadata and deployment
 
@@ -277,7 +277,7 @@ Now that we have our recording, we have to generate the RSS feed with the
 metadata so podcast clients can display the episodes in a nice list.
 After that we upload both the feed and the episode.
 
-Use _Get Value of Variable_ to get the `Metadata` variable again.
+Use *Get Value of Variable* to get the `Metadata` variable again.
 
 To generate the `feed.xml`, we append the metadata of an episode to a simple 
 TOML file.
@@ -285,7 +285,7 @@ I wrote a small tool for this, which you can find here: [toml-podcast](https://g
 After generating the `feed.xml`, we use the [AWS CLI](https://aws.amazon.com/cli) 
 deploy it and the newly recorded episode to an AWS S3 bucket.
 
-Add a _Run Shell Script_ action with the following contents:
+Add a *Run Shell Script* action with the following contents:
 
 ```bash
 #!/bin/bash
