@@ -1,8 +1,6 @@
 ---
 title: "On Hexagonal Architecture"
 date: 2018-09-02T13:20:45+02:00
-tags: posts
-layout: post
 description: Why a hexagonal architecture can be better than traditional MVC-style architecture, with a real-world example.
 ---
 

@@ -1,10 +1,7 @@
 ---
-title: "I‘m writing an app"
+title: I‘m writing an app
+description: This post is about technologies and tooling when writing an app.
 date: 2020-06-12T09:56:00+02:00
-tags: 
-  - posts
-  - writing-an-app
-layout: post
 ---
 
 The last two weeks I‘ve spent quite some time on evenings and weekends to work on an iOS app. 

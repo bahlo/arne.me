@@ -1,8 +1,6 @@
 ---
 title: "I18n in Node.js"
 date: 2018-11-15T17:47:30+01:00
-tags: posts
-layout: post
 description: Node.js uses ICU (International Components for Unicode) for i18n and only includes English data by default.
 ---
 

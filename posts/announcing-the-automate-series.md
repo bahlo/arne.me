@@ -4,7 +4,6 @@ date: 2019-01-04T18:40:44+01:00
 tags: 
   - posts
   - automate-series
-layout: post
 description: "The start of a series of blog posts, all related to one of my yearly themes: automation."
 ---
 
