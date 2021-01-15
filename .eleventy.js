@@ -27,14 +27,10 @@ module.exports = function (eleventyConfig) {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat('yyyy-LL-dd');
   });
 
-  // Favicons
-  eleventyConfig.addPassthroughCopy('*.{png,ico,webmanifest}');
-
-  // Post images
-  eleventyConfig.addPassthroughCopy('posts/**/*.{png,jpg}');
-
-  // Netlify CMS config.yml
-  eleventyConfig.addPassthroughCopy('admin/config.yml');
+  eleventyConfig.addPassthroughCopy('./*.{png,ico,webmanifest}');
+  eleventyConfig.addPassthroughCopy('./posts/**/*.{png,jpg}');
+  eleventyConfig.addPassthroughCopy('./admin/config.yml');
+  eleventyConfig.addPassthroughCopy('./static/img');
 
   const now = new Date();
   eleventyConfig.addCollection("posts", (collection) => {
