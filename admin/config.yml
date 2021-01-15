@@ -1,6 +1,7 @@
 backend:
   name: github
   repo: bahlo/arne.me
+  branch: main
 media_folder: "static/img"
 public_folder: "/static/img"
 
