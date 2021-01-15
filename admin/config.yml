@@ -31,3 +31,22 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
+  - label: "Link"
+    name: "link"
+    folder: "links"
+    create: true
+    editor:
+      preview: false
+    fields:
+      - widget: "string"
+        label: "Title"
+        name: "title"
+      - widget: "string"
+        label: "URL"
+        name: "url"
+      - widget: "datetime"
+        label: "Publish Date"
+        name: "date"
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
