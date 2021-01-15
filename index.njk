@@ -1,10 +1,23 @@
 {% extends "_includes/default.njk" %}
 
 {% block content %}
-<p>As you can probably see, this site is under construction. You can still access the content though:</p>
+<p>As you can probably see, this site is under construction.</p>
+
+<h1>Blogposts</h1>
 <ul>
   {% for post in collections.posts | reverse %}
-    <li><a href="{{ post.url | url }}">{{ post.data.title }}</a></href>
+    <li>
+      <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<h1>Links</h1>
+<ul>
+  {% for link in collections.links | reverse %}
+  <li>
+    <a href="{{ link.data.url | url }}">{{ link.data.title }}</a>
+  </li>
   {% endfor %}
 </ul>
 {% endblock %}

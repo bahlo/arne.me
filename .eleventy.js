@@ -36,9 +36,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection("posts", (collection) => {
     return collection
 	.getFilteredByGlob("./posts/*.md")
-	.filter((post) => post.date <= now && !post.data.draft);
+	.filter(post => post.date <= now && !post.data.draft);
   });
 
+  eleventyConfig.addCollection("links", (collection) => {
+    return collection
+	.getFilteredByGlob("./links/*.md")
+	.filter(link => link.date <= now && !link.data.draft);
+  });
 
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     if (
