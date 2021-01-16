@@ -1,3 +1,4 @@
+const yaml = require("js-yaml");
 const htmlmin = require("html-minifier");
 const { DateTime } = require('luxon');
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
@@ -8,6 +9,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
 
   eleventyConfig.setUseGitIgnore(false);
+
+  eleventyConfig.addDataExtension("yaml", yaml.load);
  
   eleventyConfig.addShortcode("version", () => {
     return String(Date.now());

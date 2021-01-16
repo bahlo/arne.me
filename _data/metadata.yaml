@@ -1,0 +1,10 @@
+title: Arne Bahlo
+url: https://arne.me
+description: Welcome to my personal website.
+feed:
+  filename: feed.xml
+  path: /feed.xml
+  id: https://arne.me
+author:
+  name: Arne Bahlo
+  email: hallo@arne.me

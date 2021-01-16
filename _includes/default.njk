@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{% block title %}Arne Bahlo{% endblock %}</title>
+    <title>{% block title %}{{ metadata.title }}{% endblock %}</title>
     <meta charset="UTF-8"/>
     {% if description %}<meta name="description" content="{{description}}"/>{% endif %}
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
@@ -10,7 +10,7 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    <a href="/"><h1>Arne Bahlo</h1></a>
+    <a href="/"><h1>{{ metadata.title }}</h1></a>
     {% block content %}
       {{ content | safe }}
     {% endblock %}

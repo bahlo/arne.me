@@ -82,3 +82,44 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
+  - label: "Settings"
+    name: "settings"
+    editor:
+      preview: false
+    files:
+      - label: "Metadata"
+        name: "metadata"
+        file: "_data/metadata.yaml"
+        fields:
+          - label: Title
+            name: title
+            widget: string
+          - label: URL
+            name: url
+            widget: string
+          - label: Description
+            name: description
+            widget: string
+          - label: Feed
+            name: feed
+            widget: object
+            fields:
+              - label: Filename
+                name: filename
+                widget: string
+              - label: Path
+                name: path
+                widget: string
+              - label: ID
+                name: id
+                widget: string
+          - label: Author
+            name: author
+            widget: object
+            fields:
+              - label: Name
+                name: name
+                widget: string
+              - label: Email
+                name: email
+                widget: string
