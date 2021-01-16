@@ -1,0 +1,9 @@
+{% extends "_includes/default.njk" %}
+
+{% block content %}
+  <h1>{{ title }} – {{ author }}</h1>
+  <i><time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></i>
+  <br>
+  <img src={{ cover }} alt="Cover">
+  {{ content | safe }}
+{% endblock %}
