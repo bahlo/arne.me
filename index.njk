@@ -17,6 +17,7 @@
   {% for link in collections.links | reverse %}
   <li>
     <a href="{{ link.data.url | url }}">{{ link.data.title }}</a>
+    {{ link.templateContent | safe }}
   </li>
   {% endfor %}
 </ul>
@@ -28,6 +29,7 @@
     <a href="{{ book.url | url }}">{{ book.data.title }} – {{ book.data.author }}</a>
     <br>
     <img width="360" src="{{ book.data.cover }}" alt="Cover">
+    {{ book.templateContent | safe }}
   </li>
   {% endfor %}
 </ul>
@@ -39,6 +41,7 @@
     <a href="{{ photo.url | url }}">{{ photo.data.title }}</a>
     <br>
     <img width="360" src="{{ photo.data.photo }}" alt="{{ photo.data.altText }}">
+    {{ book.templateContent | safe }}
   </li>
   {% endfor %}
 </ul>
