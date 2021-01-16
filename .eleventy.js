@@ -57,6 +57,11 @@ module.exports = function (eleventyConfig) {
 	.getFilteredByGlob("./photos/*.md")
 	.filter(photo => photo.date <= now && !photo.data.draft);
   });
+  eleventyConfig.addCollection("entries", collection => {
+    return collection
+	.getFilteredByGlob("./{posts,links,books,photos}/*.md")
+	.filter(entry => entry.date <= now && !entry.data.draft);
+  });
 
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     if (
