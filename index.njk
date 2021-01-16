@@ -29,4 +29,15 @@
   </li>
   {% endfor %}
 </ul>
+
+<h1>Photos</h1>
+<ul>
+  {% for photo in collections.photos | reverse %}
+  <li>
+    <a href="{{ photo.url | url }}">{{ photo.data.title }}</a>
+    <br>
+    <img width="360" src="{{ photo.data.photo }}" alt="{{ photo.data.altText }}">
+  </li>
+  {% endfor %}
+</ul>
 {% endblock %}
