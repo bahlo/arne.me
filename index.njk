@@ -26,6 +26,8 @@
   {% for book in collections.books | reverse %}
   <li>
     <a href="{{ book.url | url }}">{{ book.data.title }} – {{ book.data.author }}</a>
+    <br>
+    <img width="360" src="{{ book.data.cover }}" alt="Cover">
   </li>
   {% endfor %}
 </ul>
