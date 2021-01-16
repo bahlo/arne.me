@@ -33,16 +33,21 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./static/img');
 
   const now = new Date();
-  eleventyConfig.addCollection("posts", (collection) => {
+  eleventyConfig.addCollection("posts", collection => {
     return collection
 	.getFilteredByGlob("./posts/*.md")
 	.filter(post => post.date <= now && !post.data.draft);
   });
 
-  eleventyConfig.addCollection("links", (collection) => {
+  eleventyConfig.addCollection("links", collection => {
     return collection
 	.getFilteredByGlob("./links/*.md")
 	.filter(link => link.date <= now && !link.data.draft);
+  });
+  eleventyConfig.addCollection("books", collection => {
+    return collection
+	.getFilteredByGlob("./books/*.md")
+	.filter(book => book.date <= now && !book.data.draft);
   });
 
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {

@@ -20,4 +20,13 @@
   </li>
   {% endfor %}
 </ul>
+
+<h1>Books</h1>
+<ul>
+  {% for book in collections.books | reverse %}
+  <li>
+    <a href="{{ book.url | url }}">{{ book.data.title }} – {{ book.data.author }}</a>
+  </li>
+  {% endfor %}
+</ul>
 {% endblock %}
