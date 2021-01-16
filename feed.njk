@@ -4,25 +4,29 @@ eleventyExcludeFromCollections: true
 ---
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<title>{{ metadata.title }}</title>
-	<subtitle>{{ metadata.feed.subtitle }}</subtitle>
-	{% set absoluteUrl %}{{ metadata.feed.path | url | absoluteUrl(metadata.url) }}{% endset %}
-	<link href="{{ absoluteUrl }}" rel="self"/>
-	<link href="{{ metadata.url }}"/>
-	<updated>{{ collections.posts | rssLastUpdatedDate }}</updated>
-	<id>{{ metadata.feed.id }}</id>
-	<author>
-		<name>{{ metadata.author.name }}</name>
-		<email>{{ metadata.author.email }}</email>
-	</author>
-	{%- for post in collections.posts | reverse %}
-	{% set absolutePostUrl %}{{ post.url | url | absoluteUrl(metadata.url) }}{% endset %}
-	<entry>
-		<title>{{ post.data.title }}</title>
-		<link href="{{ absolutePostUrl }}"/>
-		<updated>{{ post.date | rssDate }}</updated>
-		<id>{{ absolutePostUrl }}</id>
-		<content type="html">{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) }}</content>
-	</entry>
-	{%- endfor %}
+  <title>{{ metadata.title }}</title>
+  <subtitle>{{ metadata.feed.subtitle }}</subtitle>
+  {% set absoluteUrl %}{{ metadata.feed.path | url | absoluteUrl(metadata.url) }}{% endset %}
+  <link href="{{ absoluteUrl }}" rel="self"/>
+  <link href="{{ metadata.url }}"/>
+  <updated>{{ collections.all | rssLastUpdatedDate }}</updated>
+  <id>{{ metadata.feed.id }}</id>
+  <author>
+    <name>{{ metadata.author.name }}</name>
+    <email>{{ metadata.author.email }}</email>
+  </author>
+  {%- for entry in collections.all | reverse %}
+  {% set absoluteUrl %}{{ entry.url | url | absoluteUrl(metadata.url) }}{% endset %}
+  <entry>
+    <title>{{ entry.data.title }}</title>
+    <link href="{{ absoluteUrl }}"/>
+    <updated>{{ entry.date | rssDate }}</updated>
+    <id>{{ absoluteUrl }}</id>
+    <content type="html">
+      {% if entry.data.photo %}&lt;img src=&quot;{{ entry.data.photo }}&quot; alt=&quot;{{ entry.data.altText }}&quot;&gt;{% endif %}
+      {% if entry.data.cover %}&lt;img src=&quot;{{ entry.data.cover }}&quot; alt=&quot;Cover&quot;&gt;{% endif %}
+      {{ entry.templateContent | htmlToAbsoluteUrls(absoluteUrl) }}
+    </content>
+  </entry>
+  {%- endfor %}
 </feed>
