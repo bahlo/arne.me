@@ -28,6 +28,7 @@ collections:
       - widget: "boolean"
         label: "Draft"
         name: "draft"
+        default: false
       - label: "Body"
         name: "body"
         widget: "markdown"
@@ -50,6 +51,7 @@ collections:
       - widget: "boolean"
         label: "Draft"
         name: "draft"
+        default: false
       - label: "Body"
         name: "body"
         widget: "markdown"
@@ -79,6 +81,7 @@ collections:
       - widget: "boolean"
         label: "Draft"
         name: "draft"
+        default: false
       - label: "Body"
         name: "body"
         widget: "markdown"
@@ -105,6 +108,27 @@ collections:
       - widget: "boolean"
         label: "Draft"
         name: "draft"
+        default: false
+  - label: "Bit"
+    name: "bit"
+    folder: "bits"
+    create: true
+    editor:
+      preview: false
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Publish Date"
+        name: "date"
+        widget: "datetime"
+      - widget: "boolean"
+        label: "Draft"
+        name: "draft"
+        default: false
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
   - label: "Settings"
     name: "settings"
     editor:

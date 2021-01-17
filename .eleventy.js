@@ -4,6 +4,19 @@ const { DateTime } = require('luxon');
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginRss = require('@11ty/eleventy-plugin-rss');
 
+const addCollection = function(eleventyConfig, name, glob) {
+  if (!glob) {
+    glob = name;
+  }
+
+  const now = new Date();
+  eleventyConfig.addCollection(name, collection => {
+    return collection
+	.getFilteredByGlob(`./${glob}/*.md`)
+	.filter(item => item.date <= now && !item.data.draft);
+  });
+}
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
@@ -35,33 +48,11 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('./admin/config.yml');
   eleventyConfig.addPassthroughCopy('./static/img');
 
-  const now = new Date();
-  eleventyConfig.addCollection("posts", collection => {
-    return collection
-	.getFilteredByGlob("./posts/*.md")
-	.filter(post => post.date <= now && !post.data.draft);
-  });
-
-  eleventyConfig.addCollection("links", collection => {
-    return collection
-	.getFilteredByGlob("./links/*.md")
-	.filter(link => link.date <= now && !link.data.draft);
-  });
-  eleventyConfig.addCollection("books", collection => {
-    return collection
-	.getFilteredByGlob("./books/*.md")
-	.filter(book => book.date <= now && !book.data.draft);
-  });
-  eleventyConfig.addCollection("photos", collection => {
-    return collection
-	.getFilteredByGlob("./photos/*.md")
-	.filter(photo => photo.date <= now && !photo.data.draft);
-  });
-  eleventyConfig.addCollection("entries", collection => {
-    return collection
-	.getFilteredByGlob("./{posts,links,books,photos}/*.md")
-	.filter(entry => entry.date <= now && !entry.data.draft);
-  });
+  addCollection(eleventyConfig, "posts");
+  addCollection(eleventyConfig, "links");
+  addCollection(eleventyConfig, "books");
+  addCollection(eleventyConfig, "photos");
+  addCollection(eleventyConfig, "entries", '{posts,links,books,photos}');
 
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
     if (
