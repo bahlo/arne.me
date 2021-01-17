@@ -1,0 +1,7 @@
+{% extends "_includes/default.njk" %}
+
+{% block content %}
+  <a href={{ url }}><h1>{{ title }}</h1></a>
+  <i><time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></i>
+  {{ content | safe }}
+{% endblock %}
