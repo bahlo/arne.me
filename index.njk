@@ -1,48 +1,13 @@
 {% extends "_includes/default.njk" %}
 
 {% block content %}
-<p>As you can probably see, this site is under construction.</p>
-
-<h1>Blogposts</h1>
-<ul>
-  {% for post in collections.posts | reverse %}
-    <li>
-      <a href="{{ post.url | url }}">{{ post.data.title }}</a>
-    </li>
-  {% endfor %}
-</ul>
-
-<h1>Links</h1>
-<ul>
-  {% for link in collections.links | reverse %}
-  <li>
-    <a href="{{ link.data.url | url }}">{{ link.data.title }}</a>
-    {{ link.templateContent | safe }}
-  </li>
-  {% endfor %}
-</ul>
-
-<h1>Books</h1>
-<ul>
-  {% for book in collections.books | reverse %}
-  <li>
-    <a href="{{ book.url | url }}">{{ book.data.title }} – {{ book.data.author }}</a>
-    <br>
-    <img width="360" src="{{ book.data.cover }}" alt="Cover">
-    {{ book.templateContent | safe }}
-  </li>
-  {% endfor %}
-</ul>
-
-<h1>Photos</h1>
-<ul>
-  {% for photo in collections.photos | reverse %}
-  <li>
-    <a href="{{ photo.url | url }}">{{ photo.data.title }}</a>
-    <br>
-    <img width="360" src="{{ photo.data.photo }}" alt="{{ photo.data.altText }}">
-    {{ book.templateContent | safe }}
-  </li>
-  {% endfor %}
-</ul>
+{% for entry in collections.entries | reverse %}
+<article>
+  <a href="{{ entry.url | url }}"><h1>{{ entry.data.title }}</h1></a>
+  <i><time datetime="{{ entry.data.date | htmlDateString }}">{{ entry.data.date | readableDate }}</time></i><br>
+  {% if entry.data.cover %}<img width="360" src="{{ entry.data.cover }}" alt="Cover">{% endif %}
+  {% if entry.data.photo %}<img width="360" src="{{ entry.data.photo }}" alt="{{ entry.data.altText }}">{% endif %}
+  {{ entry.templateContent | safe }}
+</article>
+{% endfor %}
 {% endblock %}
