@@ -13,12 +13,14 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    <a href="/"><h1>{{ metadata.title }}</h1></a>
-    {% block content %}
-      {{ content | safe }}
-    {% endblock %}
-    <footer>
-      <p>Copyright &copy; {% year %} Arne Bahlo</p>
-    </footer>
+    <main>
+      <a href="/"><h1>{{ metadata.title }}</h1></a>
+      {% block content %}
+        {{ content | safe }}
+      {% endblock %}
+      <footer>
+        <p>Copyright &copy; {% year %} Arne Bahlo</p>
+      </footer>
+    </main>
   </body>
 </html>
