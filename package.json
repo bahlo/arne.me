@@ -5,7 +5,11 @@
     "start": "run-p start:*",
     "start:eleventy": "eleventy --serve",
     "start:admin": "netlify-cms-proxy-server",
-    "build": "ELEVENTY_PRODUCTION=true eleventy"
+    "start:sass": "npm run sass -- --watch",
+    "build": "run-p build:*",
+    "build:sass": "npm run sass",
+    "build:eleventy": "ELEVENTY_PRODUCTION=true eleventy",
+    "sass": "sass --style=compressed scss/styles.scss _includes/css/styles.css"
   },
   "repository": {
     "type": "git",
@@ -27,6 +31,8 @@
     "js-yaml": "^4.0.0",
     "luxon": "^1.25.0",
     "netlify-cms-proxy-server": "^1.3.8",
-    "npm-run-all": "^4.1.5"
+    "normalize.css": "^8.0.1",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.32.5"
   }
 }

@@ -7,6 +7,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"/>
     <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
+    <style>
+      {% include "css/styles.css" ignore missing %}
+    </style>
     {% block head %}{% endblock %}
   </head>
   <body>
