@@ -9,3 +9,15 @@ main {
   margin: 0 auto;
   padding: 8px;
 }
+
+header {
+  margin: 32px 0;
+}
+
+article {
+  margin-bottom: 64px;
+
+  img {
+    max-width: 100%;
+  }
+}

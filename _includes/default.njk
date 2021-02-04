@@ -14,7 +14,9 @@
   </head>
   <body>
     <main>
-      <a href="/"><h1>{{ metadata.title }}</h1></a>
+      <header>
+        <a href="/"><h1>{{ metadata.title }}</h1></a>
+      </header>
       {% block content %}
         {{ content | safe }}
       {% endblock %}
