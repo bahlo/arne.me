@@ -43,6 +43,8 @@ module.exports = function (eleventyConfig) {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat('yyyy-LL-dd');
   });
 
+  eleventyConfig.addFilter('debug', console.log);
+
   eleventyConfig.addPassthroughCopy('./*.{png,ico,webmanifest}');
   eleventyConfig.addPassthroughCopy('./posts/**/*.{png,jpg}');
   eleventyConfig.addPassthroughCopy('./admin/config.yml');

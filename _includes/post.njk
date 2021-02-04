@@ -1,7 +1,9 @@
 {% extends "_includes/default.njk" %}
 
 {% block content %}
+<article class="post">
   <h1>{{ title }}</h1>
   <i><time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></i>
   {{ content | safe }}
+</article>
 {% endblock %}
