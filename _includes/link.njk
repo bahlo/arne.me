@@ -1,9 +1,6 @@
 {% extends "_includes/default.njk" %}
 
 {% block content %}
-<article class="link">
-  <a href={{ url }}><h1>{{ title }}</h1></a>
-  <i><time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></i>
-  {{ content | safe }}
-</article>
+  {% set entry = { data: { title: title, url: url, date: date }, templateContent: content } %}
+  {% include "_includes/types/link.njk" %}
 {% endblock %}

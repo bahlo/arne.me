@@ -1,11 +1,6 @@
 {% extends "_includes/default.njk" %}
 
 {% block content %}
-<article class="book">
-  <h1>{{ title }} – {{ author }}</h1>
-  <i><time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></i>
-  <br>
-  <img src={{ cover }} alt="Cover">
-  {{ content | safe }}
-</article>
+  {% set entry = { data: { title: title, author: author, cover: cover, date: date }, templateContent: content } %}
+  {% include "_includes/types/book.njk" %}
 {% endblock %}
