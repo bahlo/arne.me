@@ -1,5 +1,5 @@
 <article class="book">
-  <a href={{ entry.url }}><h1>{{ entry.data.title }} – {{ entry.data.author }}</h1></a>
+  <a href="{{ entry.url }}"><h1>{{ entry.data.title }} – {{ entry.data.author }}</h1></a>
   <i><time datetime="{{ entry.data.date | htmlDateString }}">{{ entry.data.date | readableDate }}</time></i>
   <br>
   <img src={{ entry.data.cover }} alt="Cover">
