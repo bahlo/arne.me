@@ -1,5 +1,5 @@
 <article class="post">
-  <a href="{{ entry.url }}"><h1>{{ entry.data.title }}</h1></a>
+  <a class="title" href="{{ entry.url }}"><h1>{{ entry.data.title }}</h1></a>
   <i><time datetime="{{ entry.data.date | htmlDateString }}">{{ entry.data.date | readableDate }}</time></i>
   {{ entry.templateContent | safe }}
 </article>

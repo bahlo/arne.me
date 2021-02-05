@@ -20,4 +20,20 @@ article {
   img {
     max-width: 100%;
   }
+
+  &.link .title {
+    color: green;
+  }
+
+  &.photo .title {
+    color: blue;
+  }
+
+  &.post .title {
+    color: red;
+  }
+
+  &.book .title {
+    color: orange;
+  }
 }
