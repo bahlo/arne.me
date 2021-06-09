@@ -1,14 +1,14 @@
 :root {
   --fg: #111;
   --bg: #fff;
-  --primary: #1f77d4;
+  --primary: #008570;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
 		--fg: #fff;
 		--bg: #333;
-    --primary: #1c98fc;
+    --primary: #21b49d;
   }
 }
 
