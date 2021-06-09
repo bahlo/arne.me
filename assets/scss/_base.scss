@@ -1,4 +1,7 @@
-html,
+html {
+  height: 100%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   line-height: 1.4;
@@ -19,8 +22,7 @@ main {
   max-width: 640px;
   padding: 16px;
   background: var(--main-bg);
-  border: 1px solid var(--main-border);
-  border-radius: 4px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, .2);
 
   > h1:first-child {
     margin-top: 0;
