@@ -3,7 +3,8 @@ title: "Home"
 ---
 
 I'm a software engineer from Germany. I love the indie web, fun programming
-languages (like Rust) and open source software. If you want to know what I'm doing right now, check out [/now](/now).
+languages (like Rust) and open source software.  
+If you want to know what I'm doing right now, check out [/now](/now).
 
 ## Current projects
 
