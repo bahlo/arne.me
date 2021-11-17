@@ -2,8 +2,7 @@
 title: "Home"
 ---
 
-I'm a software engineer working as team lead on the database of a serverless log
-management solution at Axiom. 
+# Arne Bahlo is a software engineer working as team lead on the database of a serverless log management solution at Axiom. 
 I find joy in creating accessible, performant applications, the indie web, fun 
 programming languages (especially Rust) and open source software.
 
@@ -12,10 +11,14 @@ You can find me on [GitHub](https://github.com/bahlo) or
 or via Email: <hey@arne.me>.  
 If you want to know what I'm currently doing, check out [/now](/now).
 
+----
+
 ## Side Projects
 * [Arnes notes](https://notes.arne.me): My own personal wiki/external brain to learn in public.
 * [Arnes weekly](https://arnesweekly.email): My weekly newsletter where I curate interesting stories from all over the web. 
 * [Sprachnachrichten](https://sprachnachrichten.fm): A podcast about tech and productivity (in German) with my good friend and co-host [Jan](https://fruechtl.me).
+
+----
 
 ## Experience
 ### 2019 - Present: Team Lead @ Axiom, Inc.
