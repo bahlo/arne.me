@@ -27,7 +27,7 @@ _Remote_
 * Built a [public demo](https://github.com/axiomhq/axiom-demo) that can be run locally to get a feeling for the product quickly
 * Working with customers to help integrate the product
 * Building an end-to-end test pipeline using Cucumber and Go
-* Working on various data-shipping solutions including a log-synthesizer, Hacker New and GitHub events
+* Working on various data-shipping solutions including a log-synthesizer, Hacker News and GitHub events
 
 ### 2017 - 2019: Software Architect @ FastBill GmbH
 _Frankfurt am Main, Germany_
