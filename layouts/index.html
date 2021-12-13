@@ -5,8 +5,7 @@
 <ul>
   {{ range .Params.sideProjects }}
   <li>
-    <a href="{{ .url }}" alt="{{ .title }}">{{ .title }}</a>: {{ .description |
-    $.RenderString}}
+    <a href="{{ .url }}" alt="{{ .title }}">{{ .title }}</a>: {{ .description | $.RenderString }}
   </li>
   {{end}}
 </ul>
