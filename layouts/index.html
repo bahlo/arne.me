@@ -1,3 +1,24 @@
-{{define "main"}}
-{{ .Content }}
-{{end}}
+{{define "main"}} {{ .Content }}
+
+<hr />
+<h2>Side Projects</h2>
+<ul>
+  {{ range .Params.sideProjects }}
+  <li>
+    <a href="{{ .url }}" alt="{{ .title }}">{{ .title }}</a>: {{ .description |
+    $.RenderString}}
+  </li>
+  {{end}}
+</ul>
+
+<hr />
+<h2>Experience</h2>
+{{ range .Params.experience }}
+<h3>{{ .from }} &ndash; {{ .to }}: {{ .title }} @ {{ .company }}</h3>
+<i>{{ .location }}</i>
+<ul>
+  {{ range .tasks }}
+  <li>{{ . | $.RenderString }}</li>
+  {{end}}
+</ul>
+{{ end }} {{end}}
