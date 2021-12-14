@@ -1,6 +1,7 @@
 @import "_reset";
 @import "_vars";
 @import "_inter";
+@import "_retail";
 
 html {
   font-size: $font-size-base;
@@ -32,6 +33,7 @@ h4,
 h5,
 h6 {
   margin-bottom: 0.2em;
+	font-family: Retail;
 }
 
 footer {

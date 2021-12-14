@@ -3,3 +3,6 @@
 /result*
 /.direnv
 /.envrc
+
+# Commercial font, sorry
+/static/fonts/retail 
