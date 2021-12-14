@@ -1,48 +1,65 @@
 {{define "main"}} 
 
-<h1 class="hero">{{ .Params.hero }}</h1>
-
-{{ .Content }}
-
-<section>
-  <h2>Open Source</h2>
-  <ul>
-    {{ range .Params.openSource }}
-    <li>
-      <h3><a href="https://github.com/{{ .repo }}" alt="{{ .repo }}">{{ .repo }}</a></h3>
-			<p>{{ .description | $.RenderString }}
-    </li>
-    {{end}}
-  </ul>
+<section class="intro">
+	<div class="title">
+		<h1>{{ .Params.hero }}</h1>
+	</div>
+	<div class="content">
+		{{ .Content }}
+	</div>
 </section>
 
-<section>
-  <h2>Side Projects</h2>
-  <ul>
-    {{ range .Params.sideProjects }}
-    <li>
-      <h3><a href="{{ .url }}" alt="{{ .title }}">{{ .title }}</a></h3>
-			<p>{{ .description | $.RenderString }}</p>
-    </li>
-    {{end}}
-  </ul>
+<section class="open-source">
+  <div class="title">
+		<h1>Open Source</h1>
+  </div>
+  <div class="content">
+		<ul>
+			{{ range .Params.openSource }}
+			<li>
+				<h3><a href="https://github.com/{{ .repo }}" alt="{{ .repo }}">{{ .title }}</a></h3>
+				<p>{{ .description | $.RenderString }}
+			</li>
+			{{end}}
+		</ul>
+	</div>
 </section>
 
-<section>
-  <h2>Experience</h2>
-	<ul>
-		{{ range .Params.experience }}
-		<li>
+<section class="side-projects">
+	<div class="title">
+		<h1>Side Projects</h1>
+	</div>
+	<div class="content">
+		<ul>
+			{{ range .Params.sideProjects }}
+			<li>
+				<h3><a href="{{ .url }}" alt="{{ .title }}">{{ .title }}</a></h3>
+				<p>{{ .description | $.RenderString }}</p>
+			</li>
+			{{end}}
+		</ul>
+	</div>
+</section>
+
+<section class="experience">
+	<div class="title">
+		<h1>Experience</h1>
+	</div>
+	<div class="content">
+		<ul>
+			{{ range .Params.experience }}
+			<li>
 				<h3>{{ .from }} &ndash; {{ .to }}: {{ .title }} @ {{ .company }}</h3>
-				<i>{{ .location }}</i>
+				<i class="location">{{ .location }}</i>
 				<ul>
-				{{ range .tasks }}
-				<li>{{ . | $.RenderString }}</li>
-				{{end}}
+					{{ range .tasks }}
+					<li>{{ . | $.RenderString }}</li>
+					{{end}}
 				</ul>
-		</li>
-		{{ end }}
-	</ul>
+			</li>
+			{{ end }}
+		</ul>
+	</div>
 </section>
 
 {{ end }}

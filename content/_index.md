@@ -4,13 +4,17 @@ title: "Arne Bahlo"
 hero: Arne Bahlo is a software engineer working as team lead on the database of a serverless log management solution at Axiom.
 
 openSource:
-  - repo: bahlo/sonyflake-rs
+  - title: sonyflake-rs
+    repo: bahlo/sonyflake-rs
     description: A distributed unique ID generator written in Rust, inspired by Twitter's Snowflake.
-  - repo: bahlo/go-styleguide
+  - title: go-styleguide
+    repo: bahlo/go-styleguide
     description: An opinionated styleguide for the Go programming language.
-  - repo: bahlo/mapdns
+  - title: mapdns
+    repo: bahlo/mapdns
     description: A simple, static DNS server in around 100 LoC of Go.
-  - repo: bahlo/discord-retention-bot
+  - title: discord-retention-bot
+    repo: bahlo/discord-retention-bot
     description: A message retention bot for Discord, written in Rust.
 
 sideProjects:
@@ -64,5 +68,5 @@ I find joy in creating accessible, performant applications, the indie web, fun
 programming languages (especially Rust) and open source software.
 
 You can find me on [GitHub](https://github.com/bahlo) or
-[Twitter](https://twitter.com/arnebahlo) and talk to me via Email: <hey@arne.me>.  
+[Twitter](https://twitter.com/arnebahlo) and talk to me via Email: <hey@arne.me>.
 If you want to know what I'm currently doing, check out [/now](/now).
