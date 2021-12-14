@@ -4,41 +4,45 @@
 
 {{ .Content }}
 
-<section class="opensource">
+<section>
   <h2>Open Source</h2>
   <ul>
     {{ range .Params.openSource }}
     <li>
-      <a href="https://github.com/{{ .repo }}" alt="{{ .repo }}">{{ .repo }}</a>: {{ .description | $.RenderString }}
+      <h3><a href="https://github.com/{{ .repo }}" alt="{{ .repo }}">{{ .repo }}</a></h3>
+			<p>{{ .description | $.RenderString }}
     </li>
     {{end}}
   </ul>
 </section>
 
-<section class="side-projects">
+<section>
   <h2>Side Projects</h2>
   <ul>
     {{ range .Params.sideProjects }}
     <li>
-      <a href="{{ .url }}" alt="{{ .title }}">{{ .title }}</a>: {{ .description | $.RenderString }}
+      <h3><a href="{{ .url }}" alt="{{ .title }}">{{ .title }}</a></h3>
+			<p>{{ .description | $.RenderString }}</p>
     </li>
     {{end}}
   </ul>
 </section>
 
-<section class="experience">
+<section>
   <h2>Experience</h2>
-  {{ range .Params.experience }}
-  <div class="experience-item">
-    <h3>{{ .from }} &ndash; {{ .to }}: {{ .title }} @ {{ .company }}</h3>
-    <i>{{ .location }}</i>
-    <ul>
-      {{ range .tasks }}
-      <li>{{ . | $.RenderString }}</li>
-      {{end}}
-    </ul>
-  </div>
-  {{ end }}
+	<ul>
+		{{ range .Params.experience }}
+		<li>
+				<h3>{{ .from }} &ndash; {{ .to }}: {{ .title }} @ {{ .company }}</h3>
+				<i>{{ .location }}</i>
+				<ul>
+				{{ range .tasks }}
+				<li>{{ . | $.RenderString }}</li>
+				{{end}}
+				</ul>
+		</li>
+		{{ end }}
+	</ul>
 </section>
 
 {{ end }}
