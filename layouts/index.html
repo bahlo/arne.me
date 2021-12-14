@@ -1,11 +1,23 @@
 {{define "main"}} {{ .Content }}
 
 <hr />
+<h2>Open Source</h2>
+<ul>
+  {{ range .Params.openSource }}
+  <li>
+    <a href="https://github.com/{{ .repo }}" alt="{{ .repo }}">{{ .repo }}</a>:
+    {{ .description | $.RenderString }}
+  </li>
+  {{end}}
+</ul>
+
+<hr />
 <h2>Side Projects</h2>
 <ul>
   {{ range .Params.sideProjects }}
   <li>
-    <a href="{{ .url }}" alt="{{ .title }}">{{ .title }}</a>: {{ .description | $.RenderString }}
+    <a href="{{ .url }}" alt="{{ .title }}">{{ .title }}</a>: {{ .description |
+    $.RenderString }}
   </li>
   {{end}}
 </ul>
@@ -20,5 +32,4 @@
   <li>{{ . | $.RenderString }}</li>
   {{end}}
 </ul>
-{{ end }} 
-{{ end }}
+{{ end }} {{ end }}

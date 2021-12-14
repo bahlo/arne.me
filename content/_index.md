@@ -1,6 +1,16 @@
 ---
 title: "Home"
 
+openSource:
+  - repo: bahlo/sonyflake-rs
+    description: A distributed unique ID generator written in Rust, inspired by Twitter's Snowflake.
+  - repo: bahlo/go-styleguide
+    description: An opinionated styleguide for the Go programming language.
+  - repo: bahlo/mapdns
+    description: A simple, static DNS server in around 100 LoC of Go.
+  - repo: bahlo/discord-retention-bot
+    description: A message retention bot for Discord, written in Rust.
+
 sideProjects:
   - title: Arnes notes
     url: https://notes.arne.me
