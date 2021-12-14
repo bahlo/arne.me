@@ -1,4 +1,9 @@
 @import "_reset";
+@import "_vars";
+
+body {
+  font-size: $font-size-base;
+}
 
 main {
   max-width: 640px;
@@ -6,10 +11,16 @@ main {
   margin: 0 auto;
 }
 
+h1.hero {
+  margin-bottom: 20px;
+}
+
 section {
   margin-top: 20px;
-  border: 1px solid black;
-  padding: 8px;
+
+  .experience-item {
+    margin: 10px 0;
+  }
 }
 
 h1,

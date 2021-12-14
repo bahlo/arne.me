@@ -1,5 +1,7 @@
 {{define "main"}} 
 
+<h1 class="hero">{{ .Params.hero }}</h1>
+
 {{ .Content }}
 
 <section class="opensource">
@@ -27,14 +29,16 @@
 <section class="experience">
   <h2>Experience</h2>
   {{ range .Params.experience }}
-  <h3>{{ .from }} &ndash; {{ .to }}: {{ .title }} @ {{ .company }}</h3>
-  <i>{{ .location }}</i>
-  <ul>
-    {{ range .tasks }}
-    <li>{{ . | $.RenderString }}</li>
-    {{end}}
-  </ul>
-  {{ end }} 
+  <div class="experience-item">
+    <h3>{{ .from }} &ndash; {{ .to }}: {{ .title }} @ {{ .company }}</h3>
+    <i>{{ .location }}</i>
+    <ul>
+      {{ range .tasks }}
+      <li>{{ . | $.RenderString }}</li>
+      {{end}}
+    </ul>
+  </div>
+  {{ end }}
 </section>
 
 {{ end }}

@@ -1,6 +1,8 @@
 ---
 title: "Home"
 
+hero: Arne Bahlo is a software engineer working as team lead on the database of a serverless log management solution at Axiom.
+
 openSource:
   - repo: bahlo/sonyflake-rs
     description: A distributed unique ID generator written in Rust, inspired by Twitter's Snowflake.
@@ -57,8 +59,6 @@ experience:
       - Developed a distributed system consisting of Go and Node.js microservices
       - Wrote my thesis about a distributed heterogeneous database layer
 ---
-
-# Arne Bahlo is a software engineer working as team lead on the database of a serverless log management solution at Axiom.
 
 I find joy in creating accessible, performant applications, the indie web, fun
 programming languages (especially Rust) and open source software.
