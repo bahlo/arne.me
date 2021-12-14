@@ -8,11 +8,12 @@ pkgs.stdenvNoCC.mkDerivation {
     ./.;
 
   dontConfigure = true;
-  buildInputs = [ pkgs.hugo ];
+  buildInputs = [ pkgs.hugo pkgs.minify pkgs.fd ];
   preferLocalBuild = true;
   installPhase = ''
     runHook preInstall
     hugo --minify -d $out
+    fd '.html$' $out -x minify --html-keep-document-tags --html-keep-end-tags -o {} {}
     runHook postInstall
   '';
 }
