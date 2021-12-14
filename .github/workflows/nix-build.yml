@@ -1,4 +1,4 @@
-name: Build
+name: nix-build
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  nix-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
