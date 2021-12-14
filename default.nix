@@ -12,7 +12,7 @@ pkgs.stdenvNoCC.mkDerivation {
   preferLocalBuild = true;
   installPhase = ''
     runHook preInstall
-    hugo -d $out
+    hugo --minify -d $out
     runHook postInstall
   '';
 }
