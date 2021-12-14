@@ -1,8 +1,14 @@
 @import "_reset";
 @import "_vars";
+@import "_inter";
 
-body {
+html {
   font-size: $font-size-base;
+  font-family: 'Inter', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+  html { font-family: 'Inter var', sans-serif; }
 }
 
 main {
