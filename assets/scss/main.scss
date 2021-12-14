@@ -1,1 +1,22 @@
-body {}
+@import "_reset";
+
+main {
+  max-width: 640px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+section {
+  margin-top: 20px;
+  border: 1px solid black;
+  padding: 8px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.2em;
+}
