@@ -1,2 +1,5 @@
 /public
 /resources/_gen
+/result*
+/.direnv
+/.envrc
