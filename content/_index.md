@@ -1,5 +1,5 @@
 ---
-title: "Home"
+title: "Arne Bahlo"
 
 hero: Arne Bahlo is a software engineer working as team lead on the database of a serverless log management solution at Axiom.
 
