@@ -4,7 +4,7 @@ pkgs.stdenvNoCC.mkDerivation {
   name = "arne.me";
 
   src = with builtins; filterSource (path: type: substring 0 1 
-    (baseNameOf path) != "." && (baseNameOf path) != "default.nix" && (baseNameOf path) != "shell.nix" && type != "symlink")
+    (baseNameOf path) != "." && (baseNameOf path) != "default.nix" && type != "symlink")
     ./.;
 
   dontConfigure = true;
