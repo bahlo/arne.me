@@ -1,0 +1,19 @@
+name: nix build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  nix_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v15
+      - run: nix build
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./result
+          publish_branch: site
