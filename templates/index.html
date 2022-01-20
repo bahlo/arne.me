@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="intro">
+	<div class="title">
+		<h1>{{ section.extra.hero }}</h1>
+	</div>
+	<div class="content">
+		{{ section.content | safe }}
+	</div>
+</section>
+
+<section class="open-source">
+  <div class="title">
+		<h1>Open Source</h1>
+  </div>
+  <div class="content">
+		<ul>
+      {% for project in section.extra.openSource %}
+			<li>
+				<h3><a href="https://github.com/{{ project.repo }}" alt="{{ project.repo }}">{{ project.title }}</a></h3>
+				<p>{{ project.description | safe }}
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</section>
+
+<section class="side-projects">
+	<div class="title">
+		<h1>Side Projects</h1>
+	</div>
+	<div class="content">
+		<ul>
+			{% for sideProject in section.extra.sideProjects %}
+			<li>
+				<h3><a href="{{ sideProject.url }}" alt="{{ sideProject.title }}">{{ sideProject.title }}</a></h3>
+				<p>{{ sideProject.description | markdown(inline=true) | safe }}</p>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</section>
+
+<section class="experience">
+	<div class="title">
+		<h1>Experience</h1>
+	</div>
+	<div class="content">
+		<ul>
+			{% for experience in section.extra.experience %}
+			<li>
+				<h3>{{ experience.from }} &ndash; {{ experience.to }}: {{ experience.title }} @ {{ experience.company }}</h3>
+				<i class="location">{{ experience.location }}</i>
+				<ul>
+					{% for task in experience.tasks %}
+					<li>{{ task | markdown(inline=true) | safe }}</li>
+					{% endfor %}
+				</ul>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</section>
+{% endblock content %}

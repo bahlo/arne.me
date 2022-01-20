@@ -1,3 +1,10 @@
-baseURL = "https://arne.me/"
-languageCode = "en-us"
+base_url = "https://arne.me"
+compile_sass = true
+build_search_index = true
 title = "Arne Bahlo"
+
+[markdown]
+highlight_code = true
+
+[extra]
+# Put all your custom variables here

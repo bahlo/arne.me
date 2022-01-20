@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head>
+  <body>
+    <main>
+      {% block content %}{% endblock content %}
+      <footer>
+        Copyright 2021 Arne Bahlo &middot; <a href="https://github.com/bahlo/arne.me">bahlo/arne.me</a>
+      </footer>
+    </main>
+  </body>
+</html>

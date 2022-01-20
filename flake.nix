@@ -12,22 +12,22 @@
     let 
       inherit (gitignore.lib) gitignoreSource;
       pkgs = nixpkgs.legacyPackages.${system};
+      buildInputs = [ pkgs.zola ];
     in {
       defaultPackage = pkgs.stdenvNoCC.mkDerivation {
         name = "static";
         src = gitignoreSource self;
-        buildInputs = [ pkgs.hugo pkgs.minify pkgs.fd ];
+        inherit buildInputs;
         buildPhase = ''
-          hugo --minify -d static
-          fd '.html$' static -x minify --html-keep-document-tags --html-keep-end-tags -o {} {}
+          zola build
         '';
         installPhase = ''
-          cp -r static $out
+          cp -r public $out
         '';
       };
 
       devShell = pkgs.mkShell {
-        buildInputs = [ pkgs.hugo ];
+        inherit buildInputs;
       };
     });
 }
