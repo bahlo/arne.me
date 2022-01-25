@@ -9,7 +9,7 @@
 
   outputs = { self, nixpkgs, flake-utils, gitignore }:
   flake-utils.lib.eachDefaultSystem (system:
-    let 
+    let
       inherit (gitignore.lib) gitignoreSource;
       pkgs = nixpkgs.legacyPackages.${system};
       buildInputs = [ pkgs.zola ];
