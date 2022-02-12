@@ -35,3 +35,17 @@ a.home-anchor {
   display: block;
   margin-bottom: 20px;
 }
+
+footer::before {
+  content: '∴';
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+  font-size: 1.4em;
+}
+
+footer {
+  text-align: center;
+  font-size: .9em;
+}
