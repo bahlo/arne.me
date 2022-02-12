@@ -6,6 +6,7 @@ body {
 header {
   background: $color-primary;
   border-bottom: 2px solid darken($color-primary, 10%);
+  padding: 20px 0;
 
   a {
     border-bottom-color: $color-dark;
@@ -29,8 +30,8 @@ a {
 
 section, article {
   max-width: 640px;
-  margin: 0 auto 20px;
-  padding: 20px;
+  margin: 20px auto 20px;
+  padding: 0 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
