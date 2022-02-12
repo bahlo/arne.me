@@ -1,7 +1,11 @@
-.intro .title {
-  font-size: 1.4em;
-  line-height: 1.2;
-  margin-bottom: 20px;
+.intro {
+  .title {
+    font-size: 1.4em;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  padding: 20px 20px 0;
 }
 
 .experience i.location {

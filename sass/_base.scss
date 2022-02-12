@@ -3,10 +3,18 @@ body {
   font-size: 18px;
 }
 
-main {
-  max-width: 640px;
-  padding: 20px;
-  background: #fff;
+header {
+  background: $color-primary;
+  border-bottom: 2px solid darken($color-primary, 10%);
+
+  a {
+    border-bottom-color: $color-dark;
+
+    &:hover {
+      background: $color-dark;
+      color: $color-light;
+    }
+  }
 }
 
 a {
@@ -20,7 +28,9 @@ a {
 }
 
 section, article {
-  margin-bottom: 20px;
+  max-width: 640px;
+  margin: 0 auto 20px;
+  padding: 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -32,20 +42,19 @@ p, ul, pre, code {
 }
 
 a.home-anchor {
-  display: block;
-  margin-bottom: 20px;
-}
-
-footer::before {
-  content: '∴';
-  display: block;
-  text-align: center;
-  width: 100%;
-  padding: 20px;
-  font-size: 1.4em;
+  display: inline-block;
+  margin: 20px;
 }
 
 footer {
   text-align: center;
   font-size: .9em;
+  background: $color-dark;
+  color: $color-light;
+  padding: 20px;
+  border-top: 2px solid lighten($color-dark, 30%);
+
+  a:hover {
+    color: $color-dark;
+  }
 }
