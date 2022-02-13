@@ -14,11 +14,11 @@
       <header>
         <nav>
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li><a href="/experience">Experience</a></li>
-            {# <li><a href="/blog">Blog</a></li>
-            <li><a href="/notes">Notes</a></li> #}
+            {% for item in config.extra.navbar_items %}
+            <li>
+              <a href="{{ item.path }}"{% if current_path == item.path %} class="active"{% endif %}>{{ item.name }}</a>
+            </li>
+            {% endfor %}
           </ul>
         </nav>
       </header>

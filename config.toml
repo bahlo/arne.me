@@ -7,4 +7,8 @@ title = "Arne Bahlo"
 highlight_code = true
 
 [extra]
-# Put all your custom variables here
+navbar_items = [
+  { path = "/", name = "Home" },
+  { path = "/projects/", name = "Projects" },
+  { path = "/experience/", name = "Experience" },
+]

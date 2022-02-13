@@ -21,10 +21,6 @@ header {
       a {
         display: inline-block;
 
-        &:hover {
-          background: darken($color-primary, 10%);
-        }
-
         &.active {
           border-bottom-color: $color-dark;
         }
