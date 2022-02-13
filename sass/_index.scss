@@ -2,10 +2,11 @@
   padding-top: 0;
 
   .title {
-    // font-family: Retail, Inter, sans-serif;
     font-size: 1.2em;
     line-height: 1.2;
     margin-bottom: 20px;
+    border-left: 4px solid $color-primary;
+    padding-left: 12px;
   }
 }
 
