@@ -69,3 +69,7 @@ footer {
     margin-bottom: 20px;
   }
 }
+
+::selection {
+  background: $color-primary;
+}
