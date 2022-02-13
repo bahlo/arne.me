@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="side-projects">
+	<div class="title">
+		<h1>Side Projects</h1>
+	</div>
+	<div class="content">
+		<ul>
+			{% for sideProject in page.extra.sideProjects %}
+			<li>
+				<h3><a href="{{ sideProject.url }}" alt="{{ sideProject.title }}">{{ sideProject.title }}</a></h3>
+				<p>{{ sideProject.description | markdown(inline=true) | safe }}</p>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</section>
+
+<section class="open-source">
+  <div class="title">
+		<h1>Open Source</h1>
+  </div>
+  <div class="content">
+		<ul>
+      {% for project in page.extra.openSource %}
+			<li>
+				<h3><a href="https://github.com/{{ project.repo }}" alt="{{ project.repo }}">{{ project.title }}</a></h3>
+				<p>{{ project.description | safe }}
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</section>
+{% endblock content %}
