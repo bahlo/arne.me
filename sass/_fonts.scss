@@ -31,3 +31,20 @@
   src: url("/inter/Inter-BoldItalic.woff2?v=3.19") format("woff2"),
        url("/inter/Inter-BoldItalic.woff?v=3.19") format("woff");
 }
+
+@font-face {
+  font-family: 'Retail';
+  font-style:  normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/retail/Retail-Bold.woff2") format("woff2"),
+       url("/retail/Retail-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: 'Retail';
+  font-style:  italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/retail/Retail-BoldItalic.woff2") format("woff2"),
+       url("/retail/Retail-BoldItalic.woff") format("woff");
+}
