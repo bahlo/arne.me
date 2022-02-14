@@ -12,6 +12,16 @@ header, section, article, footer {
 }
 
 header {
+  padding-top: 32px;
+  margin-top: 0;
+}
+
+footer {
+  padding-bottom: 32px;
+  margin-bottom: 0;
+}
+
+header {
   nav {
     ul {
       display: flex;
