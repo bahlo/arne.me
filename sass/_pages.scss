@@ -5,9 +5,9 @@
     font-size: 1.8em;
     line-height: 1.2;
     font-weight: 600;
-    margin: 32px 0;
+    margin: var(--spacing-vertical) 0;
     border-left: 4px solid var(--color-primary);
-    padding-left: 20px;
+    padding-left: var(--spacing-horizontal);
   }
 }
 

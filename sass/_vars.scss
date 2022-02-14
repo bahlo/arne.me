@@ -4,11 +4,14 @@
   --color-fg: #111;
   --color-fg-text: #333;
   --color-bg: #fff;
+  --width: 640px;
+  --font-size: 20px;
   --font-family-sans-serif: 'Inter', sans-serif;
   @supports (font-variation-settings: normal) {
     --font-family-sans-serif: 'Inter var', sans-serif;
   }
   --spacing-vertical: 32px;
+  --spacing-horizontal: 20px;
 }
 
 @media (prefers-color-scheme: dark) {

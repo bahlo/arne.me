@@ -1,14 +1,14 @@
 body {
   font-family: var(--font-family-sans-serif), sans-serif;
-  font-size: 20px;
+  font-size: var(--font-size);
   background: var(--color-bg);
   color: var(--color-fg);
 }
 
 header, section, article, footer {
   margin: var(--spacing-vertical) auto;
-  padding: 0 20px;
-  max-width: 640px;
+  padding: 0 var(--spacing-horizontal);
+  max-width: var(--width);
 }
 
 header {
@@ -31,7 +31,7 @@ header {
 
       li {
         list-style: none;
-        margin: 0 20px 0 0;
+        margin: 0 var(--spacing-horizontal) 0 0;
 
         &.logo {
           svg {
@@ -91,7 +91,7 @@ footer {
   &::before {
     content: '∴';
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-horizontal);
     font-size: 1.5em;
   }
 }
