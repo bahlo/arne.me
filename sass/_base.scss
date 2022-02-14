@@ -85,7 +85,7 @@ p, ul, pre, code {
 
 footer {
   text-align: center;
-  font-size: 0.9em;
+  font-size: 1rem; // TODO: Why do we need this?
   padding-bottom: 32px;
 
   &::before {
