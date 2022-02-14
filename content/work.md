@@ -1,6 +1,6 @@
 +++
 title = "Experience"
-template = "experience.html"
+template = "work.html"
 
 [[extra.experience]]
 from = 2019

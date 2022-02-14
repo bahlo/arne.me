@@ -13,5 +13,5 @@ smart_punctuation = false
 navbar_items = [
   # { path = "/", name = "Home" }, # static logo
   { path = "/projects/", name = "Projects" },
-  { path = "/experience/", name = "Experience" },
+  { path = "/work/", name = "Work" },
 ]

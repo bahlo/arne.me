@@ -2,6 +2,7 @@
   --color-primary: #7075df;
   --color-primary-contrast: #fff;
   --color-fg: #111;
+  --color-fg-text: #333;
   --color-bg: #fff;
   --font-family-sans-serif: 'Inter', sans-serif;
 }
@@ -9,6 +10,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-fg: #fff;
+    --color-fg-text: #ddd;
     --color-bg: #111;
   }
 }
