@@ -8,7 +8,7 @@ highlight_code = true
 
 [extra]
 navbar_items = [
-  { path = "/", name = "Home" },
+  # { path = "/", name = "Home" }, # static logo
   { path = "/projects/", name = "Projects" },
   { path = "/experience/", name = "Experience" },
 ]
