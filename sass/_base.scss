@@ -84,8 +84,10 @@ footer {
 
 ::selection {
   background: var(--color-primary);
+  color: var(--color-primary-contrast);
 }
 
 mark {
   background: var(--color-primary);
+  color: var(--color-primary-contrast);
 }
