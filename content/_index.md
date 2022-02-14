@@ -1,6 +1,6 @@
 +++
 [extra]
-hero = "Arne Bahlo is a software engineer working as team lead on the database of a serverless log management solution at Axiom."
+hero = "Arne Bahlo is a software engineer working as team lead serverless log management solutions at Axiom."
 +++
 
 I find joy in creating accessible, performant applications, the indie web, fun
