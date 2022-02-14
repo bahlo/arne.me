@@ -1,6 +1,14 @@
 :root {
   --color-primary: #ffe28a;
-  --color-dark: #111;
-  --color-light: #fff;
+  --color-primary-contrast: #111;
+  --color-fg: #111;
+  --color-bg: #fff;
   --font-family-sans-serif: 'Inter', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-fg: #fff;
+    --color-bg: #111;
+  }
 }

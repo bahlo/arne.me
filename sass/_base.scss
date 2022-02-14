@@ -1,6 +1,8 @@
 body {
   font-family: var(--font-family-sans-serif), sans-serif;
   font-size: 18px;
+  background: var(--color-bg);
+  color: var(--color-fg);
 }
 
 header {
@@ -22,7 +24,7 @@ header {
         display: inline-block;
 
         &.active {
-          border-bottom-color: var(--color-dark);
+          border-bottom-color: var(--color-fg);
         }
       }
     }
@@ -36,6 +38,7 @@ a {
 
   &:hover {
     background: var(--color-primary);
+    color: var(--color-primary-contrast);
   }
 }
 
