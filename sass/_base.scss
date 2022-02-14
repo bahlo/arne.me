@@ -5,11 +5,13 @@ body {
   color: var(--color-fg);
 }
 
-header {
-  padding: 20px;
+header, section, article, footer {
+  margin: 32px auto;
+  padding: 0 20px;
   max-width: 640px;
-  margin: 0 auto;
+}
 
+header {
   nav {
     ul {
       display: flex;
@@ -53,12 +55,6 @@ a {
   }
 }
 
-section, article {
-  max-width: 640px;
-  margin: 0 auto 20px;
-  padding: 0 20px;
-}
-
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 8px;
   font-weight: 600;
@@ -72,14 +68,8 @@ p, ul, pre, code {
   margin: 8px 0;
 }
 
-a.home-anchor {
-  display: inline-block;
-  margin: 20px;
-}
-
 footer {
   text-align: center;
-  padding: 0 20px 20px;
   font-size: 0.9em;
 
   &::before {
