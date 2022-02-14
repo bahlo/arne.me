@@ -5,10 +5,10 @@
   --color-fg-text: #333;
   --color-bg: #fff;
   --font-family-sans-serif: 'Inter', sans-serif;
-
   @supports (font-variation-settings: normal) {
     --font-family-sans-serif: 'Inter var', sans-serif;
   }
+  --spacing-vertical: 32px;
 }
 
 @media (prefers-color-scheme: dark) {

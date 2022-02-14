@@ -6,18 +6,18 @@ body {
 }
 
 header, section, article, footer {
-  margin: 32px auto;
+  margin: var(--spacing-vertical) auto;
   padding: 0 20px;
   max-width: 640px;
 }
 
 header {
-  padding-top: 32px;
+  padding-top: var(--spacing-vertical);
   margin-top: 0;
 }
 
 footer {
-  padding-bottom: 32px;
+  padding-bottom: var(--spacing-vertical);
   margin-bottom: 0;
 }
 
@@ -86,7 +86,7 @@ p, ul, pre, code {
 footer {
   text-align: center;
   font-size: 1rem; // TODO: Why do we need this?
-  padding-bottom: 32px;
+  padding-bottom: var(--spacing-vertical);
 
   &::before {
     content: '∴';
