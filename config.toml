@@ -1,10 +1,13 @@
+title = "Arne Bahlo"
+description = "The personal website of Arne Bahlo."
 base_url = "https://arne.me"
 compile_sass = true
 build_search_index = true
-title = "Arne Bahlo"
+# minify_html = true # broken
 
 [markdown]
 highlight_code = true
+smart_punctuation = false
 
 [extra]
 navbar_items = [
