@@ -48,6 +48,8 @@ a {
   color: inherit;
   text-decoration: none;
   border-bottom: 2px solid var(--color-primary);
+  padding: 0 2px;
+  margin: 0 -2px;
 
   &:hover {
     background: var(--color-primary);
