@@ -4,6 +4,7 @@ base_url = "https://arne.me"
 compile_sass = true
 build_search_index = true
 # minify_html = true # broken
+generate_feed = true
 
 [markdown]
 highlight_code = true
