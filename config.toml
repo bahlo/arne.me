@@ -17,3 +17,4 @@ navbar_items = [
   { path = "/work/", name = "Work" },
   { path = "/blog/", name = "Blog" },
 ]
+author = "Arne Bahlo"
