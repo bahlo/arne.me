@@ -83,8 +83,16 @@ p, ul, pre, code {
   margin: 8px 0;
 }
 
-time {
-  font-style: italic;
+article {
+  > h1:first-child {
+    margin-bottom: 0; // Reduce spacing to .details
+  }
+
+  .details {
+    font-size: .9em;
+    margin: 0 0 8px;
+    color: var(--color-fg-light);
+  }
 }
 
 footer {

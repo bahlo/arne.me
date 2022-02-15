@@ -5,11 +5,15 @@
 {% endblock title %}
 
 {% block content %}
-<section class="blogposts">
-  {% for page in section.pages %}
+{% for page in section.pages %}
+<article>
   <h1><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h1>
-  <time>{{ page.date }}</time><br>
+  <span class="details">
+    <time>{{ page.date }}</time>
+    &middot;
+    {{ page.reading_time }} min
+  </span>
   <p>{{ page.content | safe }}</p>
-  {% endfor %}
-</section>
+</article>
+{% endfor %}
 {% endblock content %}
