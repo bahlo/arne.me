@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: cachix/install-nix-action@v15
+      - run: sed -i "s/\$GIT_SHA/$(git rev-parse --short HEAD)/g" config.toml
       - run: nix build
       - uses: peaceiris/actions-gh-pages@v3
         with:

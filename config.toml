@@ -18,3 +18,4 @@ navbar_items = [
   { path = "/blog/", name = "Blog" },
 ]
 author = "Arne Bahlo"
+git_sha = "$GIT_SHA"
