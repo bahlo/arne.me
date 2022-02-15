@@ -1,5 +1,5 @@
 +++
-title = "Experience"
+title = "Work"
 template = "work.html"
 
 [[extra.experience]]

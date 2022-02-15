@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
+{% block title %}
+{{ page.title }} — {{ config.title }}
+{% endblock title %}
+
 {% block content %}
-<section class="experience">
+<section>
 	<h1>Work</h1>
 	{% for experience in page.extra.experience %}
 	<h3>{{ experience.from }} &ndash; {{ experience.to }}: {{ experience.title }} @ {{ experience.company }}</h3>
