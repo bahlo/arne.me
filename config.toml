@@ -14,4 +14,5 @@ navbar_items = [
   # { path = "/", name = "Home" }, # static logo
   { path = "/projects/", name = "Projects" },
   { path = "/work/", name = "Work" },
+  { path = "/blog/", name = "Blog" },
 ]

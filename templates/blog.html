@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ section.title }} — {{ config.title }}
+{% endblock title %}
+
+{% block content %}
+<section class="blogposts">
+  {% for page in section.pages %}
+  <h1><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h1>
+  <date>{{ page.date }}</date><br>
+  <p>{{ page.content | safe }}</p>
+  {% endfor %}
+</section>
+{% endblock content %}
