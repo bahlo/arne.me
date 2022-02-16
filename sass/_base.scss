@@ -49,10 +49,10 @@ header {
 
           a {
             border: none;
+            background: none;
 
             &:hover {
               color: var(--color-primary);
-              background: none;
               animation: wiggle 500ms 1;
             }
           }
@@ -77,8 +77,18 @@ a {
   padding: 0 2px;
   margin: 0 -2px;
 
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary) 0%,
+    var(--color-primary) 100%
+  );
+  background-position: 0 100%;
+  background-repeat: repeat-x;
+  background-size: .5px .5px;
+  transition: background-size .2s;
+
   &:hover {
-    background: var(--color-primary);
+    background-size: 4px 50px;
     color: var(--color-primary-contrast);
   }
 }
