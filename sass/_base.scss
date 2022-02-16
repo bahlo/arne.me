@@ -21,6 +21,13 @@ footer {
   margin-bottom: 0;
 }
 
+@keyframes wiggle {
+  0%   { transform: rotate(0deg);   }
+  33%  { transform: rotate(10deg);  }
+  66%  { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg);   }
+}
+
 header {
   nav {
     ul {
@@ -42,6 +49,12 @@ header {
 
           a {
             border: none;
+
+            &:hover {
+              color: var(--color-primary);
+              background: none;
+              animation: wiggle 500ms 1;
+            }
           }
         }
 
