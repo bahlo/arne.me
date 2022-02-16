@@ -146,3 +146,12 @@ mark {
   background: var(--color-primary);
   color: var(--color-primary-contrast);
 }
+
+.skip-link {
+  position: absolute;
+  transform: translateY(-100%);
+
+  &:focus {
+    transform: translateY(0);
+  }
+}
