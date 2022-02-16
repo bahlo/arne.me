@@ -18,4 +18,5 @@ navbar_items = [
   { path = "/blog/", name = "Blog" },
 ]
 author = "Arne Bahlo"
-git_sha = "$GIT_SHA"
+git_sha = "219f7c8"
+primary_color = "rgb(259, 178, 143)"
