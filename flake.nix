@@ -26,7 +26,7 @@
         src = gitignoreSource self;
         inherit buildInputs;
         buildPhase = ''
-          ./scripts/embed_revision.py ${shortRev}
+          python3 ./scripts/embed_revision.py ${shortRev}
           zola build
         '';
         installPhase = ''

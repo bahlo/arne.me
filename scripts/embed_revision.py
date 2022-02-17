@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Takes a git sha and generate a primary color from it.
 Update config.toml to add the two variables.
