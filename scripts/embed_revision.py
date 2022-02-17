@@ -19,8 +19,8 @@ if git_sha == "dirty":
     sys.exit(1)
 
 # Generate LCH values based on short rev
-L = 65 + int(git_sha[:2], 16) % 25 # 0-100, but >= 65 and <= 90 for good contrast
-C = int(git_sha[2:4], 16) % 132
+L = 70 + int(git_sha[:2], 16) % 25 # 0-100, but >= 70 and <= 90 for good contrast
+C = 40 + int(git_sha[2:4], 16) % 92 # 0-132, but >= 40 for good contrast
 H = int(git_sha[4:], 16) % 360
 
 # Convert to sRGB
