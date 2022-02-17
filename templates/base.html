@@ -17,6 +17,7 @@
     <link rel="mask-icon" href="/mask-icon.svg" color="#111111">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
     <style>:root { --color-primary: {{ config.extra.primary_color }}; }</style>
+    {% if config.extra.plausible_domain %}<script defer data-domain="{{ config.extra.plausible_domain }}" src="https://plausible.io/js/plausible.js"></script>{% endif %}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
