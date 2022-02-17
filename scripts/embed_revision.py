@@ -1,18 +1,23 @@
-#! /usr/bin/env nix-shell
-#! nix-shell -i python3 -p python3 python3Packages.colormath python3Packages.toml
+#!/usr/bin/env python3
 """
-Get short ref from latest commit and generate a primary color from it.
+Takes a git sha and generate a primary color from it.
 Update config.toml to add the two variables.
 """
 
-import subprocess
+import sys
 from colormath.color_objects import LCHuvColor, sRGBColor
 from colormath.color_conversions import convert_color
 import toml
 
-git_sha = subprocess.run(
-    ["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True, check=True
-).stdout.strip()
+if len(sys.argv) != 2:
+    print("Usage: embed_git_sha.py <git sha>")
+    sys.exit(1)
+
+git_sha = sys.argv[1].strip()
+
+if git_sha == "dirty":
+    print("Git directory is dirty, please commit your changes")
+    sys.exit(1)
 
 # Define LCH values
 L = 80

@@ -12,13 +12,21 @@
     let
       inherit (gitignore.lib) gitignoreSource;
       pkgs = nixpkgs.legacyPackages.${system};
-      buildInputs = [ pkgs.zola ];
+      buildInputs = [ 
+        pkgs.zola
+        pkgs.python3
+        pkgs.python3Packages.colormath
+        pkgs.python3Packages.toml
+      ];
+      shortRev = if (self ? shortRev) then self.shortRev else "dirty";
     in {
       defaultPackage = pkgs.stdenvNoCC.mkDerivation {
-        name = "static";
+        pname = "arne.me";
+        version = "0.${shortRev}";
         src = gitignoreSource self;
         inherit buildInputs;
         buildPhase = ''
+          ./scripts/embed_revision.py ${shortRev}
           zola build
         '';
         installPhase = ''
