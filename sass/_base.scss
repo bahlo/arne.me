@@ -98,8 +98,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-p, ul {
-  color: var(--color-fg-text);
+article, section {
+  p, ul {
+    color: var(--color-fg-text);
+  }
 }
 
 p, ul, pre, code {
@@ -122,6 +124,7 @@ footer {
   text-align: center;
   font-size: 1rem; // TODO: Why do we need this?
   padding-bottom: var(--spacing-vertical);
+  color: var(--color-fg-text);
 
   &::before {
     content: '∴';
