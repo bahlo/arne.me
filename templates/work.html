@@ -5,9 +5,9 @@
 {% endblock title %}
 
 {% block content %}
-<section>
-	<h1>Work</h1>
-	{% for experience in page.extra.experience %}
+<h1>Work</h1>
+{% for experience in page.extra.experience %}
+<section class="work-item">
 	<h3>{{ experience.from }} &ndash; {{ experience.to }}: {{ experience.title }} @ {{ experience.company }}</h3>
 	<i class="location">{{ experience.location }}</i>
 	<ul>
@@ -15,6 +15,6 @@
 		<li>{{ task | markdown(inline=true) | safe }}</li>
 		{% endfor %}
 	</ul>
-	{% endfor %}
 </section>
+{% endfor %}
 {% endblock content %}

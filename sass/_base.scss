@@ -5,10 +5,14 @@ body {
   color: var(--color-fg);
 }
 
-header, section, article, footer {
-  margin: var(--spacing-vertical) auto;
+header, main, footer {
   padding: 0 var(--spacing-horizontal);
   max-width: var(--width);
+  margin: 0 auto;
+}
+
+header, section, article, footer {
+  margin: 0 auto var(--spacing-vertical);
 }
 
 header {
@@ -91,6 +95,10 @@ a {
     background-size: 4px 50px;
     color: var(--color-primary-contrast);
   }
+}
+
+h1 {
+  font-size: 1.5em;
 }
 
 h1, h2, h3, h4, h5, h6 {
