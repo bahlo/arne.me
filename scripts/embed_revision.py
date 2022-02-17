@@ -18,10 +18,10 @@ if git_sha == "dirty":
     print("Git directory is dirty, please commit your changes")
     sys.exit(1)
 
-# Define LCH values
-L = 80
-C = 66
-H = int(git_sha, 16) % 360
+# Generate LCH values based on short rev
+L = 65 + int(git_sha[:2], 16) % 25 # 0-100, but >= 65 and <= 90 for good contrast
+C = int(git_sha[2:4], 16) % 132
+H = int(git_sha[4:], 16) % 360
 
 # Convert to sRGB
 lch_color = LCHuvColor(L, C, H)
