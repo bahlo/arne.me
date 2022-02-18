@@ -34,11 +34,12 @@ if lch_color.lch_c < 40:
 
 # Convert back
 rgb_color = convert_color(lch_color, sRGBColor)
+rgb_color_hex = rgb_color.get_rgb_hex()[:7] # Sometimes this returns seven characters
 
 # Load config.toml
 config = toml.load("config.toml")
 config["extra"]["git_sha"] = git_sha
-config["extra"]["primary_color"] = rgb_color.get_rgb_hex()
+config["extra"]["primary_color"] = rgb_color_hex
 
 # Write updated config.toml
 with open("config.toml", "w", encoding="utf-8") as f:
