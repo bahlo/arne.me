@@ -17,12 +17,9 @@
     <link rel="mask-icon" href="/mask-icon.svg" color="#111111">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
     <link href="mailto:{{ config.extra.authn_email }}" rel="me authn">
-    {% if config.extra.webmention_io_username %}
-    <link rel="webmention" href="https://webmention.io/{{ config.extra.webmention_io_username }}/webmention" />
-    <link rel="pingback" href="https://webmention.io/{{ config.extra.webmention_io_username }}/xmlrpc" />
-    {% endif %}
     <style>:root { --color-primary: {{ config.extra.primary_color }}; }</style>
     {% if config.extra.plausible_domain %}<script defer data-domain="{{ config.extra.plausible_domain }}" src="https://plausible.io/js/plausible.js"></script>{% endif %}
+    {% block head %}{% endblock head %}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
