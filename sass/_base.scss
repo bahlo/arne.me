@@ -140,22 +140,6 @@ footer {
     margin-bottom: var(--spacing-horizontal);
     font-size: 1.5em;
   }
-
-  .commit-color {
-    width: calc(1em - 2px);
-    height: calc(1em - 2px);
-    display: inline-block;
-    background: var(--color-primary);
-    border: 1px solid var(--color-fg-text);
-    border-radius: 4px;
-    position: relative;
-    bottom: -2px;
-
-    @media (prefers-color-scheme: dark) {
-      // Doesn't look good with a border in dark mode
-      border-color: transparent;
-    }
-  }
 }
 
 ::selection {
@@ -174,5 +158,21 @@ mark {
 
   &:focus {
     transform: translateY(0);
+  }
+}
+
+.commit-color {
+  width: calc(1em - 4px);
+  height: calc(1em - 4px);
+  display: inline-block;
+  background: var(--color-primary);
+  border: 1px solid var(--color-fg-text);
+  border-radius: 4px;
+  position: relative;
+  bottom: -2px;
+
+  @media (prefers-color-scheme: dark) {
+    // Doesn't look good with a border in dark mode
+    border-color: transparent;
   }
 }
