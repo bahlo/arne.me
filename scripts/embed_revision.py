@@ -18,25 +18,27 @@ if git_sha == "dirty":
     print("Git directory is dirty, please commit your changes")
     sys.exit(1)
 
-# Generate LCH values based on short rev
-L = 70 + int(git_sha[:2], 16) % 25 # 0-100, but >= 70 and <= 90 for good contrast
-C = 40 + int(git_sha[2:4], 16) % 92 # 0-132, but >= 40 for good contrast
-H = int(git_sha[4:], 16) % 360
+# Build rgb color from first 6 characters of git sha
+rgb_color = sRGBColor.new_from_rgb_hex(git_sha[:6])
 
-# Convert to sRGB
-lch_color = LCHuvColor(L, C, H)
+# Convert to LCH
+lch_color = convert_color(rgb_color, LCHuvColor)
+
+# Make sure the lightness and chroma is okay
+if lch_color.lch_l < 70:
+    lch_color.lch_l = 70
+if lch_color.lch_l > 90:
+    lch_color.lch_l = 90
+if lch_color.lch_c < 40:
+    lch_color.lch_c = 40
+
+# Convert back
 rgb_color = convert_color(lch_color, sRGBColor)
-
-# Convert to rgb string for CSS
-R = int(rgb_color.rgb_r * 255)
-G = int(rgb_color.rgb_g * 255)
-B = int(rgb_color.rgb_b * 255)
-rgb_color_string = f"rgb({R}, {G}, {B})"
 
 # Load config.toml
 config = toml.load("config.toml")
 config["extra"]["git_sha"] = git_sha
-config["extra"]["primary_color"] = rgb_color_string
+config["extra"]["primary_color"] = rgb_color.get_rgb_hex()
 
 # Write updated config.toml
 with open("config.toml", "w", encoding="utf-8") as f:
