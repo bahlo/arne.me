@@ -8,9 +8,8 @@
 <h1>Work</h1>
 {% for experience in page.extra.experience %}
 <section class="work-item">
-	<span class="timeframe">{{ experience.from }} &ndash; {{ experience.to }}</span>
-	<h1>{{ experience.title }} at {{ experience.company }}</h1>
-	<span class="location">{{ experience.location }}</span>
+	<h2>{{ experience.title }} at {{ experience.company }}</h2>
+	<span class="details">{{ experience.from }} &ndash; {{ experience.to }} &middot; {{ experience.location }}</span>
 	<ul>
 		{% for task in experience.tasks %}
 		<li>{{ task | markdown(inline=true) | safe }}</li>

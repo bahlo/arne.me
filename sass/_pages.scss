@@ -14,12 +14,11 @@
 
 // Work
 .work-item {
-  h1 {
-    margin: -2px 0 -4px;
-    font-size: 1.2em;
+  h2 {
+    margin-bottom: -2px;
   }
 
-  .timeframe, .location {
+  .details {
     color: var(--color-fg-text);
     text-transform: uppercase;
     font-size: .8em;
