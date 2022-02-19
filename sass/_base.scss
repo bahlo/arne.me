@@ -133,17 +133,16 @@ article {
 }
 
 footer {
-  text-align: center;
-  font-size: 1rem; // TODO: Why do we need this?
-  padding-bottom: var(--spacing-vertical);
-  color: var(--color-fg-text);
-
-  &::before {
-    content: '∴';
+  .divider {
     display: block;
     margin-bottom: var(--spacing-horizontal);
     font-size: 1.5em;
   }
+
+  text-align: center;
+  font-size: 1rem; // TODO: Why do we need this?
+  padding-bottom: var(--spacing-vertical);
+  color: var(--color-fg-text);
 }
 
 ::selection {
