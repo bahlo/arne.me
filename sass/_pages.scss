@@ -14,7 +14,14 @@
 
 // Work
 .work-item {
-  h2 {
-    margin-bottom: 0;
+  h1 {
+    margin: -2px 0 -4px;
+    font-size: 1.2em;
+  }
+
+  .timeframe, .location {
+    color: var(--color-fg-text);
+    text-transform: uppercase;
+    font-size: .8em;
   }
 }
