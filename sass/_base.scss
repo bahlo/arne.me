@@ -103,6 +103,7 @@ h1 {
 
 h2 {
   font-size: 1.2em;
+  margin: 16px 0 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -111,7 +112,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 article, section {
-  p, ul {
+  p, ul, ol {
     color: var(--color-fg-text);
   }
 }
