@@ -4,6 +4,8 @@
   --color-fg-text: #333;
   --color-fg-light: #555;
   --color-bg: #fff;
+  --color-bg-light: #eee;
+  --color-border-light: #ddd;
   --width: 640px;
   --font-size: 20px;
   --font-family-sans-serif: 'Inter', sans-serif;
@@ -20,5 +22,7 @@
     --color-fg-text: #ddd;
     --color-fg-light: #bbb;
     --color-bg: #111;
+  --color-bg-light: #333;
+  --color-border-light: #444;
   }
 }
