@@ -122,9 +122,9 @@ p, ul, pre {
 }
 
 p code {
-  background: var(--color-bg-light);
+  background: var(--color-bg-code);
   padding: 1px 2px;
-  border: 1px solid var(--color-border-light);
+  border: 1px solid var(--color-border-code);
   border-radius: 4px;
 }
 
@@ -190,6 +190,11 @@ mark {
 
 // Syntax highlighting
 pre {
+  border: 1px solid var(--color-border-code);
+  border-radius: 4px;
+
+  background: var(--color-bg-code) !important; // override
+
   padding: 1rem;
   font-size: .9rem;
   overflow: auto;

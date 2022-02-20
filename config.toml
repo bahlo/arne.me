@@ -3,12 +3,17 @@ description = "The personal website of Arne Bahlo."
 base_url = "https://arne.me"
 compile_sass = true
 build_search_index = true
-# minify_html = true # broken
 generate_feed = true
 
 [markdown]
+smart_punctuation = true
 highlight_code = true
-smart_punctuation = false
+highlight_theme = "css"
+extra_syntaxes_and_themes = ["extra_highlight_themes"]
+# highlight_themes_css = [
+#   { theme = "base16-unikitty-dark", filename = "syntax-theme-dark.css" },
+#   { theme = "base16-unikitty-light", filename = "syntax-theme-light.css" },
+# ]
 
 [extra]
 navbar_items = [
