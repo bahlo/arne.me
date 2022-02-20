@@ -1,4 +1,4 @@
-body {
+html {
   font-family: var(--font-family-sans-serif), sans-serif;
   font-size: var(--font-size);
   background: var(--color-bg);
@@ -178,5 +178,38 @@ mark {
   @media (prefers-color-scheme: dark) {
     // Doesn't look good with a border in dark mode
     border-color: transparent;
+  }
+}
+
+// Syntax highlighting
+pre {
+  padding: 1rem;
+  font-size: .9rem;
+  overflow: auto;
+
+  // The line numbers already provide some kind of left/right padding
+  &[data-linenos] {
+    padding: 1rem 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    td {
+      padding: 0;
+      // The line number cells
+      td:nth-of-type(1) {
+        text-align: center;
+        user-select: none;
+      }
+    }
+  }
+
+  mark {
+    // If you want your highlights to take the full width.
+    display: block;
+    // The default background colour of a mark is bright yellow
+    background-color: rgba(254, 252, 232, 0.9);
   }
 }
