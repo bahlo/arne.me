@@ -8,11 +8,11 @@ This website was first published on June 19th 2021 near
 [Frankfurt, Germany](https://frankfurt.de). 
 It's developed on a 2017 MacBook Pro with the static site generator
 [Zola](https://www.getzola.org).
-The code is [hosted on GitHub](https://github.com/bahlo/arne.me)
+The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 
-Every deployment has its own primary color, derived from the current commits 
-SHA using [a Python script](https://github.com/bahlo/arne.me/blob/main/scripts/embed_revision.py).
-The current commit is {{ git_sha(include_color=true) }}
+The primary color is derived from the most recent commit SHA using 
+[a Python script](https://github.com/bahlo/arne.me/blob/main/scripts/embed_revision.py).
+The current commit is {{ git_sha(include_color=true) }}.
 
 A [Nix](https://nixos.org) flake builds the website on
 [GitHub Actions](https://github.com/features/actions).
