@@ -1,3 +1,5 @@
+// Inter
+// =====
 @font-face {
   font-family: 'Inter';
   font-style:  normal;
@@ -88,4 +90,15 @@
   font-style: italic;
   font-named-instance: 'Italic';
   src: url("/inter/Inter-italic.var.woff2?v=3.19") format("woff2");
+}
+
+// Pragmata Pro
+// ============
+@font-face {
+  font-family: 'PragmataPro Mono Liga';
+  font-weight: normal;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url('/pragmatapro/PragmataPro_Mono_R_liga_0829.woff2') format('woff2');
 }

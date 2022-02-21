@@ -188,10 +188,17 @@ mark {
 }
 
 // Syntax highlighting
+code, pre {
+  font-family: var(--font-family-monospace);
+}
+
+.z-italic {
+  font-style: normal !important; // TODO: Buy italic font and remove this line
+}
+
 pre {
   border: 1px solid var(--color-border-code);
   border-radius: 4px;
-
   background: var(--color-bg-code) !important; // override
 
   padding: 1rem;
