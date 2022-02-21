@@ -192,8 +192,15 @@ code, pre {
   font-family: var(--font-family-monospace);
 }
 
-.z-italic {
-  font-style: normal !important; // TODO: Buy italic font and remove this line
+// Triple selector to override without !important
+.z-italic.z-italic.z-italic { 
+  font-style: normal; // TODO: Buy italic font and remove this line
+}
+
+// Nix syntax highlighting markes some characters as illegal even if they're not
+.z-nix .z-invalid.z-illegal {
+  color: inherit;
+  background-color: inherit;
 }
 
 pre {
@@ -202,7 +209,6 @@ pre {
   background: var(--color-bg-code) !important; // override
 
   padding: 1rem;
-  font-size: .9rem;
   overflow: auto;
 
   // The line numbers already provide some kind of left/right padding
