@@ -10,10 +10,8 @@
   <h1><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h1>
   <span class="details">
     <time>{{ page.date }}</time>
-    &middot;
-    {{ page.reading_time }} min
   </span>
-  <p>{{ page.content | safe }}</p>
+  <p>{{ page.description | safe }}</p>
 </article>
 {% endfor %}
 {% endblock content %}
