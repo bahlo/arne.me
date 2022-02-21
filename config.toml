@@ -23,8 +23,8 @@ navbar_items = [
   { path = "/blog/", name = "Blog" },
 ]
 author = "Arne Bahlo"
-git_sha = "219f7c8"
-primary_color = "rgb(259, 178, 143)"
+git_sha = "40ab7fa"
+primary_color = "#58be91"
 plausible_domain = "arne.me"
 authn_email = "hey@arne.me"
 webmention_io_username = "arne.me"
