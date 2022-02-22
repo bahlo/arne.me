@@ -9,7 +9,7 @@ generate_feed = true
 smart_punctuation = true
 highlight_code = true
 highlight_theme = "css"
-extra_syntaxes_and_themes = ["extra_highlight_themes"]          
+extra_syntaxes_and_themes = ["extra_highlight_themes/base16"]
 # highlight_themes_css = [
 #   { theme = "base16-unikitty-dark", filename = "syntax-theme-dark.css" },
 #   { theme = "base16-unikitty-light", filename = "syntax-theme-light.css" },
