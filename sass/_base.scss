@@ -3,6 +3,9 @@ html {
   font-size: var(--font-size);
   background: var(--color-bg);
   color: var(--color-fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 header, main, footer {
