@@ -26,7 +26,7 @@ and they use green energy.
 The biggest challenge was storage. Hetzner charges around €50/month for a 1 TB
 volume (others have comparable pricing).
 
-But then my friend Eric told me about [Rclone](https://rclone.org) and its 
+But then my friend Eric told me about [rclone](https://rclone.org) and its 
 ability to mount blob storage (which is cheap) as a virtual disk. 
 That means Plex sees all files as if they were actually there and if it tries
 to read a file, it's downloaded on demand if it's not cached already.
@@ -56,14 +56,14 @@ great guide called [Paranoid NixOS Setup](https://christine.website/blog/paranoi
 
 I decided to go with [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.html)
 as I have used it before, it's cheaper than S3, and I don't support Amazon.
-If you want to use something else, Rclone supports
+If you want to use something else, rclone supports
 [a lot of providers](https://rclone.org/#providers).
 
 After creating a bucket for the media, I created an Application Key and made 
 note of the `keyID` and `applicationKey`.
 
 Then I added the following lines to my Nix configuration at 
-`/etc/nixos/configuration.nix` to install Rclone and create a 
+`/etc/nixos/configuration.nix` to install rclone and create a 
 `/etc/rclone/rclone.conf` for the bucket:
 ```nix
 environment.systemPackages = [ pkgs.rclone ];
