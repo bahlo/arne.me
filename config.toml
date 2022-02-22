@@ -9,7 +9,7 @@ generate_feed = true
 smart_punctuation = true
 highlight_code = true
 highlight_theme = "css"
-extra_syntaxes_and_themes = ["extra_highlight_themes"]
+extra_syntaxes_and_themes = ["extra_highlight_themes"]          
 # highlight_themes_css = [
 #   { theme = "base16-unikitty-dark", filename = "syntax-theme-dark.css" },
 #   { theme = "base16-unikitty-light", filename = "syntax-theme-light.css" },
@@ -23,6 +23,7 @@ navbar_items = [
   { path = "/blog/", name = "Blog" },
 ]
 author = "Arne Bahlo"
+twitter_username = "@arnebahlo"
 git_sha = "d03d449"
 primary_color = "#e29799"
 primary_color_rgb = [ 225, 151, 153 ]

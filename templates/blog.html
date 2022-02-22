@@ -9,7 +9,9 @@
 <article>
   <h1><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h1>
   <span class="details">
-    <time>{{ page.date }}</time>
+    <time datetime="{{ page.date}}">{{ page.date | date(format="%b %d, %Y") }}</time>
+    &middot;
+    {{ page.reading_time }} min
   </span>
   <p>{{ page.description | safe }}</p>
 </article>

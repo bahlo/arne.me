@@ -9,6 +9,15 @@
     <meta name="theme-color" content="{{ config.extra.primary_color }}">
     <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
     <meta name="author" content="{{ config.extra.author }}">
+    <meta property="og:site_name" content="{{ config.title }}">
+    <meta property="og:title" content="{% block ogTitle %}{{ config.title }}{% endblock ogTitle %}">
+    <meta property="og:type" content="{% block ogType %}website{% endblock ogType %}">
+    <meta property="og:url" content="{% if current_url %}{{ current_url }}{% endif %}">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:description" content="{% block ogDescription %}{{ config.description }}{% endblock ogDescription %}">
+    <meta name="twitter:creator" content="{{ config.extra.twitter_username }}">
+    <meta name="twitter:site" content="{{ config.extra.twitter_username }}">
+    <meta name="twitter:text:title" content="{% block twitterTitle %}{{ config.title}}{% endblock twitterTitle %}">
     <link rel="stylesheet" href="{{ get_url(path="/style.css", cachebust=true) }}">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -23,8 +32,8 @@
       --color-primary-g: {{ config.extra.primary_color_rgb[1] }}; 
       --color-primary-b: {{ config.extra.primary_color_rgb[2] }}; 
     }</style>
-    {% if config.extra.plausible_domain %}<script defer data-domain="{{ config.extra.plausible_domain }}" src="https://plausible.io/js/plausible.js"></script>{% endif %}
     {% block head %}{% endblock head %}
+    {% if config.extra.plausible_domain %}<script defer data-domain="{{ config.extra.plausible_domain }}" src="https://plausible.io/js/plausible.js"></script>{% endif %}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>

@@ -108,6 +108,10 @@ h2 {
   font-size: 1.2em;
 }
 
+h3, h4, h5, h6 {
+  font-size: 1em;
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 8px;
   font-weight: 600;
@@ -117,10 +121,21 @@ article, section {
   p, ul, ol {
     color: var(--color-fg-text);
   }
+
+  hr {
+    border: none;
+    border-top: 1px dashed var(--color-fg-light);
+    margin: var(--spacing-vertical) 0;
+  }
+
+  img {
+    border-radius: 4px;
+    margin: 8px 0;
+  }
 }
 
 p, ul, pre {
-  margin: 8px 0;
+  margin: .5em 0;
 }
 
 p code {
