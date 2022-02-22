@@ -17,7 +17,12 @@
     <link rel="mask-icon" href="/mask-icon.svg" color="#111111">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
     <link href="mailto:{{ config.extra.authn_email }}" rel="me authn">
-    <style>:root { --color-primary: {{ config.extra.primary_color }}; }</style>
+    <style>:root { 
+      --color-primary: {{ config.extra.primary_color }}; 
+      --color-primary-r: {{ config.extra.primary_color_rgb[0] }}; 
+      --color-primary-g: {{ config.extra.primary_color_rgb[1] }}; 
+      --color-primary-b: {{ config.extra.primary_color_rgb[2] }}; 
+    }</style>
     {% if config.extra.plausible_domain %}<script defer data-domain="{{ config.extra.plausible_domain }}" src="https://plausible.io/js/plausible.js"></script>{% endif %}
     {% block head %}{% endblock head %}
   </head>
