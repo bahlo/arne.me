@@ -36,7 +36,14 @@
     &middot;
     {{ page.reading_time }} min
   </span>
-  {% if page.extra.cover_image_src %}<img class="cover-image" src="{{ page.extra.cover_image_src }}" alt="{{ page.extra.cover_image_alt }}" />{% endif %}
+  {% if page.extra.cover_image_src -%}
+  <figure class="cover-image">
+    <img src="{{ page.extra.cover_image_src }}" alt="{{ page.extra.cover_image_alt }}" >
+    {% if page.extra.cover_image_caption -%}
+    <figcaption>{{ page.extra.cover_image_caption }}</figcaption>
+    {%- endif %}
+  </figure>
+  {%- endif %}
   {{ page.content | safe }}
 </article>
 {% endblock content %}

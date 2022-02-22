@@ -150,6 +150,18 @@ article {
     margin-bottom: 0; // Reduce spacing to .details
   }
 
+  figure {
+    img {
+      margin-bottom: 4px; // Reduce spacing to figcaption
+    }
+
+    figcaption {
+      font-size: .8em;
+      margin: 0 0 8px;
+      color: var(--color-fg-light);
+    }
+  }
+
   .details {
     font-size: .9em;
     margin: 0 0 8px;
