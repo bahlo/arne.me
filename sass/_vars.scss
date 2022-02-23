@@ -5,6 +5,7 @@
   --color-fg-light: #555;
   --color-bg: #fff;
   --color-bg-code: #fafafa;
+  --color-bg-gray: #f0f0f0;
   --color-border-code: #f0f0f0;
   --width: 680px; // width of the main container, incl. 2x --spacing-horizontal
   --font-size: 20px;
@@ -25,5 +26,6 @@
     --color-bg: #111;
     --color-bg-code: #151515; 
     --color-border-code: #252525;
+  --color-bg-gray: #252525;
   }
 }

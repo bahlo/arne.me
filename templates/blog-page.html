@@ -37,8 +37,8 @@
     {{ page.reading_time }} min
   </span>
   {% if page.extra.cover_image_src -%}
-  <figure class="cover-image">
-    <img src="{{ page.extra.cover_image_src }}" alt="{{ page.extra.cover_image_alt }}" >
+  <figure class="cover-image{% if page.extra.cover_image_caption %} has-caption{% endif %}">
+    <img src="{{ page.extra.cover_image_src }}" alt="{{ page.extra.cover_image_alt }}">
     {% if page.extra.cover_image_caption -%}
     <figcaption>{{ page.extra.cover_image_caption }}</figcaption>
     {%- endif %}

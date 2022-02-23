@@ -151,8 +151,17 @@ article {
   }
 
   figure {
-    img {
-      margin-bottom: 4px; // Reduce spacing to figcaption
+    &.has-caption {
+      img {
+        margin-bottom: 0;
+        border-radius: 4px 4px 0 0;
+      }
+
+      figcaption {
+        background: var(--color-bg-gray);
+        border-radius: 0 0 4px 4px;
+        padding: 2px 4px;
+      }
     }
 
     figcaption {
