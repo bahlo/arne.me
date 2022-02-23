@@ -18,11 +18,6 @@ header, section, article, footer {
   margin: 0 auto var(--spacing-vertical);
 }
 
-header {
-  padding-top: var(--spacing-vertical);
-  margin-top: 0;
-}
-
 footer {
   padding-bottom: var(--spacing-vertical);
   margin-bottom: 0;
@@ -36,7 +31,16 @@ footer {
 }
 
 header {
+  margin: 0 0 var(--spacing-vertical);
+  max-width: 100%;
+  padding: var(--spacing-vertical-smol) 0;
+  background: rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), .1);
+  border-bottom: 1px solid rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), .2);
+
   nav {
+    max-width: var(--width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-horizontal);
     ul {
       display: flex;
       align-items: center;
@@ -51,7 +55,7 @@ header {
           svg {
             display: inline-block;
             height: 1.4em;
-            margin-bottom: -.2em;
+            margin-bottom: -.4em;
           }
 
           a {
