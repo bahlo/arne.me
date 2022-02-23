@@ -8,19 +8,24 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 header, main, footer {
   padding: 0 var(--spacing-horizontal);
   max-width: var(--width);
   margin: 0 auto;
 }
 
-header, section, article, footer {
-  margin: 0 auto var(--spacing-vertical);
+main {
+  flex-grow: 1;
 }
 
-footer {
-  padding-bottom: var(--spacing-vertical);
-  margin-bottom: 0;
+header, section, article, footer {
+  margin: 0 auto var(--spacing-vertical);
 }
 
 @keyframes wiggle {
@@ -183,16 +188,12 @@ article {
 }
 
 footer {
-  .divider {
-    display: block;
-    margin-bottom: var(--spacing-horizontal);
-    font-size: 1.5em;
-  }
-
+  width: 100%;
   text-align: center;
-  font-size: 1rem; // TODO: Why do we need this?
-  padding-bottom: var(--spacing-vertical);
-  color: var(--color-fg-text);
+  font-size: .8rem;
+  margin: var(--spacing-vertical) auto 0 ;
+  padding: 0 var(--spacing-horizontal) var(--spacing-vertical);
+  color: var(--color-fg-light);
 }
 
 ::selection {
