@@ -22,6 +22,7 @@ header, main, footer {
 
 main {
   flex-grow: 1;
+  width: 100%; // This fixes width on mobile
 }
 
 header, section, article, footer {
