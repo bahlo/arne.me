@@ -36,6 +36,18 @@ header, section, article, footer {
   100% { transform: rotate(0deg);   }
 }
 
+@mixin link($background: transparent) {
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary) 0%,
+    var(--color-primary) 100%
+  ), $background;
+  background-position: 0 100%;
+  background-repeat: repeat-x;
+  background-size: .5px .5px;
+  transition: background-size .2s;
+}
+
 header {
   margin: 0 0 var(--spacing-vertical-smol);
   max-width: 100%;
@@ -77,6 +89,7 @@ header {
 
         a {
           display: inline-block;
+          @include link;
 
           &.active {
             border-bottom-color: var(--color-fg);
@@ -94,15 +107,11 @@ a {
   padding: 0 2px;
   margin: 0 -2px;
 
-  background: linear-gradient(
-    to bottom,
-    var(--color-primary) 0%,
-    var(--color-primary) 100%
-  );
-  background-position: 0 100%;
-  background-repeat: repeat-x;
-  background-size: .5px .5px;
-  transition: background-size .2s;
+  @include link($background: rgba(
+    var(--color-primary-r), 
+    var(--color-primary-g), 
+    var(--color-primary-b), 
+  .1));
 
   &:hover {
     background-size: 4px 50px;
