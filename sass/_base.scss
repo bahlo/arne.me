@@ -179,7 +179,11 @@ article {
       figcaption {
         background: var(--color-bg-gray);
         border-radius: 0 0 var(--border-radius) var(--border-radius);
-        padding: 2px 4px;
+        padding: 4px;
+        
+        p {
+          margin: 0; // Don't mess with spacing in the caption
+        }
       }
     }
 

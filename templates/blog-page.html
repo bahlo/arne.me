@@ -40,7 +40,7 @@
   <figure class="cover-image{% if page.extra.cover_image_caption %} has-caption{% endif %}">
     <img src="{{ page.extra.cover_image_src }}" alt="{{ page.extra.cover_image_alt }}">
     {% if page.extra.cover_image_caption -%}
-    <figcaption>{{ page.extra.cover_image_caption }}</figcaption>
+    <figcaption>{{ page.extra.cover_image_caption | markdown | safe }}</figcaption>
     {%- endif %}
   </figure>
   {%- endif %}
