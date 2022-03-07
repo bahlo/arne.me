@@ -21,6 +21,7 @@ navbar_items = [
   { path = "/projects/", name = "Projects" },
   { path = "/work/", name = "Work" },
   { path = "/blog/", name = "Blog" },
+  { path = "/weekly/", name = "Weekly" },
 ]
 author = "Arne Bahlo"
 twitter_username = "@arnebahlo"

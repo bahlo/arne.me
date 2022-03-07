@@ -24,3 +24,15 @@
     font-size: .8em;
   }
 }
+
+.article--weekly {
+  h3 {
+    margin-bottom: -8px;
+  }
+
+  h3 + p > em {
+    font-size: .9em;
+    color: var(--color-fg-light);
+    font-style: normal;
+  }
+}

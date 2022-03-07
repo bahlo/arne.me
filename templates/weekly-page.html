@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }}{% endblock title %}
+{% block ogTitle %}{{ page.title }}{% endblock ogTitle %}
+{% block twitterTitle %}{{ page.title }}{% endblock twitterTitle %}
+
+{% block description %}{{ page.description }}{% endblock description %}
+{% block ogDescription %}{{ page.description }}{% endblock ogDescription %}
+
+{% block ogType %}article{% endblock ogImage %}
+
+{% block head %}
+{% if config.extra.webmention_io_username %}
+<link rel="webmention" href="https://webmention.io/{{ config.extra.webmention_io_username }}/webmention" />
+<link rel="pingback" href="https://webmention.io/{{ config.extra.webmention_io_username }}/xmlrpc" />
+{% endif %}
+<meta property="article:published_time" content="{{ page.date | date(format="%Y-%m-%dT00:00:00+00:00:00")}}">
+{% if page.extra.cover_image_src %}
+<meta property="og:image" content="{{ get_url(path = page.extra.cover_image_src) }}">
+<meta property="og:image:alt" content="{{ page.extra.cover_image_alt }}">
+{% set meta = get_image_metadata(path=page.extra.cover_image_src) %}
+<meta property="og:image:width" content="{{ meta.width }}">
+<meta property="og:image:height" content="{{ meta.height }}">
+<meta name="twitter:image" content="{{ get_url(path = page.extra.cover_image_src) }}">
+<meta name="twitter:image:alt" content="{{ page.extra.cover_image_alt }}">
+<meta name="twitter:card" content="summary_large_image">
+{% endif %}
+{% endblock head %}
+
+{% block content %}
+<article class="article--weekly">
+  <h1>{{ page.title }}</h1>
+  <span class="details">
+    <time datetime="{{ page.date}}">{{ page.date | date(format="%b %d, %Y") }}</time>
+  </span>
+  {{ page.content | safe }}
+</article>
+{% endblock content %}
