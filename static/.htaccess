@@ -8,3 +8,4 @@ RewriteRule \.(woff|eot|ttf|woff2|svg)$ - [F,NC,L]
 Options -Indexes
 
 Redirect 301 /projects /now
+Redirect 301 /atom.xml /blog/atom.xml

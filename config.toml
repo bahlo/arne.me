@@ -3,7 +3,6 @@ description = "The personal website of Arne Bahlo."
 base_url = "https://arne.me"
 compile_sass = true
 build_search_index = true
-generate_feed = true
 
 [markdown]
 smart_punctuation = true
