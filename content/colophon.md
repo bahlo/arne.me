@@ -36,4 +36,5 @@ Any issue you encounter on this website can be submitted as
 [GitHub issues](https://github.com/bahlo/arne.me/issues/new).
 
 A [sitemap](/sitemap.xml) is available and there's an 
-[RSS feed](/atom.xml) for blogposts.
+[RSS feed](/blog/atom.xml) for blogposts and an [RSS feed](/weekly/atom.xml)
+for the Weekly archives.
