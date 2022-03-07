@@ -18,7 +18,6 @@ extra_syntaxes_and_themes = ["extra_highlight_themes/base16"]
 [extra]
 navbar_items = [
   # { path = "/", name = "Home" }, # static logo
-  { path = "/projects/", name = "Projects" },
   { path = "/work/", name = "Work" },
   { path = "/blog/", name = "Blog" },
   { path = "/weekly/", name = "Weekly" },

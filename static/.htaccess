@@ -6,3 +6,5 @@ RewriteRule \.(woff|eot|ttf|woff2|svg)$ - [NC,L]
 RewriteCond %{HTTP_REFERER} !.
 RewriteRule \.(woff|eot|ttf|woff2|svg)$ - [F,NC,L]
 Options -Indexes
+
+Redirect 301 /projects /now
