@@ -1,5 +1,5 @@
 +++
-title = "Arne’s Weekly"
+title = "Weekly"
 sort_by = "date"
 template = "weekly.html"
 page_template = "weekly-page.html"
