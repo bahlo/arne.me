@@ -21,6 +21,9 @@ The resulting files are pushed to an
 pulled regularly in a cron job on an [Uberspace](https://uberspace.de) account
 and served with a domain name provided by [Hover](https://hover.com). 
 
+The [Inter](https://rsms.me/inter/) typeface family is used for text, code is
+using [Pragmata Pro](https://fsd.it/shop/fonts/pragmatapro/).
+
 [Plausible Analytics](https://plausible.io) is used, a privacy focused 
 alternative to most analytics tools.
 
