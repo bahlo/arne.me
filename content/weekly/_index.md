@@ -7,7 +7,7 @@ generate_feed = true
 +++
 
 This is my newsletter, where I collect interesting stories from all
-over the web that every sunday.
+over the web every sunday.
 It's meant to be consumed via email and the archives are always a week behind,
 so make sure to [subscribe](https://arnesweekly.email).
 
