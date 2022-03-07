@@ -5,8 +5,11 @@
 {% endblock title %}
 
 {% block content %}
+<h1>{{ section.title }}</h1>
+{{ section.content | safe }}
+
 {% for page in section.pages %}
-<article>
+<article class="article--list">
   <h1><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h1>
   <span class="details">
     <time datetime="{{ page.date}}">{{ page.date | date(format="%b %d, %Y") }}</time>

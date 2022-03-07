@@ -29,6 +29,10 @@ header, section, article, footer {
   margin: 0 auto var(--spacing-vertical);
 }
 
+article.article--list {
+  margin: calc(var(--spacing-vertical) / 2) auto;
+}
+
 @keyframes wiggle {
   0%   { transform: rotate(0deg);   }
   33%  { transform: rotate(10deg);  }
