@@ -10,7 +10,7 @@
 
   {{ section.content | safe }}
 
-  <h2>Archive</h2>
+  <h2 id="archive">Archive</h2>
   <ul>
 {% for page in section.pages %}
     <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
