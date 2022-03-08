@@ -9,7 +9,6 @@ generate_feed = true
 This is my newsletter, where I collect interesting stories from all
 over the web every sunday.
 It's meant to be consumed via email and the archives are always a week behind,
-so make sure to [subscribe](https://arnesweekly.email).
+so make sure to [subscribe](https://arnesweekly.email) if you haven't already.
 
-If you really really don't want to subscribe, the archives have an
-[RSS Feed](/weekly/atom.xml) as well.
+The archives also have an [RSS Feed](/weekly/atom.xml).
