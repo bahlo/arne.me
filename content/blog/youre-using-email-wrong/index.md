@@ -2,6 +2,7 @@
 title = "You're using email wrong"
 description = "If you don't like email, try a different strategy."
 date = "2022-03-06"
+updated = "2022-03-08"
 
 [extra]
 cover_image_src = "/blog/youre-using-email-wrong/cover.jpg"
@@ -75,3 +76,11 @@ I encourage you to try it!
 
 If you have a different concept, feedback or ideas, please 
 [let me know](mailto:hey@arne.me).
+
+**Update (2022-03-08):** Multiple people have responded with their systems and
+questions (which I love, please keep doing that), some missed a way to track if 
+a service "lost" their email address.
+If you use an alias, e.g. `papertrail@example.org`, you can use the `+` operator
+like this: `papertrail+twitter@example.org`.
+The sorting rule will be a bit more complicated, but you won't have to adapt
+it every time you sign up for something.
