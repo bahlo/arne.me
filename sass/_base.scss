@@ -175,6 +175,13 @@ blockquote {
   padding-left: var(--spacing-horizontal);
 }
 
+.preface {
+  display: inline-block;
+  margin: 0 0 8px;
+  font-size: .9em;
+  color: var(--color-fg-text);
+}
+
 article {
   > h1:first-child {
     margin-bottom: 0; // Reduce spacing to .details

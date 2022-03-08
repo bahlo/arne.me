@@ -1,6 +1,8 @@
 +++
 title = "34 / Inspiring Resilience"
 date = "2021-12-05"
+[extra]
+num = 34
 +++
 
 Hope you're doing okay ✌🏻

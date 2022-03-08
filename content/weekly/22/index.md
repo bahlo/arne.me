@@ -1,6 +1,8 @@
 +++
 title = "22 / Intentional connection in the digital office"
 date = "2021-09-12"
+[extra]
+num = 22
 +++
 
 Hello and welcome to another issue of Arnes Weekly! Hope your week was good, enjoy ✌🏻

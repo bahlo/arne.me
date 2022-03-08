@@ -1,6 +1,8 @@
 +++
 title = "40 / The Web of 2042"
 date = "2022-01-23"
+[extra]
+num = 40
 +++
 
 Hi hi ✌🏻

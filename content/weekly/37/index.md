@@ -1,6 +1,8 @@
 +++
 title = "37 / Preventing Log4j with Capabilities"
 date = "2022-01-02"
+[extra]
+num = 37
 +++
 
 

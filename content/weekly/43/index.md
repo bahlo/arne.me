@@ -1,6 +1,8 @@
 +++
 title = "43 / Why You Should Start a Blog Right Now"
 date = "2022-02-13"
+[extra]
+num = 43
 +++
 
 Hey hey, how was your week? ✌🏻
