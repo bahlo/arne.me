@@ -77,7 +77,7 @@ I encourage you to try it!
 If you have a different concept, feedback or ideas, please 
 [let me know](mailto:hey@arne.me).
 
-**Update (2022-03-08):** Multiple people have responded with their systems and
+**Update (Mar 08, 2022):** Multiple people have responded with their systems and
 questions (which I love, please keep doing that), some missed a way to track if 
 a service "lost" their email address.
 If you use an alias, e.g. `papertrail@example.org`, you can use the `+` operator
