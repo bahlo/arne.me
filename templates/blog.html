@@ -4,6 +4,9 @@
 {{ section.title }} — {{ config.title }}
 {% endblock title %}
 
+{% block description %}{{ section.description }}{% endblock description %}
+{% block ogDescription %}{{ section.description }}{% endblock ogDescription %}
+
 {% block content %}
 <h1>{{ section.title }}</h1>
 {{ section.content | safe }}

@@ -4,10 +4,8 @@
 {% block ogTitle %}{{ page.title }}{% endblock ogTitle %}
 {% block twitterTitle %}{{ page.title }}{% endblock twitterTitle %}
 
-{% block description %}{{ page.description }}{% endblock description %}
-{% block ogDescription %}{{ page.description }}{% endblock ogDescription %}
-
-{% block ogType %}article{% endblock ogImage %}
+{% block description %}Issue #{{ page.extra.num }} of Arne's Weekly{% endblock description %}
+{% block ogDescription %}Issue #{{ page.extra.num }} of Arne's Weekly{% endblock ogDescription %}
 
 {% block head %}
 <meta property="article:published_time" content="{{ page.date | date(format=" %Y-%m-%dT00:00:00+00:00:00")}}">
@@ -24,6 +22,7 @@
   </span>
   {{ page.content | safe }}
 
+  <br>
   {% include "shortcodes/newsletter_subscribe_form.html" %}
 </article>
 {% endblock content %}

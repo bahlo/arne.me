@@ -4,6 +4,9 @@
 {% block ogTitle %}{{ page.title }} — {{ config.title }}{% endblock ogTitle %}
 {% block twitterTitle %}{{ page.title }} — {{ config.title }}{% endblock twitterTitle %}
 
+{% block description %}{{ page.description }}{% endblock description %}
+{% block ogDescription %}{{ page.description }}{% endblock ogDescription %}
+
 {% block content %}
 <article>
   <h1>{{ page.title }}</h1>

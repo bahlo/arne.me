@@ -1,5 +1,6 @@
 +++
 title = "Work"
+description = "My work experience"
 template = "work.html"
 
 [[extra.experience]]

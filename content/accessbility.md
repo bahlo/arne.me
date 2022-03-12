@@ -1,5 +1,6 @@
 +++
 title = "Accessbility"
+description = "Accessbility measures on this website"
 +++
 
 This site aims to conform to level
