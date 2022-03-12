@@ -7,7 +7,7 @@ generate_feed = true
 +++
 
 Arne's Weekly is my newsletter, where I collect interesting stories from all
-over the web every sunday.
+over the web every Sunday.
 
 {{ newsletter_subscribe_form() }}
 
