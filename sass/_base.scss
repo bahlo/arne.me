@@ -136,7 +136,7 @@ h3, h4, h5, h6 {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin-bottom: .5rem;
+  margin: .5rem 0 -.5rem;
   font-weight: 600;
 
   font-family: 'InterDisplay', sans-serif;
@@ -152,8 +152,8 @@ article, section {
 
   hr {
     border: none;
-    border-top: 1px dashed var(--color-fg-light);
-    margin: var(--spacing-vertical) 0;
+    border-top: 1px dashed var(--color-border-light);
+    margin: calc(var(--spacing-vertical) / 2) 0;
   }
 
   img {

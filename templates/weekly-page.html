@@ -10,7 +10,7 @@
 {% block ogType %}article{% endblock ogImage %}
 
 {% block head %}
-<meta property="article:published_time" content="{{ page.date | date(format="%Y-%m-%dT00:00:00+00:00:00")}}">
+<meta property="article:published_time" content="{{ page.date | date(format=" %Y-%m-%dT00:00:00+00:00:00")}}">
 {% endblock head %}
 
 {% block content %}
@@ -24,5 +24,7 @@
     <time datetime="{{ page.date}}">{{ page.date | date(format="%b %d, %Y") }}</time>
   </span>
   {{ page.content | safe }}
+
+  {% include "shortcodes/newsletter_subscribe_form.html" %}
 </article>
 {% endblock content %}

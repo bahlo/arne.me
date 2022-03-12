@@ -27,10 +27,6 @@
 
 // Weekly
 .article--weekly {
-  h3 {
-    margin-bottom: -8px;
-  }
-
   h3 + p > em {
     font-size: .9em;
     color: var(--color-fg-light);
@@ -40,7 +36,7 @@
 
 .weekly-subscription {
   border: 1px dashed var(--color-primary);
-  background: rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), .04);
+  background: rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), .1);
   border-radius: var(--border-radius);
   padding: 0 12px;
   margin: 8px 0;

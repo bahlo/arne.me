@@ -9,10 +9,6 @@ generate_feed = true
 Arne's Weekly is my newsletter, where I collect interesting stories from all
 over the web every sunday.
 
-## Subscribe
-
-Get the newsletter in your inbox every Sunday. No ads, no shenanigans:
-
 {{ newsletter_subscribe_form() }}
 
 ## Archive
