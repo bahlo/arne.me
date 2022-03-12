@@ -162,7 +162,7 @@ article, section {
   }
 }
 
-p, ul, pre {
+p, ul, pre, form {
   margin: .5em 0;
 }
 
@@ -216,12 +216,12 @@ article {
       color: var(--color-fg-light);
     }
   }
+}
 
-  .details {
-    font-size: .9em;
-    margin: 0 0 8px;
-    color: var(--color-fg-light);
-  }
+.details {
+  font-size: .9em;
+  margin: 0 0 8px;
+  color: var(--color-fg-light);
 }
 
 footer {
@@ -316,5 +316,32 @@ pre {
     display: block;
     // The default background colour of a mark is bright yellow
     background-color: rgba(254, 252, 232, 0.9);
+  }
+}
+
+input {
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border-light);
+  padding: 4px 8px;
+  background: var(--color-bg);
+}
+
+label {
+  padding: 5px 0; // 4px padding + 1px border of input
+}
+
+input[type="submit"], input[type="button"], button {
+  border: 1px solid var(--color-primary);
+  color: var(--color-fg);
+  cursor: pointer;
+
+  @include link($background: rgba(
+    var(--color-primary-r), 
+    var(--color-primary-g), 
+    var(--color-primary-b), 
+  .1));
+
+  &:hover {
+    background-size: 4px 50px;
   }
 }

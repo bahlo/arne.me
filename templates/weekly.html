@@ -10,11 +10,10 @@
 
   {{ section.content | safe }}
 
-  <h2 id="archive">Archive</h2>
   <ul>
-{% for page in section.pages %}
+    {% for page in section.pages %}
     <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
-{% endfor %}
+    {% endfor %}
   </ul>
 </section>
 {% endblock content %}
