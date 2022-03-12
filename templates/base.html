@@ -24,7 +24,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/mask-icon.svg" color="#111111">
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
+    <link rel="alternate" type="application/rss+xml" title="Blog posts" href="{{ get_url(path="blog/atom.xml", trailing_slash=false) }}">
+    <link rel="alternate" type="application/rss+xml" title="Arne’s  Weekly archive" href="{{ get_url(path="weekly/atom.xml", trailing_slash=false) }}">
     <link href="mailto:{{ config.extra.authn_email }}" rel="me authn">
     <style>:root { 
       --color-primary: {{ config.extra.primary_color }}; 
