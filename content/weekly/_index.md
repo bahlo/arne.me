@@ -14,5 +14,4 @@ over the web every Sunday.
 
 ## Archive
 
-The archive is always a week behind.
-There's an [RSS Feed](/weekly/atom.xml) available.
+There's also an [RSS Feed](/weekly/atom.xml) available.
