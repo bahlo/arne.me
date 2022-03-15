@@ -49,7 +49,7 @@ If I have time, I'll read the newsletters and add the articles I want to read to
 [Instapaper](https://instapaper.com).
 
 By the way, if you're looking for something to add to your newsfeed, check out
-[Arne's Weekly](https://arnesweekly.email).
+[Arne's Weekly](/weekly).
 
 ## The Setup
 
