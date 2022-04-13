@@ -50,6 +50,10 @@ article.article--list {
   background-repeat: repeat-x;
   background-size: .5px .5px;
   transition: background-size .2s;
+
+  @media (prefers-reduced-motion) {
+    transition: none;
+  }
 }
 
 header {
@@ -87,6 +91,10 @@ header {
             &:hover {
               color: var(--color-primary);
               animation: wiggle 500ms 1;
+
+              @media (prefers-reduced-motion) {
+                animation: none;
+              }
             }
           }
         }
