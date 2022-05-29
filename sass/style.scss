@@ -4,6 +4,7 @@
 @import "_fonts";
 @import "_pages";
 @import "_syntax_theme_light";
+
 @media (prefers-color-scheme: dark) {
   @import "_syntax_theme_dark";
 }

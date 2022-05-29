@@ -14,7 +14,9 @@ body {
   align-items: stretch;
 }
 
-header, main, footer {
+header,
+main,
+footer {
   padding: 0 var(--spacing-horizontal);
   max-width: var(--width);
   margin: 0 auto;
@@ -25,7 +27,10 @@ main {
   width: 100%; // This fixes width on mobile
 }
 
-header, section, article, footer {
+header,
+section,
+article,
+footer {
   margin: 0 auto var(--spacing-vertical);
 }
 
@@ -34,18 +39,27 @@ article.article--list {
 }
 
 @keyframes wiggle {
-  0%   { transform: rotate(0deg);   }
-  33%  { transform: rotate(10deg);  }
-  66%  { transform: rotate(-10deg); }
-  100% { transform: rotate(0deg);   }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  33% {
+    transform: rotate(10deg);
+  }
+
+  66% {
+    transform: rotate(-10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 @mixin link($background: transparent) {
-  background: linear-gradient(
-    to bottom,
-    var(--color-primary) 0%,
-    var(--color-primary) 100%
-  ), $background;
+  background: linear-gradient(to bottom,
+      var(--color-primary) 0%,
+      var(--color-primary) 100%), $background;
   background-position: 0 100%;
   background-repeat: repeat-x;
   background-size: .5px .5px;
@@ -67,6 +81,7 @@ header {
     max-width: var(--width);
     margin: 0 auto;
     padding: 0 var(--spacing-horizontal);
+
     ul {
       display: flex;
       align-items: center;
@@ -119,11 +134,10 @@ a {
   padding: 0 2px;
   margin: 0 -2px;
 
-  @include link($background: rgba(
-    var(--color-primary-r), 
-    var(--color-primary-g), 
-    var(--color-primary-b), 
-  .1));
+  @include link($background: rgba(var(--color-primary-r),
+      var(--color-primary-g),
+      var(--color-primary-b),
+      .1));
 
   &:hover {
     background-size: 4px 50px;
@@ -139,27 +153,48 @@ h2 {
   font-size: 1.2em;
 }
 
-h3, h4, h5, h6 {
+h3,
+h4,
+h5,
+h6 {
   font-size: 1em;
 }
 
-h1 + h2, h2 + h3, h3 + h4, h4 + h5, h5 + h6,
-h6 + h5, h5 + h4, h4 + h3, h3 + h2, h2 + h1 {
+h1+h2,
+h2+h3,
+h3+h4,
+h4+h5,
+h5+h6,
+h6+h5,
+h5+h4,
+h4+h3,
+h3+h2,
+h2+h1 {
   margin-top: .75rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: .5rem 0 -.5rem;
   font-weight: 600;
 
   font-family: 'InterDisplay', sans-serif;
+
   @supports (font-variation-settings: normal) {
     font-family: 'InterDisplay var', sans-serif;
   }
 }
 
-article, section {
-  p, ul, ol {
+article,
+section {
+
+  p,
+  ul,
+  ol {
     color: var(--color-fg-text);
   }
 
@@ -175,7 +210,10 @@ article, section {
   }
 }
 
-p, ul, pre, form {
+p,
+ul,
+pre,
+form {
   margin: .5em 0;
 }
 
@@ -201,7 +239,7 @@ blockquote {
 }
 
 article {
-  > h1:first-child {
+  >h1:first-child {
     margin-bottom: 0; // Reduce spacing to .details
   }
 
@@ -216,7 +254,7 @@ article {
         background: var(--color-bg-gray);
         border-radius: 0 0 var(--border-radius) var(--border-radius);
         padding: 4px;
-        
+
         p {
           margin: 0; // Don't mess with spacing in the caption
         }
@@ -231,7 +269,9 @@ article {
   }
 }
 
-section, article, main {
+section,
+article,
+main {
   h1:first-child {
     margin-top: 0;
   }
@@ -248,7 +288,7 @@ footer {
   width: 100%;
   text-align: center;
   font-size: .8rem;
-  margin: var(--spacing-vertical) auto 0 ;
+  margin: var(--spacing-vertical) auto 0;
   padding: 0 var(--spacing-horizontal) var(--spacing-vertical);
   color: var(--color-fg-light);
 }
@@ -289,12 +329,13 @@ mark {
 }
 
 // Syntax highlighting
-code, pre {
+code,
+pre {
   font-family: var(--font-family-monospace);
 }
 
 // Triple selector to override without !important
-.z-italic.z-italic.z-italic { 
+.z-italic.z-italic.z-italic {
   font-style: normal; // TODO: Buy italic font and remove this line
 }
 
@@ -323,6 +364,7 @@ pre {
 
     td {
       padding: 0;
+
       // The line number cells
       td:nth-of-type(1) {
         text-align: center;
@@ -350,16 +392,17 @@ label {
   padding: 5px 0; // 4px padding + 1px border of input
 }
 
-input[type="submit"], input[type="button"], button {
+input[type="submit"],
+input[type="button"],
+button {
   border: 1px solid var(--color-primary);
   color: var(--color-fg);
   cursor: pointer;
 
-  @include link($background: rgba(
-    var(--color-primary-r), 
-    var(--color-primary-g), 
-    var(--color-primary-b), 
-  .33));
+  @include link($background: rgba(var(--color-primary-r),
+      var(--color-primary-g),
+      var(--color-primary-b),
+      .33));
 
   &:hover {
     background-size: 4px 50px;

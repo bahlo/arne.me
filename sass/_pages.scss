@@ -27,7 +27,7 @@
 
 // Weekly
 .article--weekly {
-  h3 + p > em {
+  h3+p>em {
     font-size: .9em;
     color: var(--color-fg-light);
     font-style: normal;
@@ -48,6 +48,7 @@
 
   form {
     @media (max-width: 479px) {
+
       // Small screens, no flex
       label {
         padding-top: 0;

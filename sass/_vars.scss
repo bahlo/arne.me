@@ -12,9 +12,11 @@
   --font-size: 20px;
   --font-family-monospace: 'PragmataPro Mono Liga', monospace;
   --font-family-sans-serif: 'Inter', sans-serif;
+
   @supports (font-variation-settings: normal) {
     --font-family-sans-serif: 'Inter var', sans-serif;
   }
+
   --spacing-vertical: 32px;
   --spacing-vertical-smol: 16px;
   --spacing-horizontal: 20px;
@@ -27,7 +29,7 @@
     --color-fg-text: #ddd;
     --color-fg-light: #bbb;
     --color-bg: #111;
-    --color-bg-code: #151515; 
+    --color-bg-code: #151515;
     --color-border-code: #252525;
     --color-bg-gray: #252525;
     --color-border-light: #444;
