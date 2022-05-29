@@ -72,7 +72,7 @@ article.article--list {
 
 header {
   margin: 0 auto var(--spacing-vertical-smol);
-  padding: var(--spacing-vertical-smol) 0;
+  padding: calc(var(--spacing-vertical-smol)/2) 0;
   background: rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), .1);
   border: 1px dashed rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), 1);
   border-top: none;
@@ -191,7 +191,7 @@ h4,
 h5,
 h6 {
   margin: .5rem 0 -.5rem;
-  font-weight: 600;
+  font-weight: 550;
 
   font-family: 'InterDisplay', sans-serif;
 
