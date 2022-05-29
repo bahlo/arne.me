@@ -71,14 +71,24 @@ article.article--list {
 }
 
 header {
-  margin: 0 0 var(--spacing-vertical-smol);
-  max-width: 100%;
+  margin: 0 auto var(--spacing-vertical-smol);
   padding: var(--spacing-vertical-smol) 0;
   background: rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), .1);
-  border-bottom: 1px solid rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), .2);
+  border: 1px dashed rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), 1);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+
+  // We can't use CSS variables in media queries, so this is done manually.
+  // It's oriented at the width of the nav.
+  @media (max-width: calc(680px - 2*20px)) {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
 
   nav {
-    max-width: var(--width);
+    width: calc(var(--width) - 2*var(--spacing-horizontal));
+    max-width: 100%;
     margin: 0 auto;
     padding: 0 var(--spacing-horizontal);
 
