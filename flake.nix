@@ -4,13 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
-    gitignore.url = "github:hercules-ci/gitignore.nix";
   };
 
-  outputs = { self, nixpkgs, flake-utils, gitignore }:
+  outputs = { self, nixpkgs, flake-utils }:
   flake-utils.lib.eachDefaultSystem (system:
     let
-      inherit (gitignore.lib) gitignoreSource;
       pkgs = nixpkgs.legacyPackages.${system};
       buildInputs = [ 
         pkgs.zola
@@ -23,7 +21,7 @@
       defaultPackage = pkgs.stdenvNoCC.mkDerivation {
         pname = "arne.me";
         version = "0.${shortRev}";
-        src = gitignoreSource self;
+        src = self;
         inherit buildInputs;
         buildPhase = ''
           python3 ./scripts/embed_revision.py ${shortRev}
