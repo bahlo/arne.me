@@ -58,6 +58,10 @@ h6 {
   --spacing-vertical: 32px;
   --spacing-vertical-smol: 20px;
   --spacing-horizontal: 20px;
+  --color-primary: #82adf3; 
+  --color-primary-r: 130; 
+  --color-primary-g: 173; 
+  --color-primary-b: 243; 
   --width: 680px; }
 
 @media (prefers-color-scheme: dark) {
@@ -772,3 +776,16 @@ button {
   .z-invalid.z-unimplemented {
     color: #f5f4f7;
     background-color: #838085; } }
+
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+footer ul li {
+  display: inline-block;
+  margin-left: 4px;
+}
+footer ul li:not(:last-child):after {
+  content: "·";
+  margin-left: 4px;
+}
