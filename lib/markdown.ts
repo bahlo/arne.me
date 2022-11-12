@@ -9,20 +9,14 @@ interface Markdown {
   html: string
 }
 
-function buildPath(...segments: string[]): string {
+export function buildAbsolutePath(...segments: string[]): string {
   const cwd = process.cwd();
-  if (cwd.endsWith('/.next/server/app')) {
-    // Turbopack has a different cwd
-    return join(cwd, '..', '..', '..', ...segments)
-  } else if (cwd.endsWith('.next/server/app/rsc')) {
-    return join(cwd, '..', '..', '..', '..', ...segments)
-  } else {
-    return join(cwd, ...segments)
-  }
+  const root = cwd.replace(/\.next\/server\/app(\/\[[a-z.]+\])?(\/rsc)?/, '')
+  return join(root, ...segments)
 }
 
 export async function parseMarkdown(...segments: string[]): Promise<Markdown> {
-  const path = buildPath(...segments);
+  const path = buildAbsolutePath(...segments);
   const source = await fs.readFile(path, 'utf-8');
   const { data: frontmatter, content } = matter(source);
   const html = await remark().use(remarkHtml).process(content);
