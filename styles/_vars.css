@@ -13,6 +13,12 @@
   --font-family-monospace: 'PragmataPro Mono Liga', monospace;
   --font-family-sans-serif: 'Inter', sans-serif;
 
+  /* TODO: Make this dynamic again */
+  --color-primary: #82f2f3; 
+  --color-primary-r: 130; 
+  --color-primary-g: 241; 
+  --color-primary-b: 242; 
+
   @supports (font-variation-settings: normal) {
     --font-family-sans-serif: 'Inter var', sans-serif;
   }

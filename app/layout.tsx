@@ -10,7 +10,12 @@ export default function RootLayout({
   return (
     <html>
       <head></head>
-      <body>{children}</body>
+      <body>
+        <a href="#main" className="skip-link">Skip to content</a>
+        <main id="main">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
