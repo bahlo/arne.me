@@ -1,0 +1,9 @@
+@import "./_reset.css";
+@import "./_vars.css";
+@import "./_base.css";
+@import "./_pages.css";
+@import "./_syntax_theme_light.css";
+
+@media (prefers-color-scheme: dark) {
+  @import "./_syntax_theme_dark.css";
+}

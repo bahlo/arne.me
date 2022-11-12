@@ -1,0 +1,422 @@
+html {
+  font-family: var(--font-family-sans-serif), sans-serif;
+  font-size: var(--font-size);
+  background: var(--color-bg);
+  color: var(--color-fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+header,
+main,
+footer {
+  padding: 0 var(--spacing-horizontal);
+  max-width: var(--width);
+  margin: 0 auto;
+}
+
+main {
+  flex-grow: 1;
+  width: 100%; /* This fixes width on mobile */
+}
+
+header,
+section,
+article,
+footer {
+  margin: 0 auto var(--spacing-vertical);
+}
+
+article.article--list {
+  margin: calc(var(--spacing-vertical) / 2) auto;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  33% {
+    transform: rotate(10deg);
+  }
+
+  66% {
+    transform: rotate(-10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@mixin link($background: transparent) {
+  background: linear-gradient(to bottom,
+      var(--color-primary) 0%,
+      var(--color-primary) 100%), $background;
+  background-position: 0 100%;
+  background-repeat: repeat-x;
+  background-size: .5px .5px;
+  transition: background-size .2s;
+
+  @media (prefers-reduced-motion) {
+    transition: none;
+  }
+}
+
+header {
+  margin: var(--spacing-vertical-smol) auto var(--spacing-vertical-smol);
+  padding: calc(var(--spacing-vertical-smol)/2) 0;
+  background: rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), .1);
+  border: 1px dashed rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), 1);
+  border-radius: var(--border-radius);
+  max-width: 100%;
+
+  /* We can't use CSS variables in media queries, so this is done manually.
+    It's oriented at the width of the nav. */
+  @media (max-width: calc(680px - 2*20px)) {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    margin-top: 0;
+  }
+
+  nav {
+    width: calc(var(--width) - 2*var(--spacing-horizontal));
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--spacing-horizontal);
+
+    ul {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+
+      li {
+        list-style: none;
+        margin: 0 var(--spacing-horizontal) 0 0;
+
+        &.logo {
+          svg {
+            display: inline-block;
+            height: 1.4em;
+            margin-bottom: -.4em;
+          }
+
+          a {
+            border: none;
+            background: none;
+
+            &:hover {
+              color: var(--color-primary);
+              animation: wiggle 500ms 1;
+
+              @media (prefers-reduced-motion) {
+                animation: none;
+              }
+            }
+          }
+        }
+
+        a {
+          display: inline-block;
+          @include link;
+
+          &.active {
+            border-bottom-color: var(--color-fg);
+          }
+        }
+      }
+    }
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-primary);
+  padding: 0 2px;
+  margin: 0 -2px;
+
+  @include link($background: rgba(var(--color-primary-r),
+      var(--color-primary-g),
+      var(--color-primary-b),
+      .1));
+
+  &:hover {
+    background-size: 4px 50px;
+    color: var(--color-primary-contrast);
+  }
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.2em;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1em;
+}
+
+h1+h2,
+h2+h3,
+h3+h4,
+h4+h5,
+h5+h6,
+h6+h5,
+h5+h4,
+h4+h3,
+h3+h2,
+h2+h1 {
+  margin-top: .75rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: .5rem 0 -.5rem;
+  font-weight: 550;
+
+  font-family: 'InterDisplay', sans-serif;
+
+  @supports (font-variation-settings: normal) {
+    font-family: 'InterDisplay var', sans-serif;
+  }
+}
+
+article,
+section {
+
+  p,
+  ul,
+  ol {
+    color: var(--color-fg-text);
+  }
+
+  hr {
+    border: none;
+    border-top: 1px dashed var(--color-border-light);
+    margin: calc(var(--spacing-vertical) / 2) 0;
+  }
+
+  img {
+    border-radius: var(--border-radius);
+    margin: .5rem 0;
+  }
+}
+
+p,
+ul,
+pre,
+form {
+  margin: .5em 0;
+}
+
+p code {
+  background: var(--color-bg-code);
+  padding: 1px 2px;
+  border: 1px solid var(--color-border-code);
+  border-radius: var(--border-radius);
+  font-style: normal;
+}
+
+blockquote {
+  font-style: italic;
+  border-left: 4px solid var(--color-primary);
+  padding-left: var(--spacing-horizontal);
+}
+
+.preface {
+  display: inline-block;
+  margin: 0 0 8px;
+  font-size: .9em;
+  color: var(--color-fg-text);
+}
+
+article {
+  >h1:first-child {
+    margin-bottom: 0; /* Reduce spacing to .details */
+  }
+
+  figure {
+    &.has-caption {
+      img {
+        margin-bottom: 0;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+      }
+
+      figcaption {
+        background: var(--color-bg-gray);
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        padding: 4px;
+
+        p {
+          margin: 0; /* Don't mess with spacing in the caption */
+        }
+      }
+    }
+
+    figcaption {
+      font-size: .8em;
+      margin: 0 0 8px;
+      color: var(--color-fg-light);
+    }
+  }
+}
+
+section,
+article,
+main {
+  h1:first-child {
+    margin-top: 0;
+  }
+}
+
+.details {
+  font-size: .9em;
+  margin: 0 0 8px;
+  color: var(--color-fg-light);
+  line-height: 1.4;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  font-size: .8rem;
+  margin: var(--spacing-vertical) auto 0;
+  padding: 0 var(--spacing-horizontal) var(--spacing-vertical);
+  color: var(--color-fg-light);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+mark {
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.skip-link {
+  position: absolute;
+  transform: translateY(-100%);
+
+  &:focus {
+    transform: translateY(0);
+  }
+}
+
+.commit-color {
+  width: calc(1em - 4px);
+  height: calc(1em - 4px);
+  display: inline-block;
+  background: var(--color-primary);
+  border: 1px solid var(--color-fg-text);
+  border-radius: 6px;
+  position: relative;
+  bottom: -2px;
+
+  @media (prefers-color-scheme: dark) {
+    /* Doesn't look good with a border in dark mode */
+    border-color: transparent;
+  }
+}
+
+/* Syntax highlighting */
+code,
+pre {
+  font-family: var(--font-family-monospace);
+}
+
+/* Triple selector to override without !important */
+.z-italic.z-italic.z-italic {
+  font-style: normal; /* TODO: Buy italic font and remove this line */
+}
+
+/* Nix syntax highlighting markes some characters as illegal even if they're not */
+.z-nix .z-invalid.z-illegal {
+  color: inherit;
+  background-color: inherit;
+}
+
+pre {
+  border: 1px solid var(--color-border-code);
+  border-radius: var(--border-radius);
+  background: var(--color-bg-code) !important; /* override */
+
+  padding: 8px;
+  overflow: auto;
+
+  /* The line numbers already provide some kind of left/right padding */
+  &[data-linenos] {
+    padding: 1rem 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    td {
+      padding: 0;
+
+      /* The line number cells */
+      td:nth-of-type(1) {
+        text-align: center;
+        user-select: none;
+      }
+    }
+  }
+
+  mark {
+    /* If you want your highlights to take the full width. */
+    display: block;
+    /* The default background colour of a mark is bright yellow */
+    background-color: rgba(254, 252, 232, 0.9);
+  }
+}
+
+input {
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-primary);
+  padding: 4px 8px;
+  background: var(--color-bg);
+}
+
+label {
+  padding: 5px 0; /* 4px padding + 1px border of input */
+}
+
+input[type="submit"],
+input[type="button"],
+button {
+  border: 1px solid var(--color-primary);
+  color: var(--color-fg);
+  cursor: pointer;
+
+  @include link($background: rgba(var(--color-primary-r),
+      var(--color-primary-g),
+      var(--color-primary-b),
+      .33));
+
+  &:hover {
+    background-size: 4px 50px;
+  }
+}
