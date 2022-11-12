@@ -14,6 +14,8 @@ function buildPath(...segments: string[]): string {
   if (cwd.endsWith('/.next/server/app')) {
     // Turbopack has a different cwd
     return join(cwd, '..', '..', '..', ...segments)
+  } else if (cwd.endsWith('.next/server/app/rsc')) {
+    return join(cwd, '..', '..', '..', '..', ...segments)
   } else {
     return join(cwd, ...segments)
   }
