@@ -128,7 +128,6 @@ header {
 
         a {
           display: inline-block;
-          @include link;
 
           &.active {
             border-bottom-color: var(--color-fg);
@@ -139,6 +138,12 @@ header {
   }
 }
 
+@media (prefers-reduced-motion) {
+  a {
+    transition: none;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -146,10 +151,13 @@ a {
   padding: 0 2px;
   margin: 0 -2px;
 
-  @include link($background: rgba(var(--color-primary-r),
-      var(--color-primary-g),
-      var(--color-primary-b),
-      .1));
+  background: linear-gradient(to bottom,
+      var(--color-primary) 0%,
+      var(--color-primary) 100%), rgba(var(--color-primary-r), var(--color-primary-g), var(--color-primary-b), .1);
+  background-position: 0 100%;
+  background-repeat: repeat-x;
+  background-size: .5px .5px;
+  transition: background-size .2s;
 
   &:hover {
     background-size: 4px 50px;
@@ -410,11 +418,6 @@ button {
   border: 1px solid var(--color-primary);
   color: var(--color-fg);
   cursor: pointer;
-
-  @include link($background: rgba(var(--color-primary-r),
-      var(--color-primary-g),
-      var(--color-primary-b),
-      .33));
 
   &:hover {
     background-size: 4px 50px;
