@@ -6,7 +6,7 @@ export default async function Head({ params }: any) {
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta name="theme-color" content="#82f2f3" />
+      <meta name="theme-color" content="#82adf3" />
       <meta name="description" content="The personal website of Arne Bahlo." />
       <meta name="author" content="Arne Bahlo" />
       <meta property="og:site_name" content="Arne Bahlo" />
