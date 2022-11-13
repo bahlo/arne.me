@@ -1,4 +1,4 @@
-export default async function Head({ params }: any) {
+export default async function Head() {
   return (
     <>
       <title>Arne Bahlo</title>
