@@ -4,7 +4,7 @@ import { promises as fs } from 'node:fs';
 export async function generateStaticParams() {
   const path = buildAbsolutePath('content/blog');
   const files = await fs.readdir(path);
-  return files.filter(filename => filename.endsWith('.md')).map(filename => ({
+  return files.filter(filename => filename != "_index.md" && filename.endsWith('.md')).map(filename => ({
     slug: filename.substring(0, filename.length-3),
   }));
 }
