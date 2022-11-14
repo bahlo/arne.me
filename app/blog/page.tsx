@@ -1,5 +1,6 @@
 import { parseMarkdown, buildAbsolutePath, renderMarkdown } from "../../lib/markdown";
 import matter from 'gray-matter';
+import { DateTime } from 'luxon';
 import {promises as fs} from 'node:fs';
 
 async function parseBlogposts() {
@@ -26,11 +27,15 @@ export default async function Blog() {
     <section>
       <h1>{frontmatter.title}</h1>
       <div dangerouslySetInnerHTML={{__html: html.toString()}}/>
-      {blogposts.map(({ frontmatter, slug, descriptionHtml }, i) => (
+      {blogposts.sort((a, b) => {
+        const dateA = Date.parse(a.frontmatter.date);
+        const dateB = Date.parse(b.frontmatter.date);
+        return dateB - dateA
+      }).map(({ frontmatter, slug, descriptionHtml }) => (
         <article className="article--list" key={slug}>
           <h1><a href={"/blog/" + slug }>{ frontmatter.title }</a></h1>
           <span className="details">
-            <time dateTime="{ frontmatter.date}">{ frontmatter.date }</time> &middot; { frontmatter.reading_time } min
+            <time dateTime="{ frontmatter.date}">{ DateTime.fromISO(frontmatter.date).toFormat("LLL dd, yyyy") }</time> &middot; { frontmatter.reading_time } min
           </span>
           <div dangerouslySetInnerHTML={{__html: descriptionHtml}}/>
         </article>

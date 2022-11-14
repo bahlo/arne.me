@@ -1,4 +1,5 @@
 import { buildAbsolutePath, parseMarkdown, renderMarkdown } from "../../../lib/markdown";
+import { DateTime } from "luxon";
 import { promises as fs } from 'node:fs';
 
 export async function generateStaticParams() {
@@ -29,7 +30,7 @@ export default async function Blogpost({params: { slug }}: { params: { slug: str
     <article>
       <h1>{frontmatter.title}</h1>
       <span className="details">
-        <time dateTime="{ frontmatter.date }">{ frontmatter.date }</time> &middot; { readingTime } min
+        <time dateTime={ frontmatter.date }>{ DateTime.fromISO(frontmatter.date).toFormat("LLL dd, yyyy") }</time> &middot; { readingTime } min
       </span>
       {coverImage}
       <div dangerouslySetInnerHTML={{__html: html.toString()}}/>

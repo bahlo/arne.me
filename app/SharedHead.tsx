@@ -1,5 +1,6 @@
 import { buildAbsolutePath } from '../lib/markdown';
 import sizeOf from 'image-size';
+import { DateTime } from 'luxon';
 
 interface Props {
   title?: string,
@@ -23,8 +24,7 @@ export default function Head(props: Props) {
 
   let metaArticlePublishedTime = null;
   if (props.date) {
-    // TODO: Fix this once we have time formatting
-    // articlePublishedTime = <meta property="article:published_time" content="{{ page.date | date(format="%Y-%m-%dT00:00:00+00:00:00")}}">
+    metaArticlePublishedTime = <meta property="article:published_time" content={ DateTime.fromISO(props.date).toISO() } />
   }
 
   let ogImage = null;
