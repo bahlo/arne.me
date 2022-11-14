@@ -26,6 +26,13 @@ export async function parseMarkdown(...segments: string[]): Promise<Markdown> {
   }
 }
 
+export async function parseFrontmatter(...segments: string[]): Promise<{[key: string]: any}> {
+  const path = buildAbsolutePath(...segments);
+  const source = await fs.readFile(path, 'utf-8');
+  const { data: frontmatter } = matter(source);
+  return frontmatter
+}
+
 export async function renderMarkdown(source: string): Promise<string> {
   const html = await remark().use(remarkHtml).process(source)
   return html.toString()

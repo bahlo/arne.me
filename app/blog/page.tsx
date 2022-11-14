@@ -26,8 +26,8 @@ export default async function Blog() {
     <section>
       <h1>{frontmatter.title}</h1>
       <div dangerouslySetInnerHTML={{__html: html.toString()}}/>
-      {blogposts.map(({ frontmatter, slug, descriptionHtml }) => (
-        <article className="article--list">
+      {blogposts.map(({ frontmatter, slug, descriptionHtml }, i) => (
+        <article className="article--list" key={slug}>
           <h1><a href={"/blog/" + slug }>{ frontmatter.title }</a></h1>
           <span className="details">
             <time dateTime="{ frontmatter.date}">{ frontmatter.date }</time> &middot; { frontmatter.reading_time } min

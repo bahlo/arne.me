@@ -31,8 +31,8 @@ export default async function Weekly() {
       <div dangerouslySetInnerHTML={{__html: html.toString()}}/>
 
       <ul>
-        {issues.map(({ frontmatter }, i) => (
-          <li key={i}><a href={"/weekly/"+frontmatter.num}>{ frontmatter.title }</a></li>
+        {issues.map(({ frontmatter }) => (
+          <li key={frontmatter.num}><a href={"/weekly/"+frontmatter.num}>{ frontmatter.title }</a></li>
         ))}
       </ul>
     </section>
