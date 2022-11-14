@@ -7,7 +7,6 @@ hero: "Arne Bahlo is a software engineer working as a developer experience team 
 I find joy in creating accessible, performant applications, the indie web, fun
 programming languages (especially Rust) and open source software.
 
-You can find me on [GitHub](https://github.com/bahlo) or
-[Twitter](https://twitter.com/arnebahlo) and talk to me via Email:
-[hey@arne.me](mailto:hey@arne.me).
-If you want to know what I'm currently doing, check out [/now](/now).
+You can find me on [Mastodon](https://spezi.social/@arne) or
+[GitHub](https://github.com/bahlo) or talk to me via Email: <hey@arne.me>.
+If you want to know what I’m currently doing, check out [/now](/now).
