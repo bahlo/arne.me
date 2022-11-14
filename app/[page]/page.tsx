@@ -5,7 +5,7 @@ export async function generateStaticParams() {
   const path = buildAbsolutePath("content");
   const files = await fs.readdir(path);
   return files
-    .filter((filename) => filename.endsWith(".md"))
+    .filter((filename) => filename.endsWith(".md") && filename != "index.md")
     .map((filename) => ({
       page: filename.substring(0, filename.length - 3),
     }));
