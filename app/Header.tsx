@@ -16,10 +16,7 @@ export default function Header() {
             const isActive = false; // TODO: Figure out how to determine if the route is active
             return (
               <li key={route.path}>
-                <Link
-                  href={route.path}
-                  className={isActive ? "active" : ""}
-                >
+                <Link href={route.path} className={isActive ? "active" : ""}>
                   {route.name}
                 </Link>
               </li>
