@@ -780,6 +780,7 @@ button {
 footer ul {
   list-style: none;
   padding: 0;
+  line-height: 2; /* on mobile it wraps */
 }
 footer ul li {
   display: inline-block;
