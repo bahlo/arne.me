@@ -1,6 +1,7 @@
 import { parseMarkdown, buildAbsolutePath } from "../../lib/markdown";
 import matter from "gray-matter";
 import { promises as fs } from "node:fs";
+import SubscribeForm from "./SubscribeForm";
 
 async function parseIssues() {
   const path = buildAbsolutePath("content/weekly");
@@ -42,6 +43,9 @@ export default async function Weekly() {
       <h1>{frontmatter.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: html.toString() }} />
 
+      <SubscribeForm />
+
+      <h2>Archive</h2>
       <ul>
         {issues.map(({ frontmatter }) => (
           <li key={frontmatter.num}>

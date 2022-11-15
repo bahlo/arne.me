@@ -1,5 +1,6 @@
 import { buildAbsolutePath, parseMarkdown } from "../../../lib/markdown";
 import { promises as fs } from "node:fs";
+import SubscribeForm from "../SubscribeForm";
 
 export async function generateStaticParams() {
   const path = buildAbsolutePath("content/weekly");
@@ -31,6 +32,8 @@ export default async function Issue({
           <time dateTime="{ frontmatter.date}">{frontmatter.date}</time>
         </span>
         <div dangerouslySetInnerHTML={{ __html: html }} />
+        <br />
+        <SubscribeForm />
       </article>
     </>
   );
