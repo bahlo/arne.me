@@ -7,7 +7,13 @@ async function parseIssues() {
   const files = await fs.readdir(path);
   const parsed = await Promise.all(
     files
-      .filter((filename) => filename != "_index.md" && filename.endsWith(".md"))
+      .filter(
+        (filename) =>
+          filename != "_index.md" &&
+          filename != "unsubscribed.md" &&
+          filename != "subscribed.md" &&
+          filename.endsWith(".md")
+      )
       .map(async (filename) => {
         const slug = filename.substring(0, filename.length - 3);
         const source = await fs.readFile(
