@@ -1,10 +1,7 @@
-import {
-  buildAbsolutePath,
-  parseMarkdown,
-  renderMarkdown,
-} from "../../../lib/markdown";
-import { DateTime } from "luxon";
+import { renderMarkdown } from "../../../lib/markdown";
+import { buildAbsolutePath } from "../../../lib/fs";
 import { promises as fs } from "node:fs";
+import { getPost } from "../../../lib/posts";
 
 export async function generateStaticParams() {
   const path = buildAbsolutePath("content/blog");
@@ -21,9 +18,7 @@ export default async function Blogpost({
 }: {
   params: { slug: string };
 }) {
-  const { frontmatter, html, readingTimeMinutes } = await parseMarkdown(
-    "content/blog/" + slug + ".md"
-  );
+  const { frontmatter, readingTimeMinutes, contentHtml } = await getPost(slug);
 
   let coverImage = null;
   if (frontmatter.coverImage) {
@@ -43,13 +38,13 @@ export default async function Blogpost({
     <article>
       <h1>{frontmatter.title}</h1>
       <span className="details">
-        <time dateTime={frontmatter.date}>
-          {DateTime.fromISO(frontmatter.date).toFormat("LLL dd, yyyy")}
+        <time dateTime={frontmatter.date.toISOTime()}>
+          {frontmatter.date.toFormat("LLL dd, yyyy")}
         </time>{" "}
         &middot; {readingTimeMinutes} min
       </span>
       {coverImage}
-      <div dangerouslySetInnerHTML={{ __html: html.toString() }} />
+      <div dangerouslySetInnerHTML={{ __html: contentHtml! }} />
     </article>
   );
 }

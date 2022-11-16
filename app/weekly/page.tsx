@@ -1,4 +1,5 @@
-import { parseMarkdown, buildAbsolutePath } from "../../lib/markdown";
+import { parseMarkdown } from "../../lib/markdown";
+import { buildAbsolutePath } from "../../lib/fs";
 import matter from "gray-matter";
 import { promises as fs } from "node:fs";
 import SubscribeForm from "./SubscribeForm";

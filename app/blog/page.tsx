@@ -1,40 +1,9 @@
-import {
-  parseMarkdown,
-  buildAbsolutePath,
-  renderMarkdown,
-} from "../../lib/markdown";
-import matter from "gray-matter";
-import { DateTime } from "luxon";
-import { promises as fs } from "node:fs";
-import calculateReadingTimeMinutes from "../../lib/readingTime";
-
-async function parseBlogposts() {
-  const path = buildAbsolutePath("content/blog");
-  const files = await fs.readdir(path);
-  return Promise.all(
-    files
-      .filter((filename) => filename != "_index.md" && filename.endsWith(".md"))
-      .map(async (filename) => {
-        const slug = filename.substring(0, filename.length - 3);
-        const source = await fs.readFile(
-          buildAbsolutePath("content/blog/" + filename)
-        );
-        const { data: frontmatter, content } = matter(source);
-        const descriptionHtml = await renderMarkdown(frontmatter.description);
-        const readingTimeMinutes = calculateReadingTimeMinutes(content);
-        return {
-          slug,
-          frontmatter,
-          descriptionHtml,
-          readingTimeMinutes,
-        };
-      })
-  );
-}
+import { parseMarkdown } from "../../lib/markdown";
+import { getPosts } from "../../lib/posts";
 
 export default async function Blog() {
   const { frontmatter, html } = await parseMarkdown("content/blog/_index.md");
-  const blogposts = await parseBlogposts();
+  const blogposts = await getPosts();
 
   return (
     <section>
@@ -42,22 +11,25 @@ export default async function Blog() {
       <div dangerouslySetInnerHTML={{ __html: html.toString() }} />
       {blogposts
         .sort((a, b) => {
-          const dateA = Date.parse(a.frontmatter.date);
-          const dateB = Date.parse(b.frontmatter.date);
-          return dateB - dateA;
+          return (
+            b.frontmatter.date.toUnixInteger() -
+            a.frontmatter.date.toUnixInteger()
+          );
         })
-        .map(({ frontmatter, slug, descriptionHtml, readingTimeMinutes }) => (
+        .map(({ frontmatter, slug, readingTimeMinutes }) => (
           <article className="article--list" key={slug}>
             <h1>
               <a href={"/blog/" + slug}>{frontmatter.title}</a>
             </h1>
             <span className="details">
               <time dateTime="{ frontmatter.date}">
-                {DateTime.fromISO(frontmatter.date).toFormat("LLL dd, yyyy")}
+                {frontmatter.date.toFormat("LLL dd, yyyy")}
               </time>{" "}
               &middot; {readingTimeMinutes} min
             </span>
-            <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+            <div
+              dangerouslySetInnerHTML={{ __html: frontmatter.descriptionHtml! }}
+            />
           </article>
         ))}
     </section>

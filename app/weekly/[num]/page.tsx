@@ -1,4 +1,5 @@
-import { buildAbsolutePath, parseMarkdown } from "../../../lib/markdown";
+import { parseMarkdown } from "../../../lib/markdown";
+import { buildAbsolutePath } from "../../../lib/fs";
 import { promises as fs } from "node:fs";
 import SubscribeForm from "../SubscribeForm";
 

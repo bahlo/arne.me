@@ -1,4 +1,5 @@
-import { buildAbsolutePath, parseMarkdown } from "../../lib/markdown";
+import { buildAbsolutePath } from "../../lib/fs";
+import { parseMarkdown } from "../../lib/markdown";
 import { promises as fs } from "node:fs";
 
 export async function generateStaticParams() {

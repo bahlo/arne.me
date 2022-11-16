@@ -1,4 +1,4 @@
-import { buildAbsolutePath } from "../lib/markdown";
+import { buildAbsolutePath } from "../lib/fs";
 import sizeOf from "image-size";
 import { DateTime } from "luxon";
 
