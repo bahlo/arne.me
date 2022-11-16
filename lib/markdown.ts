@@ -3,9 +3,11 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 import { join } from "node:path";
+import calculateReadingTimeMinutes from "./readingTime";
 
 interface Markdown {
   frontmatter: { [key: string]: any };
+  readingTimeMinutes: number;
   html: string;
 }
 
@@ -20,8 +22,10 @@ export async function parseMarkdown(...segments: string[]): Promise<Markdown> {
   const source = await fs.readFile(path, "utf-8");
   const { data: frontmatter, content } = matter(source);
   const html = await renderMarkdown(content);
+  const readingTimeMinutes = calculateReadingTimeMinutes(content);
   return {
     frontmatter,
+    readingTimeMinutes,
     html,
   };
 }

@@ -21,11 +21,9 @@ export default async function Blogpost({
 }: {
   params: { slug: string };
 }) {
-  const { frontmatter, html } = await parseMarkdown(
+  const { frontmatter, html, readingTimeMinutes } = await parseMarkdown(
     "content/blog/" + slug + ".md"
   );
-
-  const readingTime = "TODO";
 
   let coverImage = null;
   if (frontmatter.coverImage) {
@@ -48,7 +46,7 @@ export default async function Blogpost({
         <time dateTime={frontmatter.date}>
           {DateTime.fromISO(frontmatter.date).toFormat("LLL dd, yyyy")}
         </time>{" "}
-        &middot; {readingTime} min
+        &middot; {readingTimeMinutes} min
       </span>
       {coverImage}
       <div dangerouslySetInnerHTML={{ __html: html.toString() }} />

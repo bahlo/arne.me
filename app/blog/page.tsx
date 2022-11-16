@@ -6,6 +6,7 @@ import {
 import matter from "gray-matter";
 import { DateTime } from "luxon";
 import { promises as fs } from "node:fs";
+import calculateReadingTimeMinutes from "../../lib/readingTime";
 
 async function parseBlogposts() {
   const path = buildAbsolutePath("content/blog");
@@ -18,12 +19,14 @@ async function parseBlogposts() {
         const source = await fs.readFile(
           buildAbsolutePath("content/blog/" + filename)
         );
-        const { data: frontmatter } = matter(source);
+        const { data: frontmatter, content } = matter(source);
         const descriptionHtml = await renderMarkdown(frontmatter.description);
+        const readingTimeMinutes = calculateReadingTimeMinutes(content);
         return {
           slug,
           frontmatter,
           descriptionHtml,
+          readingTimeMinutes,
         };
       })
   );
@@ -43,7 +46,7 @@ export default async function Blog() {
           const dateB = Date.parse(b.frontmatter.date);
           return dateB - dateA;
         })
-        .map(({ frontmatter, slug, descriptionHtml }) => (
+        .map(({ frontmatter, slug, descriptionHtml, readingTimeMinutes }) => (
           <article className="article--list" key={slug}>
             <h1>
               <a href={"/blog/" + slug}>{frontmatter.title}</a>
@@ -52,7 +55,7 @@ export default async function Blog() {
               <time dateTime="{ frontmatter.date}">
                 {DateTime.fromISO(frontmatter.date).toFormat("LLL dd, yyyy")}
               </time>{" "}
-              &middot; {frontmatter.reading_time} min
+              &middot; {readingTimeMinutes} min
             </span>
             <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
           </article>
