@@ -41,7 +41,7 @@ async function generateWeeklyFeed() {
   const issues = await getIssues({ renderContent: true });
 
   const feed = new RSS({
-    title: "Arne's Weekly",
+    title: "Arne’s Weekly",
     site_url: "https://arne.me",
     feed_url: "https://arne.me/weekly/atom.xml",
     language: "en",

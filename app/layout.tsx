@@ -45,13 +45,13 @@ export default function RootLayout({
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Blog posts"
+          title="Arne Bahlo — Blog"
           href="https://arne.me/blog/atom.xml"
         />
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Arne’s  Weekly archive"
+          title="Arne’s Weekly"
           href="https://arne.me/weekly/atom.xml"
         />
         <link href="mailto:hey@arne.me" rel="me authn" />
