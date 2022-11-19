@@ -1,43 +1,10 @@
 import { parseMarkdown } from "../../lib/markdown";
-import { buildAbsolutePath } from "../../lib/fs";
-import matter from "gray-matter";
-import { promises as fs } from "node:fs";
 import SubscribeForm from "./SubscribeForm";
-
-async function parseIssues() {
-  const path = buildAbsolutePath("content/weekly");
-  const files = await fs.readdir(path);
-  const parsed = await Promise.all(
-    files
-      .filter(
-        (filename) =>
-          filename != "_index.md" &&
-          filename != "unsubscribed.md" &&
-          filename != "subscribed.md" &&
-          filename.endsWith(".md")
-      )
-      .map(async (filename) => {
-        const slug = filename.substring(0, filename.length - 3);
-        const source = await fs.readFile(
-          buildAbsolutePath("content/weekly/" + filename)
-        );
-        const { data: frontmatter } = matter(source);
-        return {
-          slug,
-          frontmatter,
-        };
-      })
-  );
-  return parsed.sort((a, b) => {
-    const dateA = Date.parse(a.frontmatter.date);
-    const dateB = Date.parse(b.frontmatter.date);
-    return dateB - dateA;
-  });
-}
+import { getIssues } from "../../lib/issues";
 
 export default async function Weekly() {
   const { frontmatter, html } = await parseMarkdown("content/weekly/_index.md");
-  const issues = await parseIssues();
+  const issues = await getIssues({ renderContent: false });
 
   return (
     <section>
@@ -48,9 +15,9 @@ export default async function Weekly() {
 
       <h2>Archive</h2>
       <ul>
-        {issues.map(({ frontmatter }) => (
-          <li key={frontmatter.num}>
-            <a href={"/weekly/" + frontmatter.num}>{frontmatter.title}</a>
+        {issues.map(({ num, frontmatter }) => (
+          <li key={num}>
+            <a href={"/weekly/" + num}>{frontmatter.title}</a>
           </li>
         ))}
       </ul>

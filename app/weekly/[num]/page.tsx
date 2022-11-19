@@ -1,38 +1,34 @@
-import { parseMarkdown } from "../../../lib/markdown";
-import { buildAbsolutePath } from "../../../lib/fs";
-import { promises as fs } from "node:fs";
 import SubscribeForm from "../SubscribeForm";
+import { getIssues, getIssue } from "../../../lib/issues";
 
 export async function generateStaticParams() {
-  const path = buildAbsolutePath("content/weekly");
-  const files = await fs.readdir(path);
-  return files
-    .filter((filename) => filename != "_index.md" && filename.endsWith(".md"))
-    .map((filename) => ({
-      num: filename.substring(0, filename.length - 3),
-    }));
+  const issues = await getIssues({ renderContent: false });
+  return issues.map((issue) => ({
+    num: issue.num,
+  }));
 }
 
 export default async function Issue({
-  params: { num },
+  params: { num: numStr },
 }: {
   params: { num: string };
 }) {
-  const { frontmatter, html } = await parseMarkdown(
-    "content/weekly/" + num + ".md"
-  );
+  const num = parseInt(numStr, 10);
+  const { frontmatter, contentHtml } = await getIssue(num);
 
   return (
     <>
       <span className="preface">
-        This is issue #{frontmatter.num} of <a href="/weekly">Arnes Weekly</a>.
+        This is issue #{num} of <a href="/weekly">Arnes Weekly</a>.
       </span>
       <article className="article--weekly">
         <h1>{frontmatter.title}</h1>
         <span className="details">
-          <time dateTime="{ frontmatter.date}">{frontmatter.date}</time>
+          <time dateTime={frontmatter.date.toISOTime()}>
+            {frontmatter.date.toFormat("LLL dd, yyyy")}
+          </time>
         </span>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
+        <div dangerouslySetInnerHTML={{ __html: contentHtml! }} />
         <br />
         <SubscribeForm />
       </article>

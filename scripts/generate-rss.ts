@@ -1,13 +1,10 @@
 import { promises as fs } from "node:fs";
 import RSS from "rss";
 import { getPosts, Post } from "../lib/posts.js";
-// const RSS = require("rss");
-// const { promises: fs } = require("node:fs");
-// const { getPosts } = require("../lib/posts");
-// import { Post } from "../lib/posts";
+import { getIssues, Issue } from "../lib/issues.js";
 
 async function generateBlogFeed() {
-  const previewItems = await getPosts({
+  const blogposts = await getPosts({
     renderContent: true,
     renderDescription: false,
     renderCoverImageCaption: false,
@@ -20,7 +17,7 @@ async function generateBlogFeed() {
     language: "en",
   });
 
-  previewItems
+  blogposts
     .sort(
       (a: Post, b: Post) =>
         b.frontmatter.date.toUnixInteger() - a.frontmatter.date.toUnixInteger()
@@ -28,7 +25,7 @@ async function generateBlogFeed() {
     .forEach((post: Post) => {
       feed.item({
         title: post.frontmatter.title,
-        guid: post.slug,
+        guid: `https://arne.me/blog/${post.slug}`,
         url: `https://arne.me/blog/${post.slug}`,
         date: post.frontmatter.date.toJSDate(),
         description: post.contentHtml!,
@@ -40,8 +37,39 @@ async function generateBlogFeed() {
   await fs.writeFile("./public/blog/atom.xml", rss);
 }
 
+async function generateWeeklyFeed() {
+  const issues = await getIssues({ renderContent: true });
+
+  const feed = new RSS({
+    title: "Arne's Weekly",
+    site_url: "https://arne.me",
+    feed_url: "https://arne.me/weekly/atom.xml",
+    language: "en",
+  });
+
+  issues
+    .sort(
+      (a: Issue, b: Issue) =>
+        b.frontmatter.date.toUnixInteger() - a.frontmatter.date.toUnixInteger()
+    )
+    .forEach((issue: Issue) => {
+      feed.item({
+        title: issue.frontmatter.title,
+        guid: `https://arne.me/weekly/${issue.num}`,
+        url: `https://arne.me/weekly/${issue.num}`,
+        date: issue.frontmatter.date.toJSDate(),
+        description: issue.contentHtml!,
+        author: "Arne Bahlo",
+      });
+    });
+
+  const rss = feed.xml();
+  await fs.writeFile("./public/weekly/atom.xml", rss);
+}
+
 async function main() {
   await generateBlogFeed();
+  await generateWeeklyFeed();
 }
 
 main();
