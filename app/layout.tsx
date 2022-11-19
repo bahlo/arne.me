@@ -55,6 +55,11 @@ export default function RootLayout({
           href="https://arne.me/weekly/atom.xml"
         />
         <link href="mailto:hey@arne.me" rel="me authn" />
+        <script
+          defer
+          data-domain="arne.me"
+          src="https://plausible.io/js/plausible.js"
+        ></script>
       </head>
       <body>
         <a href="#main" className="skip-link">
