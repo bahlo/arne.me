@@ -34,3 +34,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated RSS feed
+/public/blog/atom.xml
+
+# generated javascript files
+/lib/*.js
+/lib/*.js.map
+/scripts/*.mjs
+/scripts/*.mjs.map

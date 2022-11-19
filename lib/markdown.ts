@@ -2,7 +2,6 @@ import { promises as fs } from "node:fs";
 import matter from "gray-matter";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
-import calculateReadingTimeMinutes from "./readingTime";
 import { buildAbsolutePath } from "./fs";
 
 interface Markdown {
