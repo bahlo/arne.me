@@ -37,6 +37,7 @@ next-env.d.ts
 
 # generated RSS feed
 /public/blog/atom.xml
+/public/weekly/atom.xml
 
 # generated javascript files
 /lib/*.js

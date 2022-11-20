@@ -4,7 +4,7 @@ import { getIssues, getIssue } from "../../../lib/issues";
 export async function generateStaticParams() {
   const issues = await getIssues({ renderContent: false });
   return issues.map((issue) => ({
-    num: issue.num,
+    num: issue.num.toString(),
   }));
 }
 
