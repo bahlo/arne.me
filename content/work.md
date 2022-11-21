@@ -10,12 +10,12 @@ experience:
     location: "Remote"
     tasks:
       [
-        "Working on a scalable Go service around a database library",
-        "Working on said library to fix bugs and improve performance or scalability",
-        "Built a public demo that can be run locally to get a feeling for the product quickly",
-        "Working with customers to help integrate the product",
-        "Building an end-to-end test pipeline using Cucumber and Go",
-        "Working on various data-shipping solutions including a log-synthesizer, Hacker New and GitHub events",
+        "Architected a scalable Go service around a database library",
+        "Worked on said library to fix bugs and improve performance or scalability",
+        "Built a public demo that can be run locally to get a feeling for the product",
+        "Worked with customers to help integrate the product",
+        "Built an end-to-end test pipeline using Cucumber and Go",
+        "Worked on various data-shipping solutions including a log-synthesizer, Hacker New and GitHub events",
       ]
   - from: 2017
     to: 2019
