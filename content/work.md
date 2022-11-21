@@ -16,6 +16,7 @@ experience:
         "Worked with customers to help integrate the product",
         "Built an end-to-end test pipeline using Cucumber and Go",
         "Worked on various data-shipping solutions including a log-synthesizer, Hacker New and GitHub events",
+        "Worked on Vercel integration",
       ]
   - from: 2017
     to: 2019
