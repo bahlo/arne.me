@@ -55,6 +55,7 @@ export default function RootLayout({
           href="https://arne.me/weekly/atom.xml"
         />
         <link href="mailto:hey@arne.me" rel="me authn" />
+        <link rel="me" href="https://spezi.social/@arne" />
         <script
           defer
           data-domain="arne.me"

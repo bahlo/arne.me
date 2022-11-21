@@ -19,7 +19,6 @@ export default function Footer() {
           <Link href="/imprint">Imprint</Link>
         </li>
       </ul>
-      <a rel="me" href="https://spezi.social/@arne" hidden></a>
     </footer>
   );
 }
