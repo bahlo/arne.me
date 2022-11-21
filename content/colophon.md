@@ -9,9 +9,6 @@ It's developed on a 2017 MacBook Pro with [Next.js](https://nextjs.org) and
 hosted on [Vercel](https://vercel.com).
 The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 
-The [Inter](https://rsms.me/inter/) typeface family is used for text, code is
-using [Pragmata Pro](https://fsd.it/shop/fonts/pragmatapro/).
-
 [Plausible Analytics](https://plausible.io) is used, a privacy focused
 alternative to most analytics tools.
 
