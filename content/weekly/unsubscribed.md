@@ -1,6 +1,5 @@
-+++
-title = "Unsubscribed"
-template = "page.html"
-+++
+---
+title: "Unsubscribed"
+---
 
 You've successfully unsubscribed. No hard feelings, have a great day!

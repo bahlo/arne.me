@@ -1,7 +1,7 @@
-+++
-title = "Imprint"
-description = "The imprint for arne.me"
-+++
+---
+title: "Imprint"
+description: "The imprint for arne.me"
+---
 
 Angaben gemäß § 5 TMG:
 
@@ -10,7 +10,7 @@ Postfach 51 06
 61125 Nidderau
 
 E-Mail: <hey@arne.me>  
-Quelle: e-recht24.de  
+Quelle: e-recht24.de
 
 ## Haftungsausschluss
 
@@ -33,5 +33,3 @@ Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ern
 Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.
 
 Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.
-
-
