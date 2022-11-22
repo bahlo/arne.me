@@ -2,7 +2,8 @@ import { parseMarkdown } from "../../lib/markdown";
 import { getPosts } from "../../lib/posts";
 
 export default async function Blog() {
-  const { frontmatter, html } = await parseMarkdown("content/blog/_index.md");
+  const page = await parseMarkdown("content/blog/_index.md");
+  const { frontmatter, html } = page!;
   const blogposts = await getPosts();
 
   return (

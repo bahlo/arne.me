@@ -1,9 +1,8 @@
 import { parseMarkdown } from "../../../lib/markdown";
 
 export default async function Subscribed() {
-  const { frontmatter, html } = await parseMarkdown(
-    "content/weekly/subscribed.md"
-  );
+  const page = await parseMarkdown("content/weekly/subscribed.md");
+  const { frontmatter, html } = page!;
 
   return (
     <>

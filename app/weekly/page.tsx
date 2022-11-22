@@ -3,7 +3,8 @@ import SubscribeForm from "./SubscribeForm";
 import { getIssues } from "../../lib/issues";
 
 export default async function Weekly() {
-  const { frontmatter, html } = await parseMarkdown("content/weekly/_index.md");
+  const page = await parseMarkdown("content/weekly/_index.md");
+  const { frontmatter, html } = page!;
   const issues = await getIssues({ renderContent: false });
 
   return (

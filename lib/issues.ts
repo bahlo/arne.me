@@ -36,7 +36,7 @@ export async function getIssues(
         const base = filename.substring(0, filename.length - 3);
         const num = parseInt(base, 10);
         const issue = await getIssue(num, opts);
-        return issue;
+        return issue!;
       })
   );
   return issues.sort((a: Issue, b: Issue) => b.num - a.num);
@@ -47,9 +47,16 @@ export async function getIssue(
   opts: Opts = {
     renderContent: true,
   }
-): Promise<Issue> {
+): Promise<Issue | undefined> {
   const path = buildAbsolutePath("content", "weekly", num + ".md");
-  const source = await fs.readFile(path);
+
+  let source;
+  try {
+    source = await fs.readFile(path);
+  } catch {
+    return undefined;
+  }
+
   const { data: frontmatter, content } = matter(source);
   let contentHtml;
   if (opts.renderContent) {

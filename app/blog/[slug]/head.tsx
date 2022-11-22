@@ -7,6 +7,9 @@ export default async function Head({
   params: { slug: string };
 }) {
   const frontmatter = await parseFrontmatter("content/blog/" + slug + ".md");
+  if (!frontmatter) {
+    return null;
+  }
   return (
     <SharedHead
       title={frontmatter.title}

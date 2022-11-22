@@ -45,7 +45,7 @@ export async function getPosts(
       .map(async (filename) => {
         const slug = filename.substring(0, filename.length - 3);
         const post = await getPost(slug, opts);
-        return post;
+        return post!;
       })
   );
 }
@@ -57,9 +57,16 @@ export async function getPost(
     renderContent: true,
     renderCoverImageCaption: true,
   }
-): Promise<Post> {
+): Promise<Post | undefined> {
   const path = buildAbsolutePath("content", "blog", slug + ".md");
-  const source = await fs.readFile(path);
+
+  let source;
+  try {
+    source = await fs.readFile(path);
+  } catch {
+    return undefined;
+  }
+
   const { data: frontmatter, content } = matter(source);
   let descriptionHtml, contentHtml;
   if (opts.renderDescription) {

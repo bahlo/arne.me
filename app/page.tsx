@@ -1,7 +1,8 @@
 import { parseMarkdown } from "../lib/markdown";
 
 export default async function Page() {
-  const { frontmatter, html } = await parseMarkdown("content/index.md");
+  const page = await parseMarkdown("content/index.md");
+  const { frontmatter, html } = page!;
 
   return (
     <section className="intro">

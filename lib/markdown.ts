@@ -13,9 +13,19 @@ interface Markdown {
   html: string;
 }
 
-export async function parseMarkdown(...segments: string[]): Promise<Markdown> {
+export async function parseMarkdown(
+  ...segments: string[]
+): Promise<Markdown | undefined> {
   const path = buildAbsolutePath(...segments);
-  const source = await fs.readFile(path, "utf-8");
+
+  // Return undefined if the file doesn't exist
+  let source;
+  try {
+    source = await fs.readFile(path, "utf-8");
+  } catch {
+    return undefined;
+  }
+
   const { data: frontmatter, content } = matter(source);
   const html = await renderMarkdown(content);
   return {
@@ -26,9 +36,16 @@ export async function parseMarkdown(...segments: string[]): Promise<Markdown> {
 
 export async function parseFrontmatter(
   ...segments: string[]
-): Promise<{ [key: string]: any }> {
+): Promise<{ [key: string]: any } | undefined> {
   const path = buildAbsolutePath(...segments);
-  const source = await fs.readFile(path, "utf-8");
+
+  let source;
+  try {
+    source = await fs.readFile(path, "utf-8");
+  } catch {
+    return undefined;
+  }
+
   const { data: frontmatter } = matter(source);
   return frontmatter;
 }

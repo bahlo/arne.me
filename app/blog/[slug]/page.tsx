@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { renderMarkdown } from "../../../lib/markdown";
 import { buildAbsolutePath } from "../../../lib/fs";
 import { promises as fs } from "node:fs";
@@ -18,16 +19,21 @@ export default async function Blogpost({
 }: {
   params: { slug: string };
 }) {
-  const { frontmatter, readingTimeMinutes, contentHtml } = await getPost(slug);
+  const post = await getPost(slug);
+  if (!post) {
+    return notFound();
+  }
 
   let coverImage = null;
-  if (frontmatter.coverImage) {
-    const captionHtml = await renderMarkdown(frontmatter.coverImage.caption);
+  if (post.frontmatter.coverImage) {
+    const captionHtml = await renderMarkdown(
+      post.frontmatter.coverImage.caption
+    );
     coverImage = (
       <figure className="cover-image has-caption">
         <img
-          src={frontmatter.coverImage.src}
-          alt={frontmatter.coverImage.alt}
+          src={post.frontmatter.coverImage.src}
+          alt={post.frontmatter.coverImage.alt}
         />
         <figcaption dangerouslySetInnerHTML={{ __html: captionHtml }} />
       </figure>
@@ -36,15 +42,15 @@ export default async function Blogpost({
 
   return (
     <article>
-      <h1>{frontmatter.title}</h1>
+      <h1>{post.frontmatter.title}</h1>
       <span className="details">
-        <time dateTime={frontmatter.date.toISOTime()}>
-          {frontmatter.date.toFormat("LLL dd, yyyy")}
+        <time dateTime={post.frontmatter.date.toISOTime()}>
+          {post.frontmatter.date.toFormat("LLL dd, yyyy")}
         </time>{" "}
-        &middot; {readingTimeMinutes} min
+        &middot; {post.readingTimeMinutes} min
       </span>
       {coverImage}
-      <div dangerouslySetInnerHTML={{ __html: contentHtml! }} />
+      <div dangerouslySetInnerHTML={{ __html: post.contentHtml! }} />
     </article>
   );
 }
