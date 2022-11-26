@@ -9,5 +9,5 @@ programming languages (especially Rust) and open source software.
 
 You can find me on [Mastodon](https://spezi.social/@arne) or
 [GitHub](https://github.com/bahlo) or talk to me via
-[Matrix](https://matrix.to/#/@arne:arne.me) or [Email](hey@arne.me).
+[Matrix](https://matrix.to/#/@arne:arne.me) or [Email](mailto:hey@arne.me).
 If you want to know what I’m currently doing, check out [/now](/now).
