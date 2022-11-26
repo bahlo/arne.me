@@ -10,7 +10,8 @@ interface Experience {
 }
 
 export default async function Work() {
-  const { frontmatter, html } = await parseMarkdown("content/work.md");
+  const page = await parseMarkdown("content/work.md");
+  const { frontmatter, html } = page!;
 
   return (
     <section>
