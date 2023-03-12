@@ -3,6 +3,8 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+import {frontmatter, Content } from '../content/index.md';
 ---
 
 <!DOCTYPE html>
@@ -13,20 +15,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
   <body>
     <Header />
     <main>
-      <h1>Arne Bahlo is a software engineer working as a developer 
-        experience team lead on serverless log management solutions at 
-        Axiom.</h1>
-      <p>I find joy in creating accessible, performant applications, the 
-        indie web, fun programming languages (especially Rust) and open 
-        source software.</p>
-      <p>You can find me on 
-        <a href="https://https://spezi.social/@arne">Mastodon</a> or
-        <a href="https://github.com/bahlo">GitHub</a> or talk to me via
-        <a href="https://matrix.to/#/@arne:arne.me">Matrix</a> or 
-        <e href="mailto:hey@arne.me">Email</a>.
-        If you want to know what I’m currently doing, check out
-        <a href="/now">/now</a>.
-      </p>
+      <h1>{frontmatter.hero}</h1>
+      <Content/>
     </main>
     <Footer />
   </body>
