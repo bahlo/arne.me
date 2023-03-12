@@ -3,7 +3,7 @@ title: "Plex on NixOS"
 description: "In this post I describe how I set up Plex on NixOS, including a virtual file system for Backblaze B2 and Nginx for HTTPS."
 pubDate: "2022-02-22"
 coverImage:
-  src: "/blog/plex-on-nixos/cover.jpg"
+  src: "/assets/blog/plex-on-nixos/cover.jpg"
   alt: "A screenshot of the Plex web interface with the movie Frozen"
   caption: "The poster art copyright is believed to belong to Disney Enterprises, Inc.."
 ---
