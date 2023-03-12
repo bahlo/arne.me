@@ -1,0 +1,41 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+import {frontmatter, Content } from '../content/work.md';
+
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={`${frontmatter.title} — ${SITE_TITLE}`} description={frontmatter.description} />
+  </head>
+  <body>
+    <Header />
+    <main>
+     <section>
+        <h1>{frontmatter.title}</h1>
+        {frontmatter.experience.map((experience: Experience) => (
+          <>
+            <h2>
+              {experience.title} at {experience.company}
+            </h2>
+            <span className="details">
+              {experience.from} &ndash; {experience.to} &middot;{" "}
+              {experience.location}
+            </span>
+            <ul>
+              {experience.tasks.map((task, i) => {
+                return <li key={i}>{task}</li>;
+              })}
+            </ul>
+          </>
+        ))}
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
