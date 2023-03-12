@@ -1,4 +1,5 @@
 ---
+import { marked } from 'marked';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
@@ -7,7 +8,9 @@ import FormattedDate from '../components/FormattedDate.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, coverImage } = Astro.props;
+const { title, description, pubDate, updatedDate, cover } = Astro.props;
+
+const coverCaption = marked.parse(cover.caption);
 
 ---
 
@@ -19,7 +22,11 @@ const { title, description, pubDate, updatedDate, coverImage } = Astro.props;
     <Header />
     <main>
       <article>
-        {coverImage && <img width={720} height={360} src={coverImage.src} alt={coverImage.alt} />}
+        {cover && 
+          <figure>
+            <img src={cover.image} alt={cover.alt} />
+            <figcaption set:html={cover.caption} />
+          </figure>}
         <h1 class="title">{title}</h1>
         <FormattedDate date={pubDate} />
         {
