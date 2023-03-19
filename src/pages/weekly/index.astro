@@ -2,6 +2,7 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import SubscribeForm from '../../components/SubscribeForm.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
@@ -19,12 +20,16 @@ const issues = (await getCollection('weekly')).sort(
   <body>
     <Header />
       <main>
-        <h1>Weekly</h1>
-        <p>Arne's Weekly is my newsletter, where I collect interesting stories 
-           from all over the web every Sunday.<br />
-           There's also an <a href="/weekly/axom.xml">RSS Feed</a> available.
-        </p>
         <section>
+          <h1>Weekly</h1>
+          <p>Arne's Weekly is my newsletter, where I collect interesting stories 
+             from all over the web every Sunday.<br />
+             There's also an <a href="/weekly/axom.xml">RSS Feed</a> available.
+          </p>
+
+          <SubscribeForm />
+
+          <h2>Archive</h2>
           <ul>
             {issues.map((issue) => (
               <li>
