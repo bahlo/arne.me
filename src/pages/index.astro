@@ -9,11 +9,18 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .hero {
+        line-height: 1.2;
+        padding-left: 1em;
+        border-left: 4px solid #0000ff;
+      }
+    </style>
   </head>
   <body>
     <Header />
     <main>
-      <h1>Arne Bahlo is a software engineer working as a developer experience team lead on serverless log management solutions at Axiom.</h1>
+      <h1 class="hero">Arne Bahlo is a software engineer working as a developer experience team lead on serverless log management solutions at Axiom.</h1>
       <p>I find joy in creating accessible, performant applications, the indie web, fun
       programming languages (especially Rust) and open source software.</p>
       <p>You can find me on <a href="https://spezi.social/@arne">Mastodon</a> or

@@ -19,10 +19,10 @@ const posts = (await getCollection('blog')).sort(
   <body>
     <Header />
       <main>
-        <h1>Blog</h1>
-        <p>Hey, here are some blog posts I've written. There's an 
-        <a href="/blog/atom.xml">RSS Feed</a>, if you're into that.</p>
         <section>
+          <h1>Blog</h1>
+          <p>Hey, here are some blog posts I've written. There's an 
+          <a href="/blog/atom.xml">RSS Feed</a>, if you're into that.</p>
           <ul>
             {posts.map((post) => (
               <li>

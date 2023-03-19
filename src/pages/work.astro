@@ -57,6 +57,21 @@ const experience = [
 <html lang="en">
   <head>
     <BaseHead title={`${title} — ${SITE_TITLE}`} description={description} />
+    <style>
+      h2 {
+        margin: 0 0 0.5rem;
+      }
+
+      .details {
+        display: inline-block;
+        margin: 0 0 0.5rem;
+      }
+
+      ul {
+        margin: 0 0 1rem;
+        padding-left: 1rem;
+      }
+    </style>
   </head>
   <body>
     <Header />
@@ -68,7 +83,7 @@ const experience = [
             <h2>
               {experience.title} at {experience.company}
             </h2>
-            <span className="details">
+            <span class="details">
               {experience.from} &ndash; {experience.to} &middot;{" "}
               {experience.location}
             </span>
