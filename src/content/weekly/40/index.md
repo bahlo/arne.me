@@ -9,7 +9,7 @@ Hi hi ✌🏻
 ## Tweet of The Week
 
 > Here's a great chess tip for beginners, I never knew the reason behind that rule!!
-> ![A chess board with a Chess Tip on the side saying "While pawns can move forward, they cannot capture pieces moving directly forward. The reason for this is because if they look their opponent in the eye while they kill them, they will see only their own face: that of a worker. The truth will dawn on them, that their enemey is their comrade and their kind is their enemy."](twitter_image.png)
+> ![A chess board with a Chess Tip on the side saying "While pawns can move forward, they cannot capture pieces moving directly forward. The reason for this is because if they look their opponent in the eye while they kill them, they will see only their own face: that of a worker. The truth will dawn on them, that their enemey is their comrade and their kind is their enemy."](./twitter_image.png)
 > — [@KungFuChessOrg on Twitter](https://twitter.com/KungFuChessOrg/status/1483600671148437504)
 
 ## Books
@@ -17,7 +17,7 @@ Hi hi ✌🏻
 This week I read _How to Take Smart Notes_ by Söhnke Ahrens (2017), and I really enjoyed it.
 
 <div style="width: 30%;float: left;padding-right: 20px;">
-  <img alt="The cover of How to Take Smart Notes, showing a checkered colorful board with lines that sometimes connect and are sometimes interrupted." src="how_to_take_smart_notes_cover.jpg">
+  <img alt="The cover of How to Take Smart Notes, showing a checkered colorful board with lines that sometimes connect and are sometimes interrupted." src="./how_to_take_smart_notes_cover.jpg">
 </div>
 
 The author explains the Zettelkasten system by Niklas Luhmann, who had a physical box with DIN A6 (4.1×5.8 inches for my imperial friends) cards, each of which had contained one note and was densely linked and clustered to other notes.

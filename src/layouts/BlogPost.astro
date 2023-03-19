@@ -11,7 +11,10 @@ type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, cover } = Astro.props;
 
-const coverCaption = marked.parse(cover.caption);
+let coverCaption = null;
+if (cover) {
+  const coverCaption = marked.parse(cover.caption);
+}
 
 ---
 

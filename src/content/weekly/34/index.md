@@ -9,7 +9,7 @@ Hope you're doing okay ✌🏻
 ## Tweet of the Week
 
 > If you wondering what’s Tech Twitter been up to lately.
-> ![A meme. A boy with a trumped follows a girl that covers her ears. Text on the boy reads "crypto/nft/web3/dao", text on the girl reads "tech twitter"](twitter_image.jpeg)
+> ![A meme. A boy with a trumped follows a girl that covers her ears. Text on the boy reads "crypto/nft/web3/dao", text on the girl reads "tech twitter"](./twitter_image.jpeg)
 > — [@tweevtran](https://twitter.com/tweevtran/status/1464947469557682180)
 
 ## Favourites

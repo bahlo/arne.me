@@ -9,7 +9,7 @@ Hey, how's it going? ✌🏻
 ## Tweet of The Week
 
 > truly blessed day
-> ![Screenshot of GitHub Actions showing successful run for commit "Fix CI (attempt #1)"](twitter_image.png)
+> ![Screenshot of GitHub Actions showing successful run for commit "Fix CI (attempt #1)"](./twitter_image.png)
 > — [@tmandry on Twitter](https://twitter.com/tmandry/status/1486534292360470528)
 
 ## Favourites

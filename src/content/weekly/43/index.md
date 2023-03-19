@@ -9,7 +9,7 @@ Hey hey, how was your week? ✌🏻
 ## Tweet of The Week
 
 > Extremely niche #msdos
-> ![Three aliens talking, subtitle: Some of the less intelligent humans are trading in "Non Frungy Tokens"?](twitter_image.png)
+> ![Three aliens talking, subtitle: Some of the less intelligent humans are trading in "Non Frungy Tokens"?](./twitter_image.png)
 > — [@voxel on Twitter](https://twitter.com/voxel/status/1492049780734050304)
 
 ## Favourites
