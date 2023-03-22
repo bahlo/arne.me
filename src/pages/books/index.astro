@@ -2,7 +2,7 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE_TITLE } from '../../consts';
+import { BOOKS_TITLE, BOOKS_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 
@@ -14,7 +14,7 @@ const books = (await getCollection('books')).sort(
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <BaseHead title={`Books — ${SITE_TITLE}`} description="Books that I've read" />
+    <BaseHead title={BOOKS_TITLE} description={BOOKS_DESCRIPTION} />
   </head>
   <body>
     <Header />
