@@ -9,21 +9,46 @@ import { SITE_TITLE } from '../consts';
 
 type Props = CollectionEntry<'books'>['data'];
 
-const { title, subtitle, author, dateRead, rating } = Astro.props;
+const { title, subtitle, author, dateRead, rating, cover } = Astro.props;
+
 ---
 
 <html lang="en">
   <head>
     <BaseHead title={`${title} by ${author}`}/>
+    <style>
+      .cover {
+        width: 32%;
+        float: right;
+        margin-left: 1%;
+      }
+
+      .clear {
+        clear: both;
+      }
+
+      h1 {
+        margin-bottom: 0;
+      }
+
+      .subtitle {
+        display: block;
+        margin: .25rem 0 1rem;
+        font-size: 1.2rem;
+      }
+    </style>
   </head>
   <body>
     <Header/>
     <main>
       <article>
-        <h1>{title}: {subtitle}</h1>
-        Read on <FormattedDate date={dateRead}/> &middot;
+        <img class="cover" src={cover} alt={`Cover of ${title} by ${author}`} />
+        <h1>{title}</h1>
+        <span class="subtitle">{subtitle}</span>
+        Read on <FormattedDate date={dateRead}/>
         <Rating rating={rating}/>
         <slot />
+        <br class="clear"/>
       </article>
     </main>
     <Footer/>

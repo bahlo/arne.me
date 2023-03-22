@@ -40,6 +40,7 @@ const books = defineCollection({
       .string()
       .or(z.date())
       .transform((val) => new Date(val)),
+    cover: z.string(),
   }),
 });
 

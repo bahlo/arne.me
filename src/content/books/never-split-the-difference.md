@@ -4,10 +4,13 @@ subtitle: "Negotiating As If Your Life Depended On It"
 author: "Chris Voss"
 dateRead: "2023-03-23"
 rating: 4
+cover: "/books/never-split-the-difference/cover.jpeg"
 ---
 
-This book is thrilling as Chris Voss tells stories from real (sometimes hostage) 
-negotiations from his time at the FBI and explains how and why his tactics work. 
+Chris Voss makes this non-fiction book exciting by telling stories from real 
+hostage negotiations from his time at the FBI.
+Each chapter is about a specific tactic and filled with psychological 
+information as well as real-world experience and has a nice summary at the end 
+(remind me to collate those into my notes).
+
 If I every ask you „How am I supposed to do that?“, it‘s about to get real. 
-Every chapter has a nice summary at the end (remind me to collate those into my 
-notes) and it reads like a fiction book.
