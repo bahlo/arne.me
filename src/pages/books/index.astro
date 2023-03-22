@@ -1,0 +1,37 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+const books = (await getCollection('books')).sort(
+	(a, b) => b.data.dateRead.valueOf() - a.data.dateRead.valueOf()
+);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+      <main>
+        <section>
+          <h1>Books</h1>
+          <p>Hey, on this page I collect the books I've read since March 2023:</p>
+          <ul>
+            {books.map((book) => (
+              <li>
+                <FormattedDate date={book.data.dateRead} />
+                <a href={`/books/${book.slug}/`}>{book.data.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </main>
+      <Footer />
+	</body>
+</html>
