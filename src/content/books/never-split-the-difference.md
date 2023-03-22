@@ -12,5 +12,3 @@ hostage negotiations from his time at the FBI.
 Each chapter is about a specific tactic and filled with psychological 
 information as well as real-world experience and has a nice summary at the end 
 (remind me to collate those into my notes).
-
-If I every ask you „How am I supposed to do that?“, it‘s about to get real. 
