@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE } from '../consts';
 
 const title = "Work"
 const description = "My work experience"
@@ -56,7 +56,7 @@ const experience = [
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <BaseHead title={`${title} — ${SITE_TITLE}`} description={description} />
+    <BaseHead title={`${title} — ${SITE_TITLE}`} description="Work experience of Arne Bahlo" />
     <style>
       h2 {
         margin: 0 0 0.5rem;
