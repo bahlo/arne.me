@@ -2,7 +2,7 @@
 title: "Never Split the Difference"
 subtitle: "Negotiating As If Your Life Depended On It"
 author: "Chris Voss"
-dateRead: "2023-03-23"
+dateRead: "2023-03-21"
 rating: 4
 cover: "/books/never-split-the-difference/cover.jpeg"
 ---
