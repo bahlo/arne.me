@@ -13,7 +13,7 @@ const { title, description, pubDate, updatedDate, cover } = Astro.props;
 
 let coverCaption = null;
 if (cover) {
-  const coverCaption = marked.parse(cover.caption);
+  coverCaption = marked.parse(cover.caption);
 }
 
 ---
@@ -29,7 +29,7 @@ if (cover) {
         {cover && 
           <figure>
             <img src={cover.image} alt={cover.alt} />
-            <figcaption set:html={cover.caption} />
+            <figcaption set:html={coverCaption} />
           </figure>}
         <h1 class="title">{title}</h1>
         <FormattedDate date={pubDate} />
