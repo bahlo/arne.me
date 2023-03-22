@@ -24,7 +24,9 @@ const { title, description, image } = Astro.props;
 <link rel="canonical" href={canonicalURL} />
 	
 <!-- RSS Feed Discovery -->
-<link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="Arne's Blog" href="/blog/atom.xml" />
+<link rel="alternate" type="application/rss+xml" title="Arne's Weekly" href="/weekly/atom.xml" />
+<link rel="alternate" type="application/rss+xml" title="Books" href="/books/atom.xml" />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
