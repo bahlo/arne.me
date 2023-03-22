@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import SubscribeForm from '../../components/SubscribeForm.astro';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
+import {WEEKLY_TITLE, WEEKLY_DESCRIPTION} from '../../consts.js';
 
 const issues = (await getCollection('weekly')).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -14,7 +15,7 @@ const issues = (await getCollection('weekly')).sort(
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <BaseHead title={`Arne's Weekly`} description="A weekly newsletter with interesting stories from all over the web" />
+    <BaseHead title={WEEKLY_TITLE} description={WEEKLY_DESCRIPTION} />
   </head>
   <body>
     <Header />
