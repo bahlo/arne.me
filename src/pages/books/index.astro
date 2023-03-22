@@ -7,7 +7,7 @@ import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 
 const books = (await getCollection('books')).sort(
-	(a, b) => b.data.dateRead.valueOf() - a.data.dateRead.valueOf()
+  (a, b) => b.data.dateRead.valueOf() - a.data.dateRead.valueOf()
 );
 ---
 
@@ -21,12 +21,13 @@ const books = (await getCollection('books')).sort(
       <main>
         <section>
           <h1>Books</h1>
-          <p>Hey, on this page I collect the books I've read since March 2023:</p>
+          <p>All the books I've read since March 2023:</p>
           <ul>
-            {books.map((book) => (
+            {books.map(book => (
               <li>
                 <FormattedDate date={book.data.dateRead} />
                 <a href={`/books/${book.slug}/`}>{book.data.title}</a>
+                by {book.data.author}
               </li>
             ))}
           </ul>

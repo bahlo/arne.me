@@ -38,9 +38,9 @@ const books = defineCollection({
     rating: z.number(),
     dateRead: z
       .string()
-      .optional()
-      .transform((str) => (str ? new Date(str) : undefined)),
+      .or(z.date())
+      .transform((val) => new Date(val)),
   }),
 });
 
-export const collections = { blog, weekly };
+export const collections = { blog, weekly, books };
