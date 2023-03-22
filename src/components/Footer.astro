@@ -2,39 +2,11 @@
 const today = new Date();
 ---
 
-<style>
-  footer {
-    font-size: 16px;
-    margin-top: 2em;
-  }
-
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    list-style: none;
-    padding: 0;
-  }
-
-  li {
-    margin: 0 0.2em;
-  }
-</style>
-
 <footer>
-  <ul>
-    <li>&copy; {today.getFullYear()} Arne Bahlo</li>
-    <li>
-      <a href="/now">Now</a>
-    </li>
-    <li>
-      <a href="/colophon">Colophon</a>
-    </li>
-    <li>
-      <a href="/accessibility">A11y</a>
-    </li>
-    <li>
-      <a href="/imprint">Imprint</a>
-    </li>
-  </ul>
+  <hr>
+  &copy; {today.getFullYear()} Arne Bahlo &middot;
+  <a href="/now">Now</a> &middot;
+  <a href="/colophon">Colophon</a> &middot;
+  <a href="/accessibility">A11y</a> &middot;
+  <a href="/imprint">Imprint</a>
 </footer>

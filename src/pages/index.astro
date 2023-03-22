@@ -3,30 +3,30 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const now = new Date();
+const yearsOfExperience = now.getFullYear() - 2011;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style>
-      .hero {
-        line-height: 1.2;
-        padding-left: 1em;
-        border-left: 4px solid #0000ff;
-      }
-    </style>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION}/>
   </head>
   <body>
-    <Header />
+    <Header/>
     <main>
-      <h1 class="hero">Arne Bahlo is a software engineer working as a developer experience team lead on serverless log management solutions at Axiom.</h1>
-      <p>I find joy in creating accessible, performant applications, the indie web, fun
-      programming languages (especially Rust) and open source software.</p>
-      <p>You can find me on <a href="https://spezi.social/@arne">Mastodon</a> or
-      <a href="https://github.com/bahlo">GitHub</a> or send me an <a href="mailto:hey@arne.me">Email</a>.
-      If you want to know what I’m currently doing, check out <a href="/now">/now</a>.</p>
+      <h1>Hey,</h1>
+      <p>I'm Arne Bahlo, a software engineer with more than {yearsOfExperience} 
+         years of professional experience living near Frankfurt, Germany.</p>
+
+      <p>
+        @ me:
+        <a href="mailto:hey@arne.me">Email</a>,
+        <a href="https://spezi.social/@arne">Mastodon</a>,
+        <a href="https://github.com/bahlo">GitHub</a>
+      </p>
     </main>
-    <Footer />
+    <Footer/>
   </body>
 </html>
