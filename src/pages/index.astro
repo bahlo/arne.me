@@ -1,0 +1,31 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const now = new Date();
+const yearsOfExperience = now.getFullYear() - 2011;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION}/>
+  </head>
+  <body>
+    <Header/>
+    <main>
+      <h1>Hey,</h1>
+      <p>I'm Arne Bahlo, a software engineer with more than {yearsOfExperience} 
+         years of professional experience living near Frankfurt, Germany.</p>
+      <p>
+        @ me:
+        <a href="https://spezi.social/@arne">Mastodon</a>,
+        <a href="https://github.com/bahlo">GitHub</a>,
+        <a href="mailto:hey@arne.me">Email</a>
+      </p>
+    </main>
+    <Footer/>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+header, main, footer {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+figure {
+  margin: 0;
+}
+
+figcaption p {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}

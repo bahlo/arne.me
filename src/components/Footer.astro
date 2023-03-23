@@ -1,0 +1,23 @@
+---
+const today = new Date();
+---
+
+<style>
+  .content {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+
+<footer>
+  <hr>
+  <div class="content">
+    <div>
+      <a href="/now">Now</a> &middot;
+      <a href="/colophon">Colophon</a> &middot;
+      <a href="/accessibility">A11y</a> &middot;
+      <a href="/imprint">Imprint</a>
+    </div>    
+    <span>&copy; {today.getFullYear()} Arne Bahlo</span>
+  </div>
+</footer>

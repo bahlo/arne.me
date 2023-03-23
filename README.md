@@ -1,4 +1,4 @@
-## arne.me
+## arne.me [![Netlify Status](https://api.netlify.com/api/v1/badges/2485cf2e-e6a6-4a0f-b412-a929e0d3a379/deploy-status)](https://app.netlify.com/sites/arne-me/deploys)
 
 My personal website.
 
@@ -9,6 +9,3 @@ Run the development server like this:
 ```bash
 npm run dev
 ```
-
-> **Warning**: This project uses the Next.js app directory (beta) and Turbopack
-> (alpha).

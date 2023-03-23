@@ -1,0 +1,45 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import SubscribeForm from '../../components/SubscribeForm.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+import {WEEKLY_TITLE, WEEKLY_DESCRIPTION} from '../../consts.js';
+
+const issues = (await getCollection('weekly')).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={WEEKLY_TITLE} description={WEEKLY_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+      <main>
+        <section>
+          <h1>Weekly</h1>
+          <p>Arne's Weekly is my newsletter, where I collect interesting stories 
+             from all over the web every Sunday.<br />
+             There's also an <a href="/weekly/axom.xml">RSS Feed</a> available.
+          </p>
+
+          <SubscribeForm />
+
+          <h2>Archive</h2>
+          <ul>
+            {issues.map((issue) => (
+              <li>
+                <FormattedDate date={issue.data.date} />
+                <a href={`/weekly/${issue.slug}/`}>{issue.data.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </main>
+      <Footer />
+	</body>
+</html>

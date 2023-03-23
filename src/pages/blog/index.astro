@@ -1,0 +1,38 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { BLOG_TITLE, BLOG_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={BLOG_TITLE} description={BLOG_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+      <main>
+        <section>
+          <h1>Blog</h1>
+          <p>Hey, here are some blog posts I've written. There's an 
+          <a href="/blog/atom.xml">RSS Feed</a>, if you're into that.</p>
+          <ul>
+            {posts.map((post) => (
+              <li>
+                <FormattedDate date={post.data.pubDate} />
+                <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </main>
+      <Footer />
+	</body>
+</html>
