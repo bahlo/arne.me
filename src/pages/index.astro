@@ -3,9 +3,6 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-
-const now = new Date();
-const yearsOfExperience = now.getFullYear() - 2011;
 ---
 
 <!DOCTYPE html>
@@ -17,8 +14,11 @@ const yearsOfExperience = now.getFullYear() - 2011;
     <Header/>
     <main>
       <h1>Hey,</h1>
-      <p>I'm Arne Bahlo, a software engineer with more than {yearsOfExperience} 
-         years of professional experience living near Frankfurt, Germany.</p>
+      <p>I'm Arne Bahlo, a full stack software engineer living near Frankfurt, Germany.
+        I love the indie web, <a href="https://rustlang.org">safe programming languages</a>, 
+        digital gardens, <a href="/books">books</a> and Japanese food. 
+        I also publish a <a href="/weekly">weekly newsletter</a> and a 
+        <a href="https://sprachnachrichten.fm">podcast</a>.</p>
       <p>
         @ me:
         <a href="https://spezi.social/@arne">Mastodon</a>,
