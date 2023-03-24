@@ -48,11 +48,9 @@ h1 {
 
 a {
   color: var(--color-text);
-  text-decoration: none;
-  border-bottom: 2px dotted var(--color-light);
+  text-decoration: underline;
 }
 
 a:hover {
-  color: var(--color-text);
-  border-bottom-color: var(--color-text);
+  text-decoration: none;
 }
