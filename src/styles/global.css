@@ -1,3 +1,9 @@
+@import "reset.css";
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
 header, main, footer {
   max-width: 640px;
   margin: 0 auto;
