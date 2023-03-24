@@ -4,6 +4,7 @@
   --color-text: #333;
   --color-heading: #111;
   --color-light: #ccc;
+  --color-gray: #555;
   --color-bg: #fffefd;
 }
 
@@ -49,9 +50,9 @@ a {
   color: var(--color-text);
   text-decoration: none;
   border-bottom: 2px dotted var(--color-light);
-  transition: border-bottom-color 0.2s ease-in-out;
 }
 
 a:hover {
+  color: var(--color-text);
   border-bottom-color: var(--color-text);
 }
