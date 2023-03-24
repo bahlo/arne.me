@@ -4,6 +4,7 @@
   --color-text: #333;
   --color-heading: #111;
   --color-light: #ccc;
+  --color-bg: #fffefd;
 }
 
 body {
@@ -14,6 +15,7 @@ body {
   flex-direction: column;
   align-items: stretch;
   color: var(--color-text);
+  background: var(--color-bg);
 }
 
 main {
@@ -44,7 +46,7 @@ h1 {
 }
 
 a {
-  color: var(--color-heading);
+  color: var(--color-text);
   text-decoration: none;
   border-bottom: 2px dotted var(--color-light);
   transition: border-bottom-color 0.2s ease-in-out;
