@@ -3,10 +3,18 @@
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+main {
+  flex-grow: 1;
 }
 
 header, main, footer {
   max-width: 640px;
+  width: 100%;
   margin: 0 auto;
 }
 
