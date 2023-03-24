@@ -9,7 +9,7 @@
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   padding: 0 16px;
-  font-size: 18px;
+  font-size: 112.5%; /* 18px when the browser is set to 16px */
   display: flex;
   flex-direction: column;
   align-items: stretch;
