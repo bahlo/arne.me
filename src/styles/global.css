@@ -23,9 +23,13 @@ figcaption p {
 }
 
 p, ul, ol, pre {
-  margin: 1em 0;
+  margin: 8px 0 16px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: .5em 0;
+  margin: 8px 0;
+}
+
+h1 {
+  margin: 0 0 8px;
 }
