@@ -4,6 +4,7 @@ subtitle: "Negotiating As If Your Life Depended On It"
 author: "Chris Voss"
 dateRead: "2023-03-21"
 rating: 4
+website: "https://www.blackswanltd.com/never-split-the-difference"
 cover: "/books/never-split-the-difference/cover.jpeg"
 ---
 

@@ -33,7 +33,8 @@ const weekly = defineCollection({
 const books = defineCollection({
   schema: z.object({
     title: z.string(),
-    subtitle: z.string(),
+    subtitle: z.string().optional(),
+    website: z.string().optional(),
     author: z.string(),
     rating: z.number(),
     dateRead: z
