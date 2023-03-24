@@ -2,9 +2,20 @@
 import HeaderLink from './HeaderLink.astro';
 ---
 
+<style>
+  .warning {
+    background: #fff6c7;
+    padding: 8px;
+    width: 100%;
+    display: block;
+    margin: 8px 0;
+    border: 1px solid #f7dc50;
+    border-radius: 4px;
+  }
+</style>
+
 <header>
-  <span>⚠️  This website is redesigned in the open</span>
-  <hr>
+  <span class="warning">This website is being redesigned in the open</span>
   <nav>
     <HeaderLink href="/">Home</HeaderLink>
     <HeaderLink href="/work">Work</HeaderLink>
@@ -12,5 +23,4 @@ import HeaderLink from './HeaderLink.astro';
     <HeaderLink href="/weekly">Weekly</HeaderLink>
     <HeaderLink href="/books">Books</HeaderLink>
   </nav>
-  <hr>
 </header>
