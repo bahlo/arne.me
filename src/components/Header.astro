@@ -15,7 +15,13 @@ import Maintenance from './Maintenance.astro';
     margin-right: 12px;
   }
 
-  nav a.active {
+  nav .home {
+    border: none;
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  nav a:not(.home).active {
     font-weight: bold;
     border-bottom-color: var(--color-text);
   }
@@ -24,7 +30,7 @@ import Maintenance from './Maintenance.astro';
 <header>
   <Maintenance />
   <nav>
-    <HeaderLink href="/">Home</HeaderLink>
+    <HeaderLink href="/" class="home">Arne Bahlo</HeaderLink>
     <HeaderLink href="/work">Work</HeaderLink>
     <HeaderLink href="/blog">Blog</HeaderLink>
     <HeaderLink href="/weekly">Weekly</HeaderLink>
