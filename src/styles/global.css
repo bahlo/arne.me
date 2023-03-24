@@ -2,6 +2,7 @@
 
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  padding: 0 16px;
 }
 
 header, main, footer {

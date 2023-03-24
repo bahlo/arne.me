@@ -8,9 +8,24 @@ import HeaderLink from './HeaderLink.astro';
     padding: 8px;
     width: 100%;
     display: block;
-    margin: 8px 0;
+    margin: 16px 0;
     border: 1px solid #f7dc50;
     border-radius: 4px;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+  }
+
+  nav a {
+    display: inline-block;
+    margin-right: 12px;
+  }
+
+  nav a.active {
+    font-weight: bold;
   }
 </style>
 
