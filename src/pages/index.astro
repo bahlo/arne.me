@@ -5,22 +5,21 @@ import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
-<style>
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-  }
-
-  .hero {
-    font-size: 1.5rem;
-    color: var(--color-gray);
-  }
-</style>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION}/>
+    <style>
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+      }
+
+      .hero {
+        font-size: 1.5rem;
+        color: var(--color-gray);
+      }
+    </style>
   </head>
   <body>
     <Header/>
