@@ -15,7 +15,7 @@ and guides you through your different areas of responsibility in four parts:
 - Helping your team do their best work
 - Your work
 
-She talks about 1:1s, giving feedback, navigating conflict, holding good meetings, happyness and drive, change management, prioritizing your time and much more.
+She talks about 1:1s, giving feedback, navigating conflict, holding good meetings, happiness and drive, change management, prioritizing your time and much more.
 
 One of the cornerstones of the book is the chapter about values.
 Values are defined as the "fundamental belief that guide us, motivate us and drive our action".
