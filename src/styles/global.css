@@ -8,6 +8,16 @@
   --color-bg: #fffefd;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #ddd;
+    --color-heading: #eee;
+    --color-light: #777;
+    --color-gray: #bbb;
+    --color-bg: #111;
+  }
+}
+
 body {
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   padding: 0 16px;
