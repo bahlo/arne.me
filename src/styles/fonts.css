@@ -1,18 +1,24 @@
-@font-face{
-    font-family: "Cooper BT";
-    font-weight: bold;
-    font-style: normal;
-    src: url("/fonts/cooperbt/1296123/fd1bceaa-aa03-4f1b-b42d-0ad98603820b.woff2") format("woff2"), url("/fonts/cooperbt/1296123/d6b715ec-1259-4329-9cfe-5e9d545eea39.woff") format("woff");
+/*
+This CSS resource incorporates links to font software which is the valuable copyrighted property of Monotype and/or its suppliers. You may not attempt to copy, install, redistribute, convert, modify or reverse engineer this font software. Please contact Monotype with any questions regarding Web Fonts: http://www.fontshop.com
+*/
+
+@font-face {
+  font-family: "Cooper BT";
+  font-weight: bold;
+  font-style: normal;
+  src: url("/fonts/cooperbt/1296123/fd1bceaa-aa03-4f1b-b42d-0ad98603820b.woff2") format("woff2"), url("/fonts/cooperbt/1296123/d6b715ec-1259-4329-9cfe-5e9d545eea39.woff") format("woff");
 }
-@font-face{
-    font-family: "Cooper BT";
-    font-weight: normal;
-    font-style: normal;
-    src: url("/fonts/cooperbt/1296125/d59ef098-07e0-4444-8441-7afbd29330c1.woff2") format("woff2"), url("/fonts/cooperbt/1296125/20e6a666-635b-4b16-9068-d92fc0a1f0ec.woff") format("woff");
+
+@font-face {
+  font-family: "Cooper BT";
+  font-weight: normal;
+  font-style: normal;
+  src: url("/fonts/cooperbt/1296125/d59ef098-07e0-4444-8441-7afbd29330c1.woff2") format("woff2"), url("/fonts/cooperbt/1296125/20e6a666-635b-4b16-9068-d92fc0a1f0ec.woff") format("woff");
 }
-@font-face{
-    font-family: "Cooper BT";
-    font-weight: normal;
-    font-style: italic;
-    src: url("/fonts/cooperbt/5137333/4164bc64-d561-4989-96e3-59e5b93cc9dd.woff2") format("woff2"), url("/fonts/cooperbt/5137333/61e07128-9223-421a-a25d-d34b83340dbe.woff") format("woff");
+
+@font-face {
+  font-family: "Cooper BT";
+  font-weight: normal;
+  font-style: italic;
+  src: url("/fonts/cooperbt/5137333/4164bc64-d561-4989-96e3-59e5b93cc9dd.woff2") format("woff2"), url("/fonts/cooperbt/5137333/61e07128-9223-421a-a25d-d34b83340dbe.woff") format("woff");
 }
