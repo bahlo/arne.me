@@ -6,7 +6,7 @@ layout: "../layouts/Page.astro"
 
 This website was first published on June 19th 2021 near
 [Frankfurt, Germany](https://frankfurt.de).
-It's developed on a 2017 MacBook Pro with [Astro](https://astro.build) and
+It's developed on a 2021 MacBook Pro with [Astro](https://astro.build) and
 hosted on [Netlify](https://netlify.com).
 The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 
