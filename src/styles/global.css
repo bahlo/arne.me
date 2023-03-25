@@ -1,6 +1,7 @@
 @import "reset.css";
 
 :root {
+  --width: 768px;
   --color-text: #333;
   --color-heading: #111;
   --color-light: #ccc;
@@ -34,7 +35,7 @@ main {
 }
 
 header, main, footer {
-  max-width: 640px;
+  max-width: var(--width);
   width: 100%;
   margin: 0 auto;
 }
