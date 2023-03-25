@@ -19,6 +19,16 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         font-size: 1.5rem;
         color: var(--color-gray);
       }
+
+      ul.contact {
+        display: flex;
+        list-style: none;
+        padding: 0;
+      }
+
+      ul.contact li {
+        margin-right: 1rem;
+      }
     </style>
   </head>
   <body>
@@ -28,12 +38,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       <p class="hero">a full stack software engineer living near Frankfurt, Germany.
         A systems thinker with a love for safe programming languages, the 
         indie web, digital gardens, reading books and Japanese food. 
-      <p>
-        @ me:
-        <a href="https://spezi.social/@arne" rel="me">Mastodon</a>,
-        <a href="https://github.com/bahlo">GitHub</a>,
-        <a href="mailto:hey@arne.me">Email</a>
-      </p>
+      <ul class="contact">
+        <li><a href="https://spezi.social/@arne" rel="me">Mastodon</a></li>
+        <li><a href="https://github.com/bahlo">GitHub</a></li>
+        <li><a href="mailto:hey@arne.me">Email</a></li>
+      </ul>
     </main>
     <Footer/>
   </body>
