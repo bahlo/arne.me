@@ -6,7 +6,7 @@
   --color-heading: #111;
   --color-light: #ccc;
   --color-gray: #555;
-  --color-bg: #fffdf6;
+  --color-bg: #fffefb;
 }
 
 @media (prefers-color-scheme: dark) {
