@@ -1,4 +1,5 @@
 @import "reset.css";
+@import "fonts.css";
 
 :root {
   --width: 768px;
@@ -20,7 +21,7 @@
 }
 
 body {
-  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "Cooper BT", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   padding: 0 16px;
   font-size: 112.5%; /* 18px when the browser is set to 16px */
   display: flex;
