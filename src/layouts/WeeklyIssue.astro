@@ -15,20 +15,32 @@ const { num } = Astro.params;
 <html lang="en">
   <head>
     <BaseHead title={`${title} — Arne's Weekly`} description={`Issue #${num} of Arne's Weekly`} />
+    <style>
+      h1 {
+        margin-bottom: 0;
+      }
+
+      .date {
+        display: block;
+        margin-bottom: 16px;
+        color: var(--color-gray);
+        font-style: italic;
+      }
+    </style>
   </head>
   <body>
     <Header />
     <main>
       <section>
         <span>
-          This is issue #{num} of <a href="/weekly">Arnes Weekly</a>.
         </span>
         <h1>{title}</h1>
-       <span>
-         <FormattedDate date={date} />
-       </span>
-       <slot />
-       <SubscribeForm />
+        <span class="date">
+          This is issue #{num} of <a href="/weekly">Arnes Weekly</a> from
+          <FormattedDate date={date} />
+        </span>
+        <slot />
+        <SubscribeForm />
       </section>
     </main>
     <Footer />

@@ -32,7 +32,6 @@
 
 body {
   font-family: var(--font-sans);
-  padding: 0 16px;
   font-size: 112.5%; /* 18px when the browser is set to 16px */
   display: flex;
   flex-direction: column;
@@ -46,9 +45,19 @@ main {
 }
 
 header, main, footer {
-  max-width: var(--width);
   width: 100%;
   margin: 0 auto;
+}
+
+header {
+  background: rgb(var(--color-primary-rgb) / 4%);
+  border-bottom: 1px solid rgb(var(--color-primary-rgb) / 2%);
+  margin-bottom: 12px;
+}
+
+main, footer {
+  padding: 0 16px;
+  max-width: var(--width);
 }
 
 figcaption p {
@@ -60,13 +69,31 @@ p, ul, ol, pre {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   color: var(--color-heading);
   font-family: var(--font-serif);
+  font-weight: 800;
 }
 
 h1 {
   margin-bottom: 8px;
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+blockquote {
+  padding: 0 0 0 16px;
+  border-left: 4px solid var(--color-primary);
+  color: var(--color-gray);
+  font-style: italic;
+  font-size: 1em;
 }
 
 a {
