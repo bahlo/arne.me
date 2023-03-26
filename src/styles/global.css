@@ -7,7 +7,9 @@
   --color-heading: #111;
   --color-light: #ccc;
   --color-gray: #555;
-  --color-bg: #fffefb;
+  --color-bg: #fff8f0;
+  --color-button: #ffe6cb;
+  --color-button-dark: #f2d3b1;
 
   --font-serif: "Cooper BT", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

@@ -27,7 +27,19 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       ul.contact li {
-        margin-right: 1rem;
+        margin-right: 8px;
+      }
+
+      ul.contact li a {
+        background: var(--color-button);
+        padding: 4px 8px;
+        border-radius: 8px;
+        text-decoration: none;
+        border: 1px solid var(--color-button-dark);
+      }
+
+      ul.contact li a:hover {
+        background: var(--color-button-dark);
       }
     </style>
   </head>
