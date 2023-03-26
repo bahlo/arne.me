@@ -55,9 +55,13 @@ header {
   margin-bottom: 12px;
 }
 
-main, footer {
-  padding: 0 16px;
+main {
   max-width: var(--width);
+  padding: 0 16px;
+}
+
+footer {
+  padding: 16px;
 }
 
 figcaption p {
