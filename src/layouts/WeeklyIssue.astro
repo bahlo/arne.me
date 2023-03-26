@@ -19,13 +19,6 @@ const { num } = Astro.params;
       h1, h3 {
         margin-bottom: 0;
       }
-
-      .date {
-        display: block;
-        margin-bottom: 16px;
-        color: var(--color-gray);
-        font-style: italic;
-      }
     </style>
   </head>
   <body>
@@ -35,7 +28,7 @@ const { num } = Astro.params;
         <span>
         </span>
         <h1>{title}</h1>
-        <span class="date">
+        <span class="meta">
           This is issue #{num} of <a href="/weekly">Arnes Weekly</a> from
           <FormattedDate date={date} />
         </span>

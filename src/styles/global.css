@@ -123,3 +123,10 @@ a {
 a:hover {
   text-decoration: none;
 }
+
+.meta {
+  display: block;
+  color: var(--color-gray);
+  margin-bottom: 16px;
+  font-style: italic;
+}

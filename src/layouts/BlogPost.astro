@@ -21,6 +21,11 @@ if (cover) {
 <html lang="en">
   <head>
     <BaseHead title={`${title} — ${SITE_TITLE}`} description={description} image={cover?.image} />
+    <style>
+      h1 {
+        margin-bottom: 0;
+      }
+    </style>
   </head>
   <body>
     <Header />
@@ -32,14 +37,7 @@ if (cover) {
             <figcaption set:html={coverCaption} />
           </figure>}
         <h1 class="title">{title}</h1>
-        <FormattedDate date={pubDate} />
-        {
-          updatedDate && (
-              <div class="last-updated-on">
-              Last updated on <FormattedDate date={updatedDate} />
-              </div>
-              )
-        }
+        <span class="meta"><FormattedDate date={pubDate} /></span>
         <slot />
       </article>
     </main>
