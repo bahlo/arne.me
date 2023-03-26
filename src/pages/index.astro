@@ -22,23 +22,26 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       .contact {
-        display: flex;
-        flex-flow: wrap;
         list-style: none;
         padding: 0;
+
+        --color-bg: rgb(88 177 255 / 10%);
+        --color-bg-hover: rgb(88 177 255 / 20%);
+        --color: rgb(11 132 217);
       }
 
       .contact li {
-        margin-right: 8px;
+        margin-right: 4px;
         padding: 8px 0;
+        display: inline-block;
       }
 
       .contact a {
-        color: #fff;
+        background: var(--color-bg);
+        color: var(--color);
         padding: 8px 12px;
         border-radius: 16px;
         text-decoration: none;
-        border: 1px solid rgba(0, 0, 0, .05);
       }
 
       .contact a svg {
@@ -50,12 +53,12 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       .contact svg path {
-        fill: #fff;
+        fill: var(--color);
       }
 
-      .contact .mastodon { background: #595aff; }
-      .contact .github   { background: #24292f; }
-      .contact .email    { background: #4ea4ef;  }
+      .contact a:hover {
+        background: var(--color-bg-hover);
+      }
     </style>
   </head>
   <body>
