@@ -13,19 +13,21 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       h1 {
         font-size: 2.5rem;
         font-weight: 800;
+        margin-bottom: 0;
       }
 
       .hero {
         font-size: 1.5rem;
         color: var(--color-gray);
-        margin-bottom: 16px;
+        font-family: var(--font-serif);
       }
 
       .contact {
         list-style: none;
         padding: 0;
-        margin-bottom: 24px;
         font-weight: 500;
+        font-size: 1rem;
+        margin: 16px 0;
       }
 
       .contact li {
@@ -63,9 +65,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
     <Header/>
     <main>
       <h1>Hey, I'm Arne —</h1>
-      <p class="hero">a full stack software engineer living near Frankfurt, Germany.
-        A systems thinker with a love for safe programming languages, the 
-        indie web, digital gardens, reading books and Japanese food. 
+      <p class="hero">a full stack software engineer & dad living near Frankfurt, Germany.</p>
+      <p>
+        I love building safe and accessible systems, reading, learning new things,
+        the indie web, decentralisation (but not crypto) and digital gardens.
+      </p>
       <ul class="contact">
         <li>
           <a href="https://spezi.social/@arne" rel="me" class="mastodon">
