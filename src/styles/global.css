@@ -3,14 +3,18 @@
 
 :root {
   --width: 768px;
+  --text-opacity: .9;
   --color-text: #333;
   --color-heading: #111;
   --color-light: #ccc;
   --color-gray: #555;
-  --color-bg: rgb(249 249 251);
-  --color-primary: rgb(66 70 184);
-  --color-button: rgb(110 115 255 / 10%);
-  --color-button-hover: rgb(110 115 255 / 20%);
+  --color-nav-stroke: rgb(242 45 94);
+
+  --color-primary-rgb: 53 88 255;
+  --color-primary: rgb(var(--color-primary-rgb));
+  --color-bg: rgb(var(--color-primary-rgb) / 2%);
+  --color-button: rgb(var(--color-primary-rgb) / 10%);
+  --color-button-hover: rgb(var(--color-primary-rgb) / 20%);
 
   --font-serif: "Cooper BT", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
