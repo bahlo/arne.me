@@ -38,6 +38,7 @@ body {
   align-items: stretch;
   color: var(--color-text);
   background: var(--color-bg);
+  font-weight: 500;
 }
 
 main {
