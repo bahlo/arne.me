@@ -18,16 +18,13 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       .hero {
         font-size: 1.5rem;
         color: var(--color-gray);
-        margin-bottom: 20px;
+        margin-bottom: 16px;
       }
 
       .contact {
         list-style: none;
         padding: 0;
-
-        --color-bg: rgb(88 177 255 / 10%);
-        --color-bg-hover: rgb(88 177 255 / 20%);
-        --color: rgb(11 132 217);
+        margin-bottom: 24px;
       }
 
       .contact li {
@@ -37,8 +34,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       .contact a {
-        background: var(--color-bg);
-        color: var(--color);
+        background: var(--color-button);
+        color: var(--color-primary);
         padding: 8px 12px;
         border-radius: 16px;
         text-decoration: none;
@@ -53,11 +50,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       .contact svg path {
-        fill: var(--color);
+        fill: var(--color-primary);
       }
 
       .contact a:hover {
-        background: var(--color-bg-hover);
+        background: var(--color-button-hover);
       }
     </style>
   </head>
