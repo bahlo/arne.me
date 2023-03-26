@@ -55,8 +55,11 @@ header {
   margin-bottom: 12px;
 }
 
-main {
+main, footer {
   max-width: var(--width);
+}
+
+main {
   padding: 0 16px;
 }
 
