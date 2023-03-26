@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "download-fonts": "node ./scripts/download-fonts.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.17.2",
@@ -16,6 +17,7 @@
     "astro": "^2.0.18",
     "markdown-it": "^13.0.1",
     "marked": "^4.2.12",
-    "sanitize-html": "^2.10.0"
+    "sanitize-html": "^2.10.0",
+    "unzipper": "^0.10.11"
   }
 }
