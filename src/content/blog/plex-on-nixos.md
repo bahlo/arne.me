@@ -5,7 +5,7 @@ pubDate: "2022-02-22"
 cover:
   image: "/blog/plex-on-nixos/cover.jpg"
   alt: "A screenshot of the Plex web interface with the movie Frozen"
-  caption: "The poster art copyright is believed to belong to Disney Enterprises, Inc.."
+  caption: "The poster art copyright belongs to Disney Enterprises, Inc.."
 ---
 
 A few weeks ago, the hard drive (yes, I know) in my home lab died.
