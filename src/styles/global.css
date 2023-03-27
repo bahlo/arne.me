@@ -4,7 +4,7 @@
 :root {
   --width: 768px;
   --text-opacity: .9;
-  --color-text: #333;
+  --color-text: rgba(0, 0, 0, .7);
   --color-heading: #111;
   --color-light: #ccc;
   --color-gray: #555;
