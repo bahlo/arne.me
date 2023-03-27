@@ -1,5 +1,6 @@
 @import "reset.css";
-@import "fonts.css";
+@import "cooperbt.css";
+@import "pragmatapro.css";
 
 :root {
   --width: 768px;
@@ -122,6 +123,10 @@ a {
 
 a:hover {
   text-decoration: none;
+}
+
+code {
+  font-family: "Pragmata Pro", monospace;
 }
 
 .meta {
