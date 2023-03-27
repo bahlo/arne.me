@@ -5,6 +5,9 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://arne.me',
-	integrations: [mdx(), sitemap()]
+  site: 'https://arne.me',
+  integrations: [mdx(), sitemap()],
+  markdown: {
+    shikiConfig: { theme: 'css-variables' },
+  }
 });

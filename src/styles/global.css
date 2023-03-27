@@ -23,8 +23,23 @@
   --color-footer-bg: rgba(0, 0, 0, 0.02);
   --color-footer-border: rgba(0, 0, 0, 0.01);
 
+  --color-code-bg: #fff;
+  --color-code-border: rgba(0, 0, 0, 0.05);
+
   --font-serif: "Cooper BT", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  --astro-code-color-text: var(--color-text);
+  --astro-code-color-background: var(--color-code-bg);
+  --astro-code-token-constant: var(--color-primary);
+  --astro-code-token-string: #22863a;
+  --astro-code-token-comment: var(--color-gray);
+  --astro-code-token-keyword: #ec3c3c;
+  --astro-code-token-parameter: #FF9800;
+  --astro-code-token-function: #7538e5;
+  --astro-code-token-string-expression: #0d8a2b;
+  --astro-code-token-punctuation: #212121;
+  --astro-code-token-link: #1976D2;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,11 +50,19 @@
     --color-gray: #bbb;
     --color-bg: #111;
 
+    --color-primary-rgb: 83 118 255;
+
     --color-header-bg:  rgb(var(--color-primary-rgb) / 10%);
     --color-header-border: rgb(var(--color-primary-rgb) / 10%);
 
     --color-footer-bg: rgba(255, 255, 255, 0.02);
     --color-footer-border: rgba(255, 255, 255, 0.02);
+
+    --color-code-bg: #222;
+    --color-code-border: rgba(255, 255, 255, 0.05);
+
+    --astro-code-token-function: #a575ff;
+    --astro-code-token-string-expression: #57b96f;
   }
 }
 
@@ -127,6 +150,12 @@ a:hover {
 
 code {
   font-family: "Pragmata Pro", monospace;
+}
+
+.astro-code {
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--color-code-border);
 }
 
 .meta {
