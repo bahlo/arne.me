@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # Paid fonts are not part of the repository
 /public/fonts
+
+# Local Netlify folder
+.netlify

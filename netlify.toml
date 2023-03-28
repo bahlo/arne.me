@@ -1,0 +1,7 @@
+[dev]
+  framework = "astro"
+  targetPort = 3000
+
+[[edge_functions]]
+  function = "og"
+  path = "/og-image"
