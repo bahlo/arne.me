@@ -13,7 +13,7 @@
 
   --color-primary-rgb: 53 88 255;
   --color-primary: rgb(var(--color-primary-rgb));
-  --color-bg: rgb(var(--color-primary-rgb) / 2%);
+  --color-bg: rgb(var(--color-primary-rgb) / .1%);
   --color-button: rgb(var(--color-primary-rgb) / 10%);
   --color-button-hover: rgb(var(--color-primary-rgb) / 20%);
 
@@ -116,6 +116,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-heading);
   font-family: var(--font-serif);
   font-weight: 800;
+  line-height: 1.2;
 }
 
 h1 {
