@@ -8,7 +8,15 @@ import FormattedDate from '../../components/FormattedDate.astro';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+).reduce((acc, post) => {
+  const year = post.data.pubDate.getFullYear();
+  if (acc[year]) {
+    acc[year].push(post);
+  } else {
+    acc[year] = [post];
+  }
+  return acc;
+}, {});
 ---
 
 <!DOCTYPE html>
@@ -23,14 +31,17 @@ const posts = (await getCollection('blog')).sort(
           <h1>Blog</h1>
           <p>Hey, here are some blog posts I've written. There's an 
           <a href="/blog/atom.xml">RSS Feed</a>, if you're into that.</p>
-          <ul>
-            {posts.map((post) => (
+          {Object.keys(posts).sort((a, b) => b - a).map(year => (
+            <h3>{year}</h3>
+            <ul>
+            {posts[year].map(post => (
               <li>
                 <FormattedDate date={post.data.pubDate} />
                 <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
               </li>
             ))}
-          </ul>
+            </ul>
+          ))}
         </section>
       </main>
       <Footer />

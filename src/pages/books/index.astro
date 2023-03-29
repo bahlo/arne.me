@@ -8,7 +8,15 @@ import FormattedDate from '../../components/FormattedDate.astro';
 
 const books = (await getCollection('books')).sort(
   (a, b) => b.data.dateRead.valueOf() - a.data.dateRead.valueOf()
-);
+).reduce((acc, book) => {
+  const year = book.data.dateRead.getFullYear();
+  if (acc[year]) {
+    acc[year].push(book);
+  } else {
+    acc[year] = [book];
+  }
+  return acc;
+}, {});
 ---
 
 <!DOCTYPE html>
@@ -22,15 +30,18 @@ const books = (await getCollection('books')).sort(
         <section>
           <h1>Books</h1>
           <p>All the books I've read since March 2023:</p>
-          <ul>
-            {books.map(book => (
+          {Object.keys(books).sort((a, b) => b - a).map(year => (
+            <h3>{year}</h3>
+            <ul>
+            {books[year].map(book => (
               <li>
                 <FormattedDate date={book.data.dateRead} />
                 <a href={`/books/${book.slug}/`}>{book.data.title}</a>
                 by {book.data.author}
               </li>
             ))}
-          </ul>
+            </ul>
+          ))}
         </section>
       </main>
       <Footer />

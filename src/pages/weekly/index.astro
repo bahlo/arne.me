@@ -9,7 +9,15 @@ import {WEEKLY_TITLE, WEEKLY_DESCRIPTION} from '../../consts.js';
 
 const issues = (await getCollection('weekly')).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+).reduce((acc, issue) => {
+  const year = issue.data.date.getFullYear();
+  if (acc[year]) {
+    acc[year].push(issue);
+  } else {
+    acc[year] = [issue];
+  }
+  return acc;
+}, {});
 ---
 
 <!DOCTYPE html>
@@ -30,14 +38,17 @@ const issues = (await getCollection('weekly')).sort(
           <SubscribeForm />
 
           <h2>Archive</h2>
-          <ul>
-            {issues.map((issue) => (
+          {Object.keys(issues).sort((a, b) => b - a).map(year => (
+            <h3>{year}</h3>
+            <ul>
+            {issues[year].map((issue) => (
               <li>
                 <FormattedDate date={issue.data.date} />
                 <a href={`/weekly/${issue.slug}/`}>{issue.data.title}</a>
               </li>
             ))}
-          </ul>
+            </ul>
+          ))}
         </section>
       </main>
       <Footer />
