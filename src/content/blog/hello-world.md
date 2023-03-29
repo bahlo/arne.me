@@ -1,5 +1,5 @@
 ---
-title: "Hello world"
+title: "Hello World"
 description: "My first blogpost (not really)."
 pubDate: "2022-02-13"
 ---
