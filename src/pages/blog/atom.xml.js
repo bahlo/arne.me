@@ -7,9 +7,11 @@ import MarkdownIt from 'markdown-it';
 const parser = new MarkdownIt();
 
 export async function get(context) {
-  const posts = (await getCollection('blog')).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-  );
+  const posts = (await getCollection('blog'))
+    .filter(post => post.slug != "hello-world")
+    .sort(
+      (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    );
 
   return rss({
     title: BLOG_TITLE,
