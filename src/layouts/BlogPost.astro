@@ -25,20 +25,6 @@ if (cover) {
       h1 {
         margin-bottom: 4px;
       }
-
-      figure img {
-        border-radius: 8px 8px 0 0;
-      }
-
-      figcaption {
-        background: rgba(0,0,0,.02);
-        padding: 4px 8px;
-        border-radius: 0 0 8px 8px;
-        border: 1px solid rgba(0,0,0,.1);
-        border-top: 0;
-        font-size: 90%;
-        margin-bottom: 8px;
-      }
     </style>
   </head>
   <body>
@@ -47,11 +33,6 @@ if (cover) {
       <article>
         <h1 class="title">{title}</h1>
         <span class="meta"><FormattedDate date={pubDate} /></span>
-        {cover && 
-          <figure>
-            <img src={cover.image} alt={cover.alt} />
-            <figcaption set:html={coverCaption} />
-          </figure>}
         <slot />
       </article>
     </main>
