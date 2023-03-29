@@ -3,10 +3,6 @@ title: "You're Using Email Wrong"
 description: "If you don't like email, try a different strategy."
 pubDate: "2022-03-06"
 updatedDate: "2022-03-08"
-cover:
-  image: "/blog/youre-using-email-wrong/cover.jpg"
-  alt: "A screenshot of an iOS homescreen with the Mail.app having 6.753 unread email"
-  caption: "Photo by [Brian Tromp](https://unsplash.com/@84media?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/email?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)."
 ---
 
 You probably don't like email, not a lot of people do.
