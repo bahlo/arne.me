@@ -163,3 +163,16 @@ code {
   color: var(--color-gray);
   margin-bottom: 16px;
 }
+
+.skip-link {
+  position: absolute;
+  transform: translateY(-100%);
+  background: var(--color-code-bg);
+  padding: 4px 8px;
+  font-size: 1rem;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}

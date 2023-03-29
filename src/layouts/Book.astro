@@ -39,7 +39,7 @@ const { title, subtitle, author, dateRead, rating, cover, website } = Astro.prop
   </head>
   <body>
     <Header/>
-    <main>
+    <main id="main">
       <article>
         <img class="cover" src={cover} alt={`Cover of ${title} by ${author}`} />
         <h1>{title}{subtitle && ": " + subtitle}</h1>
