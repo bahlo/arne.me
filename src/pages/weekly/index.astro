@@ -33,6 +33,11 @@ const issues = (await getCollection('weekly')).sort(
       .meta {
         margin-bottom: 4px;
       }
+
+      hr {
+        margin: 2rem 0;
+        border-top: 1px solid var(--color-light-gray);
+      }
     </style>
   </head>
   <body>
@@ -46,6 +51,8 @@ const issues = (await getCollection('weekly')).sort(
           </p>
 
           <SubscribeForm />
+
+          <hr>
 
           <h2>Archive</h2>
           {Object.keys(issues).sort((a, b) => b - a).map(year => (
