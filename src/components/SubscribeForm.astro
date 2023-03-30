@@ -16,6 +16,24 @@
   input[type="submit"] {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    margin-bottom: 4px;
+  }
+
+  small {
+    line-height: 1.2;
+    display: inline-block;
+  }
+
+  @media (max-width: 326px) {
+    #email {
+      margin-bottom: 8px;
+    }
+
+    #email,
+    input[type="submit"] {
+      width: 100%;
+      border-radius: 8px;
+    }
   }
 </style>
 
