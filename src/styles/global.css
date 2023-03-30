@@ -18,19 +18,19 @@
   --color-button-hover: rgb(var(--color-primary-rgb) / 20%);
 
   --color-header-bg:  rgb(var(--color-primary-rgb) / 4%);
-  --color-header-border: rgb(var(--color-primary-rgb) / 2%);
+  --color-header-border: rgb(var(--color-primary-rgb) / 5%);
 
   --color-footer-bg: rgba(0, 0, 0, 0.02);
-  --color-footer-border: rgba(0, 0, 0, 0.01);
+  --color-footer-border: rgba(0, 0, 0, 0.05);
 
-  --color-code-bg: #fff;
-  --color-code-border: rgba(0, 0, 0, 0.05);
+  --color-box-bg: rgba(0, 0, 0, 0.02);
+  --color-box-border: rgba(0, 0, 0, 0.05);
 
   --font-serif: "Cooper BT", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
   --astro-code-color-text: var(--color-text);
-  --astro-code-color-background: var(--color-code-bg);
+  --astro-code-color-background: var(--color-box-bg);
   --astro-code-token-constant: var(--color-primary);
   --astro-code-token-string: #22863a;
   --astro-code-token-comment: var(--color-gray);
@@ -152,10 +152,11 @@ code {
   font-family: "Pragmata Pro", monospace;
 }
 
-.astro-code {
+.astro-code, .box {
   padding: 4px 8px;
   border-radius: 8px;
-  border: 1px solid var(--color-code-border);
+  border: 1px solid var(--color-box-border);
+  background: var(--color-box-bg);
 }
 
 .meta {
