@@ -26,6 +26,11 @@ const posts = (await getCollection('blog'))
 <html lang="en">
   <head>
     <BaseHead title={BLOG_TITLE} description={BLOG_DESCRIPTION} />
+    <style>
+      h4, .meta {
+        margin-bottom: 0;
+      }
+    </style>
   </head>
   <body>
     <Header />
@@ -35,15 +40,14 @@ const posts = (await getCollection('blog'))
           <p>Hey, here are some blog posts I've written. There's an 
           <a href="/blog/atom.xml">RSS Feed</a>, if you're into that.</p>
           {Object.keys(posts).sort((a, b) => b - a).map(year => (
-            <h3>{year}</h3>
-            <ul>
-            {posts[year].map(post => (
-              <li>
-                <FormattedDate date={post.data.pubDate} />
-                <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-              </li>
-            ))}
-            </ul>
+            <>
+              <h3>{year}</h3>
+              {posts[year].map(post => (
+                <h4><a href={`/blog/${post.slug}/`}>{post.data.title}</a></h4>
+                <span class="meta"><FormattedDate date={post.data.pubDate} /></span>
+                <p>{post.data.description}</p>
+              ))}
+            </>
           ))}
         </section>
       </main>
