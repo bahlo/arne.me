@@ -18,10 +18,10 @@
   --color-button-hover: rgb(var(--color-primary-rgb) / 20%);
 
   --color-header-bg:  rgb(var(--color-primary-rgb) / 4%);
-  --color-header-border: rgb(var(--color-primary-rgb) / 5%);
+  --color-header-border: rgb(var(--color-primary-rgb) / 4%);
 
   --color-footer-bg: rgba(0, 0, 0, 0.02);
-  --color-footer-border: rgba(0, 0, 0, 0.05);
+  --color-footer-border: rgba(0, 0, 0, 0.02);
 
   --color-box-bg: rgba(0, 0, 0, 0.02);
   --color-box-border: rgba(0, 0, 0, 0.05);
@@ -58,8 +58,8 @@
     --color-footer-bg: rgba(255, 255, 255, 0.02);
     --color-footer-border: rgba(255, 255, 255, 0.02);
 
-    --color-code-bg: #222;
-    --color-code-border: rgba(255, 255, 255, 0.05);
+    --color-box-bg: rgba(255, 255, 255, 0.02);
+    --color-box-border: rgba(255, 255, 255, 0.05);
 
     --astro-code-token-function: #a575ff;
     --astro-code-token-string-expression: #57b96f;
