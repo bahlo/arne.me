@@ -177,3 +177,22 @@ code {
 .skip-link:focus {
   transform: translateY(0);
 }
+
+label {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  display: block;
+  font-weight: 700;
+}
+
+input {
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, .1);
+  padding: 4px 8px;
+}
+
+input[type="submit"] {
+  background: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+}
