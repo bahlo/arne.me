@@ -24,6 +24,16 @@ const issues = (await getCollection('weekly')).sort(
 <html lang="en">
   <head>
     <BaseHead title={WEEKLY_TITLE} description={WEEKLY_DESCRIPTION} />
+    <style>
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .meta {
+        margin-bottom: 4px;
+      }
+    </style>
   </head>
   <body>
     <Header />
@@ -43,8 +53,10 @@ const issues = (await getCollection('weekly')).sort(
             <ul>
             {issues[year].map((issue) => (
               <li>
-                <FormattedDate date={issue.data.date} />
                 <a href={`/weekly/${issue.slug}/`}>{issue.data.title}</a>
+                <span class="meta">
+                  <FormattedDate date={issue.data.date} />
+                </span>
               </li>
             ))}
             </ul>
