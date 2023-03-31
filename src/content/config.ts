@@ -27,6 +27,24 @@ const weekly = defineCollection({
       .string()
       .or(z.date())
       .transform((val) => new Date(val)),
+    tootOfTheWeek: z.object({
+      text: z.string(),
+      author: z.string(),
+      url: z.string(),
+    }).optional(),
+    categories: z.array(
+      z.object({
+        title: z.string(),
+        stories: z.array(
+          z.object({
+            title: z.string(),
+            url: z.string(),
+            readingTimeMinutes: z.number(),
+            description: z.string(),
+          })
+        ),
+      })
+    ).optional(),
   }),
 });
 
