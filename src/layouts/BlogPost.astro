@@ -1,5 +1,4 @@
 ---
-import { marked } from 'marked';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
@@ -10,11 +9,6 @@ import { SITE_TITLE } from '../consts';
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, cover } = Astro.props;
-
-let coverCaption = null;
-if (cover) {
-  coverCaption = marked.parse(cover.caption);
-}
 
 ---
 

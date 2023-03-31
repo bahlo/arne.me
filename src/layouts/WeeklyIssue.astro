@@ -1,4 +1,5 @@
 ---
+import { marked } from 'marked';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -49,7 +50,7 @@ function buildAnchor(title) {
         <h2 id="toot-of-the-week">Toot of the Week</h2>
         <blockquote>
           <p>
-            {tootOfTheWeek.text}
+            <Fragment set:html={marked.parse(tootOfTheWeek.text)} />
             — <a href="{tootOfTheWeek.url}">{tootOfTheWeek.author}</a>
           </p>
         </blockquote>
@@ -59,7 +60,7 @@ function buildAnchor(title) {
         {category.stories.map(story => (
           <h3><a href={"https://click.arne.me/?issue="+num+"&url=" + story.url}>{story.title}</a></h3>
           <p><em>{story.readingTimeMinutes} min &middot; {getHost(story.url)}</em></p>
-          <p>{story.description}</p>
+          <p set:html={marked.parse(story.description)} />
         ))}
         ))}
         <SubscribeForm />
