@@ -163,6 +163,7 @@ code {
   display: block;
   color: var(--color-gray);
   margin-bottom: 16px;
+  font-size: .9em;
 }
 
 .skip-link {
