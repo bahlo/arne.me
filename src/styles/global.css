@@ -206,9 +206,10 @@ ul {
 
 hr {
   margin: 20px 0;
-  border-top: 1px solid var(--color-light-gray);
+  border-top: 1px solid var(--color-light);
   border-left: 0;
   border-right: 0;
+  border-bottom: 0;
 }
 
 .no-margin-bottom {
