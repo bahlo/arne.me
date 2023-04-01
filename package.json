@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "download-fonts": "node ./scripts/download-fonts.js"
+    "download-fonts": "npx ts-node --esm ./scripts/download-fonts.ts",
+    "export-weekly": "npx ts-node --esm ./scripts/export-weekly.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.17.2",
@@ -20,6 +21,10 @@
     "marked": "^4.2.12",
     "remark-toc": "^8.0.1",
     "sanitize-html": "^2.10.0",
+    "ts-node": "^10.9.1",
     "unzipper": "^0.10.11"
+  },
+  "devDependencies": {
+    "@types/unzipper": "^0.10.5"
   }
 }

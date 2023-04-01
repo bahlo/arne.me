@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as https from "https";
 import * as unzipper from "unzipper";
 
-const zipUrl = process.env.FONT_ZIP_URL;
+const zipUrl = process.env.FONT_ZIP_URL!;
 const outputDir = "public/fonts";
 
 https.get(zipUrl, async (response) => {

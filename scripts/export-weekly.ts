@@ -1,6 +1,5 @@
 import fs from 'fs/promises';
 import matter from 'gray-matter';
-import { cwd } from 'process';
 import readline from 'readline';
 
 function getHost(url: string): string {
@@ -47,7 +46,7 @@ interface Story {
   const num = await (new Promise(resolve => rl.question("Issue number: ", resolve)));
   rl.close();
 
-  const raw = await fs.readFile(`${cwd()}/../src/content/weekly/${num}.md`, 'utf-8');
+  const raw = await fs.readFile(`./src/content/weekly/${num}.md`, 'utf-8');
   const { content, data }: Markdown = matter(raw) as any;
 
   console.log(content);
