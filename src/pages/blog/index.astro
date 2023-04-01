@@ -41,9 +41,9 @@ const posts = (await getCollection('blog'))
           <a href="/blog/atom.xml">RSS Feed</a>, if you're into that.</p>
           {Object.keys(posts).sort((a, b) => b - a).map(year => (
             <>
-              <h3>{year}</h3>
+              <h2>{year}</h2>
               {posts[year].map(post => (
-                <h4><a href={`/blog/${post.slug}/`}>{post.data.title}</a></h4>
+                <h3><a href={`/blog/${post.slug}/`}>{post.data.title}</a></h3>
                 <span class="meta"><FormattedDate date={post.data.pubDate} /></span>
                 <p>{post.data.description}</p>
               ))}
