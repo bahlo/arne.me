@@ -21,6 +21,8 @@ and [Safari](http://www.apple.com/safari/).
 Any issue you encounter on this website can be submitted as
 [GitHub issues](https://github.com/bahlo/arne.me/issues/new).
 
-A [sitemap](/sitemap.xml) is available and there's an
-[RSS feed](/blog/atom.xml) for blogposts and an [RSS feed](/weekly/atom.xml)
-for the Weekly archives.
+A [sitemap](/sitemap.xml) is available and there are RSS feeds for
+[blog posts](/blog/atom.xml), the [weekly](/weekly/atom.xml) and
+[books](/books/atom.xml).
+
+None of the content on this site is AI generated.
