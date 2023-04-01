@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import {WEEKLY_TITLE, WEEKLY_DESCRIPTION} from '../../consts.ts';
+import renderWeeklyIssue from '../../templates/WeeklyIssueContent.ts'
 import sanitizeHtml from 'sanitize-html';
 import MarkdownIt from 'markdown-it';
 
@@ -20,7 +21,7 @@ export async function get(context) {
       pubDate: issue.data.date,
       description: `Issue #${issue.slug} from Arne's Weekly`,
       link: `/weekly/${issue.slug}`,
-      content: sanitizeHtml(parser.render(issue.body)),
+      content: sanitizeHtml(parser.render(issue.body) + renderWeeklyIssue(issue.slug, issue.data)),
     })),
     customData: '<language>en-us</language><link>https://arne.me/weekly</link>',
   });
