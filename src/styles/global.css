@@ -203,3 +203,10 @@ ul {
   padding-left: 20px;
   line-height: 1.2;
 }
+
+hr {
+  margin: 20px 0;
+  border-top: 1px solid var(--color-light-gray);
+  border-left: 0;
+  border-right: 0;
+}
