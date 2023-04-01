@@ -1,5 +1,4 @@
 ---
-const { hideHeading, hideIntro } = Astro.props;
 ---
 
 <style>
@@ -19,10 +18,6 @@ const { hideHeading, hideIntro } = Astro.props;
 </style>
 
 <div class="subscribe-form">
-  {!hideHeading && <h2>Subscribe</h2>}
-  {!hideIntro && (<p>
-    Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans.
-  </p>)}
   <form
     action="https://buttondown.email/api/emails/embed-subscribe/arnesweekly"
     method="post"

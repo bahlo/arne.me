@@ -36,6 +36,8 @@ const { num } = Astro.params;
         </span>
         <slot />
         <Fragment set:html={renderWeeklyIssue(num, Astro.props)} />
+        <h2>Subscribe</h2>
+        <p>Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans.</p>
         <SubscribeForm />
       </section>
     </main>
