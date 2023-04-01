@@ -1,6 +1,6 @@
 // Astro cannot render components, so we'll have to do this, see
 // https://docs.astro.build/en/reference/errors/invalid-component-args/
-import marked from 'marked';
+import { marked } from 'marked';
 
 function buildAnchor(title) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
