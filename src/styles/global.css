@@ -210,3 +210,7 @@ hr {
   border-left: 0;
   border-right: 0;
 }
+
+.no-margin-bottom {
+  margin-bottom: 0;
+}
