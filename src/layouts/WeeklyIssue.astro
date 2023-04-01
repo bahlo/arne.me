@@ -5,23 +5,12 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import SubscribeForm from '../components/SubscribeForm.astro';
+import renderWeeklyIssue from '../templates/WeeklyIssueContent.ts'
 
 type Props = CollectionEntry<'weekly'>['data'];
 
 const { title, date, tootOfTheWeek, categories } = Astro.props;
 const { num } = Astro.params;
-
-function getHost(url) {
-  const host = new URL(url).host;
-  if (host.startsWith("www.")) {
-    return host.slice(4);
-  }
-  return host;
-}
-
-function buildAnchor(title) {
-  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-}
 
 ---
 
@@ -46,23 +35,7 @@ function buildAnchor(title) {
           <FormattedDate date={date} />
         </span>
         <slot />
-        {tootOfTheWeek && (
-        <h2 id="toot-of-the-week">Toot of the Week</h2>
-        <blockquote>
-          <p>
-            <Fragment set:html={marked.parse(tootOfTheWeek.text)} />
-            — <a href="{tootOfTheWeek.url}">{tootOfTheWeek.author}</a>
-          </p>
-        </blockquote>
-        )}
-        {(categories || []).map(category => (
-        <h2 id={buildAnchor(category.title)}>{category.title}</h2> <!-- TODO: Add anchor -->
-        {category.stories.map(story => (
-          <h3><a href={"https://click.arne.me/?issue="+num+"&url=" + story.url}>{story.title}</a></h3>
-          <p><em>{story.readingTimeMinutes} min &middot; {getHost(story.url)}</em></p>
-          <p set:html={marked.parse(story.description)} />
-        ))}
-        ))}
+        <Fragment set:html={renderWeeklyIssue(num, Astro.props)} />
         <SubscribeForm />
       </section>
     </main>
