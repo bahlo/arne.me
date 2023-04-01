@@ -93,7 +93,7 @@ header {
 
 main {
   max-width: var(--width);
-  padding: 12px 16px;
+  padding: 12px;
 }
 
 footer {
