@@ -64,6 +64,9 @@ const issues = (await getCollection('weekly')).sort(
                 <a href={`/weekly/${issue.slug}/`}>{issue.data.title}</a>
                 <span class="meta">
                   <FormattedDate date={issue.data.date} />
+                  &middot;
+                  {(issue.data.categories || []).reduce((acc, category) => acc + category.stories.length, 0) || '?'}
+                  stories
                 </span>
               </li>
             ))}
