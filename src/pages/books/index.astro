@@ -2,6 +2,7 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Rating from '../../components/Rating.astro';
 import { BOOKS_TITLE, BOOKS_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
@@ -23,6 +24,11 @@ const books = (await getCollection('books')).sort(
 <html lang="en">
   <head>
     <BaseHead title={BOOKS_TITLE} description={BOOKS_DESCRIPTION} />
+    <style>
+      h3 {
+        margin-bottom: 0;
+      }
+    </style>
   </head>
   <body>
     <Header />
@@ -31,16 +37,19 @@ const books = (await getCollection('books')).sort(
           <h1>Books</h1>
           <p>All the books I've read since March 2023:</p>
           {Object.keys(books).sort((a, b) => b - a).map(year => (
-            <h3>{year}</h3>
-            <ul>
+            <h2>{year}</h2>
+            <>
             {books[year].map(book => (
-              <li>
-                <FormattedDate date={book.data.dateRead} />
-                <a href={`/books/${book.slug}/`}>{book.data.title}</a>
-                by {book.data.author}
-              </li>
+            <>
+              <h3><a href={`/books/${book.slug}/`}>{book.data.title}</a></h3>
+              <div class="meta">
+                {book.data.author} &middot;
+                Read on <FormattedDate date={book.data.dateRead}/> &middot;
+                <Rating rating={book.data.rating}/>
+              </div>
+            </>
             ))}
-            </ul>
+            </>
           ))}
         </section>
       </main>
