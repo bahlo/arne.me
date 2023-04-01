@@ -25,4 +25,4 @@ A [sitemap](/sitemap.xml) is available and there are RSS feeds for
 [blog posts](/blog/atom.xml), the [weekly](/weekly/atom.xml) and
 [books](/books/atom.xml).
 
-None of the content on this site is AI generated.
+All of the content on this site is written by a human.
