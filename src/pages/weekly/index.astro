@@ -25,13 +25,13 @@ const issues = (await getCollection('weekly')).sort(
   <head>
     <BaseHead title={WEEKLY_TITLE} description={WEEKLY_DESCRIPTION} />
     <style>
+      h4 {
+        margin-bottom: 0;
+      }
+
       ul {
         list-style: none;
         padding: 0;
-      }
-
-      .meta {
-        margin-bottom: 4px;
       }
 
       hr {
@@ -61,7 +61,7 @@ const issues = (await getCollection('weekly')).sort(
             <ul>
             {issues[year].map((issue) => (
               <li>
-                <a href={`/weekly/${issue.slug}/`}>{issue.data.title}</a>
+                <h4><a href={`/weekly/${issue.slug}/`}>{issue.data.title}</a></h4>
                 <span class="meta">
                   <FormattedDate date={issue.data.date} />
                   &middot;
