@@ -12,6 +12,9 @@ The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 
 [Plausible Analytics](https://plausible.io) is used, a privacy focused
 alternative to most analytics tools.
+For counting the clicks in my newletter I use a custom-built application that 
+logs the request to an [Axiom](https://axiom.co) dataset, recording only the 
+issue #, the URL and the user agent.
 
 Testing was conducted in the latest versions of
 [Edge](https://www.microsoft.com/en-us/windows/microsoft-edge/microsoft-edge),
