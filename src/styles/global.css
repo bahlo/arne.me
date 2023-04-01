@@ -198,3 +198,8 @@ input[type="submit"] {
   color: #fff;
   cursor: pointer;
 }
+
+ul {
+  padding-left: 20px;
+  line-height: 1.2;
+}

@@ -13,7 +13,9 @@ Hosting it at home is great for storage costs and control, but it's hard to
 share with friends or access on the go, especially with a NATed IPv4, so I
 decided to move to the cloud.
 
-## Prerequisites
+## Table of Contents
+
+## Choosing a server and storage method
 
 I chose [Hetzner Cloud](https://cloud.hetzner.com) because I like their service,
 and they use green energy.
@@ -28,7 +30,7 @@ to read a file, it's downloaded on demand if it's not cached already.
 
 Armed with this knowledge, I started setting up the server.
 
-## NixOS
+## Setting up NixOS
 
 NixOS is a declarative and reproducible operating system.
 You have a configuration file in `/etc/nixos/configuration.nix` that defines
@@ -47,7 +49,7 @@ upgraded NixOS (see [Upgrading NixOS](https://nixos.org/manual/nixos/stable/inde
 If you want to further secure your NixOS installation, Christine Dodrill has a
 great guide called [Paranoid NixOS Setup](https://christine.website/blog/paranoid-nixos-2021-07-18).
 
-## Storage
+## Setting up storage
 
 I decided to go with [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.html)
 as I have used it before, it's cheaper than S3, and I don't support Amazon.
@@ -130,7 +132,7 @@ I only have 40 GB local disk space, so I set the cache size to 20 GB (using
 I then ran `nixos-rebuild switch` to apply the configuration, uploaded some
 data to the bucket and listed `/mnt/media` to make sure everything works.
 
-## Plex
+## Configuring Plex
 
 NixOS has a predefined service for Plex, which I used like this:
 
@@ -150,7 +152,7 @@ With this configuration, Nix will open the correct ports in the firewall,
 create a user called `plex` with a group also called `plex` and install the Plex
 Media Server with the configuration in `/var/lib/plex`.
 
-### Audiobooks Plugin
+### Adding an Audiobooks Plugin
 
 I wanted to use the [Audiobooks.bundle](https://github.com/macr0dev/Audiobooks.bundle)
 metadata agent for better matching, so I added this to the `let`-section at the
@@ -197,7 +199,7 @@ $ ssh -L 32400:localhost:32400 user@domain-or-ip
 
 Then I opened <http://localhost:32400/web> in my local browser and set up Plex.
 
-## Nginx
+## Configuring Nginx
 
 I wanted a nice domain with HTTPS on 443 (instead of HTTP on port 32400), so I
 set up [Nginx](https://nginx.com) with [Let's Encrypt](https://letsencrypt.org)
@@ -312,7 +314,7 @@ Finally, I ran `nixos-rebuild switch` one last time to apply the configuration.
 Then I opened `https://my-domain` in a browser and started creating Plex
 libraries.
 
-## Pricing
+## How much does it cost?
 
 The CPX11 costs €4,75/month with backups enabled, B2 costs $0.005/GB/month
 storage + $0.01/GB downloaded.

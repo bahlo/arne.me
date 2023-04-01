@@ -17,6 +17,7 @@
     "astro": "^2.0.18",
     "markdown-it": "^13.0.1",
     "marked": "^4.2.12",
+    "remark-toc": "^8.0.1",
     "sanitize-html": "^2.10.0",
     "unzipper": "^0.10.11"
   }
