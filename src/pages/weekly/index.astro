@@ -48,10 +48,10 @@ const issues = (await getCollection('weekly')).sort(
           <p>Arne's Weekly is my newsletter, where I collect interesting stories 
              from all over the web every Sunday.
              There's an <a href="/weekly/atom.xml">RSS Feed</a> available, but
-             you should really subscribe.
+             you should really subscribe:
           </p>
 
-          <SubscribeForm />
+          <SubscribeForm hideHeading={true} hideIntro={true} />
 
           <hr>
 
