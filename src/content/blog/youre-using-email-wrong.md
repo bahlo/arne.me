@@ -1,6 +1,6 @@
 ---
-title: "You're Using Email Wrong"
-description: "If you don't like email, try a different strategy."
+title: "You’re Using Email Wrong"
+description: "If you don’t like email, try a different strategy."
 pubDate: "2022-03-06"
 updatedDate: "2022-03-08"
 ---

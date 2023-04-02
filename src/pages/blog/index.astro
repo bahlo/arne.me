@@ -37,8 +37,8 @@ const posts = (await getCollection('blog'))
       <main id="main">
         <section>
           <h1>Blog</h1>
-          <p>Hey, here are some blog posts I've written. There's an 
-          <a href="/blog/atom.xml">RSS Feed</a>, if you're into that.</p>
+          <p>Hey, here are some blog posts I’ve written. There’s an 
+          <a href="/blog/atom.xml">RSS Feed</a>, if you’re into that.</p>
           {Object.keys(posts).sort((a, b) => b - a).map(year => (
             <>
               <h2>{year}</h2>

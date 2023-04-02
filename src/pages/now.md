@@ -4,7 +4,7 @@ description: "What I'm up to"
 layout: "../layouts/Page.astro"
 ---
 
-This page was last update in March 2023:
+This page was last updated in March 2023:
 
 - Updating this very website with a new design and functionality
 - Thinking about LMMs and how to use them to make our lives easier
