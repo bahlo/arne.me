@@ -27,6 +27,7 @@
     "unzipper": "^0.10.11"
   },
   "devDependencies": {
+    "prettier": "^2.8.7",
     "@types/unzipper": "^0.10.5"
   }
 }
