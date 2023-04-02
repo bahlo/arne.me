@@ -29,6 +29,12 @@
   --font-serif: "Cooper BT", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
+  /* Type scale 1.250 (Major Third) */
+  --font-size-largest: 1.953rem;
+  --font-size-larger: 1.563rem;
+  --font-size-large: 1.25rem;
+  --font-size-small: 0.8rem;
+
   --astro-code-color-text: var(--color-text);
   --astro-code-color-background: var(--color-box-bg);
   --astro-code-token-constant: var(--color-primary);
@@ -66,9 +72,12 @@
   }
 }
 
+html {
+  font-size: 112.5%; /* 18px when the browser is set to 16px */
+}
+
 body {
   font-family: var(--font-sans);
-  font-size: 112.5%; /* 18px when the browser is set to 16px */
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -116,19 +125,16 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 800;
   line-height: 1.2;
+  font-size: 1rem;
 }
 
 h1 {
   margin-bottom: 8px;
-  font-size: 1.8em;
+  font-size: var(--font-size-larger);
 }
 
 h2 {
-  font-size: 1.4em;
-}
-
-h3 {
-  font-size: 1.2em;
+  font-size: var(--font-size-large);
 }
 
 blockquote {
@@ -136,7 +142,6 @@ blockquote {
   border-left: 4px solid var(--color-primary);
   color: var(--color-gray);
   font-style: italic;
-  font-size: 1em;
 }
 
 a {
@@ -162,8 +167,8 @@ code {
 .meta {
   display: block;
   color: var(--color-gray);
-  margin-bottom: 16px;
-  font-size: .9em;
+  margin-bottom: 8px;
+  font-size: var(--font-size-small);
 }
 
 .skip-link {
@@ -171,7 +176,6 @@ code {
   transform: translateY(-100%);
   background: var(--color-code-bg);
   padding: 4px 8px;
-  font-size: 1rem;
   border-radius: 0 0 8px 0;
 }
 
@@ -181,9 +185,13 @@ code {
 
 label {
   text-transform: uppercase;
-  font-size: 0.8em;
+  font-size: var(--font-size-small);
   display: block;
   font-weight: 700;
+}
+
+small {
+  font-size: var(--font-size-small);
 }
 
 input {
