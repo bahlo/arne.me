@@ -40,7 +40,6 @@ export const get: APIRoute = async function get({ params, request }) {
                   props: {
                     children: issue.data.title,
                     style: { 
-                      color: '#111',
                       fontFamily: 'Cooper BT',
                       fontSize: '72px',
                       lineHeight: 1,
@@ -52,7 +51,7 @@ export const get: APIRoute = async function get({ params, request }) {
                   props: {
                     children: `Issue #${params.num} of Arne's Weekly from ${date}.`,
                     style: { 
-                      color: '#333',
+                      color: 'rgba(255, 255, 255, 0.9)',
                       fontFamily: 'Roboto',
                       fontSize: '40px',
                     },
@@ -64,22 +63,7 @@ export const get: APIRoute = async function get({ params, request }) {
                 flexDirection: 'column',
                 flexGrow: 1,
                 justifyContent: 'center',
-                padding: '32px',
-              }
-            }
-          },
-          {
-            type: 'div',
-            props: {
-              children: 'Arne\'s Weekly is my newsletter, where I collect interesting stories from all over the web every Sunday.',
-              style: {
-                padding: '32px',
-                background: "rgba(53, 88, 255, 0.04)",
-                color: '#111',
-                fontFamily: 'Roboto',
-                fontSize: '40px',
-                lineHeight: 1.4,
-                borderTop: '2px solid rgba(53, 88, 255, 0.04)',
+                padding: '64px',
               }
             }
           }
@@ -89,7 +73,8 @@ export const get: APIRoute = async function get({ params, request }) {
           height: 630,
           display: "flex",
           flexDirection: "column",
-          background: "rgba(53, 88, 255, 0.01)",
+          background: "rgb(53, 88, 255)",
+          color: "#fff",
         },
       },
     },
