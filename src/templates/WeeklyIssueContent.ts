@@ -33,7 +33,7 @@ export default function render(num, frontmatter) {
     <h2 id=${buildAnchor(category.title)}>${category.title}</h2>
     ${category.stories.map(story => `
     <h3 class="no-margin-bottom"><a href=${"https://click.arne.me/?issue="+num+"&url=" + story.url}>${story.title}</a></h3>
-    <p class="meta"><em>${(story.readingTimeMinutes >= 0 ? story.readingTimeMinutes + " min &middot; " : "") + getHost(story.url)}</em></p>
+    <p class="meta">${(story.readingTimeMinutes >= 0 ? story.readingTimeMinutes + " min &middot; " : "") + getHost(story.url)}</p>
     ${marked.parse(story.description)}`).join('\n')}`).join('\n')}
   `
 }
