@@ -16,7 +16,7 @@ const { num } = Astro.params;
 
 <html lang="en">
   <head>
-    <BaseHead title={`${title} — Arne's Weekly`} description={`Issue #${num} of Arne's Weekly`} />
+    <BaseHead title={`${title} — Arne's Weekly`} description={`Issue #${num} of Arne's Weekly`} image={`/weekly/og-image/${num}.svg`} />
     <style>
       h1 {
         margin-bottom: 4px;
