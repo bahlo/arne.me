@@ -22,6 +22,7 @@
     "remark-toc": "^8.0.1",
     "sanitize-html": "^2.10.0",
     "satori": "^0.4.4",
+    "sharp": "^0.31.3",
     "ts-node": "^10.9.1",
     "unzipper": "^0.10.11"
   },

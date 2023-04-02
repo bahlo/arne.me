@@ -1,6 +1,7 @@
 import satori from 'satori';
 import fs from 'fs/promises';
 import type { APIRoute } from 'astro';
+import sharp from 'sharp';
 import { getCollection, getEntryBySlug } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -98,9 +99,11 @@ export const get: APIRoute = async function get({ params, request }) {
     },
   );
 
-  return new Response(svg, {
+  const png = await sharp(Buffer.from(svg)).png().toBuffer();
+
+  return new Response(png, {
     headers: {
-      'Content-Type': 'image/svg+xml',
+      'Content-Type': 'image/png',
     },
   });
 }
