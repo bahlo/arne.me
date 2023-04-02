@@ -21,4 +21,5 @@ pnpm-debug.log*
 .DS_Store
 
 # Paid fonts are not part of the repository
-/public/fonts
+/public/fonts/*
+!public/fonts/roboto
