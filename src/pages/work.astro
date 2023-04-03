@@ -1,11 +1,11 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE } from "../consts";
 
-const title = "Work"
-const description = "My work experience"
+const title = "Work";
+const description = "My work experience";
 const experience = [
   {
     from: 2019,
@@ -22,7 +22,7 @@ const experience = [
       "Developed and maintained the Axiom Vercel integration",
       "Built axiom-rs, an ergonomic Rust SDK for Axiom",
       "Lead a Developer Experience team of 3 engineers, owning the integrations, SDKs and other open-source projects",
-    ]
+    ],
   },
   {
     from: 2017,
@@ -35,7 +35,7 @@ const experience = [
       "Extracted parts of a PHP monolith into Go services",
       "Wrote a backend-for-frontend to provide a unified API and auth for the frontend",
       "Worked with an external provider to integrate advanced VAT return into a Go service",
-    ]
+    ],
   },
   {
     from: 2011,
@@ -49,15 +49,18 @@ const experience = [
       "Wrote an iPad app in Swift to demo the application to potential customers",
       "Developed a distributed system consisting of Go and Node.js microservices",
       "Wrote my thesis about a distributed heterogeneous database layer",
-    ]
-  }
-]
+    ],
+  },
+];
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <BaseHead title={`${title} — ${SITE_TITLE}`} description="Work experience of Arne Bahlo" />
+    <BaseHead
+      title={`${title} — ${SITE_TITLE}`}
+      description="Work experience of Arne Bahlo"
+    />
     <style>
       h2 {
         margin-bottom: 4px;
@@ -76,24 +79,26 @@ const experience = [
   <body>
     <Header />
     <main id="main">
-     <section>
+      <section>
         <h1>{title}</h1>
-        {experience.map((experience: Experience) => (
-          <>
-            <h2>
-              {experience.title} at {experience.company}
-            </h2>
-            <span class="meta">
-              {experience.from} &ndash; {experience.to} &middot;{" "}
-              {experience.location}
-            </span>
-            <ul>
-              {experience.tasks.map((task, i) => {
-                return <li key={i}>{task}</li>;
-              })}
-            </ul>
-          </>
-        ))}
+        {
+          experience.map((experience: Experience) => (
+            <>
+              <h2>
+                {experience.title} at {experience.company}
+              </h2>
+              <span class="meta">
+                {experience.from} &ndash; {experience.to} &middot;{" "}
+                {experience.location}
+              </span>
+              <ul>
+                {experience.tasks.map((task, i) => {
+                  return <li key={i}>{task}</li>;
+                })}
+              </ul>
+            </>
+          ))
+        }
       </section>
     </main>
     <Footer />

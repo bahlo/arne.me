@@ -1,16 +1,15 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE } from "../consts";
 
 interface Props {
-  title: String,
-  description: String,
+  title: String;
+  description: String;
 }
 
 const { title, description } = Astro.props.frontmatter;
-
 ---
 
 <html lang="en">
@@ -28,4 +27,3 @@ const { title, description } = Astro.props.frontmatter;
     <Footer />
   </body>
 </html>
-

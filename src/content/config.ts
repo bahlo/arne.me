@@ -1,4 +1,4 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content";
 
 const blog = defineCollection({
   schema: z.object({
@@ -12,11 +12,13 @@ const blog = defineCollection({
       .string()
       .optional()
       .transform((str) => (str ? new Date(str) : undefined)),
-    cover: z.object({
-      image: z.string(),
-      alt: z.string(),
-      caption: z.string(),
-    }).optional()
+    cover: z
+      .object({
+        image: z.string(),
+        alt: z.string(),
+        caption: z.string(),
+      })
+      .optional(),
   }),
 });
 
@@ -27,24 +29,28 @@ const weekly = defineCollection({
       .string()
       .or(z.date())
       .transform((val) => new Date(val)),
-    tootOfTheWeek: z.object({
-      text: z.string(),
-      author: z.string(),
-      url: z.string(),
-    }).optional(),
-    categories: z.array(
-      z.object({
-        title: z.string(),
-        stories: z.array(
-          z.object({
-            title: z.string(),
-            url: z.string(),
-            readingTimeMinutes: z.number(),
-            description: z.string(),
-          })
-        ),
+    tootOfTheWeek: z
+      .object({
+        text: z.string(),
+        author: z.string(),
+        url: z.string(),
       })
-    ).optional(),
+      .optional(),
+    categories: z
+      .array(
+        z.object({
+          title: z.string(),
+          stories: z.array(
+            z.object({
+              title: z.string(),
+              url: z.string(),
+              readingTimeMinutes: z.number(),
+              description: z.string(),
+            })
+          ),
+        })
+      )
+      .optional(),
   }),
 });
 

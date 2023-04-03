@@ -1,22 +1,25 @@
 ---
-import { marked } from 'marked';
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import SubscribeForm from '../components/SubscribeForm.astro';
-import renderWeeklyIssue from '../templates/WeeklyIssueContent.ts'
+import { marked } from "marked";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import SubscribeForm from "../components/SubscribeForm.astro";
+import renderWeeklyIssue from "../templates/WeeklyIssueContent.ts";
 
-type Props = CollectionEntry<'weekly'>['data'];
+type Props = CollectionEntry<"weekly">["data"];
 
 const { title, date, tootOfTheWeek, categories } = Astro.props;
 const { num } = Astro.params;
-
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={`${title} — Arne's Weekly`} description={`Issue #${num} of Arne's Weekly`} image={`/weekly/og-image/${num}.png`} />
+    <BaseHead
+      title={`${title} — Arne's Weekly`}
+      description={`Issue #${num} of Arne's Weekly`}
+      image={`/weekly/og-image/${num}.png`}
+    />
     <style>
       h1 {
         margin-bottom: 4px;
@@ -27,8 +30,7 @@ const { num } = Astro.params;
     <Header />
     <main id="main">
       <section>
-        <span>
-        </span>
+        <span> </span>
         <h1>{title}</h1>
         <span class="meta">
           This is issue #{num} of <a href="/weekly">Arnes Weekly</a> from
@@ -37,7 +39,9 @@ const { num } = Astro.params;
         <slot />
         <Fragment set:html={renderWeeklyIssue(num, Astro.props)} />
         <h2>Subscribe</h2>
-        <p>Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans.</p>
+        <p>
+          Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans.
+        </p>
         <SubscribeForm />
       </section>
     </main>

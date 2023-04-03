@@ -1,6 +1,6 @@
-import fs from 'fs/promises';
-import matter from 'gray-matter';
-import readline from 'readline';
+import fs from "fs/promises";
+import matter from "gray-matter";
+import readline from "readline";
 
 function getHost(url: string): string {
   const host = new URL(url).host;
@@ -41,27 +41,36 @@ interface Story {
 (async () => {
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stderr
+    output: process.stderr,
   });
-  const num = await (new Promise(resolve => rl.question("Issue number: ", resolve)));
+  const num = await new Promise((resolve) =>
+    rl.question("Issue number: ", resolve)
+  );
   rl.close();
 
-  const raw = await fs.readFile(`./src/content/weekly/${num}.md`, 'utf-8');
+  const raw = await fs.readFile(`./src/content/weekly/${num}.md`, "utf-8");
   const { content, data }: Markdown = matter(raw) as any;
 
   console.log(content);
 
   console.log("## Toot of the Weeek");
-  console.log(data.tootOfTheWeek.text.split('\n').map(line => `> ${line}`).join('\n'));
+  console.log(
+    data.tootOfTheWeek.text
+      .split("\n")
+      .map((line) => `> ${line}`)
+      .join("\n")
+  );
   console.log(`> — [${data.tootOfTheWeek.author}](${data.tootOfTheWeek.url})`);
 
-  data.categories.forEach(category => {
+  data.categories.forEach((category) => {
     console.log(`## ${category.title}`);
-    category.stories.forEach(story => {
-      console.log(`### [${story.title}](https://click.arne.me/?issue=${num}&url=${story.url})`);
+    category.stories.forEach((story) => {
+      console.log(
+        `### [${story.title}](https://click.arne.me/?issue=${num}&url=${story.url})`
+      );
       console.log(`_${story.readingTimeMinutes} min · ${getHost(story.url)}_`);
-      console.log()
+      console.log();
       console.log(`${story.description}`);
     });
-  })
+  });
 })();

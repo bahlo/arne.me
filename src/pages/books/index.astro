@@ -1,23 +1,23 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import Rating from '../../components/Rating.astro';
-import { BOOKS_TITLE, BOOKS_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Rating from "../../components/Rating.astro";
+import { BOOKS_TITLE, BOOKS_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+import FormattedDate from "../../components/FormattedDate.astro";
 
-const books = (await getCollection('books')).sort(
-  (a, b) => b.data.dateRead.valueOf() - a.data.dateRead.valueOf()
-).reduce((acc, book) => {
-  const year = book.data.dateRead.getFullYear();
-  if (acc[year]) {
-    acc[year].push(book);
-  } else {
-    acc[year] = [book];
-  }
-  return acc;
-}, {});
+const books = (await getCollection("books"))
+  .sort((a, b) => b.data.dateRead.valueOf() - a.data.dateRead.valueOf())
+  .reduce((acc, book) => {
+    const year = book.data.dateRead.getFullYear();
+    if (acc[year]) {
+      acc[year].push(book);
+    } else {
+      acc[year] = [book];
+    }
+    return acc;
+  }, {});
 ---
 
 <!DOCTYPE html>
@@ -32,27 +32,35 @@ const books = (await getCollection('books')).sort(
   </head>
   <body>
     <Header />
-      <main id="main">
-        <section>
-          <h1>Books</h1>
-          <p>All the books I’ve read since March 2023:</p>
-          {Object.keys(books).sort((a, b) => b - a).map(year => (
-            <h2>{year}</h2>
-            <>
-            {books[year].map(book => (
-            <>
-              <h3><a href={`/books/${book.slug}/`}>{book.data.title}</a></h3>
-              <div class="meta">
-                {book.data.author} &middot;
-                Read on <FormattedDate date={book.data.dateRead}/> &middot;
-                <Rating rating={book.data.rating}/>
-              </div>
-            </>
-            ))}
-            </>
-          ))}
-        </section>
-      </main>
-      <Footer />
-	</body>
+    <main id="main">
+      <section>
+        <h1>Books</h1>
+        <p>All the books I’ve read since March 2023:</p>
+        {
+          Object.keys(books)
+            .sort((a, b) => b - a)
+            .map((year) => (
+              <>
+                <h2>{year}</h2>
+                <>
+                  {books[year].map((book) => (
+                    <>
+                      <h3>
+                        <a href={`/books/${book.slug}/`}>{book.data.title}</a>
+                      </h3>
+                      <div class="meta">
+                        {book.data.author} &middot; Read on{" "}
+                        <FormattedDate date={book.data.dateRead} /> &middot;
+                        <Rating rating={book.data.rating} />
+                      </div>
+                    </>
+                  ))}
+                </>
+              </>
+            ))
+        }
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>

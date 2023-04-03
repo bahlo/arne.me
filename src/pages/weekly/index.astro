@@ -1,23 +1,23 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import SubscribeForm from '../../components/SubscribeForm.astro';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
-import {WEEKLY_TITLE, WEEKLY_DESCRIPTION} from '../../consts.js';
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import SubscribeForm from "../../components/SubscribeForm.astro";
+import { getCollection } from "astro:content";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { WEEKLY_TITLE, WEEKLY_DESCRIPTION } from "../../consts.js";
 
-const issues = (await getCollection('weekly')).sort(
-	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-).reduce((acc, issue) => {
-  const year = issue.data.date.getFullYear();
-  if (acc[year]) {
-    acc[year].push(issue);
-  } else {
-    acc[year] = [issue];
-  }
-  return acc;
-}, {});
+const issues = (await getCollection("weekly"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .reduce((acc, issue) => {
+    const year = issue.data.date.getFullYear();
+    if (acc[year]) {
+      acc[year].push(issue);
+    } else {
+      acc[year] = [issue];
+    }
+    return acc;
+  }, {});
 ---
 
 <!DOCTYPE html>
@@ -37,37 +37,51 @@ const issues = (await getCollection('weekly')).sort(
   </head>
   <body>
     <Header />
-      <main id="main">
-        <section>
-          <h1>Weekly</h1>
-          <p>Arne’s Weekly is my newsletter, where I collect interesting stories 
-             from all over the web every Sunday.
-             There’s an <a href="/weekly/atom.xml">RSS Feed</a> available, but
-             you should really subscribe:
-          </p>
+    <main id="main">
+      <section>
+        <h1>Weekly</h1>
+        <p>
+          Arne’s Weekly is my newsletter, where I collect interesting stories
+          from all over the web every Sunday. There’s an <a
+            href="/weekly/atom.xml">RSS Feed</a
+          > available, but you should really subscribe:
+        </p>
 
-          <SubscribeForm />
+        <SubscribeForm />
 
-          <hr>
+        <hr />
 
-          {Object.keys(issues).sort((a, b) => b - a).map(year => (
-            <h2>{year}</h2>
-            <ul>
-            {issues[year].map((issue) => (
-              <li>
-                <h3><a href={`/weekly/${issue.slug}/`}>{issue.data.title}</a></h3>
-                <span class="meta">
-                  <FormattedDate date={issue.data.date} />
-                  &middot;
-                  {(issue.data.categories || []).reduce((acc, category) => acc + category.stories.length, 0) || '?'}
-                  stories
-                </span>
-              </li>
-            ))}
-            </ul>
-          ))}
-        </section>
-      </main>
-      <Footer />
-	</body>
+        {
+          Object.keys(issues)
+            .sort((a, b) => b - a)
+            .map((year) => (
+              <>
+                <h2>{year}</h2>
+                <ul>
+                  {issues[year].map((issue) => (
+                    <li>
+                      <h3>
+                        <a href={`/weekly/${issue.slug}/`}>
+                          {issue.data.title}
+                        </a>
+                      </h3>
+                      <span class="meta">
+                        <FormattedDate date={issue.data.date} />
+                        &middot;
+                        {(issue.data.categories || []).reduce(
+                          (acc, category) => acc + category.stories.length,
+                          0
+                        ) || "?"}
+                        stories
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ))
+        }
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>

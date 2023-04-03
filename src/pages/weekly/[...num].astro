@@ -1,15 +1,15 @@
 ---
-import { CollectionEntry, getCollection } from 'astro:content';
-import WeeklyIssue from '../../layouts/WeeklyIssue.astro';
+import { CollectionEntry, getCollection } from "astro:content";
+import WeeklyIssue from "../../layouts/WeeklyIssue.astro";
 
 export async function getStaticPaths() {
-  const issues = await getCollection('weekly');
+  const issues = await getCollection("weekly");
   return issues.map((issue) => ({
     params: { num: issue.slug },
     props: issue,
   }));
 }
-type Props = CollectionEntry<'issue'>;
+type Props = CollectionEntry<"issue">;
 
 const post = Astro.props;
 const { Content } = await post.render();
