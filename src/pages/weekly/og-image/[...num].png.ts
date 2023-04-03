@@ -45,18 +45,18 @@ export const get: APIRoute = async function get({ params, request }) {
                 fontSize: "64px",
                 lineHeight: 1,
                 color: "#111",
-                marginBottom: "16px",
+                marginBottom: "32px",
               },
             },
           },
           {
             type: "span",
             props: {
-              children: `Issue #${params.num} of Arne's Weekly from ${date}.`,
+              children: `Arne's Weekly from ${date}.`,
               style: {
                 color: "#333",
                 fontFamily: "Roboto",
-                fontSize: "32px",
+                fontSize: "40px",
               },
             },
           },
