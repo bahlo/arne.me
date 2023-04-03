@@ -17,8 +17,8 @@
   --color-button: rgb(var(--color-primary-rgb) / 10%);
   --color-button-hover: rgb(var(--color-primary-rgb) / 20%);
 
-  --color-header-bg:  rgb(var(--color-primary-rgb) / 8%);
-  --color-header-border: rgb(var(--color-primary-rgb) / 8%);
+  --color-header-bg:  rgb(var(--color-primary-rgb) / 4%);
+  --color-header-border: rgb(var(--color-primary-rgb) / 4%);
 
   --color-footer-bg: rgba(0, 0, 0, 0.02);
   --color-footer-border: rgba(0, 0, 0, 0.02);
