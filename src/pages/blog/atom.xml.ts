@@ -1,17 +1,15 @@
-import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
-import { BLOG_TITLE, BLOG_DESCRIPTION } from '../../consts';
-import sanitizeHtml from 'sanitize-html';
-import MarkdownIt from 'markdown-it';
+import rss from "@astrojs/rss";
+import { getCollection } from "astro:content";
+import { BLOG_TITLE, BLOG_DESCRIPTION } from "../../consts";
+import sanitizeHtml from "sanitize-html";
+import MarkdownIt from "markdown-it";
 
 const parser = new MarkdownIt();
 
 export async function get(context) {
-  const posts = (await getCollection('blog'))
-    .filter(post => post.slug != "hello-world")
-    .sort(
-      (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-    );
+  const posts = (await getCollection("blog"))
+    .filter((post) => post.slug != "hello-world")
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return rss({
     title: BLOG_TITLE,
@@ -22,6 +20,6 @@ export async function get(context) {
       link: `/blog/${post.slug}/`,
       content: sanitizeHtml(parser.render(post.body)),
     })),
-    customData: '<language>en-us</language><link>https://arne.me/blog</link>',
+    customData: "<language>en-us</language><link>https://arne.me/blog</link>",
   });
 }
