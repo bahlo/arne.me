@@ -1,6 +1,6 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
-import WeeklyIssue from "../../layouts/WeeklyIssue.astro";
+import WeeklyIssue from "../../../layouts/WeeklyIssue.astro";
 
 export async function getStaticPaths() {
   const issues = await getCollection("weekly");
