@@ -1,7 +1,7 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import { WEEKLY_TITLE, WEEKLY_DESCRIPTION } from "../../consts.ts";
-import renderWeeklyIssue from "../../templates/WeeklyIssueContent.ts";
+import renderWeeklyIssue from "../../shared/WeeklyIssueContent.ts";
 import sanitizeHtml from "sanitize-html";
 import MarkdownIt from "markdown-it";
 
