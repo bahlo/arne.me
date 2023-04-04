@@ -17,6 +17,7 @@
     "@astrojs/sitemap": "^1.1.0",
     "astro": "^2.0.18",
     "gray-matter": "^4.0.3",
+    "image-size": "^1.0.2",
     "markdown-it": "^13.0.1",
     "marked": "^4.2.12",
     "remark-toc": "^8.0.1",
@@ -27,7 +28,7 @@
     "unzipper": "^0.10.11"
   },
   "devDependencies": {
-    "prettier": "^2.8.7",
-    "@types/unzipper": "^0.10.5"
+    "@types/unzipper": "^0.10.5",
+    "prettier": "^2.8.7"
   }
 }

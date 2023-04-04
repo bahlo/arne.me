@@ -1,13 +1,7 @@
 ---
-const { rating } = Astro.props;
+import renderRating from '../shared/rating.ts';
 
-let str = "";
-for (let i = 0; i < rating; i++) {
-  str += "★";
-}
-for (let i = 0; i < 5 - rating; i++) {
-  str += "☆";
-}
+const { rating } = Astro.props;
 ---
 
-<span>{str}</span>
+<span>{renderRating(rating)}</span>
