@@ -1,9 +1,9 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { SITE_TITLE } from "../consts";
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE } from "../../consts";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
