@@ -29,7 +29,7 @@ export const get: APIRoute = async function get({ params, request }) {
               style: {
                 fontFamily: "Cooper BT Bold",
                 fontWeight: "bold",
-                fontSize: "64px",
+                fontSize: "74px",
                 lineHeight: 1,
                 color: "#111",
                 marginBottom: "20px",
@@ -44,7 +44,7 @@ export const get: APIRoute = async function get({ params, request }) {
               style: {
                 fontFamily: "Cooper BT",
                 fontWeight: "normal",
-                fontSize: "40px",
+                fontSize: "48px",
                 lineHeight: 1.2,
                 color: "rgba(0, 0, 0, .7)",
               },
