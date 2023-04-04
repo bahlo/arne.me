@@ -8,7 +8,8 @@ import { SITE_TITLE } from "../consts";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, updatedDate, cover } = Astro.props;
+const { title, description, pubDate, updatedDate } = Astro.props;
+const { slug } = Astro.params;
 ---
 
 <html lang="en">
@@ -16,7 +17,7 @@ const { title, description, pubDate, updatedDate, cover } = Astro.props;
     <BaseHead
       title={`${title} — ${SITE_TITLE}`}
       description={description}
-      image={cover?.image}
+      image={`/blog/${slug}/og-image.png`}
     />
     <style>
       h1 {
