@@ -36,7 +36,7 @@ export const get: APIRoute = async function get({ params, request }) {
   const coverImageRatio = coverImageSize.width / coverImageSize.height;
   const base64CoverImage = coverImage.toString("base64");
 
-  const coverImageMimeType = "image/jpeg";
+  let coverImageMimeType = "image/jpeg";
   if (book.data.cover.endsWith(".png")) {
     coverImageMimeType = "image/png";
   }
