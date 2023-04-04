@@ -35,6 +35,11 @@ export const get: APIRoute = async function get({ params, request }) {
   const coverImageSize = sizeOf(coverImage);
   const coverImageRatio = coverImageSize.width / coverImageSize.height;
   const base64CoverImage = coverImage.toString("base64");
+
+  const coverImageMimeType = "image/jpeg";
+  if (book.data.cover.endsWith(".png")) {
+    coverImageMimeType = "image/png";
+  }
     
   const svg = await satori(
     {
@@ -96,7 +101,7 @@ export const get: APIRoute = async function get({ params, request }) {
                 width: `${coverImageRatio * 450}px`,
                 height: "450px",
                 marginLeft: "20px",
-                backgroundImage: `url('data:image/jpeg;base64,${base64CoverImage}')`,
+                backgroundImage: `url('data:${coverImageMimeType};base64,${base64CoverImage}')`,
                 backgroundSize: `${coverImageRatio * 450}px 450px`,
                 backgroundRepeat: "no-repeat",
               }
