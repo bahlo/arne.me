@@ -9,8 +9,8 @@ import { SITE_TITLE } from "../consts";
 
 type Props = CollectionEntry<"books">["data"];
 
-const { title, subtitle, author, dateRead, rating, cover, website } =
-  Astro.props;
+const { title, subtitle, author, dateRead, rating, cover, website } = Astro.props;
+const { slug } = Astro.params;
 ---
 
 <html lang="en">
@@ -19,7 +19,7 @@ const { title, subtitle, author, dateRead, rating, cover, website } =
       title={`A review of ${title} by ${author}`}
       description={`My review and rating of ${title} by ${author}.`}
       }
-      image={cover}
+      image={`/books/${slug}/og-image.png`}
     />
     <style>
       .cover {
