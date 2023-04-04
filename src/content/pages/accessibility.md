@@ -1,7 +1,6 @@
 ---
 title: "Accessbility"
 description: "Accessbility measures on this website"
-layout: ../layouts/Page.astro
 ---
 
 This site aims to conform to level

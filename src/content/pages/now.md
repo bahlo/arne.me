@@ -1,7 +1,6 @@
 ---
 title: "Now"
 description: "What I'm up to"
-layout: "../layouts/Page.astro"
 ---
 
 This page was last updated in March 2023:

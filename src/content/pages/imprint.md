@@ -1,7 +1,6 @@
 ---
 title: "Imprint"
 description: "The imprint for arne.me"
-layout: "../layouts/Page.astro"
 ---
 
 Angaben gemäß § 5 TMG:

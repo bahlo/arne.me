@@ -1,7 +1,6 @@
 ---
 title: "Style Guide"
 description: "The styleguide for this website"
-layout: ../layouts/Page.astro
 ---
 
 ## Second-level heading

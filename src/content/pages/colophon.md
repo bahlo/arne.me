@@ -1,7 +1,6 @@
 ---
 title: "Colophon"
 description: "The Colophon of arne.me"
-layout: "../layouts/Page.astro"
 ---
 
 This website was first published on June 19th 2021 near

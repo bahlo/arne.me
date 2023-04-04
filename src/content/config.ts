@@ -69,4 +69,11 @@ const books = defineCollection({
   }),
 });
 
-export const collections = { blog, weekly, books };
+const pages = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+  }),
+});
+
+export const collections = { blog, weekly, books, pages };
