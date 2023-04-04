@@ -17,11 +17,13 @@ type Props = CollectionEntry<"page">;
 const page = Astro.props;
 const { title, description } = page.data;
 const { Content } = await page.render();
+
+const { slug } = Astro.params;
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={`${title} — ${SITE_TITLE}`} description={description} />
+    <BaseHead title={`${title} — ${SITE_TITLE}`} description={description} image={`/${slug}/og-image.png`} />
   </head>
   <body>
     <Header />
