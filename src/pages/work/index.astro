@@ -1,8 +1,8 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { SITE_TITLE } from "../consts";
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, WORK_DESCRIPTION } from "../../consts";
 
 const title = "Work";
 const description = "My work experience";
@@ -59,7 +59,8 @@ const experience = [
   <head>
     <BaseHead
       title={`${title} — ${SITE_TITLE}`}
-      description="Work experience of Arne Bahlo"
+      description={WORK_DESCRIPTION}
+      image="/work/og-image.png"
     />
     <style>
       h2 {

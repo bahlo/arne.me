@@ -13,3 +13,5 @@ export const WEEKLY_DESCRIPTION =
 
 export const BOOKS_TITLE = `Books — ${SITE_TITLE}`;
 export const BOOKS_DESCRIPTION = "Books I've read.";
+
+export const WORK_DESCRIPTION = "My work experience.";
