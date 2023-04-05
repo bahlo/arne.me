@@ -3,11 +3,11 @@ title: "Now"
 description: "What I'm up to"
 ---
 
-This page was last updated in March 2023:
+Here's what I'm up to:
 
-- Updating this very website with a new design and functionality
-- Thinking about LMMs and how to use them to make our lives easier
-- Spend way more time reading thanks to [this post](https://hbr.org/2017/02/8-ways-to-read-a-lot-more-books-this-year) from [issue #94](/weekly/94)
-- Building a tool to vastly improve energy efficiency in public, club or church buildings (more to that soon)
+- Redesign my website
+- Think about LMMs and how to use them to make our lives easier
+- Read Dune by Frank Herbert
+- Build a tool to vastly improve energy efficiency in public, club or church buildings (more to that soon)
 
-This page is inspired by [NowNowNow](https://nownownow.com).
+This page was last updated in April 2023 and is inspired by [NowNowNow](https://nownownow.com).
