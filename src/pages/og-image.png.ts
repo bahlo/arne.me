@@ -3,6 +3,7 @@ import fs from "fs/promises";
 import sharp from "sharp";
 import { getCollection, getEntryBySlug } from "astro:content";
 import sizeOf from "image-size";
+import { INDEX_TITLE, INDEX_HERO } from "../consts";
 
 const cooperBtBold = fs.readFile(
   "./public/fonts/cooperbt/1296123/d6b715ec-1259-4329-9cfe-5e9d545eea39.woff"
@@ -25,7 +26,7 @@ export const get: APIRoute = async function get({ params, request }) {
           {
             type: "h1",
             props: {
-              children: "Hey, I’m Arne —",
+              children: INDEX_TITLE,
               style: {
                 fontFamily: "Cooper BT Bold",
                 fontWeight: "bold",
@@ -39,8 +40,7 @@ export const get: APIRoute = async function get({ params, request }) {
           {
             type: "span",
             props: {
-              children:
-                "a full stack software engineer, team lead, podcaster & dad based near Frankfurt, Germany.",
+              children: INDEX_HERO,
               style: {
                 fontFamily: "Cooper BT",
                 fontWeight: "normal",

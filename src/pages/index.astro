@@ -2,7 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, INDEX_TITLE, INDEX_HERO } from "../consts";
 ---
 
 <!DOCTYPE html>
@@ -61,11 +61,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
   <body>
     <Header />
     <main id="main">
-      <h1>Hey, I’m Arne —</h1>
-      <p class="hero">
-        a full stack software engineer, team lead, podcaster & dad based near
-        Frankfurt, Germany.
-      </p>
+      <h1>{INDEX_TITLE}</h1>
+      <p class="hero">{INDEX_HERO}</p>
       <p>
         Having worked with a variety of technologies and stacks, from frontend
         to backend to databases, I know my way around building accessible and
