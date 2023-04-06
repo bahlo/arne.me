@@ -11,7 +11,7 @@ export const INDEX_HERO =
 export const BLOG_TITLE = `Blog — ${SITE_TITLE}`;
 export const BLOG_DESCRIPTION = "The personal blog of Arne Bahlo.";
 
-export const WEEKLY_TITLE = `Arne's Weekly`;
+export const WEEKLY_TITLE = `Arne’s Weekly`;
 export const WEEKLY_DESCRIPTION =
   "A weekly newsletter with interesting stories from all over the web.";
 
