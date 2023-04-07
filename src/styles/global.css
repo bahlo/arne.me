@@ -106,7 +106,7 @@ main {
 }
 
 footer {
-  padding: 16px;
+  padding: 16px 16px 20px;
   background: var(--color-footer-bg);
   border-top: 1px solid var(--color-footer-border);
 }
