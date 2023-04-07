@@ -8,8 +8,12 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://arne.me",
   integrations: [mdx(), sitemap()],
+  experimental: {
+    assets: true,
+  },
   markdown: {
     shikiConfig: { theme: "css-variables" },
     remarkPlugins: [remarkToc],
+    gfm: true,
   },
 });
