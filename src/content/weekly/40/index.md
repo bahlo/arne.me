@@ -17,7 +17,9 @@ Hi hi ✌🏻
 This week I read _How to Take Smart Notes_ by Söhnke Ahrens (2017), and I really enjoyed it.
 
 <div style="width: 30%;float: left;padding-right: 20px;">
-  <img alt="The cover of How to Take Smart Notes, showing a checkered colorful board with lines that sometimes connect and are sometimes interrupted." src="_/how_to_take_smart_notes_cover.jpg">
+  
+  ![The cover of How to Take Smart Notes, showing a checkered colorful board with lines that sometimes connect and are sometimes interrupted.](./_how_to_take_smart_notes_cover.jpg)
+
 </div>
 
 The author explains the Zettelkasten system by Niklas Luhmann, who had a physical box with DIN A6 (4.1×5.8 inches for my imperial friends) cards, each of which had contained one note and was densely linked and clustered to other notes.
