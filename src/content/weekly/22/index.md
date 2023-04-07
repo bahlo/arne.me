@@ -9,7 +9,7 @@ Hello and welcome to another issue of Arnes Weekly! Hope your week was good, enj
 ## Tweet of the Week
 
 > “I’m sorry, but we had to cut down the scope to make the deadline.”
-> ![A picture of a spoon with a huge hole in it and a fork with super short tines](/weekly/22/twitter_image.jpeg)
+> ![A picture of a spoon with a huge hole in it and a fork with super short tines](./_twitter_image.jpeg)
 > — [@WdeB on Twitter](https://twitter.com/WdeB/status/1436051539450376200)
 
 ## Culture
