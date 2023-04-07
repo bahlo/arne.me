@@ -234,4 +234,5 @@ hr {
 article img {
   margin: 12px 0;
   border-radius: 8px;
+  height: auto;
 }
