@@ -15,7 +15,7 @@
     "@astrojs/mdx": "^0.17.2",
     "@astrojs/rss": "^2.1.1",
     "@astrojs/sitemap": "^1.1.0",
-    "astro": "^2.0.18",
+    "astro": "^2.2",
     "gray-matter": "^4.0.3",
     "image-size": "^1.0.2",
     "markdown-it": "^13.0.1",
