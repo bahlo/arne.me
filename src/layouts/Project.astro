@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import { SITE_TITLE } from "../consts";
+
+type Props = CollectionEntry<"projects">["data"];
+
+const { title, type, description, est, website, image, imageAlt } = Astro.props;
+const { slug } = Astro.params;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`${title} — ${SITE_TITLE}`}
+      description={description}
+      image={`/projects/${slug}/og-image.png`}
+    />
+    <style>
+      h1 {
+        margin-bottom: 4px;
+      }
+
+      img {
+        float: right;
+        width: 32%;
+        margin-left: 1%;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main id="main">
+      <article>
+        <img src={image.src} alt={imageAlt} />
+        <h1 class="title">{title}</h1>
+        <span class="meta">{type} &middot; Est. {est} &middot; 
+          <a href={website}>{website.substr("https://".length)}</a>
+          </span>
+        <slot />
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>

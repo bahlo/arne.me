@@ -79,4 +79,19 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { blog, weekly, books, pages };
+const projects = defineCollection({
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      type: z.string(),
+      website: z.string().optional(),
+      est: z.number(),
+      image: image().refine((img) => img.width >= 360, {
+        message: "Cover image must be at least 360 pixels wide!",
+      }),
+      imageAlt: z.string(),
+    }),
+});
+
+export const collections = { blog, weekly, books, pages, projects };

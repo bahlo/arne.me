@@ -19,3 +19,6 @@ export const BOOKS_TITLE = `Books — ${SITE_TITLE}`;
 export const BOOKS_DESCRIPTION = "Books I've read.";
 
 export const WORK_DESCRIPTION = "My work experience.";
+
+export const PROJECTS_TITLE = `Projects — ${SITE_TITLE}`;
+export const PROJECTS_DESCRIPTION = "Projects I've worked on.";
