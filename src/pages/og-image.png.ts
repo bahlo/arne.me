@@ -2,7 +2,6 @@ import satori from "satori";
 import fs from "fs/promises";
 import sharp from "sharp";
 import { getCollection, getEntryBySlug } from "astro:content";
-import sizeOf from "image-size";
 import { INDEX_TITLE, INDEX_HERO } from "../consts";
 
 const cooperBtBold = fs.readFile(

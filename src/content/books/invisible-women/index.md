@@ -4,7 +4,7 @@ subtitle: "Data Bias in a World Designed for Men"
 author: "Caroline Criado Perez"
 dateRead: "2023-03-30"
 rating: 4
-cover: "/books/invisible-women/cover.jpg"
+cover: "./_cover.jpg"
 ---
 
 This book opened my eyes to the systematic exclusion of women in areas I didn't see before.

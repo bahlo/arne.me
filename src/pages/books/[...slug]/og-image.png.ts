@@ -1,8 +1,8 @@
 import satori from "satori";
 import fs from "fs/promises";
+import path from "path";
 import sharp from "sharp";
 import { getCollection, getEntryBySlug } from "astro:content";
-import sizeOf from "image-size";
 
 const cooperBt = fs.readFile(
   "./public/fonts/cooperbt/1296123/d6b715ec-1259-4329-9cfe-5e9d545eea39.woff"
@@ -31,13 +31,14 @@ export const get: APIRoute = async function get({ params, request }) {
   const robotoData = await roboto;
   const base64Pattern = (await pattern).toString("base64");
 
-  const coverImage = await fs.readFile("./public"+book.data.cover)
-  const coverImageSize = sizeOf(coverImage);
-  const coverImageRatio = coverImageSize.width / coverImageSize.height;
+  // FIXME: We shouldn't require a static path for the cover images
+  const coverImage = await fs.readFile(path.join("./src/content/books", params.slug, "_cover.jpg"))
+
+  const coverImageRatio = book.data.cover.width / book.data.cover.height;
   const base64CoverImage = coverImage.toString("base64");
 
   let coverImageMimeType = "image/jpeg";
-  if (book.data.cover.endsWith(".png")) {
+  if (book.data.cover.format == "png") {
     coverImageMimeType = "image/png";
   }
     

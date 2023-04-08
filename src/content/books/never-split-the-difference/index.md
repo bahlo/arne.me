@@ -5,7 +5,7 @@ author: "Chris Voss"
 dateRead: "2023-03-21"
 rating: 4
 website: "https://www.blackswanltd.com/never-split-the-difference"
-cover: "/books/never-split-the-difference/cover.jpeg"
+cover: "./_cover.jpg"
 ---
 
 Chris Voss makes this non-fiction book exciting by telling stories from real 

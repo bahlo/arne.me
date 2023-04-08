@@ -3,7 +3,7 @@ title: "Engineering Management for the Rest of Us"
 author: "Sarah Drasner"
 dateRead: "2023-03-23"
 rating: 4
-cover: "/books/engineering-management-for-the-rest-of-us/cover.jpeg"
+cover: "./_cover.jpg"
 website: "https://www.engmanagement.dev"
 ---
 

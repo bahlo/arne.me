@@ -3,7 +3,7 @@ title: "The Design of Everyday Things"
 author: "Don Norman"
 dateRead: "2023-04-03"
 rating: 5
-cover: "/books/the-design-of-everyday-things/cover.jpg"
+cover: "./_cover.jpg"
 ---
 
 Did you ever push on a door that's pull only or the other way around?

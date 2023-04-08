@@ -55,18 +55,21 @@ const weekly = defineCollection({
 });
 
 const books = defineCollection({
-  schema: z.object({
-    title: z.string(),
-    subtitle: z.string().optional(),
-    website: z.string().optional(),
-    author: z.string(),
-    rating: z.number(),
-    dateRead: z
-      .string()
-      .or(z.date())
-      .transform((val) => new Date(val)),
-    cover: z.string(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      subtitle: z.string().optional(),
+      website: z.string().optional(),
+      author: z.string(),
+      rating: z.number(),
+      dateRead: z
+        .string()
+        .or(z.date())
+        .transform((val) => new Date(val)),
+      cover: image().refine((img) => img.width >= 360, {
+        message: "Cover image must be at least 360 pixels wide!",
+      }),
+    }),
 });
 
 const pages = defineCollection({

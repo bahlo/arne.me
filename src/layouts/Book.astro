@@ -41,7 +41,7 @@ const { slug } = Astro.params;
     <Header />
     <main id="main">
       <article>
-        <img class="cover" src={cover} alt={`Cover of ${title} by ${author}`} />
+        <img class="cover" src={cover.src} alt={`Cover of ${title} by ${author}`} />
         <h1>{title}{subtitle && ": " + subtitle}</h1>
         <div class="meta">
           {author} &middot; Read on <FormattedDate date={dateRead} /> &middot;
