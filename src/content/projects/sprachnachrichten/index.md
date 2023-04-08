@@ -9,7 +9,7 @@ imageAlt: "The podcast cover of Sprachnachrichten, a green S and N on dark backg
 ---
 
 A podcast I'm doing with my good friend [Jan](https://jan.work) in German.
-We talk about different topics about tech and productivity, our side projects, our home screens and one a year we hold a gala to select the best apps, music and more.
+We talk about tech and productivity, our side projects, our home screens and one a year we hold a gala to select the best apps, music and more.
 
 If you want to get started, I recommend one of these episodes:
 
