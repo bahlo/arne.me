@@ -25,9 +25,13 @@ const projects = (await getCollection("projects"))
         margin-bottom: 0;
       }
 
-      .project img {
+      .project .image {
         width: 100px;
         margin-right: 16px;
+      }
+
+      .project .image img {
+        width: 100px;
         border-radius: 8px;
       }
     </style>
@@ -42,7 +46,9 @@ const projects = (await getCollection("projects"))
         </p>
         {projects.map(project => (
           <div class="project">
-            <img src={project.data.image.src} alt={project.data.imageAlt} />
+            <div class="image">
+              <img src={project.data.image.src} alt={project.data.imageAlt} />
+            </div>
             <div>
               <h3>
                 <a href={`/projects/${project.slug}/`}>{project.data.title}</a>
