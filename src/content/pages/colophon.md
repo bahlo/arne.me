@@ -9,6 +9,9 @@ It's developed on a 2021 MacBook Pro with [Astro](https://astro.build) and
 hosted on [Netlify](https://netlify.com).
 The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 
+Icons are picked from the great [Bootstrap Icons](https://icons.getbootstrap.com),
+their [LICENSE](https://github.com/twbs/icons/blob/main/LICENSE.md) applies.
+
 [Plausible Analytics](https://plausible.io) is used, a privacy focused
 alternative to most analytics tools.
 For counting the clicks in my newletter I use a custom-built application that 
