@@ -4,7 +4,7 @@ type: "Podcast"
 description: "A podcast about productivity, self improvement and side projects"
 website: "https://sprachnachrichten.fm"
 est: 2020
-image: "./_cover.png"
+image: "./_image.png"
 imageAlt: "The podcast cover of Sprachnachrichten, a green S and N on dark background."
 ---
 

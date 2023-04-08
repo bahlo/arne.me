@@ -26,7 +26,7 @@ export const get: APIRoute = async function get({ params, request }) {
   const base64Pattern = (await pattern).toString("base64");
 
   // FIXME: We shouldn't require a static path for the cover images
-  const image = await fs.readFile(path.join("./src/content/projects", params.slug, "_cover.png"))
+  const image = await fs.readFile(path.join("./src/content/projects", params.slug, "_image.png"))
 
   const imageRatio = project.data.image.width / project.data.image.height;
   const base64Image = image.toString("base64");
