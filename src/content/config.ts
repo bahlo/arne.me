@@ -86,7 +86,11 @@ const projects = defineCollection({
       description: z.string(),
       type: z.string(),
       website: z.string().optional(),
-      est: z.number(),
+      sortIndex: z.number(),
+      est: z
+        .string()
+        .or(z.date())
+        .transform((val) => new Date(val)),
       image: image().refine((img) => img.width >= 360, {
         message: "Cover image must be at least 360 pixels wide!",
       }),

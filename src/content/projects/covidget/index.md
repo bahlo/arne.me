@@ -3,7 +3,8 @@ title: COVIDget
 type: "App"
 description: "An iOS app which showed the regional COVID infections in Germany."
 website: "https://github.com/bahlo/COVIDget"
-est: 2020
+est: "2020-10-17"
+sortIndex: 2
 image: "./_image.png"
 imageAlt: "An iOS widget showing 69 new infections for the Main-Kinzig-Kreis for the last 7 days per 100k population."
 ---

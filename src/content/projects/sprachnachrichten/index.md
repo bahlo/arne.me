@@ -3,7 +3,8 @@ title: "Sprachnachrichten"
 type: "Podcast"
 description: "A podcast about productivity, self improvement and side projects"
 website: "https://sprachnachrichten.fm"
-est: 2020
+est: "2020-02-14"
+sortIndex: 1
 image: "./_image.png"
 imageAlt: "The podcast cover of Sprachnachrichten, a green S and N on dark background."
 ---

@@ -7,7 +7,7 @@ import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 
 const projects = (await getCollection("projects"))
-  .sort((a, b) => b.est - a.est)
+  .sort((a, b) => a.data.sortIndex - b.data.sortIndex)
 ---
 
 <!DOCTYPE html>
@@ -47,7 +47,7 @@ const projects = (await getCollection("projects"))
               <h3>
                 <a href={`/projects/${project.slug}/`}>{project.data.title}</a>
               </h3>
-              <span class="meta">{project.data.type} &middot; Est. {project.data.est}</span>
+              <span class="meta">{project.data.type} &middot; Est. {project.data.est.getFullYear()}</span>
               <p>{project.data.description}</p>
             </div>
           </div>

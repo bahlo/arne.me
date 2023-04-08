@@ -37,7 +37,7 @@ const { slug } = Astro.params;
       <article>
         <img src={image.src} alt={imageAlt} />
         <h1 class="title">{title}</h1>
-        <span class="meta">{type} &middot; Est. {est} &middot; 
+        <span class="meta">{type} &middot; Est. {est.getFullYear()} &middot; 
           <a href={website}>{website.substr("https://".length)}</a>
           </span>
         <slot />
