@@ -26,9 +26,9 @@ where you can play around and quickly get results.
 
 ![A screenshot of the OG Image Playground showing a code editor on the left and a preview and some settings on the right.](./_og-image-playground.png)
 
-I recommend setting the size to 1200&times;630px as that's what Facebook 
+Set the size to 1200&times;630px as that's what Facebook 
 recommends in [their guidelines](https://developers.facebook.com/docs/sharing/webmasters/images/).
-use Flexbox liberally and enable debug mode when figuring out the layout.
+Use Flexbox liberally and enable debug mode when figuring out the layout.
 [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) 
 is a great resource to have at hand.
 
