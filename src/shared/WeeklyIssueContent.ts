@@ -7,11 +7,14 @@ function buildAnchor(title) {
 }
 
 function getHost(url) {
-  const host = new URL(url).host;
-  if (host.startsWith("www.")) {
-    return host.slice(4);
+  const u = new URL(url);
+  if (u.host == "www.reddit.com") {
+    const pathSegements = u.pathname.split("/");
+    return u.host.slice(4) + "/" + pathSegements[1] + "/" + pathSegements[2];
+  } else if (u.host.startsWith("www.")) {
+    return u.host.slice(4);
   }
-  return host;
+  return u.host;
 }
 
 export default function render(num, frontmatter) {
