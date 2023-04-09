@@ -20,10 +20,6 @@ const { slug } = Astro.params;
       image={`/projects/${slug}/og-image.png`}
     />
     <style>
-      h1 {
-        margin-bottom: 4px;
-      }
-
       img {
         float: right;
         width: 32%;
@@ -41,6 +37,7 @@ const { slug } = Astro.params;
           <a href={website}>{website.substr("https://".length)}</a>
           </span>
         <slot />
+        <br class="clear" />
       </article>
     </main>
     <Footer />

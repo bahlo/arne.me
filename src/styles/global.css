@@ -119,12 +119,7 @@ figcaption p {
   margin: 0;
 }
 
-p, ul, ol, pre {
-  margin-bottom: 12px;
-}
-
 h1, h2, h3, h4, h5, h6 {
-  margin-bottom: 8px;
   color: var(--color-heading);
   font-family: var(--font-serif);
   font-weight: 800;
@@ -133,7 +128,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  margin-bottom: 8px;
   font-size: var(--font-size-larger);
 }
 
@@ -171,7 +165,6 @@ code {
 .meta {
   display: block;
   color: var(--color-gray);
-  margin-bottom: 8px;
   font-size: var(--font-size-small);
 }
 
@@ -215,24 +208,19 @@ ul, ol {
   padding-left: 20px;
 }
 
-ul li, ol li {
-  margin-bottom: 4px;
-}
-
 hr {
-  margin: 20px 0;
   border-top: 1px solid var(--color-light);
   border-left: 0;
   border-right: 0;
   border-bottom: 0;
 }
 
-.no-margin-bottom {
-  margin-bottom: 0;
-}
-
 article img {
   margin: 12px 0;
   border-radius: 8px;
   height: auto;
+}
+
+.clear {
+  clear: both;
 }

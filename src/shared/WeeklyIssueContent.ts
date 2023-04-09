@@ -43,7 +43,7 @@ export default function render(num, frontmatter) {
     ${category.stories
       .map(
         (story) => `
-    <h3 class="no-margin-bottom"><a href=${
+    <h3><a href=${
       "https://click.arne.me/?issue=" + num + "&url=" + story.url
     }>${story.title}</a></h3>
     <p class="meta">${
