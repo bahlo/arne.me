@@ -31,14 +31,14 @@ import Maintenance from "./Maintenance.astro";
     font-weight: bold;
   }
 
-  nav a svg {
+  nav a .underline {
     display: none;
     position: absolute;
     bottom: -3px;
     width: 100%;
   }
 
-  nav a.active svg path {
+  nav a.active .underline path {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
     animation: draw 2s ease-in-out 4ms forwards;
@@ -46,7 +46,7 @@ import Maintenance from "./Maintenance.astro";
   }
 
   @media (prefers-reduced-motion) {
-    nav a.active svg .path {
+    nav a.active .underline path {
       animation: none;
       stroke-dasharray: 0;
       stroke-dashoffset: 0;
@@ -67,7 +67,7 @@ import Maintenance from "./Maintenance.astro";
     color: var(--color-heading);
   }
 
-  nav a.active svg {
+  nav a.active .underline {
     display: block;
   }
 </style>
@@ -81,6 +81,7 @@ import Maintenance from "./Maintenance.astro";
       <HeaderLink href="/now/">
         Now
         <svg
+          class="underline"
           width="38"
           height="5"
           viewBox="0 0 38 5"
@@ -98,6 +99,7 @@ import Maintenance from "./Maintenance.astro";
       <HeaderLink href="/work/">
         Work
         <svg
+          class="underline"
           width="42"
           height="5"
           viewBox="0 0 42 5"
@@ -115,6 +117,7 @@ import Maintenance from "./Maintenance.astro";
       <HeaderLink href="/blog/">
         Blog
         <svg
+          class="underline"
           width="35"
           height="5"
           viewBox="0 0 35 5"
@@ -132,6 +135,7 @@ import Maintenance from "./Maintenance.astro";
       <HeaderLink href="/weekly/">
         Weekly
         <svg
+          class="underline"
           width="64"
           height="7"
           viewBox="0 0 64 7"
@@ -148,13 +152,21 @@ import Maintenance from "./Maintenance.astro";
       </HeaderLink>
       <HeaderLink href="/projects/">
         Projects
-          <svg width="69" height="5" viewBox="0 0 69 5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg 
+            class="underline"
+            width="69" 
+            height="5" 
+            viewBox="0 0 69 5" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg" 
+            aria-hidden="true">
             <path d="M1 1.45429C10.2509 1.06883 19.4475 0.51723 28.6691 1.80517C37.3858 3.02258 46.5016 3.25878 55.3107 2.78261C58.0434 2.6349 60.981 1.82497 63.7067 2.58211C64.5995 2.83011 66.5 2.78261 67.7669 2.35654" stroke="#D23A3A" stroke-width="2" stroke-linecap="round"/>
           </svg>
       </HeaderLink>
       <HeaderLink href="/books/">
         Books
         <svg
+          class="underline"
           width="52"
           height="7"
           viewBox="0 0 52 7"
