@@ -9,17 +9,18 @@ interface Props {
   description: String;
 }
 
-const { title, description } = Astro.props.frontmatter;
+const { title, description } = Astro.props;
+const { slug } = Astro.params;
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={`${title} — ${SITE_TITLE}`} description={description} />
+    <BaseHead title={`${title} — ${SITE_TITLE}`} description={description} image={`/${slug}/og-image.png`} />
   </head>
   <body>
     <Header />
     <main id="main">
-      <section>
+      <section class="stack">
         <h1>{title}</h1>
         <slot />
       </section>

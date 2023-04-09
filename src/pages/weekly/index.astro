@@ -34,7 +34,7 @@ const issues = (await getCollection("weekly"))
   <body>
     <Header />
     <main id="main">
-      <section>
+      <section class="stack">
         <h1>Weekly</h1>
         <p>
           Arne’s Weekly is my newsletter, where I collect interesting stories
@@ -53,7 +53,7 @@ const issues = (await getCollection("weekly"))
             .map((year) => (
               <>
                 <h2>{year}</h2>
-                <ul>
+                <ul class="stack-small">
                   {issues[year].map((issue) => (
                     <li>
                       <h3>

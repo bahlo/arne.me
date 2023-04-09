@@ -4,7 +4,6 @@
 <style>
   input {
     border-radius: 8px;
-    margin-bottom: 8px;
   }
 
   small {
@@ -17,6 +16,7 @@
   <form
     action="https://buttondown.email/api/emails/embed-subscribe/arnesweekly"
     method="post"
+    class="stack-small"
   >
     <label for="email">Email address:</label>
     <input
@@ -27,11 +27,11 @@
       placeholder="you@example.org"
     />
     <input type="submit" value="Subscribe" />
+    <small>
+      Subscription is one click and you can unsubscribe at any time. Your email
+      address will be sent to
+      <a href="https://buttondown.email">Buttondown</a>, the service I use to send
+      out emails.
+    </small>
   </form>
-  <small>
-    Subscription is one click and you can unsubscribe at any time. Your email
-    address will be sent to
-    <a href="https://buttondown.email">Buttondown</a>, the service I use to send
-    out emails.
-  </small>
 </div>

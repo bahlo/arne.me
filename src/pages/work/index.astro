@@ -62,12 +62,18 @@ const experience = [
       description={WORK_DESCRIPTION}
       image="/work/og-image.png"
     />
+    <style>
+      ul {
+        --space: .5em;
+      }
+    </style>
   </head>
   <body>
     <Header />
     <main id="main">
-      <section>
+      <section class="stack">
         <h1>{title}</h1>
+        <p>This is my work experience.</p>
         {
           experience.map((experience: Experience) => (
             <>

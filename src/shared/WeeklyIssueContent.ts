@@ -22,7 +22,6 @@ export default function render(num, frontmatter) {
 
   // In HTML we trust
   return `
-    <slot />
     ${
       (tootOfTheWeek &&
         `

@@ -28,7 +28,7 @@ const posts = (await getCollection("blog"))
   <body>
     <Header />
     <main id="main">
-      <section>
+      <section class="stack">
         <h1>Blog</h1>
         <p>
           Hey, here are some blog posts I’ve written. There’s an
@@ -41,7 +41,7 @@ const posts = (await getCollection("blog"))
               <>
                 <h2>{year}</h2>
                 {posts[year].map((post) => (
-                  <>
+                  <div class="stack-small">
                     <h3>
                       <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
                     </h3>
@@ -49,7 +49,7 @@ const posts = (await getCollection("blog"))
                       <FormattedDate date={post.data.pubDate} />
                     </span>
                     <p>{post.data.description}</p>
-                  </>
+                  </div>
                 ))}
               </>
             ))

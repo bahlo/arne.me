@@ -27,12 +27,16 @@ const { slug } = Astro.params;
         float: right;
         margin-left: 1%;
       }
+
+      h1 {
+        --space: 0;
+      }
     </style>
   </head>
   <body>
     <Header />
     <main id="main">
-      <article>
+      <article class="stack">
         <img class="cover" src={cover.src} alt={`Cover of ${title} by ${author}`} />
         <h1>{title}{subtitle && ": " + subtitle}</h1>
         <div class="meta">

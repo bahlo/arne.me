@@ -25,12 +25,16 @@ const { slug } = Astro.params;
         width: 32%;
         margin-left: 1%;
       }
+
+      h1 {
+        --space: 0;
+      }
     </style>
   </head>
   <body>
     <Header />
     <main id="main">
-      <article>
+      <section class="stack">
         <img src={image.src} alt={imageAlt} />
         <h1 class="title">{title}</h1>
         <span class="meta">{type} &middot; Est. {est.getFullYear()} &middot; 
@@ -38,7 +42,7 @@ const { slug } = Astro.params;
           </span>
         <slot />
         <br class="clear" />
-      </article>
+      </section>
     </main>
     <Footer />
   </body>

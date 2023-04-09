@@ -3,6 +3,7 @@ import { CollectionEntry, getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import Page from "../../layouts/Page.astro";
 import { SITE_TITLE } from "../../consts";
 
 export async function getStaticPaths() {
@@ -15,24 +16,11 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"page">;
 
 const page = Astro.props;
-const { title, description } = page.data;
 const { Content } = await page.render();
 
 const { slug } = Astro.params;
 ---
 
-<html lang="en">
-  <head>
-    <BaseHead title={`${title} — ${SITE_TITLE}`} description={description} image={`/${slug}/og-image.png`} />
-  </head>
-  <body>
-    <Header />
-    <main id="main">
-      <section>
-        <h1>{title}</h1>
-        <Content />
-      </section>
-    </main>
-    <Footer />
-  </body>
-</html>
+<Page {...page.data}>
+  <Content />
+</Page>

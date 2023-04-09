@@ -23,7 +23,7 @@ const { slug } = Astro.params;
   <body>
     <Header />
     <main id="main">
-      <article>
+      <article class="stack">
         <h1 class="title">{title}</h1>
         <span class="meta"><FormattedDate date={pubDate} /></span>
         <slot />
