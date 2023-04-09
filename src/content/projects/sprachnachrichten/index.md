@@ -6,7 +6,7 @@ website: "https://sprachnachrichten.fm"
 est: "2020-02-14"
 sortIndex: 1
 image: "./_image.png"
-imageAlt: "The podcast cover of Sprachnachrichten, a green S and N on dark background."
+imageAlt: "The podcast cover, saying Sprachnachrichten in green on a dark background."
 ---
 
 A podcast I'm doing with my good friend [Jan](https://jan.work) in German.

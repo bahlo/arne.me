@@ -49,9 +49,9 @@ const projects = (await getCollection("projects"))
               <img src={project.data.image.src} alt={project.data.imageAlt} />
             </div>
             <div>
-              <h3>
+              <h2>
                 <a href={`/projects/${project.slug}/`}>{project.data.title}</a>
-              </h3>
+              </h2>
               <span class="meta">{project.data.type} &middot; Est. {project.data.est.getFullYear()}</span>
               <p>{project.data.description}</p>
             </div>

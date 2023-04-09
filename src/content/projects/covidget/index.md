@@ -6,7 +6,7 @@ website: "https://github.com/bahlo/COVIDget"
 est: "2020-10-17"
 sortIndex: 2
 image: "./_image.png"
-imageAlt: "An iOS widget showing 69 new infections for the Main-Kinzig-Kreis for the last 7 days per 100k population."
+imageAlt: "An iOS widget showing 69 new infections for a district for the last 7 days / 100k pop."
 ---
 
 An iOS app I wrote to play around with widgets when they were new in iOS 14.
