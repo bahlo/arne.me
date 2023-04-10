@@ -242,9 +242,13 @@ article img {
 }
 
 .stack-small h1 + .meta, .stack-small h2 + .meta, .stack-small h3 + .meta, .stack-small h4 + .meta, .stack-small h5 + .meta, .stack-small h6 + .meta {
-  --space: 0.2rem;
+  --space: .2rem;
 }
 
 .flex-spacer {
   flex-grow: 1;
+}
+
+.stack > .meta + p {
+  --space: .5rem;
 }
