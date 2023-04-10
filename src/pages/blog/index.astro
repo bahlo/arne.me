@@ -24,6 +24,11 @@ const posts = (await getCollection("blog"))
 <html lang="en">
   <head>
     <BaseHead title={BLOG_TITLE} description={BLOG_DESCRIPTION} image="/blog/og-image.png" />
+    <style>
+      .blogpost {
+        --space: .5rem;
+      }
+    </style>
   </head>
   <body>
     <Header />
@@ -41,7 +46,7 @@ const posts = (await getCollection("blog"))
               <>
                 <h2>{year}</h2>
                 {posts[year].map((post) => (
-                  <div class="stack-small">
+                  <div class="stack-small blogpost">
                     <h3>
                       <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
                     </h3>
