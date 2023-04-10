@@ -5,7 +5,10 @@ const today = new Date();
 <style>
   .container {
     display: flex;
-    justify-content: space-between;
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    line-height: 1.5;
     color: var(--color-gray);
     font-size: var(--font-size-small);
     max-width: var(--width);
@@ -16,15 +19,20 @@ const today = new Date();
   a {
     color: var(--color-gray);
   }
+
+  .middot {
+    margin: 0 .2rem;
+  }
 </style>
 
 <footer>
   <div class="container">
-    <div>
-      <a href="/colophon">Colophon</a> &middot;
-      <a href="/accessibility">A11y</a> &middot;
-      <a href="/imprint">Imprint</a>
-    </div>
+    <a href="/colophon">Colophon</a>
+    <span class="middot">&middot;</span>
+    <a href="/accessibility">A11y</a>
+    <span class="middot">&middot;</span>
+    <a href="/imprint">Imprint</a>
+    <div class="flex-spacer"></div>
     <span>&copy; {today.getFullYear()} Arne Bahlo</span>
   </div>
 </footer>
