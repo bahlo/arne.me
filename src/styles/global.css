@@ -1,6 +1,7 @@
 @import "reset.css";
 @import "cooperbt.css";
 @import "pragmatapro.css";
+@import "stack.css";
 
 :root {
   --width: 768px;
@@ -220,35 +221,6 @@ article img {
   clear: both;
 }
 
-
-.stack > * {
-  margin-block: 0;
-} 
-
-.stack > * + * {
-  margin-block-start: var(--space, 1rem);
-}
-
-.stack h1 + .meta, .stack h2 + .meta, .stack h3 + .meta, .stack h4 + .meta, .stack h5 + .meta, .stack h6 + .meta {
-  --space: 0.2rem;
-}
-
-.stack-small > * {
-  margin-block: 0;
-} 
-
-.stack-small > * + * {
-  margin-block-start: var(--space, .5rem);
-}
-
-.stack-small h1 + .meta, .stack-small h2 + .meta, .stack-small h3 + .meta, .stack-small h4 + .meta, .stack-small h5 + .meta, .stack-small h6 + .meta {
-  --space: .2rem;
-}
-
 .flex-spacer {
   flex-grow: 1;
-}
-
-.stack > .meta + p {
-  --space: .5rem;
 }
