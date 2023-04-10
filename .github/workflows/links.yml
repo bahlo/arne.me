@@ -27,6 +27,6 @@ jobs:
         if: env.lychee_exit_code != 0
         uses: peter-evans/create-issue-from-file@v4
         with:
-          title: There are broken hyperlinks
+          title: Broken hyperlinks
           content-filepath: ./lychee/out.md
           labels: report, automated issue
