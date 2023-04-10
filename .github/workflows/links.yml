@@ -20,7 +20,7 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v1.6.1
         with:
-          args: --verbose --no-progress "./src/**/*.md" "./src/**/*.astro"
+          args: --verbose --exclude "https://twitter.com/.*" --no-progress "./src/**/*.md" "./src/**/*.astro"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Create issue from file
