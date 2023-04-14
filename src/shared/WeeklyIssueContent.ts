@@ -18,7 +18,7 @@ function getHost(url) {
 }
 
 export default function render(num, frontmatter) {
-  const { tootOfTheWeek, categories } = frontmatter;
+  const { tootOfTheWeek, tweetOfTheWeek, categories } = frontmatter;
 
   // In HTML we trust
   return `
@@ -30,6 +30,21 @@ export default function render(num, frontmatter) {
       <p>
         ${marked.parse(tootOfTheWeek.text)}
         — <a href="${tootOfTheWeek.url}">${tootOfTheWeek.author}</a>
+      </p>
+    </blockquote>
+    `) ||
+      ""
+    }
+    ${
+      (tweetOfTheWeek &&
+        `
+    <h2 id="tweet-of-the-week">Tweet of the Week</h2>
+    <blockquote>
+      <p>
+        ${marked.parse(tweetOfTheWeek.text)}
+        — <a href="${tweetOfTheWeek.url}">${
+          tweetOfTheWeek.author
+        } on Twitter</a>
       </p>
     </blockquote>
     `) ||

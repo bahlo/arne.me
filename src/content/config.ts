@@ -36,6 +36,13 @@ const weekly = defineCollection({
         url: z.string(),
       })
       .optional(),
+    tweetOfTheWeek: z
+      .object({
+        text: z.string(),
+        author: z.string(),
+        url: z.string(),
+      })
+      .optional(),
     categories: z
       .array(
         z.object({
