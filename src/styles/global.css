@@ -30,10 +30,11 @@
   --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
   /* Type scale 1.250 (Major Third) */
-  --font-size-largest: 1.953rem;
-  --font-size-larger: 1.563rem;
-  --font-size-large: 1.25rem;
-  --font-size-small: 0.8rem;
+  --font-size-largest: 3.516rem;
+  --font-size-larger: 2.813rem;
+  --font-size-large: 2.25rem;
+  --font-size: 1.8rem;
+  --font-size-small: 1.44rem;
 
   --astro-code-color-text: var(--color-text);
   --astro-code-color-background: var(--color-box-bg);
@@ -69,7 +70,7 @@
 
     --astro-code-token-function: #a575ff;
     --astro-code-token-string-expression: #57b96f;
-  --astro-code-token-punctuation: #dedede;
+    --astro-code-token-punctuation: #dedede;
   }
 
   article img {
@@ -78,7 +79,7 @@
 }
 
 html {
-  font-size: 112.5%; /* 18px when the browser is set to 16px */
+  font-size: 62.5%; /* 10px when the browser is set to 16px */
 }
 
 body {
@@ -89,6 +90,7 @@ body {
   color: var(--color-text);
   background: var(--color-bg);
   font-weight: 500;
+  font-size: var(--font-size);
 }
 
 main {
@@ -121,7 +123,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 800;
   line-height: 1.2;
-  font-size: 1rem;
+  font-size: var(--font-size);
 }
 
 h1 {
