@@ -109,11 +109,11 @@ header {
 
 main {
   max-width: var(--width);
-  padding: 16px 12px;
+  padding: 1.6rem 1.2rem;
 }
 
 footer {
-  padding: 16px 0 20px;
+  padding: 1.6rem 0 2rem;
   background: var(--color-footer-bg);
   border-top: 1px solid var(--color-footer-border);
 }
@@ -135,7 +135,7 @@ h2 {
 }
 
 blockquote {
-  padding: 0 0 0 16px;
+  padding-left: 1.6rem;
   border-left: 4px solid var(--color-primary);
   color: var(--color-gray);
   font-style: italic;
@@ -155,7 +155,7 @@ code {
 }
 
 .astro-code, .box {
-  padding: 8px 12px;
+  padding: .8rem 1.2rem;
   border-radius: 8px;
   border: 1px solid var(--color-box-border);
   background: var(--color-box-bg);
@@ -171,7 +171,7 @@ code {
   position: absolute;
   transform: translateY(-100%);
   background: var(--color-code-bg);
-  padding: 4px 8px;
+  padding: .4rem .8rem;
   border-radius: 0 0 8px 0;
 }
 
@@ -192,7 +192,7 @@ small {
 
 input {
   border-radius: 8px;
-  padding: 4px 8px;
+  padding: .4rem .8rem;
   background: var(--color-box-bg);
   border: 1px solid var(--color-box-border);
 }
