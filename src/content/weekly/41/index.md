@@ -40,7 +40,7 @@ _9 min · biodigitaljazz.tech_
 
 Tim Reynolds describes the job of a tech lead, arguing that feasibility should be the central theme.
 
-### [The Biggest Mistake I See Engineers Make](https://www.thezbook.com/the-biggest-mistake-i-see-engineers-make/)
+### [The Biggest Mistake I See Engineers Make](https://web.archive.org/web/20230404051537/https://thezbook.com/the-biggest-mistake-i-see-engineers-make)
 
 _4 min · thezbook.com_
 

@@ -11,6 +11,8 @@ function getHost(url) {
   if (u.host == "www.reddit.com") {
     const pathSegements = u.pathname.split("/");
     return u.host.slice(4) + "/" + pathSegements[1] + "/" + pathSegements[2];
+  } else if (u.host == "web.archive.org") {
+    return getHost("https://" + url.split("https://")[2]);
   } else if (u.host.startsWith("www.")) {
     return u.host.slice(4);
   }
