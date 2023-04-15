@@ -19,6 +19,25 @@ function getHost(url) {
   return u.host;
 }
 
+function formatReadingTime(minutes) {
+  if (minutes < 1) {
+    return "";
+  }
+
+  if (minutes < 60) {
+    return minutes + " min";
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const minutesLeft = minutes % 60;
+
+  if (minutesLeft < 1) {
+    return hours + " hours";
+  }
+
+  return hours + " hours " + minutesLeft + " min";
+}
+
 export default function render(num, frontmatter) {
   const { tootOfTheWeek, tweetOfTheWeek, categories } = frontmatter;
 
@@ -63,9 +82,9 @@ export default function render(num, frontmatter) {
       "https://click.arne.me/?issue=" + num + "&url=" + story.url
     }>${story.title}</a></h3>
     <p class="meta">${
-      (story.readingTimeMinutes >= 0
-        ? story.readingTimeMinutes + " min &middot; "
-        : "") + getHost(story.url)
+      formatReadingTime(story.readingTimeMinutes) +
+      " &middot; " +
+      getHost(story.url)
     }</p>
     ${marked.parse(story.description)}`
       )
