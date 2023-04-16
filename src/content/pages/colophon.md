@@ -19,7 +19,7 @@ logs the request to an [Axiom](https://axiom.co) dataset, recording only the
 issue #, the URL and the user agent.
 
 Testing was conducted in the latest versions of
-[Edge](https://www.microsoft.com/en-us/windows/microsoft-edge/microsoft-edge),
+[Edge](https://www.microsoft.com/en-us/edge),
 [Chrome](https://www.google.com/chrome/),
 [Firefox](https://www.mozilla.org/en-US/firefox/new/),
 and [Safari](http://www.apple.com/safari/).
