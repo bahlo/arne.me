@@ -30,11 +30,21 @@
   --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
   /* Type scale 1.250 (Major Third) */
-  --font-size-largest: 3.5rem;
-  --font-size-larger: 2.8rem;
-  --font-size-large: 2.2rem;
-  --font-size: 1.8rem;
-  --font-size-small: 1.4rem;
+  --font-size-largest: 2.1875rem;
+  --font-size-larger: 1.75rem;
+  --font-size-large: 1.4375rem;
+  --font-size: 1.125rem;
+  --font-size-small: .875rem;
+
+  /* Spacing */
+  --space-0: 0;
+  --space-1: .25rem; /* 4px */
+  --space-2: .5rem; /* 8px */
+  --space-3: .75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-7: 2rem; /* 32px */
 
   --astro-code-color-text: var(--color-text);
   --astro-code-color-background: var(--color-box-bg);
@@ -78,10 +88,6 @@
   }
 }
 
-html {
-  font-size: 62.5%; /* 10px when the browser is set to 16px */
-}
-
 body {
   font-family: var(--font-sans);
   display: flex;
@@ -109,11 +115,11 @@ header {
 
 main {
   max-width: var(--width);
-  padding: 1.6rem 1.2rem;
+  padding: var(--space-4) var(--space-3);
 }
 
 footer {
-  padding: 1.6rem 0 2rem;
+  padding: var(--space-4) 0 var(--space-5);
   background: var(--color-footer-bg);
   border-top: 1px solid var(--color-footer-border);
 }
@@ -135,7 +141,7 @@ h2 {
 }
 
 blockquote {
-  padding-left: 1.6rem;
+  padding-left: var(--space-4);
   border-left: 4px solid var(--color-primary);
   color: var(--color-gray);
   font-style: italic;
@@ -155,7 +161,7 @@ code {
 }
 
 .astro-code, .box {
-  padding: .8rem 1.2rem;
+  padding: var(--space-2) var(--space-3);
   border-radius: 8px;
   border: 1px solid var(--color-box-border);
   background: var(--color-box-bg);
@@ -171,7 +177,7 @@ code {
   position: absolute;
   transform: translateY(-100%);
   background: var(--color-code-bg);
-  padding: .4rem .8rem;
+  padding: var(--space-1) var(--space-2);
   border-radius: 0 0 8px 0;
 }
 
@@ -192,7 +198,7 @@ small {
 
 input {
   border-radius: 8px;
-  padding: .4rem .8rem;
+  padding: var(--space-1) var(--space-2);
   background: var(--color-box-bg);
   border: 1px solid var(--color-box-border);
 }

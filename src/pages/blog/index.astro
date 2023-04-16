@@ -24,11 +24,6 @@ const posts = (await getCollection("blog"))
 <html lang="en">
   <head>
     <BaseHead title={BLOG_TITLE} description={BLOG_DESCRIPTION} image="/blog/og-image.png" />
-    <style>
-      .blogpost {
-        --space: .5rem;
-      }
-    </style>
   </head>
   <body>
     <Header />
@@ -39,26 +34,28 @@ const posts = (await getCollection("blog"))
           Hey, here are some blog posts I’ve written. There’s an
           <a href="/blog/atom.xml">RSS Feed</a>, if you’re into that.
         </p>
-        {
-          Object.keys(posts)
-            .sort((a, b) => b - a)
-            .map((year) => (
-              <>
-                <h2>{year}</h2>
-                {posts[year].map((post) => (
-                  <div class="stack-small blogpost">
-                    <h3>
-                      <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-                    </h3>
-                    <span class="meta">
-                      <FormattedDate date={post.data.pubDate} />
-                    </span>
-                    <p>{post.data.description}</p>
-                  </div>
-                ))}
-              </>
-            ))
-        }
+        <div class="stack-small">
+          {
+            Object.keys(posts)
+              .sort((a, b) => b - a)
+              .map((year) => (
+                <>
+                  <h2>{year}</h2>
+                  {posts[year].map((post) => (
+                    <>
+                      <h3>
+                        <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                      </h3>
+                      <span class="meta">
+                        <FormattedDate date={post.data.pubDate} />
+                      </span>
+                      <p>{post.data.description}</p>
+                    </>
+                  ))}
+                </>
+              ))
+          }
+        </div>
       </section>
     </main>
     <Footer />

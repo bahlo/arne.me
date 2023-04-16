@@ -31,29 +31,31 @@ const books = (await getCollection("books"))
       <section class="stack">
         <h1>Books</h1>
         <p>All the books I’ve read since March 2023:</p>
-        {
-          Object.keys(books)
-            .sort((a, b) => b - a)
-            .map((year) => (
-              <>
-                <h2>{year}</h2>
+        <div class="stack-small">
+          {
+            Object.keys(books)
+              .sort((a, b) => b - a)
+              .map((year) => (
                 <>
-                  {books[year].map((book) => (
-                    <>
-                      <h3>
-                        <a href={`/books/${book.slug}/`}>{book.data.title}</a>
-                      </h3>
-                      <div class="meta">
-                        {book.data.author} &middot; Read on{" "}
-                        <FormattedDate date={book.data.dateRead} /> &middot;
-                        <Rating rating={book.data.rating} />
-                      </div>
-                    </>
-                  ))}
+                  <h2>{year}</h2>
+                  <>
+                    {books[year].map((book) => (
+                      <>
+                        <h3>
+                          <a href={`/books/${book.slug}/`}>{book.data.title}</a>
+                        </h3>
+                        <div class="meta">
+                          {book.data.author} &middot; Read on{" "}
+                          <FormattedDate date={book.data.dateRead} /> &middot;
+                          <Rating rating={book.data.rating} />
+                        </div>
+                      </>
+                    ))}
+                  </>
                 </>
-              </>
-            ))
-        }
+              ))
+          }
+        </div>
       </section>
     </main>
     <Footer />
