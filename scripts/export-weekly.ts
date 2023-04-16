@@ -53,7 +53,7 @@ interface Story {
 
   console.log(content);
 
-  console.log("## Toot of the Weeek");
+  console.log("## Toot of the Week");
   console.log(
     data.tootOfTheWeek.text
       .split("\n")
