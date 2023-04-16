@@ -2,110 +2,98 @@
 title: "41 / Contemplating calendars"
 date: "2022-01-30"
 num: 41
+tweetOfTheWeek:
+  text: |
+    truly blessed day
+  media:
+    alt: "Screenshot of GitHub Actions showing successful run for commit \"Fix CI (attempt #1)\""
+    image: "./_twitter_image.png"
+  author: "@tmandry"
+  url: "https://twitter.com/tmandry/status/1486534292360470528"
+categories:
+  - title: Favourites
+    stories:
+      - title: "Contemplating calendars"
+        url: "https://devonzuegel.com/post/contemplating-calendars"
+        readingTimeMinutes: 5
+        description: |
+          Devon Zuegel has an interesting way to use their calendar and seems to get way more out of it than the average person.
+  - title: Culture
+    stories:
+      - title: "The complexity of knowledge and skill transfer"
+        url: "https://danluu.com/hardware-unforgiving/"
+        readingTimeMinutes: 7
+        description: |
+          Dan Luu about the importance of experience in the software engineering field.
+      - title: "@lilykonings on Twitter"
+        url: "https://twitter.com/lilykonings/status/1484598087494496258"
+        readingTimeMinutes: 1
+        description: |
+          Lily Konings has five questions to ask your future manager back in your interview.
+      - title: "Technical Feasibility"
+        url: "https://www.biodigitaljazz.tech/p/technical-feasibility"
+        readingTimeMinutes: 9
+        description: |
+          Tim Reynolds describes the job of a tech lead, arguing that feasibility should be the central theme.
+      - title: "The Biggest Mistake I See Engineers Make"
+        url: "https://web.archive.org/web/20230404051537/https://thezbook.com/the-biggest-mistake-i-see-engineers-make"
+        readingTimeMinutes: 4
+        description: |
+          Zach Lloyd about the problem with engineers working on a big or important project without involving their team.
+  - title: Software Engineering
+    stories:
+      - title: "Go is about to get a whole lot faster"
+        url: "https://dominictobias.medium.com/go-is-about-to-get-a-whole-lot-faster-a50c1e7d60b9"
+        readingTimeMinutes: 2
+        description: |
+          Dominic Tobias ported a library to new generics and the benchmarks show a 2-3x increase.
+      - title: "Tutorial: Getting started with generics"
+        url: "https://go.dev/doc/tutorial/generics"
+        readingTimeMinutes: 10
+        description: |
+          The official Go tutorial to get started with generics, one of the most exciting (and controversal) features ever for the language.
+      - title: "I'm porting tsc to Go"
+        url: "https://kdy1.dev/posts/2022/1/tsc-go"
+        readingTimeMinutes: 2
+        description: |
+          DongYoon Kang explains why he chose to rewrite the TypeScript Type Checker in Go instead of Rust.
+      - title: "Hosting my static sites with nginx"
+        url: "https://jvns.ca/blog/2022/01/24/hosting-my-static-sites-with-nginx/"
+        readingTimeMinutes: 6
+        description: |
+          Julia Evans explains her infrastructure and deployment setup for the websites they host.
+      - title: "The Curse of NixOS"
+        url: "https://blog.wesleyac.com/posts/the-curse-of-nixos"
+        readingTimeMinutes: 7
+        description: |
+          Wesley Aptekar-Cassels about NixOS and it's flaws, but also why he can't go back.
+      - title: "Prefer to change the code rather than write a workaround"
+        url: "https://catern.com/change_code.html"
+        readingTimeMinutes: 3
+        description: |
+          Spencer Baugh makes the point that unless you have a valid excuse (which you most likely don't have), you should fix code instead of working around it.
+  - title: Cutting Room Floor
+    stories:
+      - title: "A Science Experiment: published!"
+        url: "https://berthub.eu/articles/posts/a-science-experiment-got-published/"
+        readingTimeMinutes: 11
+        description: |
+          Bert Hubert has a list of tips to get your paper published in a journal as an outsider.
+      - title: "Yet Another Hot Take on “Folders versus Tags”"
+        url: "https://eleanorkonik.com/yet-another-hot-take-on-folders-versus-tags/"
+        readingTimeMinutes: 18
+        description: |
+          Eleanor Konik prefers folders to tags in his slip-box.
+      - title: "Buy Things, Not Experiences"
+        url: "https://write.as/harold-lee/theres-a-phrase-going-around-that-you-should-buy-experiences-not-things"
+        readingTimeMinutes: 3
+        description: |
+          Harold Lee in an argument against the trend to "buy experiences, not things".
+      - title: "nft-to-silly-jpeg"
+        url: "https://github.com/k-wong/nft-to-silly-jpeg"
+        readingTimeMinutes: -1
+        description: |
+          Kevin Wong created a browser extension that replaces the term "nft" with "silly jpeg" and I'm here for it.
 ---
 
 Hey, how's it going? ✌🏻
-
-## Tweet of The Week
-
-> truly blessed day
-> ![Screenshot of GitHub Actions showing successful run for commit "Fix CI (attempt #1)"](./_twitter_image.png)
-> — [@tmandry on Twitter](https://twitter.com/tmandry/status/1486534292360470528)
-
-## Favourites
-
-### [Contemplating calendars](https://devonzuegel.com/post/contemplating-calendars)
-
-_5 min · devonzuegel.com_
-
-Devon Zuegel has an interesting way to use their calendar and seems to get way more out of it than the average person.
-
-## Culture
-
-### [The complexity of knowledge and skill transfer](https://danluu.com/hardware-unforgiving/)
-
-_7 min · danluu.com_
-
-Dan Luu about the importance of experience in the software engineering field.
-
-### [@lilykonings on Twitter](https://twitter.com/lilykonings/status/1484598087494496258)
-
-_1 min · twitter.com/lilykonings_
-
-Lily Konings has five questions to ask your future manager back in your interview.
-
-### [Technical Feasibility](https://www.biodigitaljazz.tech/p/technical-feasibility)
-
-_9 min · biodigitaljazz.tech_
-
-Tim Reynolds describes the job of a tech lead, arguing that feasibility should be the central theme.
-
-### [The Biggest Mistake I See Engineers Make](https://web.archive.org/web/20230404051537/https://thezbook.com/the-biggest-mistake-i-see-engineers-make)
-
-_4 min · thezbook.com_
-
-Zach Lloyd about the problem with engineers working on a big or important project without involving their team.
-
-## Software Engineering
-
-### [Go is about to get a whole lot faster](https://dominictobias.medium.com/go-is-about-to-get-a-whole-lot-faster-a50c1e7d60b9)
-
-_2 min · dominictobias.medium.com_
-
-Dominic Tobias ported a library to new generics and the benchmarks show a 2-3x increase.
-
-### [Tutorial: Getting started with generics](https://go.dev/doc/tutorial/generics)
-
-_10 min · go.dev_
-
-The official Go tutorial to get started with generics, one of the most exciting (and controversal) features ever for the language.
-
-### [I’m porting tsc to Go](https://kdy1.dev/posts/2022/1/tsc-go)
-
-_2 min · kdy1.dev_
-
-DongYoon Kang explains why he chose to rewrite the TypeScript Type Checker in Go instead of Rust.
-
-### [Hosting my static sites with nginx](https://jvns.ca/blog/2022/01/24/hosting-my-static-sites-with-nginx/)
-
-_6 min · jvns.ca_
-
-Julia Evans explains her infrastructure and deployment setup for the websites they host.
-
-### [The Curse of NixOS](https://blog.wesleyac.com/posts/the-curse-of-nixos)
-
-_7 min · blog.wesleyac.com_
-
-Wesley Aptekar-Cassels about NixOS and it's flaws, but also why he can't go back.
-
-### [Prefer to change the code rather than write a workaround](https://catern.com/change_code.html)
-
-_3 min · catern.com_
-
-Spencer Baugh makes the point that unless you have a valid excuse (which you most likely don't have), you should fix code instead of working around it.
-
-## Cutting Room Floor
-
-### [A Science Experiment: published!](https://berthub.eu/articles/posts/a-science-experiment-got-published/)
-
-_11 min · berthub.eu_
-
-Bert Hubert has a list of tips to get your paper published in a journal as an outsider.
-
-### [Yet Another Hot Take on “Folders versus Tags”](https://eleanorkonik.com/yet-another-hot-take-on-folders-versus-tags/)
-
-_18 min · eleanorkonik.com_
-
-Eleanor Konik prefers folders to tags in his slip-box.
-
-### [Buy Things, Not Experiences](https://write.as/harold-lee/theres-a-phrase-going-around-that-you-should-buy-experiences-not-things)
-
-_3 min · write.as_
-
-Harold Lee in an argument against the trend to "buy experiences, not things".
-
-### [nft-to-silly-jpeg](https://github.com/k-wong/nft-to-silly-jpeg)
-
-_github.com/k-wong_
-
-Kevin Wong created a browser extension that replaces the term "nft" with "silly jpeg" and I'm here for it.

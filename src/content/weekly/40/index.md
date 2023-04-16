@@ -2,15 +2,80 @@
 title: "40 / The Web of 2042"
 date: "2022-01-23"
 num: 40
+tweetOfTheWeek:
+  text: |
+    Here's a great chess tip for beginners, I never knew the reason behind that rule!!
+  media:
+    alt: |
+      A chess board with a Chess Tip on the side saying "While pawns can move forward, they cannot capture pieces moving directly forward. The reason for this is because if they look their opponent in the eye while they kill them, they will see only their own face: that of a worker. The truth will dawn on them, that their enemey is their comrade and their kind is their enemy."
+    image: ./_twitter_image.png
+  author: "@KungFuChessOrg"
+  url: "https://twitter.com/KungFuChessOrg/status/1483600671148437504"
+categories:
+  - title: Culture
+    stories:
+      - title: "The Web of 2042"
+        url: "https://buttondown.email/robinrendle/archive/the-web-of-2042/"
+        readingTimeMinutes: 3
+        description: |
+          Robin Rendle talks about his predictions for the web in 10 years. _Thanks, Jan!_
+      - title: "Are We Really Engineers?"
+        url: "https://www.hillelwayne.com/post/are-we-really-engineers/"
+        readingTimeMinutes: 16
+        description: |
+          Hillel Wayne asked 17 crossovers that used to be traditional engineers and then worked in software to answer the question: Is building software engineering?
+  - title: Software Engineering
+    stories:
+      - title: "What I'd like to see in Go 2.0"
+        url: "https://www.sethvargo.com/what-id-like-to-see-in-go-2/"
+        readingTimeMinutes: 10
+        description: |
+          Seth Vargo has a wish-list for Go 2.0 and I agree with all of the points.
+      - title: "NixOS: The Ultimate Dev Environment?"
+        url: "https://myme.no/posts/2022-01-16-nixos-the-ultimate-dev-environment.html"
+        readingTimeMinutes: 29
+        description: |
+          Martin Myrseth guides you through a Nix (+ Flakes) setup for a real project he's been working on which consists of a frontend and a backend component.
+      - title: "Hello Mac OS X Tiger"
+        url: "https://bunn.dev/benchmark/2022/01/16/hello-tiger.html"
+        readingTimeMinutes: 5
+        description: |
+          Fernando Bunn takes you back to 2005 and guides you through the setup of an Xcode project on Mac OS X Tiger.
+      - title: "Some ways DNS can break"
+        url: "https://jvns.ca/blog/2022/01/15/some-ways-dns-can-break/"
+        readingTimeMinutes: 5
+        description: |
+          Julia Evans lists 15 common issues caused by DNS.
+  - title: Cutting Room Floor
+    stories:
+      - title: "Halting Progress and Happy Accidents: How mRNA Vaccines Were Made"
+        url: "https://www.nytimes.com/2022/01/15/health/mrna-vaccine.html"
+        readingTimeMinutes: 24
+        description: |
+          Gina Kolata and Benjamin Mueller explain the long history of mRNA and how it went from being overlooked to the most important defence against COVID. _Thanks, Mum!_
+      - title: "Is Sharing a COVID Test a Bad Idea, or Just a Gross One?"
+        url: "https://www.theatlantic.com/health/archive/2022/01/sharing-rapid-tests/621318/"
+        readingTimeMinutes: 5
+        description: |
+          Rachel Gutman about pool-testing at home (using one swab).
+      - title: "The UK Has A Voyeuristic New Propaganda Campaign Against Encryption"
+        url: "https://www.techdirt.com/articles/20220118/11393948308/uk-has-voyeuristic-new-propaganda-campaign-against-encryption.shtml"
+        readingTimeMinutes: 4
+        description: |
+          Riana Pfefferkorn about the new anti-encryption and anti-privacy campaign of the UK.
+      - title: "I automated my job over a year ago and haven't told anyone."
+        url: "https://www.reddit.com/r/antiwork/comments/s2igq9/i_automated_my_job_over_a_year_ago_and_havent/"
+        readingTimeMinutes: 4
+        description: |
+          Throwaway59724 explains how he automated his job at a mid-size lawfirm.
+      - title: "Roblox Return to Service 10/28-10/31 2021"
+        url: "https://blog.roblox.com/2022/01/roblox-return-to-service-10-28-10-31-2021/"
+        readingTimeMinutes: 21
+        description: |
+          Daniel Sturman and colleagues explain the ~~background~~ horror story of the 73 hour outage at Roblox.
 ---
 
 Hi hi ✌🏻
-
-## Tweet of The Week
-
-> Here's a great chess tip for beginners, I never knew the reason behind that rule!!
-> ![A chess board with a Chess Tip on the side saying "While pawns can move forward, they cannot capture pieces moving directly forward. The reason for this is because if they look their opponent in the eye while they kill them, they will see only their own face: that of a worker. The truth will dawn on them, that their enemey is their comrade and their kind is their enemy."](./_twitter_image.png)
-> — [@KungFuChessOrg on Twitter](https://twitter.com/KungFuChessOrg/status/1483600671148437504)
 
 ## Books
 
@@ -35,75 +100,3 @@ I really recommend reading this book (no matter if you write or not), it has giv
 
 If you know German, make sure to subscribe to my podcast [Sprachnachrichten](https://sprachnachrichten.fm), where we talked about this book, the episode will be published next week.
 <br style="clear: both;">
-
-## Culture
-
-### [The Web of 2042](https://buttondown.email/robinrendle/archive/the-web-of-2042/)
-
-_3 min · buttondown.email/robinrendle_
-
-Robin Rendle talks about his predictions for the web in 10 years. _Thanks, Jan!_
-
-### [Are We Really Engineers?](https://www.hillelwayne.com/post/are-we-really-engineers/)
-
-_16 min · hillelwayne.com_
-
-Hillel Wayne asked 17 crossovers that used to be traditional engineers and then worked in software to answer the question: Is building software engineering?
-
-## Software Engineering
-
-### [What I'd like to see in Go 2.0](https://www.sethvargo.com/what-id-like-to-see-in-go-2/)
-
-_10 min · sethvargo.com_
-
-Seth Vargo has a wish-list for Go 2.0 and I agree with all of the points.
-
-### [NixOS: The Ultimate Dev Environment?](https://myme.no/posts/2022-01-16-nixos-the-ultimate-dev-environment.html)
-
-_29 min · myme.no_
-
-Martin Myrseth guides you through a Nix (+ Flakes) setup for a real project he's been working on which consists of a frontend and a backend component.
-
-### [Hello Mac OS X Tiger](https://bunn.dev/benchmark/2022/01/16/hello-tiger.html)
-
-_5 min · bunn.dev_
-
-Fernando Bunn takes you back to 2005 and guides you through the setup of an Xcode project on Mac OS X Tiger.
-
-### [Some ways DNS can break](https://jvns.ca/blog/2022/01/15/some-ways-dns-can-break/)
-
-_5 min · jvns.ca_
-
-Julia Evans lists 15 common issues caused by DNS.
-
-## Cutting Room Floor
-
-### [Halting Progress and Happy Accidents: How mRNA Vaccines Were Made](https://www.nytimes.com/2022/01/15/health/mrna-vaccine.html)
-
-_24 min · nytimes.com_
-
-Gina Kolata and Benjamin Mueller explain the long history of mRNA and how it went from being overlooked to the most important defence against COVID. _Thanks, Mum!_
-
-### [Is Sharing a COVID Test a Bad Idea, or Just a Gross One?](https://www.theatlantic.com/health/archive/2022/01/sharing-rapid-tests/621318/)
-
-_5 min · theatlantic.com_
-
-Rachel Gutman about pool-testing at home (using one swab).
-
-### [The UK Has A Voyeuristic New Propaganda Campaign Against Encryption](https://www.techdirt.com/articles/20220118/11393948308/uk-has-voyeuristic-new-propaganda-campaign-against-encryption.shtml)
-
-_4 min · techdirt.com_
-
-Riana Pfefferkorn about the new anti-encryption and anti-privacy campaign of the UK.
-
-### [I automated my job over a year ago and haven't told anyone.](https://www.reddit.com/r/antiwork/comments/s2igq9/i_automated_my_job_over_a_year_ago_and_havent/)
-
-_4 min · reddit.com/r/antiwork_
-
-Throwaway59724 explains how he automated his job at a mid-size lawfirm.
-
-### [Roblox Return to Service 10/28-10/31 2021](https://blog.roblox.com/2022/01/roblox-return-to-service-10-28-10-31-2021/)
-
-_21 min · blog.roblox.com_
-
-Daniel Sturman and colleagues explain the ~~background~~ horror story of the 73 hour outage at Roblox.

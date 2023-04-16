@@ -23,42 +23,49 @@ const blog = defineCollection({
 });
 
 const weekly = defineCollection({
-  schema: z.object({
-    title: z.string(),
-    date: z
-      .string()
-      .or(z.date())
-      .transform((val) => new Date(val)),
-    tootOfTheWeek: z
-      .object({
-        text: z.string(),
-        author: z.string(),
-        url: z.string(),
-      })
-      .optional(),
-    tweetOfTheWeek: z
-      .object({
-        text: z.string(),
-        author: z.string(),
-        url: z.string(),
-      })
-      .optional(),
-    categories: z
-      .array(
-        z.object({
-          title: z.string(),
-          stories: z.array(
-            z.object({
-              title: z.string(),
-              url: z.string(),
-              readingTimeMinutes: z.number(),
-              description: z.string(),
-            })
-          ),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      date: z
+        .string()
+        .or(z.date())
+        .transform((val) => new Date(val)),
+      tootOfTheWeek: z
+        .object({
+          text: z.string(),
+          author: z.string(),
+          url: z.string(),
         })
-      )
-      .optional(),
-  }),
+        .optional(),
+      tweetOfTheWeek: z
+        .object({
+          text: z.string(),
+          author: z.string(),
+          url: z.string(),
+          media: z
+            .object({
+              image: image(),
+              alt: z.string(),
+            })
+            .optional(),
+        })
+        .optional(),
+      categories: z
+        .array(
+          z.object({
+            title: z.string(),
+            stories: z.array(
+              z.object({
+                title: z.string(),
+                url: z.string(),
+                readingTimeMinutes: z.number(),
+                description: z.string(),
+              })
+            ),
+          })
+        )
+        .optional(),
+    }),
 });
 
 const books = defineCollection({

@@ -63,6 +63,11 @@ export default function render(num, frontmatter) {
     <blockquote>
       <p>
         ${marked.parse(tweetOfTheWeek.text)}
+        ${
+          (tweetOfTheWeek.media &&
+            `<img src="${tweetOfTheWeek.media.image.src}" alt="${tweetOfTheWeek.media.alt}">`) ||
+          ""
+        }
         — <a href="${tweetOfTheWeek.url}">${
           tweetOfTheWeek.author
         } on Twitter</a>
