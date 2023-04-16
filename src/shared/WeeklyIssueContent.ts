@@ -25,17 +25,17 @@ function formatReadingTime(minutes) {
   }
 
   if (minutes < 60) {
-    return minutes + " min";
+    return minutes + " min" + " &middot; ";
   }
 
   const hours = Math.floor(minutes / 60);
   const minutesLeft = minutes % 60;
 
   if (minutesLeft < 1) {
-    return hours + " hours";
+    return hours + " hours" + " &middot; ";
   }
 
-  return hours + " hours " + minutesLeft + " min";
+  return hours + " hours " + minutesLeft + " min" + " &middot; ";
 }
 
 export default function render(num, frontmatter) {
@@ -87,9 +87,7 @@ export default function render(num, frontmatter) {
       "https://click.arne.me/?issue=" + num + "&url=" + story.url
     }>${story.title}</a></h3>
     <p class="meta">${
-      formatReadingTime(story.readingTimeMinutes) +
-      " &middot; " +
-      getHost(story.url)
+      formatReadingTime(story.readingTimeMinutes) + getHost(story.url)
     }</p>
     ${marked.parse(story.description)}`
       )
