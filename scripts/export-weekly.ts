@@ -60,7 +60,9 @@ interface Story {
       .map((line) => `> ${line}`)
       .join("\n")
   );
-  console.log(`> — [${data.tootOfTheWeek.author}](${data.tootOfTheWeek.url})`);
+  console.log(
+    `> — [${data.tootOfTheWeek.author}](${data.tootOfTheWeek.url})\n`
+  );
 
   data.categories.forEach((category) => {
     console.log(`## ${category.title}`);
@@ -68,7 +70,7 @@ interface Story {
       console.log(
         `### [${story.title}](https://click.arne.me/?issue=${num}&url=${story.url})`
       );
-      console.log(`_${story.readingTimeMinutes} min · ${getHost(story.url)}_`);
+      console.log(`${story.readingTimeMinutes} min · ${getHost(story.url)}`);
       console.log();
       console.log(`${story.description}`);
     });
