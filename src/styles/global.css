@@ -30,11 +30,11 @@
   --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
   /* Type scale 1.250 (Major Third) */
-  --font-size-largest: 3.516rem;
-  --font-size-larger: 2.813rem;
-  --font-size-large: 2.25rem;
+  --font-size-largest: 3.5rem;
+  --font-size-larger: 2.8rem;
+  --font-size-large: 2.2rem;
   --font-size: 1.8rem;
-  --font-size-small: 1.44rem;
+  --font-size-small: 1.4rem;
 
   --astro-code-color-text: var(--color-text);
   --astro-code-color-background: var(--color-box-bg);
