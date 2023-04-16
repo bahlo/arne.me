@@ -31,6 +31,11 @@ const { slug } = Astro.params;
       h1 {
         --space: 0;
       }
+
+      article::after {
+        content: "";
+        clear: both;
+      }
     </style>
   </head>
   <body>
@@ -44,7 +49,6 @@ const { slug } = Astro.params;
           <Rating rating={rating} />
         </div>
         <slot />
-        <br class="clear" />
       </article>
     </main>
     <Footer />
