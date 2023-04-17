@@ -91,7 +91,7 @@ One drawback that you can already see in the code above is that Astro does not s
 
 You'll also always need to provide a font because it'll be embedded.
 I used [Roboto](https://fonts.google.com/specimen/Roboto) in the example above,
-[Inter](https://rsms.me/inter/) or (Open Sans)(https://fonts.google.com/specimen/Open+Sans) 
+[Inter](https://rsms.me/inter/) or [Open Sans](https://fonts.google.com/specimen/Open+Sans) 
 are other solid free sans fonts (choose WOFF or TTF/OTF, WOFF2 is not supported).
 
 Run `astro dev` and navigate to the endpoint (in our example [:3000/og-image.png](http://localhost:3000/og-image.png))
