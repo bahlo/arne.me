@@ -12,9 +12,9 @@
 }
 @supports (color: oklch(50% .25 265)) {
   :root {
-    --color-primary: oklch(50% .25 265);
-    --color-primary-10: oklch(50% .25 265 / 10%);
-    --color-primary-20: oklch(50% .25 265 / 20%);
+    --color-primary: oklch(60% .25 265);
+    --color-primary-10: oklch(60% .25 265 / 10%);
+    --color-primary-20: oklch(60% .25 265 / 20%);
     --color-primary-dark: oklch(10% .1 265);
   }
 }
