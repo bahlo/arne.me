@@ -22,7 +22,7 @@
 :root {
   --width: 768px;
   --color-text: rgba(0, 0, 0, .8);
-  --color-heading: #111;
+  --color-heading: var(--color-primary-dark);
   --color-light: #ccc;
   --color-gray: #555;
   --color-nav-stroke: rgb(242 45 94);
