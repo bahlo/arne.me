@@ -1,6 +1,5 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
-import Maintenance from "./Maintenance.astro";
 ---
 
 <style>
@@ -24,11 +23,11 @@ import Maintenance from "./Maintenance.astro";
     text-decoration: none;
     position: relative;
     font-weight: 500;
-    color: var(--color-gray);
+    color: rgba(255, 255, 255, .8);
   }
 
   nav .home {
-    color: var(--color-heading);
+    color: #fff;
     font-weight: bold;
   }
 
@@ -65,7 +64,7 @@ import Maintenance from "./Maintenance.astro";
 
   nav a:hover,
   nav a.active {
-    color: var(--color-heading);
+    color: #fff;
   }
 
   nav a.active .underline {
@@ -76,7 +75,6 @@ import Maintenance from "./Maintenance.astro";
 <a class="skip-link" href="#main">Skip to content</a>
 <header>
   <div class="container">
-    <Maintenance />
     <nav>
       <HeaderLink href="/" class="home">Arne Bahlo</HeaderLink>
       <HeaderLink href="/now/">

@@ -17,7 +17,7 @@
   --color-button: rgb(var(--color-primary-rgb) / 10%);
   --color-button-hover: rgb(var(--color-primary-rgb) / 20%);
 
-  --color-header-bg:  rgb(var(--color-primary-rgb) / 8%);
+  --color-header-bg: #171B29; /* rgb(var(--color-primary-rgb) / 10%) on #111 **/
   --color-footer-bg: rgba(0, 0, 0, 0.02);
   --color-box-bg: rgba(0, 0, 0, 0.02);
 
@@ -64,7 +64,6 @@
 
     --color-primary-rgb: 83 118 255;
 
-    --color-header-bg:  rgb(var(--color-primary-rgb) / 10%);
     --color-header-border: rgb(var(--color-primary-rgb) / 10%);
 
     --color-footer-bg: rgba(255, 255, 255, 0.02);
