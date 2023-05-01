@@ -3,6 +3,22 @@
 @import "pragmatapro.css";
 @import "stack.css";
 
+/* Workaround for browsers that don't support oklch */
+:root {
+  --color-primary: hsl(227 86% 52%);
+  --color-primary-10: hsl(227 86% 52% / .1);
+  --color-primary-20: hsl(227 86% 52% / .2);
+  --color-primary-dark: hsl(271 100% 9%);
+}
+@supports (color: oklch(50% .25 265)) {
+  :root {
+    --color-primary: oklch(50% .25 265);
+    --color-primary-10: oklch(50% .25 265 / 10%);
+    --color-primary-20: oklch(50% .25 265 / 20%);
+    --color-primary-dark: oklch(2% .25 265);
+  }
+}
+
 :root {
   --width: 768px;
   --color-text: rgba(0, 0, 0, .8);
@@ -10,11 +26,6 @@
   --color-light: #ccc;
   --color-gray: #555;
   --color-nav-stroke: rgb(242 45 94);
-
-  --color-primary: oklch(50% .25 265);
-  --color-primary-10: oklch(50% .25 265 / 10%);
-  --color-primary-20: oklch(50% .25 265 / 20%);
-  --color-primary-dark: oklch(2% .25 265);
 
   --color-bg: #fff;
   --color-button: var(--color-primary-10);
