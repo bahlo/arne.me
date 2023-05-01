@@ -22,7 +22,7 @@
 :root {
   --width: 768px;
   --color-text: rgba(0, 0, 0, .8);
-  --color-heading: var(--color-primary-dark);
+  --color-heading: #111;
   --color-light: #ccc;
   --color-gray: #555;
   --color-nav-stroke: rgb(242 45 94);
@@ -70,7 +70,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-text: #ccc;
+    --color-text: rgba(255 255 255 / .8);
     --color-heading: #ddd;
     --color-light: #777;
     --color-gray: #bbb;
