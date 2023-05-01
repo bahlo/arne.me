@@ -5,9 +5,9 @@
 
 /* Workaround for browsers that don't support oklch */
 :root {
-  --color-primary: hsl(227 86% 52%);
-  --color-primary-10: hsl(227 86% 52% / .1);
-  --color-primary-20: hsl(227 86% 52% / .2);
+  --color-primary: hsl(225 100% 64%);
+  --color-primary-10: hsl(225 100% 64% / .1);
+  --color-primary-20: hsl(225 100% 64% / .2);
   --color-primary-dark: hsl(249 100% 7%);
 }
 @supports (color: oklch(50% .25 265)) {
