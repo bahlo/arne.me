@@ -11,13 +11,16 @@
   --color-gray: #555;
   --color-nav-stroke: rgb(242 45 94);
 
-  --color-primary-rgb: 53 88 255;
-  --color-primary: rgb(var(--color-primary-rgb));
-  --color-bg: #fff;
-  --color-button: rgb(var(--color-primary-rgb) / 10%);
-  --color-button-hover: rgb(var(--color-primary-rgb) / 20%);
+  --color-primary: oklch(50% .25 265);
+  --color-primary-10: oklch(50% .25 265 / 10%);
+  --color-primary-20: oklch(50% .25 265 / 20%);
+  --color-primary-dark: oklch(2% .25 265);
 
-  --color-header-bg: #171B29; /* rgb(var(--color-primary-rgb) / 10%) on #111 **/
+  --color-bg: #fff;
+  --color-button: var(--color-primary-10);
+  --color-button-hover: var(--color-primary-10);
+
+  --color-header-bg: var(--color-primary-dark);
   --color-footer-bg: rgba(0, 0, 0, 0.02);
   --color-box-bg: rgba(0, 0, 0, 0.02);
 
