@@ -13,7 +13,7 @@
 
   --color-primary-rgb: 53 88 255;
   --color-primary: rgb(var(--color-primary-rgb));
-  --color-bg: rgb(var(--color-primary-rgb) / .1%);
+  --color-bg: #fff;
   --color-button: rgb(var(--color-primary-rgb) / 10%);
   --color-button-hover: rgb(var(--color-primary-rgb) / 20%);
 
