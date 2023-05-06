@@ -39,10 +39,24 @@ function formatReadingTime(minutes) {
 }
 
 export default function render(num, frontmatter) {
-  const { tootOfTheWeek, tweetOfTheWeek, categories } = frontmatter;
+  const { quoteOfTheWeek, tootOfTheWeek, tweetOfTheWeek, categories } =
+    frontmatter;
 
   // In HTML we trust
   return `
+    ${
+      (quoteOfTheWeek &&
+        `
+    <h2 id="quote-of-the-week">Quote of the Week</h2>
+    <blockquote>
+      <p>
+        ${marked.parse(quoteOfTheWeek.text)}
+        — ${quoteOfTheWeek.author}
+      </p>
+    </blockquote>
+    `) ||
+      ""
+    }
     ${
       (tootOfTheWeek &&
         `

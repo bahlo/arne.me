@@ -30,6 +30,12 @@ const weekly = defineCollection({
         .string()
         .or(z.date())
         .transform((val) => new Date(val)),
+      quoteOfTheWeek: z
+        .object({
+          text: z.string(),
+          author: z.string(),
+        })
+        .optional(),
       tootOfTheWeek: z
         .object({
           text: z.string(),
