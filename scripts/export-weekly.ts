@@ -16,8 +16,14 @@ interface Markdown {
 }
 
 interface Frontmatter {
+  quoteOfTheWeek: QuoteOfTheWeek;
   tootOfTheWeek: TootOfTheWeek;
   categories: Category[];
+}
+
+interface QuoteOfTheWeek {
+  text: string;
+  author: string;
 }
 
 interface TootOfTheWeek {
@@ -53,16 +59,27 @@ interface Story {
 
   console.log(content);
 
-  console.log("## Toot of the Week");
-  console.log(
-    data.tootOfTheWeek.text
-      .split("\n")
-      .map((line) => `> ${line}`)
-      .join("\n")
-  );
-  console.log(
-    `> — [${data.tootOfTheWeek.author}](${data.tootOfTheWeek.url})\n`
-  );
+  if (data.quoteOfTheWeek) {
+    console.log("## Quote of the Week");
+    console.log(
+      data.quoteOfTheWeek.text
+        .split("\n")
+        .map((line) => `> ${line}`)
+        .join("\n")
+    );
+    console.log(`> — ${data.quoteOfTheWeek.author}\n`);
+  } else if (data.tootOfTheWeek) {
+    console.log("## Toot of the Week");
+    console.log(
+      data.tootOfTheWeek.text
+        .split("\n")
+        .map((line) => `> ${line}`)
+        .join("\n")
+    );
+    console.log(
+      `> — [${data.tootOfTheWeek.author}](${data.tootOfTheWeek.url})\n`
+    );
+  }
 
   data.categories.forEach((category) => {
     console.log(`## ${category.title}`);

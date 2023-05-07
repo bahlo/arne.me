@@ -89,7 +89,7 @@ wrote to them—congratulations to the lucky person! 🎉
 
 <div style="float: right; width: 50%; margin-left: 8px;">
 
-![A screenshot of the watchlist in CouchTimes](./_couchtimes.png)
+![Three phones with CouchTimes open, showing the watchlist, search and Ted Lasso](./_couchtimes.png)
 
 </div>
 
