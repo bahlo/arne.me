@@ -80,7 +80,7 @@ categories:
 ---
 
 Hey hey, how's it going? 
-To celebrate 100 issues of Arne's Weekly last week I announced I'm giving away
+To celebrate 100 issues of Arne's Weekly last week, I announced I'm giving away
 an eReader.
 Today was the deadline and I've drawn a winner from all of my subscribers and 
 wrote to them—congratulations to the lucky person! 🎉
