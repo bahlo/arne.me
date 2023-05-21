@@ -35,6 +35,7 @@
   --color-button-border: var(--color-primary-20);
 
   --color-header-border: rgba(0, 0, 0, 0.1);
+  --color-header-shadow: rgba(0, 0, 0, 0.1);
 
   --color-footer-bg: rgba(0, 0, 0, 0.02);
   --color-footer-border: rgba(0, 0, 0, 0.03);
@@ -83,8 +84,11 @@
 
     --color-primary-rgb: 83 118 255;
 
+    --color-header-border: rgba(255, 255, 255, 0.1);
+    --color-header-shadow: rgba(255, 255, 255, 0.05);
+
     --color-footer-bg: rgba(255, 255, 255, 0.02);
-    --color-footer-border: rgba(255, 255, 255, 0.02);
+    --color-footer-border: rgba(255, 255, 255, 0.03);
 
     --color-box-bg: rgba(255, 255, 255, 0.02);
     --color-box-border: rgba(255, 255, 255, 0.05);
