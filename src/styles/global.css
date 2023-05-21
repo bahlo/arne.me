@@ -102,6 +102,8 @@ body {
 
 main {
   flex-grow: 1;
+  max-width: var(--width);
+  padding: 0 var(--space-3) var(--space-4);
 }
 
 header, main, footer {
@@ -109,9 +111,8 @@ header, main, footer {
   margin: 0 auto;
 }
 
-main {
-  max-width: var(--width);
-  padding: var(--space-4) var(--space-3);
+header {
+  margin: var(--space-2) 0;
 }
 
 footer {
