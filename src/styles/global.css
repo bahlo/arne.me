@@ -31,10 +31,13 @@
 
   --color-bg: #fff;
   --color-button: var(--color-primary-10);
-  --color-button-hover: var(--color-primary-10);
+  --color-button-hover: var(--color-primary-20);
+  --color-button-border: var(--color-primary-20);
 
-  /* --color-header-bg: var(--color-primary-dark); */
+  --color-header-border: rgba(0, 0, 0, 0.1);
+
   --color-footer-bg: rgba(0, 0, 0, 0.02);
+  --color-footer-border: rgba(0, 0, 0, 0.03);
   --color-box-bg: rgba(0, 0, 0, 0.02);
 
   --font-serif: "Cooper BT", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
@@ -116,10 +119,6 @@ header, main, footer {
   margin: 0 auto;
 }
 
-header {
-  background: var(--color-header-bg);
-}
-
 main {
   max-width: var(--width);
   padding: var(--space-4) var(--space-3);
@@ -128,6 +127,7 @@ main {
 footer {
   padding: var(--space-4) 0 var(--space-5);
   background: var(--color-footer-bg);
+  border-top: 1px solid var(--color-footer-border);
 }
 
 h1, h2, h3, h4, h5, h6 {
