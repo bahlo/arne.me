@@ -54,6 +54,7 @@
 
   /* Spacing */
   --space-0: 0;
+  --space-05: .125rem; /* 2px */
   --space-1: .25rem; /* 4px */
   --space-2: .5rem; /* 8px */
   --space-3: .75rem; /* 12px */
