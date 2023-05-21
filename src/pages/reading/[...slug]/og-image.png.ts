@@ -11,7 +11,7 @@ const roboto = fs.readFile("./public/fonts/roboto/Roboto-Regular.ttf");
 const pattern = fs.readFile("./public/dot-grid.png");
 
 export async function getStaticPaths() {
-  const posts = await getCollection("books");
+  const posts = await getCollection("reading");
   return posts.map((book) => ({
     params: { slug: book.slug },
     props: book,
@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 }
 
 export const get: APIRoute = async function get({ params, request }) {
-  const book = await getEntryBySlug("books", params.slug);
+  const book = await getEntryBySlug("reading", params.slug);
 
   const date = book.data.dateRead.toLocaleDateString("en-us", {
     year: "numeric",
@@ -32,7 +32,7 @@ export const get: APIRoute = async function get({ params, request }) {
   const base64Pattern = (await pattern).toString("base64");
 
   // FIXME: We shouldn't require a static path for the cover images
-  const coverImage = await fs.readFile(path.join("./src/content/books", params.slug, "_cover.jpg"))
+  const coverImage = await fs.readFile(path.join("./src/content/reading", params.slug, "_cover.jpg"))
 
   const coverImageRatio = book.data.cover.width / book.data.cover.height;
   const base64CoverImage = coverImage.toString("base64");

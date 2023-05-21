@@ -1,27 +1,28 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
-import { BOOKS_TITLE, BOOKS_DESCRIPTION } from "../../consts";
+import { READING_TITLE, READING_DESCRIPTION } from "../../consts";
 import sanitizeHtml from "sanitize-html";
 import MarkdownIt from "markdown-it";
 
 const parser = new MarkdownIt();
 
 export async function get(context) {
-  const books = (await getCollection("books")).sort(
+  const books = (await getCollection("reading")).sort(
     (a, b) => b.data.dateRead.valueOf() - a.data.dateRead.valueOf()
   );
 
   return rss({
-    title: BOOKS_TITLE,
-    description: BOOKS_DESCRIPTION,
+    title: READING_TITLE,
+    description: READING_DESCRIPTION,
     site: context.site,
     items: books.map((book) => ({
       title: book.data.title,
       pubDate: book.data.dateRead,
       description: book.data.subtitle,
-      link: `/book/${book.slug}/`,
+      link: `/reading/${book.slug}/`,
       content: sanitizeHtml(parser.render(book.body)),
     })),
-    customData: "<language>en-us</language><link>https://arne.me/blog</link>",
+    customData:
+      "<language>en-us</language><link>https://arne.me/reading</link>",
   });
 }

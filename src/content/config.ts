@@ -74,7 +74,7 @@ const weekly = defineCollection({
     }),
 });
 
-const books = defineCollection({
+const reading = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -118,4 +118,4 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { blog, weekly, books, pages, projects };
+export const collections = { blog, weekly, reading, pages, projects };

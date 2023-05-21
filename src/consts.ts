@@ -15,8 +15,8 @@ export const WEEKLY_TITLE = `Arne’s Weekly`;
 export const WEEKLY_DESCRIPTION =
   "A weekly newsletter with interesting stories from all over the web.";
 
-export const BOOKS_TITLE = `Books — ${SITE_TITLE}`;
-export const BOOKS_DESCRIPTION = "Books I've read.";
+export const READING_TITLE = `Reading — ${SITE_TITLE}`;
+export const READING_DESCRIPTION = "Books I've read.";
 
 export const WORK_DESCRIPTION = "My work experience.";
 
