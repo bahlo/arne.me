@@ -29,11 +29,12 @@
   --color-gray: #555;
   --color-nav-stroke: rgb(242 45 94);
 
-  --color-bg: #fff;
+  --color-bg: #fefefe;
   --color-button: var(--color-primary-10);
   --color-button-hover: var(--color-primary-20);
   --color-button-border: var(--color-primary-20);
 
+  --color-header-bg: #fff;
   --color-header-border: rgba(0, 0, 0, 0.1);
   --color-header-shadow: rgba(0, 0, 0, 0.1);
 
@@ -84,6 +85,7 @@
 
     --color-primary-rgb: 83 118 255;
 
+    --color-header-bg: rgba(255, 255, 255, 0.02);
     --color-header-border: rgba(255, 255, 255, 0.1);
     --color-header-shadow: rgba(255, 255, 255, 0.05);
 
