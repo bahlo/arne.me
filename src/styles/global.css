@@ -33,7 +33,7 @@
   --color-button: var(--color-primary-10);
   --color-button-hover: var(--color-primary-10);
 
-  --color-header-bg: var(--color-primary-dark);
+  /* --color-header-bg: var(--color-primary-dark); */
   --color-footer-bg: rgba(0, 0, 0, 0.02);
   --color-box-bg: rgba(0, 0, 0, 0.02);
 
@@ -79,8 +79,6 @@
     --color-bg: #111;
 
     --color-primary-rgb: 83 118 255;
-
-    --color-header-border: rgb(var(--color-primary-rgb) / 10%);
 
     --color-footer-bg: rgba(255, 255, 255, 0.02);
     --color-footer-border: rgba(255, 255, 255, 0.02);
