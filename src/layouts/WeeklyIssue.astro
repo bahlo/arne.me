@@ -13,12 +13,13 @@ const { title, date, tootOfTheWeek, categories } = Astro.props;
 const { num } = Astro.params;
 ---
 
-<html lang="en">
+<html lang="en" class="weekly">
   <head>
     <BaseHead
       title={`${title} — Arne's Weekly`}
       description={`Issue #${num} of Arne's Weekly`}
       image={`/weekly/${num}/og-image.png`}
+      themeColor="#00aa71"
     />
   </head>
   <body>

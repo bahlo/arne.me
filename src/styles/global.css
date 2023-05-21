@@ -2,24 +2,7 @@
 @import "cooperbt.css";
 @import "pragmatapro.css";
 @import "stack.css";
-
-/* Workaround for browsers that don't support oklch */
-:root {
-  --color-primary: hsl(225 100% 64%);
-  --color-primary-5: hsl(225 100% 64% / .05);
-  --color-primary-10: hsl(225 100% 64% / .1);
-  --color-primary-20: hsl(225 100% 64% / .2);
-  --color-primary-dark: hsl(249 100% 7%);
-}
-@supports (color: oklch(50% .25 265)) {
-  :root {
-    --color-primary: oklch(60% .25 265);
-    --color-primary-5: oklch(60% .25 265 / 5%);
-    --color-primary-10: oklch(60% .25 265 / 10%);
-    --color-primary-20: oklch(60% .25 265 / 20%);
-    --color-primary-dark: oklch(10% .1 265);
-  }
-}
+@import "colors.css";
 
 :root {
   --width: 768px;

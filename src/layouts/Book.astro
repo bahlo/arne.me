@@ -13,13 +13,14 @@ const { title, subtitle, author, dateRead, rating, cover, website } = Astro.prop
 const { slug } = Astro.params;
 ---
 
-<html lang="en">
+<html lang="en" class="reading">
   <head>
     <BaseHead
       title={`A review of ${title} by ${author}`}
       description={`My review and rating of ${title} by ${author}.`}
       }
       image={`/books/${slug}/og-image.png`}
+      themeColor="#ce5c00"
     />
     <style>
       .cover {

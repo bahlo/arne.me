@@ -12,12 +12,13 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 const { slug } = Astro.params;
 ---
 
-<html lang="en">
+<html lang="en" class="writing">
   <head>
     <BaseHead
       title={`${title} — ${SITE_TITLE}`}
       description={description}
       image={`/blog/${slug}/og-image.png`}
+      themeColor="#009adf"
     />
   </head>
   <body>

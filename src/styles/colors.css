@@ -1,0 +1,44 @@
+:root {
+  --color-index-hue: 265;
+  --color-weekly-hue: 173;
+  --color-writing-hue: 217;
+  --color-reading-hue: 77;
+  
+  --color-primary: hsl(0 0% 7%);
+  --color-primary-5: hsl(0 0% 7% / .05);
+  --color-primary-10: hsl(0 0% 7% / .1);
+  --color-primary-20: hsl(0 0% 7% / .2);
+}
+@supports (color: oklch(.18 0 0)) {
+  :root {
+    --color-primary: oklch(.18 0 0);
+    --color-primary-5: oklch(.18 0 0 / 5%);
+    --color-primary-10: oklch(.18 0 0 / 10%);
+    --color-primary-20: oklch(.18 0 0 / 20%);
+  }
+}
+
+html.index {
+  --color-primary: oklch(60% .25 var(--color-index-hue));
+  --color-primary-5: oklch(60% .25 var(--color-index-hue) / 5%);
+  --color-primary-10: oklch(60% .25 var(--color-index-hue) / 10%);
+  --color-primary-20: oklch(60% .25 var(--color-index-hue) / 20%);
+}
+html.weekly {
+  --color-primary: oklch(60% .25 var(--color-weekly-hue));
+  --color-primary-5: oklch(60% .25 var(--color-weekly-hue) / 5%);
+  --color-primary-10: oklch(60% .25 var(--color-weekly-hue) / 10%);
+  --color-primary-20: oklch(60% .25 var(--color-weekly-hue) / 20%);
+}
+html.writing {
+  --color-primary: oklch(60% .25 var(--color-writing-hue));
+  --color-primary-5: oklch(60% .25 var(--color-writing-hue) / 5%);
+  --color-primary-10: oklch(60% .25 var(--color-writing-hue) / 10%);
+  --color-primary-20: oklch(60% .25 var(--color-writing-hue) / 20%);
+}
+html.reading {
+  --color-primary: oklch(60% .25 var(--color-reading-hue));
+  --color-primary-5: oklch(60% .25 var(--color-reading-hue) / 5%);
+  --color-primary-10: oklch(60% .25 var(--color-reading-hue) / 10%);
+  --color-primary-20: oklch(60% .25 var(--color-reading-hue) / 20%);
+}
