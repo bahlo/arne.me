@@ -24,6 +24,7 @@
   --color-footer-bg: rgba(0, 0, 0, 0.02);
   --color-footer-border: rgba(0, 0, 0, 0.03);
   --color-box-bg: rgba(0, 0, 0, 0.02);
+  --color-box-border: rgba(0, 0, 0, .08);
 
   --font-serif: "Cooper BT", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -77,7 +78,7 @@
     --color-footer-border: rgba(255, 255, 255, 0.03);
 
     --color-box-bg: rgba(255, 255, 255, 0.02);
-    --color-box-border: rgba(255, 255, 255, 0.05);
+    --color-box-border: rgba(255, 255, 255, 0.08);
 
     --astro-code-token-function: #a575ff;
     --astro-code-token-string-expression: #57b96f;
