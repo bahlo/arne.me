@@ -1,2 +1,5 @@
 /books /reading
 /books/* /reading/:splat
+
+/blog /writing
+/blog/* /writing/:splat

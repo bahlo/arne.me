@@ -2,11 +2,11 @@
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import { BLOG_TITLE, BLOG_DESCRIPTION } from "../../consts";
+import { WRITING_TITLE, WRITING_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 
-const posts = (await getCollection("blog"))
+const posts = (await getCollection("writing"))
   .filter((post) => post.slug != "hello-world")
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .reduce((acc, post) => {
@@ -23,16 +23,16 @@ const posts = (await getCollection("blog"))
 <!DOCTYPE html>
 <html lang="en" class="writing">
   <head>
-    <BaseHead title={BLOG_TITLE} description={BLOG_DESCRIPTION} image="/blog/og-image.png" />
+    <BaseHead title={WRITING_TITLE} description={WRITING_DESCRIPTION} image="/writing/og-image.png" />
   </head>
   <body>
     <Header />
     <main id="main">
       <section class="stack">
-        <h1>Blog</h1>
+        <h1>Writing</h1>
         <p>
-          Hey, here are some blog posts I’ve written. There’s an
-          <a href="/blog/atom.xml">RSS Feed</a>, if you’re into that.
+          Hey, here are some articles I’ve written. There’s an
+          <a href="/writing/atom.xml">RSS Feed</a>, if you’re into that.
         </p>
         <div class="stack-small">
           {
@@ -44,7 +44,7 @@ const posts = (await getCollection("blog"))
                   {posts[year].map((post) => (
                     <>
                       <h3>
-                        <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                        <a href={`/writing/${post.slug}/`}>{post.data.title}</a>
                       </h3>
                       <span class="meta">
                         <FormattedDate date={post.data.pubDate} />

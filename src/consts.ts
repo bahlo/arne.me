@@ -8,8 +8,8 @@ export const INDEX_TITLE = "Hey, I’m Arne—";
 export const INDEX_HERO =
   "a developer, creator & dad based near Frankfurt, Germany.";
 
-export const BLOG_TITLE = `Blog — ${SITE_TITLE}`;
-export const BLOG_DESCRIPTION = "The personal blog of Arne Bahlo.";
+export const WRITING_TITLE = `Writing — ${SITE_TITLE}`;
+export const WRITING_DESCRIPTION = "Articles written by Arne Bahlo.";
 
 export const WEEKLY_TITLE = `Arne’s Weekly`;
 export const WEEKLY_DESCRIPTION =
