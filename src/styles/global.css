@@ -12,7 +12,7 @@
   --color-gray: #555;
   --color-nav-stroke: rgb(242 45 94);
 
-  --color-bg: #fbfbfb;
+  --color-bg: #fbfbfd;
   --color-button: var(--color-primary-10);
   --color-button-hover: var(--color-primary-20);
   --color-button-border: var(--color-primary-20);
@@ -66,7 +66,7 @@
     --color-heading: #ddd;
     --color-light: #777;
     --color-gray: #bbb;
-    --color-bg: #222;
+    --color-bg: #222233;
 
     --color-primary-rgb: 83 118 255;
 
