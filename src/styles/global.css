@@ -149,6 +149,7 @@ blockquote {
 a {
   color: var(--color-primary);
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 a:hover {
