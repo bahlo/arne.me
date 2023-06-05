@@ -12,12 +12,6 @@ The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 Icons are picked from the great [Bootstrap Icons](https://icons.getbootstrap.com),
 their [LICENSE](https://github.com/twbs/icons/blob/main/LICENSE.md) applies.
 
-[Plausible Analytics](https://plausible.io) is used, a privacy focused
-alternative to most analytics tools.
-For counting the clicks in my newletter I use a custom-built application that 
-logs the request to an [Axiom](https://axiom.co) dataset, recording only the 
-issue #, the URL and the user agent.
-
 Testing was conducted in the latest versions of
 [Edge](https://www.microsoft.com/en-us/edge),
 [Chrome](https://www.google.com/chrome/),
