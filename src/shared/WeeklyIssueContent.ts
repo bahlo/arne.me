@@ -97,9 +97,7 @@ export default function render(num, frontmatter) {
     ${category.stories
       .map(
         (story) => `
-    <h3><a href=${
-      "https://click.arne.me/?issue=" + num + "&url=" + story.url
-    }>${story.title}</a></h3>
+    <h3><a href=${story.url}>${story.title}</a></h3>
     <p class="meta">${
       formatReadingTime(story.readingTimeMinutes) + getHost(story.url)
     }</p>
