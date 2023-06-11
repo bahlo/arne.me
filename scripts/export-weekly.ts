@@ -84,9 +84,7 @@ interface Story {
   data.categories.forEach((category) => {
     console.log(`## ${category.title}`);
     category.stories.forEach((story) => {
-      console.log(
-        `### [${story.title}](https://click.arne.me/?issue=${num}&url=${story.url})`
-      );
+      console.log(`### [${story.title}](${story.url})`);
       console.log(`${story.readingTimeMinutes} min · ${getHost(story.url)}`);
       console.log();
       console.log(`${story.description}`);
