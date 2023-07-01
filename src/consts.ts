@@ -4,7 +4,7 @@
 export const SITE_TITLE = "Arne Bahlo";
 export const SITE_DESCRIPTION = "The personal website of Arne Bahlo.";
 
-export const INDEX_TITLE = "Hey, I’m Arne—";
+export const INDEX_TITLE = "Hej, I’m Arne—";
 export const INDEX_HERO =
   "a developer, podcaster & dad based near Frankfurt, Germany.";
 
