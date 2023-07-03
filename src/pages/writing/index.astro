@@ -1,15 +1,18 @@
 ---
+import getReadingTime from 'reading-time';
+import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { WRITING_TITLE, WRITING_DESCRIPTION } from "../../consts";
-import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 
 const posts = (await getCollection("writing"))
   .filter((post) => post.slug != "hello-world")
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .reduce((acc, post) => {
+    post.data.readingTime = getReadingTime(post.body).text;
+
     const year = post.data.pubDate.getFullYear();
     if (acc[year]) {
       acc[year].push(post);
@@ -48,6 +51,8 @@ const posts = (await getCollection("writing"))
                       </h3>
                       <span class="meta">
                         <FormattedDate date={post.data.pubDate} />
+                        &middot;
+                        {post.data.readingTime}
                       </span>
                       <p>{post.data.description}</p>
                     </>
