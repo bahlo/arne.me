@@ -86,9 +86,7 @@ const reading = defineCollection({
         .string()
         .or(z.date())
         .transform((val) => new Date(val)),
-      cover: image().refine((img) => img.width >= 360, {
-        message: "Cover image must be at least 360 pixels wide!",
-      }),
+      cover: image(),
     }),
 });
 
