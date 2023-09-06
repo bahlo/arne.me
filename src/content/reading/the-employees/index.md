@@ -3,7 +3,7 @@ title: "The Employees"
 author: "Olga Ravn"
 dateRead: "2023-09-06"
 rating: 3
-cover: "./_cover.png"
+cover: "./_cover.jpg"
 ---
 
 This book is strange.
