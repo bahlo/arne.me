@@ -8,7 +8,7 @@ cover: "./_cover.jpg"
 
 This book was tough, I was angry a lot.
 
-Yuval Noah Harari starts this book by explaining how humanity has solved 
+Yuval Noah Harari starts by explaining how humanity has solved 
 famine, plague and war and will therefore focus on advancing humans 
 themselves (even if you ignore COVID-19 and the Ukraine invasion, 
 what about the climate crisis?).
