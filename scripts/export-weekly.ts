@@ -18,7 +18,8 @@ interface Markdown {
 interface Frontmatter {
   quoteOfTheWeek: QuoteOfTheWeek;
   tootOfTheWeek: TootOfTheWeek;
-  categories: Category[];
+  categories?: Category[];
+  stories?: Story[];
 }
 
 interface QuoteOfTheWeek {
@@ -81,7 +82,7 @@ interface Story {
     );
   }
 
-  data.categories.forEach((category) => {
+  (data.categories ?? []).forEach((category) => {
     console.log(`## ${category.title}`);
     category.stories.forEach((story) => {
       console.log(`### [${story.title}](${story.url})`);
@@ -89,5 +90,12 @@ interface Story {
       console.log();
       console.log(`${story.description}`);
     });
+  });
+
+  (data.stories ?? []).forEach((story) => {
+    console.log(`### [${story.title}](${story.url})`);
+    console.log(`${story.readingTimeMinutes} min · ${getHost(story.url)}`);
+    console.log();
+    console.log(`${story.description}`);
   });
 })();

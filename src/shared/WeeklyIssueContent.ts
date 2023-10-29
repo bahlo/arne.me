@@ -39,7 +39,7 @@ function formatReadingTime(minutes) {
 }
 
 export default function render(num, frontmatter) {
-  const { quoteOfTheWeek, tootOfTheWeek, tweetOfTheWeek, categories } =
+  const { quoteOfTheWeek, tootOfTheWeek, tweetOfTheWeek, categories, stories } =
     frontmatter;
 
   // In HTML we trust
@@ -104,6 +104,17 @@ export default function render(num, frontmatter) {
     ${marked.parse(story.description)}`
       )
       .join("\n")}`
+      )
+      .join("\n")}
+
+    ${(stories || [])
+      .map(
+        (story) => `
+    <h3><a href=${story.url}>${story.title}</a></h3>
+    <p class="meta">${
+      formatReadingTime(story.readingTimeMinutes) + getHost(story.url)
+    }</p>
+    ${marked.parse(story.description)}`
       )
       .join("\n")}
   `;

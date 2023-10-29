@@ -71,6 +71,16 @@ const weekly = defineCollection({
           })
         )
         .optional(),
+      stories: z
+        .array(
+          z.object({
+            title: z.string(),
+            url: z.string(),
+            readingTimeMinutes: z.number(),
+            description: z.string(),
+          })
+        )
+        .optional(),
     }),
 });
 
