@@ -23,7 +23,11 @@ const issues = (await getCollection("weekly"))
 <!DOCTYPE html>
 <html lang="en" class="weekly">
   <head>
-    <BaseHead title={WEEKLY_TITLE} description={WEEKLY_DESCRIPTION} image="/weekly/og-image.png" />
+    <BaseHead
+      title={WEEKLY_TITLE}
+      description={WEEKLY_DESCRIPTION}
+      image="/weekly/og-image.png"
+    />
     <style>
       ul {
         list-style: none;
@@ -67,7 +71,9 @@ const issues = (await getCollection("weekly"))
                         {(issue.data.categories || []).reduce(
                           (acc, category) => acc + category.stories.length,
                           0
-                        ) || "?"}
+                        ) ||
+                          (issue.data.stories ?? []).length ||
+                          "?"}
                         stories
                       </span>
                     </li>
