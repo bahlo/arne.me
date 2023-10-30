@@ -83,11 +83,26 @@ impl Content {
                     entry.path()
                 ))?;
 
+            let extension = comrak::ExtensionOptionsBuilder::default()
+                .strikethrough(true)
+                .tagfilter(true)
+                .table(true)
+                .superscript(true)
+                .footnotes(true)
+                .front_matter_delimiter(Some("---".to_string()))
+                .build()
+                .context("Failed to build extension options")?;
+            let options = comrak::Options {
+                extension,
+                ..Default::default()
+            };
+            let content_html = comrak::markdown_to_html(&contents, &options);
+
             articles.push(Article {
                 slug,
                 frontmatter,
                 excerpt_html: "TODO".to_string(),
-                content_html: "TODO".to_string(),
+                content_html,
             });
         }
 
