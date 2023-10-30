@@ -1,5 +1,5 @@
 use anyhow::{anyhow, Context, Result};
-use chrono::{DateTime, Utc};
+use chrono::NaiveDate;
 use gray_matter::{engine::YAML, Matter};
 use serde::Deserialize;
 
@@ -20,8 +20,8 @@ pub struct Article {
 pub struct ArticleFrontmatter {
     pub title: String,
     pub description: String,
-    pub published: DateTime<Utc>,
-    pub updated: Option<DateTime<Utc>>,
+    pub published: NaiveDate,
+    pub updated: Option<NaiveDate>,
     #[serde(default)]
     pub hidden: bool,
 }

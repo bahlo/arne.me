@@ -1,7 +1,7 @@
 ---
 title: "Hello World"
 description: "My first blogpost (not really)."
-published: "2022-02-13T00:00:00Z"
+published: "2022-02-13"
 hidden: true
 ---
 
