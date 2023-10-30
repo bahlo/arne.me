@@ -20,6 +20,7 @@ pub struct Article {
 pub struct ArticleFrontmatter {
     pub title: String,
     pub description: String,
+    pub location: String,
     pub published: NaiveDate,
     pub updated: Option<NaiveDate>,
     #[serde(default)]
@@ -30,7 +31,7 @@ impl Content {
     pub fn parse(dir: &'static include_dir::Dir) -> Result<Self> {
         let matter = Matter::<YAML>::new();
 
-        let articles = dir
+        let mut articles = dir
             .get_dir("articles")
             .ok_or(anyhow!("Couldn't find articles dir"))?
             .files()
@@ -64,6 +65,8 @@ impl Content {
                 })
             })
             .collect::<Result<Vec<Article>>>()?;
+
+        articles.sort_by(|a, b| b.frontmatter.published.cmp(&a.frontmatter.published));
 
         Ok(Self { articles })
     }

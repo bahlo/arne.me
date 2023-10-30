@@ -13,7 +13,7 @@ use crate::content::Content;
 static PROJECT_DIR: Dir<'_> = include_dir!("$CARGO_MANIFEST_DIR/content");
 
 lazy_static! {
-    static ref CONTENT: Content = Content::parse(&PROJECT_DIR).expect("Failed to load content");
+    pub static ref CONTENT: Content = Content::parse(&PROJECT_DIR).expect("Failed to load content");
 }
 
 #[tokio::main]

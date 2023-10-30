@@ -2,6 +2,7 @@
 title: "Static OG (Open Graph) Images in Astro"
 description: "A guide to set up build-time Open Graph images in Astro using Satori, sharp and Astro endpoints."
 published: "2023-04-07"
+location: "Frankfurt, Germany"
 ---
 
 Have you every shared a link to a friend and wondered where the image preview 

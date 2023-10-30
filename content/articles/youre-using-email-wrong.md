@@ -3,6 +3,7 @@ title: "You’re Using Email Wrong"
 description: "If you don’t like email, try a different strategy."
 published: "2022-03-06"
 updated: "2022-03-08"
+location: "Frankfurt, Germany"
 ---
 
 You probably don't like email, not a lot of people do.
