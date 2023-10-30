@@ -1,8 +1,8 @@
-use maud::{html, Markup};
+use maud::{html, Markup, PreEscaped};
 use url::Url;
 
 use crate::{
-    content::Content,
+    content::{Article, Content},
     layout::{self, Head, OgType},
 };
 
@@ -31,6 +31,28 @@ pub fn index(content: &Content) -> Markup {
                         }
                     }
                 }
+            }
+        },
+    )
+}
+
+pub fn article(article: &Article) -> Markup {
+    layout::render(
+        Head {
+            title: article.frontmatter.title.clone(),
+            description: article.frontmatter.description.clone(),
+            url: Url::parse(&format!("https://arne.me/articles/{}", article.slug)).unwrap(),
+            og_type: OgType::Article,
+        },
+        html! {
+            article.article {
+                header {
+                    h1 { (article.frontmatter.title) }
+                    span.article__byline {
+                        "Posted on " (article.frontmatter.published.format("%B %e, %Y")) " from " (article.frontmatter.location)
+                    }
+                }
+                (PreEscaped(article.content_html.clone()))
             }
         },
     )

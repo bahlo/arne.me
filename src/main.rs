@@ -36,6 +36,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     fs::write("dist/index.html", templates::index(&content).into_string()).await?;
 
+    for article in &content.articles {
+        fs::create_dir_all(format!("dist/articles/{}", article.slug)).await?;
+        let path = format!("dist/articles/{}/index.html", article.slug);
+        fs::write(&path, templates::article(article).into_string()).await?;
+    }
+
     Ok(())
 }
 
