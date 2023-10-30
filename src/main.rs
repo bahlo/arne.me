@@ -1,42 +1,22 @@
-use serde::Serialize;
-use std::process::exit;
-use tera::Tera;
+use maud::html;
 use url::Url;
 
-#[derive(Serialize)]
-struct Context {
-    title: String,
-    description: String,
-    url: Url,
-}
+use crate::layout::{Meta, OgType};
 
-impl From<Context> for tera::Context {
-    fn from(context: Context) -> Self {
-        let mut tera_context = tera::Context::new();
-        tera_context.insert("title", &context.title);
-        tera_context.insert("description", &context.description);
-        tera_context.insert("url", &context.url);
-        tera_context
-    }
-}
+mod layout;
+mod routes;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let tera = match Tera::new("templates/**/*.html") {
-        Ok(t) => t,
-        Err(e) => {
-            println!("Parsing error(s): {}", e);
-            exit(1);
-        }
-    };
-
-    let context = Context {
+    let meta = Meta {
         title: "Arne Bahlo".to_string(),
         description: "Arne Bahlo's personal website".to_string(),
         url: Url::parse("https://arne.me")?,
+        og_type: OgType::Website,
     };
-    let output = tera.render("layout.html", &context.into())?;
 
-    println!("{}", output);
+    let markup = layout::render(meta, html! { h1 { "Hello, world!" } });
+
+    println!("{}", markup.into_string());
 
     Ok(())
 }
