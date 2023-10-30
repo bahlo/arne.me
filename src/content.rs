@@ -83,20 +83,7 @@ impl Content {
                     entry.path()
                 ))?;
 
-            let extension = comrak::ExtensionOptionsBuilder::default()
-                .strikethrough(true)
-                .tagfilter(true)
-                .table(true)
-                .superscript(true)
-                .footnotes(true)
-                .front_matter_delimiter(Some("---".to_string()))
-                .build()
-                .context("Failed to build extension options")?;
-            let options = comrak::Options {
-                extension,
-                ..Default::default()
-            };
-            let content_html = comrak::markdown_to_html(&contents, &options);
+            let content_html = render_markdown(contents)?;
 
             articles.push(Article {
                 slug,
@@ -110,4 +97,27 @@ impl Content {
 
         Ok(articles)
     }
+}
+
+fn render_markdown(markdown: String) -> Result<String> {
+    let extension = comrak::ExtensionOptionsBuilder::default()
+        .strikethrough(true)
+        .tagfilter(true)
+        .table(true)
+        .superscript(true)
+        .footnotes(true)
+        .front_matter_delimiter(Some("---".to_string()))
+        .build()
+        .context("Failed to build extension options")?;
+    let options = comrak::Options {
+        extension,
+        ..Default::default()
+    };
+    // let syntex_adapter = SyntectAdapter::new(
+    //     "InspiredGitHub"
+    // );
+    // let mut plugins = comrak::Plugins::default();
+    // plugins.render.codefence_syntax_highlighter = Some(&syntex_adapter);
+    // let content_html = comrak::markdown_to_html_with_plugins(&contents, &options, &plugins);
+    Ok(comrak::markdown_to_html(&markdown, &options))
 }
