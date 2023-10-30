@@ -1,7 +1,5 @@
 use anyhow::{bail, Result};
 use async_recursion::async_recursion;
-use include_dir::{include_dir, Dir};
-use lazy_static::lazy_static;
 use std::path::Path;
 use tokio::fs;
 use tracing::info;
@@ -12,12 +10,6 @@ mod layout;
 mod templates;
 
 use crate::content::Content;
-
-static PROJECT_DIR: Dir<'_> = include_dir!("$CARGO_MANIFEST_DIR/content");
-
-lazy_static! {
-    pub static ref CONTENT: Content = Content::parse(&PROJECT_DIR).expect("Failed to load content");
-}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -30,6 +22,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         )
         .init();
 
+    let content = Content::parse(fs::read_dir("content").await?).await?;
+
+    dbg!(&content);
+
     info!("Recreating dist/ directory");
     fs::remove_dir_all("dist").await.ok();
     fs::create_dir_all("dist").await?;
@@ -38,7 +34,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     fs::create_dir_all("dist/static").await?;
     copy_dir("static", "dist/static").await?;
 
-    fs::write("dist/index.html", templates::index().into_string()).await?;
+    fs::write("dist/index.html", templates::index(&content).into_string()).await?;
 
     Ok(())
 }

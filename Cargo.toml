@@ -11,11 +11,9 @@ anyhow = "1"
 async-recursion = "1.0.5"
 chrono = { version = "0.4.31", default-features = false, features = ["std", "clock", "serde"] }
 gray_matter = "0.2"
-include_dir = "0.7"
-lazy_static = "1"
 maud = { version = "0.25", features = ["axum"] }
 serde = { version = "1.0.190", features = ["derive"] }
-tokio = { version = "1", features = ["macros", "rt-multi-thread", "fs"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "fs", "io-util"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 url = { version = "2.4", features = ["serde"] }

@@ -2,11 +2,11 @@ use maud::{html, Markup};
 use url::Url;
 
 use crate::{
+    content::Content,
     layout::{self, Head, OgType},
-    CONTENT,
 };
 
-pub fn index() -> Markup {
+pub fn index(content: &Content) -> Markup {
     layout::render(
         Head {
             title: "Arne Bahlo".to_string(),
@@ -15,7 +15,7 @@ pub fn index() -> Markup {
             og_type: OgType::Website,
         },
         html! {
-            @for article in &CONTENT.articles {
+            @for article in &content.articles {
                 @if !article.frontmatter.hidden {
                     article.article {
                         h2 {
