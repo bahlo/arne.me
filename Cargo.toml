@@ -9,6 +9,7 @@ publish = false
 [dependencies]
 axum = "0.6"
 chrono = { version = "0.4.31", default-features = false, features = ["std", "clock"] }
+include_dir = "0.7"
 maud = { version = "0.25", features = ["axum"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 tracing = "0.1"

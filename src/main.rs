@@ -1,9 +1,12 @@
 use axum::{routing::get, Router, Server};
+use include_dir::{include_dir, Dir};
 use tracing::info;
 use tracing_subscriber::{filter::LevelFilter, fmt, prelude::*, EnvFilter};
 
 mod layout;
 mod routes;
+
+static PROJECT_DIR: Dir<'_> = include_dir!("$CARGO_MANIFEST_DIR/content");
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
