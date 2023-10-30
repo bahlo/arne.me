@@ -38,6 +38,7 @@ pub fn render(meta: Head, content: Markup) -> Markup {
                 title { (meta.title) }
                 meta name="title" content=(meta.title);
                 meta name="description" content=(meta.description);
+                meta name="author" content="Arne Bahlo";
                 meta charset="utf-8";
                 meta name="viewport" content="width=device-width,initial-scale=1";
                 meta property="og:type" content=(meta.og_type);
