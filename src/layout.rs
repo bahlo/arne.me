@@ -4,7 +4,7 @@ use std::fmt::Display;
 use url::Url;
 
 #[derive(Debug)]
-pub struct Meta {
+pub struct Head {
     pub title: String,
     pub description: String,
     pub url: Url,
@@ -30,7 +30,7 @@ impl Display for OgType {
     }
 }
 
-pub fn render(meta: Meta, content: Markup) -> Markup {
+pub fn render(meta: Head, content: Markup) -> Markup {
     html! {
         (DOCTYPE)
         html lang="en" {

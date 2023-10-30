@@ -1,22 +1,15 @@
-use maud::html;
-use url::Url;
-
-use crate::layout::{Meta, OgType};
+use axum::{routing::get, Router, Server};
 
 mod layout;
 mod routes;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let meta = Meta {
-        title: "Arne Bahlo".to_string(),
-        description: "Arne Bahlo's personal website".to_string(),
-        url: Url::parse("https://arne.me")?,
-        og_type: OgType::Website,
-    };
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let app = Router::new().route("/", get(routes::index));
 
-    let markup = layout::render(meta, html! { h1 { "Hello, world!" } });
-
-    println!("{}", markup.into_string());
+    Server::bind(&"0.0.0.0:3000".parse().unwrap())
+        .serve(app.into_make_service())
+        .await?;
 
     Ok(())
 }
