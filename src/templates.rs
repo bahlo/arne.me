@@ -6,7 +6,7 @@ use crate::{
     CONTENT,
 };
 
-pub async fn index() -> Markup {
+pub fn index() -> Markup {
     layout::render(
         Head {
             title: "Arne Bahlo".to_string(),

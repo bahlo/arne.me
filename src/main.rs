@@ -1,12 +1,11 @@
-use axum::{routing::get, Router, Server};
 use include_dir::{include_dir, Dir};
 use lazy_static::lazy_static;
-use tracing::info;
+use tokio::fs;
 use tracing_subscriber::{filter::LevelFilter, fmt, prelude::*, EnvFilter};
 
 mod content;
 mod layout;
-mod routes;
+mod templates;
 
 use crate::content::Content;
 
@@ -27,15 +26,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         )
         .init();
 
-    let articles = &CONTENT.articles;
-    dbg!(articles);
-
-    let app = Router::new().route("/", get(routes::index));
-
-    info!(port = 3000, "Starting server");
-    Server::bind(&"0.0.0.0:3000".parse().unwrap())
-        .serve(app.into_make_service())
-        .await?;
+    fs::remove_dir_all("dist").await.ok();
+    fs::create_dir_all("dist").await?;
+    fs::write("dist/index.html", templates::index().into_string()).await?;
 
     Ok(())
 }
