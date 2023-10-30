@@ -1,8 +1,8 @@
 ---
 title: "You’re Using Email Wrong"
 description: "If you don’t like email, try a different strategy."
-pubDate: "2022-03-06"
-updatedDate: "2022-03-08"
+published: "2022-03-06T00:00:00Z"
+updated: "2022-03-08T00:00:00Z"
 ---
 
 You probably don't like email, not a lot of people do.

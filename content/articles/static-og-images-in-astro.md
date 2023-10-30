@@ -1,7 +1,7 @@
 ---
 title: "Static OG (Open Graph) Images in Astro"
 description: "A guide to set up build-time Open Graph images in Astro using Satori, sharp and Astro endpoints."
-pubDate: "2023-04-07"
+published: "2023-04-07T00:00:00Z"
 ---
 
 Have you every shared a link to a friend and wondered where the image preview 
@@ -24,7 +24,7 @@ JavaScript library which can render a HTML tree as SVG.
 Vercel also has a great [OG Image Playground](https://og-playground.vercel.app/), 
 where you can play around and quickly get results.
 
-![A screenshot of the OG Image Playground showing a code editor on the left and a preview and some settings on the right.](./_og-image-playground.png)
+![A screenshot of the OG Image Playground showing a code editor on the left and a preview and some settings on the right.](/static-og-images-in-astro/og-image-playground.png)
 
 Set the size to 1200&times;630px as that's what Facebook 
 recommends in [their guidelines](https://developers.facebook.com/docs/sharing/webmasters/images/).

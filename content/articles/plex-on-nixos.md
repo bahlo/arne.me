@@ -1,7 +1,7 @@
 ---
 title: "Plex on NixOS"
 description: "In this post I describe how I set up Plex on NixOS, including a virtual file system for Backblaze B2 and Nginx for HTTPS."
-pubDate: "2022-02-22"
+published: "2022-02-22T00:00:00Z"
 ---
 
 A few weeks ago, the hard drive (yes, I know) in my home lab died.
