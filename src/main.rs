@@ -31,8 +31,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     fs::create_dir_all("dist").await?;
 
     info!("Copying static files");
-    fs::create_dir_all("dist/static").await?;
-    copy_dir("static", "dist/static").await?;
+    copy_dir("static", "dist/").await?;
 
     fs::write("dist/index.html", templates::index(&content).into_string()).await?;
 
