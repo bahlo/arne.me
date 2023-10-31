@@ -1,4 +1,6 @@
 .weekly {
+  @include stack(.5rem);
+
   &__overview {
     column-width: 316px;
     @include stack(.5rem);

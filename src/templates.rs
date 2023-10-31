@@ -112,26 +112,28 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
             og_type: OgType::Website,
         },
         html! {
-            h1 { "Arne’s Weekly" }
-            p { "A weekly newsletter with the best stories of the internet. There’s an "
-                a href="/weekly/atom.xml" { "RSS Feed" }
-                " available, but you should really subscribe:" }
-            (subscribe_form())
-            h2 { "Archive" }
-            .weekly__overview {
-                @for (year, issues) in weekly_by_year {
-                    @if year != current_year {
-                        h2 { (year) }
-                    }
-                    ul.weekly__list {
-                        @for weekly in issues {
-                            li.weekly__item {
-                                a href=(format!("/weekly/{}", weekly.num)) {
-                                    (weekly.title)
-                                }
-                                br;
-                                em {
-                                    "Published on " (weekly.published.format("%B %e, %Y"))
+            section.weekly {
+                h1 { "Arne’s Weekly" }
+                p { "A weekly newsletter with the best stories of the internet. There’s an "
+                    a href="/weekly/atom.xml" { "RSS Feed" }
+                    " available, but you should really subscribe:" }
+                (subscribe_form())
+                h2 { "Archive" }
+                .weekly__overview {
+                    @for (year, issues) in weekly_by_year {
+                        @if year != current_year {
+                            h2 { (year) }
+                        }
+                        ul.weekly__list {
+                            @for weekly in issues {
+                                li.weekly__item {
+                                    a href=(format!("/weekly/{}", weekly.num)) {
+                                        (weekly.title)
+                                    }
+                                    br;
+                                    em {
+                                        "Published on " (weekly.published.format("%B %e, %Y"))
+                                    }
                                 }
                             }
                         }
