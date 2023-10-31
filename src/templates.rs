@@ -19,26 +19,26 @@ pub fn index(content: &Content) -> Result<Markup> {
             @for article in &content.articles {
                 @if !article.hidden {
                     article.article {
-                        h2 {
-                            a href=(format!("/articles/{}", article.slug)) {
-                                (article.title)
+                        header {
+                            h2 {
+                                a href=(format!("/articles/{}", article.slug)) {
+                                    (article.title)
+                                }
                             }
                             span.article__byline {
                                 "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
                             }
                         }
-                        p {
-                            @if let Some(excerpt_html) = &article.excerpt_html {
-                                (PreEscaped(excerpt_html.clone()))
+                        @if let Some(excerpt_html) = &article.excerpt_html {
+                            (PreEscaped(excerpt_html.clone()))
 
-                                p {
-                                    a href=(format!("/articles/{}", article.slug)) {
-                                        "Read more" (PreEscaped("&hellip;"))
-                                    }
+                            p {
+                                a href=(format!("/articles/{}", article.slug)) {
+                                    "Read more" (PreEscaped("&hellip;"))
                                 }
-                            } @else {
-                                (article.description)
                             }
+                        } @else {
+                            p { (article.description) }
                         }
                     }
                 }
