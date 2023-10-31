@@ -14,6 +14,8 @@ Hosting it at home is great for storage costs and control, but it's hard to
 share with friends or access on the go, especially with a NATed IPv4, so I
 decided to move to the cloud.
 
+<!-- more -->
+
 ## Table of Contents
 
 ## Choosing a server and storage method

@@ -14,8 +14,9 @@ emails, log-in notifications or spam.
 Or you're doing inbox zero and all that trash lives in your archive.
 
 As everything else, email is subject (hah) to entropy.
-If you're not careful, chaos will take over and your email inbox will look like
-the screenshot above.
+If you're not careful, chaos will take over.
+
+<!-- more -->
 
 ## A different concept
 

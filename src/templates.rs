@@ -28,7 +28,17 @@ pub fn index(content: &Content) -> Result<Markup> {
                             }
                         }
                         p {
-                            (article.description)
+                            @if let Some(excerpt_html) = &article.excerpt_html {
+                                (PreEscaped(excerpt_html.clone()))
+
+                                p {
+                                    a href=(format!("/articles/{}", article.slug)) {
+                                        "Read more" (PreEscaped("&hellip;"))
+                                    }
+                                }
+                            } @else {
+                                (article.description)
+                            }
                         }
                     }
                 }

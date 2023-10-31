@@ -12,6 +12,8 @@ extensions that can enrich a link, originally invented at Facebook.
 This blog post describes how you can generate these images on build time in 
 the [Astro web framework](https://astro.build).
 
+<!-- more -->
+
 Most of the guides out there (including Vercel's official [OG Image Generation](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)) 
 use a function to generate the OG image dynamically.
 While there's nothing wrong with that, I really wanted mine to be statically

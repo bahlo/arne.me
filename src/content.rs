@@ -34,7 +34,7 @@ pub struct Article {
     pub published: NaiveDate,
     pub updated: Option<NaiveDate>,
     pub hidden: bool,
-    pub excerpt_html: String,
+    pub excerpt_html: Option<String>,
     pub content_html: String,
 }
 
@@ -183,6 +183,16 @@ impl Content {
                     entry.path()
                 ))?;
 
+            let excerpt_html: Option<String> = contents
+                .splitn(2, "<!-- more -->")
+                .collect::<Vec<_>>()
+                .first()
+                .map(|excerpt_markdown| -> Result<String> {
+                    let excerpt_html = render_markdown(excerpt_markdown.to_string())?;
+                    Ok(excerpt_html)
+                })
+                .transpose()?;
+
             let content_html = render_markdown(contents)?;
 
             articles.push(Article {
@@ -193,7 +203,7 @@ impl Content {
                 published: frontmatter.published,
                 updated: frontmatter.updated,
                 hidden: frontmatter.hidden,
-                excerpt_html: "TODO".to_string(),
+                excerpt_html,
                 content_html,
             });
         }
