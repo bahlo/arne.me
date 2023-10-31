@@ -1,9 +1,8 @@
 ---
-title: "Homo Deus"
-author: "Yuval Noah Harari"
-dateRead: "2023-10-28"
-rating: 3
-cover: "./_cover.jpg"
+title: "Book Review: Homo Deus"
+description: "A review of the book Homo Deus by Yuval Noah Harari"
+published: "2023-10-28"
+location: "Frankfurt, Germany"
 ---
 
 This book was tough, I was angry a lot.
@@ -14,6 +13,8 @@ themselves (even if you ignore COVID-19 and the Ukraine invasion,
 what about the climate crisis?).
 God is dead and the new religion, Humanism, has the goal to create super-humans, 
 therefore creating the next evolutionary stage after Homo Sapiens: Homo Deus.
+
+<!-- more -->
 
 He's talking about consciousness, how it will be decoupled from intelligence 
 and how every living being, including humans, is just a complex algorithm that 
