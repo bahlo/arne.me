@@ -1,9 +1,7 @@
 ---
-title: "Dune"
-author: "Frank Herbert"
-dateRead: "2023-04-15"
-rating: 4
-cover: "./_cover.jpg"
+title: "Book Review: Dune"
+description: "A review of Dune by Frank Herbert"
+published: "2023-04-15"
 ---
 
 This book sat on my shelf for the better part of last year. 
@@ -15,6 +13,8 @@ into the fascinating world of the desert planet Arrakis (or "Dune") with its
 sand worms, the Bene Gesserit sisterhood with superhuman powers, the native 
 Freemen who learned to live in the harsh environment, the intrigues, the 
 politics and the religion.
+
+<!-- more -->
 
 I loved to see the evolution of the main character from being a royal youth from 
 House Altreides to leading the native Freemen as Muad'Dib. 
