@@ -72,6 +72,22 @@ pub fn article(article: &Article) -> Result<Markup> {
     ))
 }
 
+fn subscribe_form() -> Markup {
+    html! {
+        form.subscribe-form action="https://buttondown.email/api/emails/embed-subscribe/arnesweekly" method="post" {
+            label for="email" { "Email address:" }
+            input required type="email" name="email" id="email" placeholder="you@example.org";
+            input type="submit" value="Subscribe";
+            br;
+            small {
+                "Subscription is one click and you can unsubscribe at any time. Your email address will be sent to "
+                a href="https://buttondown.email" { "Buttondown" }
+                ", the service I use to send out emails."
+            }
+        }
+    }
+}
+
 pub fn weekly_index(content: &Content) -> Result<Markup> {
     let mut weekly_by_year = content
         .weekly
@@ -97,7 +113,11 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
         },
         html! {
             h1 { "Arne’s Weekly" }
-            p { "A weekly newsletter with the best stories of the internet." }
+            p { "A weekly newsletter with the best stories of the internet. There’s an "
+                a href="/weekly/atom.xml" { "RSS Feed" }
+                " available, but you should really subscribe:" }
+            (subscribe_form())
+            h2 { "Archive" }
             .weekly__overview {
                 @for (year, issues) in weekly_by_year {
                     @if year != current_year {
@@ -186,6 +206,9 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
                         }
                     }
                 }
+                h2 { "Subscribe" }
+                p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans."}
+                (subscribe_form())
             }
         },
     ))
