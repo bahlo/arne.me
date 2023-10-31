@@ -1,11 +1,8 @@
 ---
-title: "Never Split the Difference"
-subtitle: "Negotiating As If Your Life Depended On It"
-author: "Chris Voss"
-dateRead: "2023-03-21"
-rating: 4
-website: "https://www.blackswanltd.com/never-split-the-difference"
-cover: "./_cover.jpg"
+title: "Book Review: Never Split the Difference"
+description: "A review of the book Never Split the Difference by Chriss Voss"
+published: "2023-03-21"
+location: "Frankfurt, Germany"
 ---
 
 Chris Voss makes this non-fiction book exciting by telling stories from real 
@@ -13,3 +10,7 @@ hostage negotiations from his time at the FBI.
 Each chapter is about a specific tactic and filled with psychological 
 information as well as real-world experience and has a nice summary at the end 
 (remind me to collate those into my notes).
+
+★★★★☆ 
+
+<!-- more -->
