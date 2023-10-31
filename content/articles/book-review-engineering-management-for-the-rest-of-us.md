@@ -1,19 +1,19 @@
 ---
-title: "Engineering Management for the Rest of Us"
-author: "Sarah Drasner"
-dateRead: "2023-03-23"
-rating: 4
-cover: "./_cover.jpg"
-website: "https://www.engmanagement.dev"
+title: "Book Review: Engineering Management for the Rest of Us"
+description: "A review of the book Engineering Management for the Rest of Us by Sarah Drasner"
+published: "2023-03-23"
+location: "Frankfurt, Germany"
 ---
 
-I’ve read a few management books and this one stands out for being so hands-on.
+I've read a few management books and this one stands out for being so hands-on.
 Sarah Drasner provides systems for your everyday work as an engineering manager
 and guides you through your different areas of responsibility in four parts:
 - Your team
 - Collaboration
 - Helping your team do their best work
 - Your work
+
+<!-- more -->
 
 She talks about 1:1s, giving feedback, navigating conflict, holding good meetings, happiness and drive, change management, prioritizing your time and much more.
 
