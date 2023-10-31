@@ -378,10 +378,10 @@ impl Content {
 
         // No end date means the project is still active
         projects.sort_by(|a, b| match (a.to, b.to) {
-            (Some(a), Some(b)) => a.cmp(&b),
-            (Some(a), None) => return Ordering::Less, // b is still active
-            (None, Some(b)) => return Ordering::Greater, // a is still active
-            (None, None) => return Ordering::Equal,
+            (Some(a_to), Some(b_to)) => a_to.cmp(&b_to),
+            (Some(_a_to), None) => return Ordering::Less, // b is still active
+            (None, Some(_b_to)) => return Ordering::Greater, // a is still active
+            (None, None) => b.from.cmp(&a.from),
         });
 
         Ok(projects)
