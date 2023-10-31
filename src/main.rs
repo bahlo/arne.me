@@ -31,6 +31,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let path = format!("dist/articles/{}/index.html", article.slug);
         fs::write(&path, templates::article(article).into_string())?;
     }
+    for weekly_issue in &content.weekly {
+        fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
+        let path = format!("dist/weekly/{}/index.html", weekly_issue.num);
+        fs::write(&path, templates::weekly(weekly_issue)?.into_string())?;
+    }
 
     Ok(())
 }
