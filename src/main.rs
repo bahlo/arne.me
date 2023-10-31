@@ -25,23 +25,30 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     fs::write("dist/main.css", css)?;
 
     // Generate articles
-    fs::write("dist/index.html", templates::index(&content).into_string())?;
+    fs::write("dist/index.html", templates::index(&content)?.into_string())?;
     for article in &content.articles {
         fs::create_dir_all(format!("dist/articles/{}", article.slug))?;
         let path = format!("dist/articles/{}/index.html", article.slug);
-        fs::write(&path, templates::article(article).into_string())?;
+        fs::write(&path, templates::article(article)?.into_string())?;
     }
 
     // Generate weekly
     fs::create_dir_all("dist/weekly")?;
     fs::write(
         "dist/weekly/index.html",
-        templates::weekly_index(&content).into_string(),
+        templates::weekly_index(&content)?.into_string(),
     )?;
     for weekly_issue in &content.weekly {
         fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
         let path = format!("dist/weekly/{}/index.html", weekly_issue.num);
         fs::write(&path, templates::weekly(weekly_issue)?.into_string())?;
+    }
+
+    // Generate pages
+    for page in &content.pages {
+        fs::create_dir_all(format!("dist/{}", page.slug))?;
+        let path = format!("dist/{}/index.html", page.slug);
+        fs::write(&path, templates::page(page)?.into_string())?;
     }
 
     Ok(())

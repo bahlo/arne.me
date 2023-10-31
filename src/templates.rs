@@ -3,16 +3,16 @@ use maud::{html, Markup, PreEscaped};
 use url::Url;
 
 use crate::{
-    content::{Article, Content, WeeklyIssue},
+    content::{Article, Content, Page, WeeklyIssue},
     layout::{self, Head, OgType},
 };
 
-pub fn index(content: &Content) -> Markup {
-    layout::render(
+pub fn index(content: &Content) -> Result<Markup> {
+    Ok(layout::render(
         Head {
             title: "Arne Bahlo".to_string(),
             description: "Arne Bahlo's personal website".to_string(),
-            url: Url::parse("https://arne.me").unwrap(),
+            url: Url::parse("https://arne.me")?,
             og_type: OgType::Website,
         },
         html! {
@@ -34,15 +34,15 @@ pub fn index(content: &Content) -> Markup {
                 }
             }
         },
-    )
+    ))
 }
 
-pub fn article(article: &Article) -> Markup {
-    layout::render(
+pub fn article(article: &Article) -> Result<Markup> {
+    Ok(layout::render(
         Head {
             title: article.title.clone(),
             description: article.description.clone(),
-            url: Url::parse(&format!("https://arne.me/articles/{}", article.slug)).unwrap(),
+            url: Url::parse(&format!("https://arne.me/articles/{}", article.slug))?,
             og_type: OgType::Article,
         },
         html! {
@@ -56,15 +56,15 @@ pub fn article(article: &Article) -> Markup {
                 (PreEscaped(article.content_html.clone()))
             }
         },
-    )
+    ))
 }
 
-pub fn weekly_index(content: &Content) -> Markup {
-    layout::render(
+pub fn weekly_index(content: &Content) -> Result<Markup> {
+    Ok(layout::render(
         Head {
             title: "Arne’s Weekly".to_string(),
             description: "A weekly newsletter with the best stories of the internet.".to_string(),
-            url: Url::parse("https://arne.me/weekly").unwrap(),
+            url: Url::parse("https://arne.me/weekly")?,
             og_type: OgType::Website,
         },
         html! {
@@ -78,7 +78,7 @@ pub fn weekly_index(content: &Content) -> Markup {
                 }
             }
         },
-    )
+    ))
 }
 
 pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
@@ -86,7 +86,7 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
         Head {
             title: weekly.title.clone(),
             description: format!("Arne's Weekly #{}", weekly.num),
-            url: Url::parse(&format!("https://arne.me/weekly/{}", weekly.num)).unwrap(),
+            url: Url::parse(&format!("https://arne.me/weekly/{}", weekly.num))?,
             og_type: OgType::Article,
         },
         html! {
@@ -145,6 +145,25 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
                         }
                     }
                 }
+            }
+        },
+    ))
+}
+
+pub fn page(page: &Page) -> Result<Markup> {
+    Ok(layout::render(
+        Head {
+            title: page.title.clone(),
+            description: page.description.clone(),
+            url: Url::parse(&format!("https://arne.me/{}", page.slug))?,
+            og_type: OgType::Website,
+        },
+        html! {
+            article.article {
+                header {
+                    h1 { (page.title) }
+                }
+                (PreEscaped(page.content_html.clone()))
             }
         },
     ))
