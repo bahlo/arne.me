@@ -1,8 +1,11 @@
-use std::{fs::{self, File}, io::prelude::*};
 use anyhow::{anyhow, Context, Result};
 use chrono::NaiveDate;
 use gray_matter::{engine::YAML, Matter};
 use serde::Deserialize;
+use std::{
+    fs::{self, File},
+    io::prelude::*,
+};
 
 #[derive(Debug, Default)]
 pub struct Content {
@@ -12,20 +15,14 @@ pub struct Content {
 #[derive(Debug)]
 pub struct Article {
     pub slug: String,
-    pub frontmatter: ArticleFrontmatter,
-    pub excerpt_html: String,
-    pub content_html: String,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct ArticleFrontmatter {
     pub title: String,
     pub description: String,
     pub location: String,
     pub published: NaiveDate,
     pub updated: Option<NaiveDate>,
-    #[serde(default)]
     pub hidden: bool,
+    pub excerpt_html: String,
+    pub content_html: String,
 }
 
 impl Content {
@@ -43,10 +40,7 @@ impl Content {
         Ok(content)
     }
 
-    fn parse_articles(
-        matter: &Matter<YAML>,
-        mut dir: fs::ReadDir,
-    ) -> Result<Vec<Article>> {
+    fn parse_articles(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<Article>> {
         let mut articles = Vec::new();
         while let Some(entry) = dir.next().transpose()? {
             if entry.file_type()?.is_dir() {
@@ -73,7 +67,18 @@ impl Content {
             let mut contents = String::new();
             file.read_to_string(&mut contents)?;
 
-            let frontmatter = matter
+            #[derive(Debug, Deserialize)]
+            struct Frontmatter {
+                pub title: String,
+                pub description: String,
+                pub location: String,
+                pub published: NaiveDate,
+                pub updated: Option<NaiveDate>,
+                #[serde(default)]
+                pub hidden: bool,
+            }
+
+            let frontmatter: Frontmatter = matter
                 .parse(&contents)
                 .data
                 .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
@@ -87,13 +92,18 @@ impl Content {
 
             articles.push(Article {
                 slug,
-                frontmatter,
+                title: frontmatter.title,
+                description: frontmatter.description,
+                location: frontmatter.location,
+                published: frontmatter.published,
+                updated: frontmatter.updated,
+                hidden: frontmatter.hidden,
                 excerpt_html: "TODO".to_string(),
                 content_html,
             });
         }
 
-        articles.sort_by(|a, b| b.frontmatter.published.cmp(&a.frontmatter.published));
+        articles.sort_by(|a, b| b.published.cmp(&a.published));
 
         Ok(articles)
     }

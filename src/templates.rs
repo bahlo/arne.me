@@ -16,18 +16,18 @@ pub fn index(content: &Content) -> Markup {
         },
         html! {
             @for article in &content.articles {
-                @if !article.frontmatter.hidden {
+                @if !article.hidden {
                     article.article {
                         h2 {
                             a href=(format!("/articles/{}", article.slug)) {
-                                (article.frontmatter.title)
+                                (article.title)
                             }
                             span.article__byline {
-                                "Posted on " (article.frontmatter.published.format("%B %e, %Y")) " from " (article.frontmatter.location)
+                                "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
                             }
                         }
                         p {
-                            (article.frontmatter.description)
+                            (article.description)
                         }
                     }
                 }
@@ -39,17 +39,17 @@ pub fn index(content: &Content) -> Markup {
 pub fn article(article: &Article) -> Markup {
     layout::render(
         Head {
-            title: article.frontmatter.title.clone(),
-            description: article.frontmatter.description.clone(),
+            title: article.title.clone(),
+            description: article.description.clone(),
             url: Url::parse(&format!("https://arne.me/articles/{}", article.slug)).unwrap(),
             og_type: OgType::Article,
         },
         html! {
             article.article {
                 header {
-                    h1 { (article.frontmatter.title) }
+                    h1 { (article.title) }
                     span.article__byline {
-                        "Posted on " (article.frontmatter.published.format("%B %e, %Y")) " from " (article.frontmatter.location)
+                        "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
                     }
                 }
                 (PreEscaped(article.content_html.clone()))
