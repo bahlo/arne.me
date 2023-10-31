@@ -1,15 +1,17 @@
 ---
-title: "The Design of Everyday Things"
-author: "Don Norman"
-dateRead: "2023-04-03"
-rating: 5
-cover: "./_cover.jpg"
+title: "Book Review: The Design of Everyday Things"
+description: "A review of The Design of Everyday Things by Don Norman"
+published: "2023-04-03"
+location: "Frankfurt, Germany"
 ---
 
 Did you ever push on a door that's pull only or the other way around?
 How did that make you feel?
 Probably not great, but I have good news: It's not your fault! 
 They're designed badly.
+
+<!-- more -->
+
 A door should have a push plate or a pull handle, signifiers which clearly
 indicate what actions are possible without you having to stop and read the signs.
 
