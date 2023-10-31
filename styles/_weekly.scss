@@ -1,0 +1,11 @@
+.weekly {
+  &__list {
+    padding-left: 32px;
+    column-width: 316px;
+    @include stack(.5rem);
+
+    @media (max-width: $site-width) {
+      column-width: 100%;
+    }
+  }
+}

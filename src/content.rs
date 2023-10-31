@@ -1,4 +1,4 @@
-use anyhow::{anyhow, bail, Context, Result};
+use anyhow::{anyhow, Context, Result};
 use chrono::NaiveDate;
 use gray_matter::{engine::YAML, Matter};
 use serde::Deserialize;
@@ -6,7 +6,6 @@ use std::{
     cmp::Ordering,
     fs::{self, DirEntry, File},
     io::prelude::*,
-    path::Path,
 };
 use url::Url;
 

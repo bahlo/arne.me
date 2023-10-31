@@ -80,11 +80,15 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
         html! {
             h1 { "Arne’s Weekly" }
             p { "A weekly newsletter with the best stories of the internet." }
-            @for weekly in &content.weekly {
-                ul {
-                    li {
+            ul.weekly__list {
+                @for weekly in &content.weekly {
+                    li.weekly__item {
                         a href=(format!("/weekly/{}", weekly.num)) {
                             (weekly.title)
+                        }
+                        br;
+                        em {
+                            "Published on " (weekly.published.format("%B %e, %Y"))
                         }
                     }
                 }
@@ -171,7 +175,7 @@ pub fn page(page: &Page) -> Result<Markup> {
             og_type: OgType::Website,
         },
         html! {
-            article.article {
+            section.page {
                 header {
                     h1 { (page.title) }
                 }
