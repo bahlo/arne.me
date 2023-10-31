@@ -2,6 +2,7 @@
 title: "Book Review: Dune"
 description: "A review of the book Dune by Frank Herbert"
 published: "2023-04-15"
+location: "Frankfurt, Germany"
 ---
 
 This book sat on my shelf for the better part of last year. 
