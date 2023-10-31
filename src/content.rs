@@ -238,6 +238,8 @@ impl Content {
             });
         }
 
+        weekly_issues.sort_by(|a, b| b.published.cmp(&a.published));
+
         Ok(weekly_issues)
     }
 }

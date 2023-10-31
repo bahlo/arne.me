@@ -24,13 +24,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let css = grass::from_path("styles/main.scss", &sass_options)?;
     fs::write("dist/main.css", css)?;
 
-    // Generate HTML
+    // Generate articles
     fs::write("dist/index.html", templates::index(&content).into_string())?;
     for article in &content.articles {
         fs::create_dir_all(format!("dist/articles/{}", article.slug))?;
         let path = format!("dist/articles/{}/index.html", article.slug);
         fs::write(&path, templates::article(article).into_string())?;
     }
+
+    // Generate weekly
+    fs::create_dir_all("dist/weekly")?;
+    fs::write(
+        "dist/weekly/index.html",
+        templates::weekly_index(&content).into_string(),
+    )?;
     for weekly_issue in &content.weekly {
         fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
         let path = format!("dist/weekly/{}/index.html", weekly_issue.num);

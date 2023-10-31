@@ -59,6 +59,28 @@ pub fn article(article: &Article) -> Markup {
     )
 }
 
+pub fn weekly_index(content: &Content) -> Markup {
+    layout::render(
+        Head {
+            title: "Arne’s Weekly".to_string(),
+            description: "A weekly newsletter with the best stories of the internet.".to_string(),
+            url: Url::parse("https://arne.me/weekly").unwrap(),
+            og_type: OgType::Website,
+        },
+        html! {
+            @for weekly in &content.weekly {
+                ul {
+                    li {
+                        a href=(format!("/weekly/{}", weekly.num)) {
+                            (weekly.title)
+                        }
+                    }
+                }
+            }
+        },
+    )
+}
+
 pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
     Ok(layout::render(
         Head {
