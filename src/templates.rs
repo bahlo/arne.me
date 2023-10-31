@@ -3,7 +3,7 @@ use maud::{html, Markup, PreEscaped};
 use url::Url;
 
 use crate::{
-    content::{Article, Content, Page, WeeklyIssue},
+    content::{Article, Content, Page, Project, WeeklyIssue},
     layout::{self, Head, OgType},
 };
 
@@ -164,6 +164,56 @@ pub fn page(page: &Page) -> Result<Markup> {
                     h1 { (page.title) }
                 }
                 (PreEscaped(page.content_html.clone()))
+            }
+        },
+    ))
+}
+
+fn render_project(project: &Project) -> Markup {
+    html! {
+        details {
+            summary {
+                strong {
+                    a href=(project.url) {
+                        (project.title)
+                    }
+                }
+                " (" (project.from) (PreEscaped(" &ndash; "))
+                @if let Some(to) = &project.to {
+                     (to)
+                } @else {
+                    "Present"
+                }
+                ")"
+            }
+
+            (PreEscaped(project.content_html.clone()))
+        }
+    }
+}
+
+pub fn projects(project: &Vec<Project>) -> Result<Markup> {
+    Ok(layout::render(
+        Head {
+            title: "Projects".to_string(),
+            description: "Some projects I've worked on".to_string(),
+            url: Url::parse("https://arne.me/projects")?,
+            og_type: OgType::Website,
+        },
+        html! {
+            article.article {
+                header {
+                    h1 { "Projects" }
+                }
+                p { "Here are some projects I've worked on:" }
+                @for project in project.iter().filter(|project| project.active) {
+                    (render_project(project))
+                }
+
+                h2 { "Inactive/Abandoned Projects" }
+                @for project in project.iter().filter(|project| !project.active) {
+                    (render_project(project))
+                }
             }
         },
     ))

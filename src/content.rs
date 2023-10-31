@@ -3,6 +3,7 @@ use chrono::NaiveDate;
 use gray_matter::{engine::YAML, Matter};
 use serde::Deserialize;
 use std::{
+    cmp::Ordering,
     fs::{self, File},
     io::prelude::*,
 };
@@ -13,6 +14,7 @@ pub struct Content {
     pub articles: Vec<Article>,
     pub weekly: Vec<WeeklyIssue>,
     pub pages: Vec<Page>,
+    pub projects: Vec<Project>,
 }
 
 #[derive(Debug)]
@@ -90,6 +92,16 @@ pub struct WeeklyQuoteOfTheWeek {
     pub author: String,
 }
 
+#[derive(Debug)]
+pub struct Project {
+    pub title: String,
+    pub url: Url,
+    pub from: u16,
+    pub to: Option<u16>,
+    pub active: bool,
+    pub content_html: String,
+}
+
 impl Content {
     pub fn parse(mut dir: fs::ReadDir) -> Result<Self> {
         let matter = Matter::<YAML>::new();
@@ -112,6 +124,10 @@ impl Content {
                 "pages" => {
                     let dir = fs::read_dir(entry.path())?;
                     content.pages = Self::parse_pages(&matter, dir)?;
+                }
+                "projects" => {
+                    let dir = fs::read_dir(entry.path())?;
+                    content.projects = Self::parse_projects(&matter, dir)?;
                 }
                 _ => continue,
             }
@@ -310,6 +326,68 @@ impl Content {
         }
 
         Ok(pages)
+    }
+
+    fn parse_projects(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<Project>> {
+        let mut projects = Vec::new();
+        while let Some(entry) = dir.next().transpose()? {
+            if entry.file_type()?.is_dir() {
+                continue;
+            }
+
+            if entry.file_name().to_string_lossy().starts_with(".")
+                || entry.path().extension().ok_or(anyhow!(
+                    "Failed to get file extension for {:?}",
+                    entry.path()
+                ))? != "md"
+            {
+                continue;
+            }
+
+            let mut file = File::open(entry.path())?;
+            let mut contents = String::new();
+            file.read_to_string(&mut contents)?;
+
+            #[derive(Debug, Deserialize)]
+            struct Frontmatter {
+                pub title: String,
+                pub url: Url,
+                pub from: u16,
+                pub to: Option<u16>,
+                pub active: bool,
+            }
+
+            let frontmatter: Frontmatter = matter
+                .parse(&contents)
+                .data
+                .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
+                .deserialize()
+                .context(format!(
+                    "Couldn't deserialize frontmatter for {:?}",
+                    entry.path()
+                ))?;
+
+            let content_html = render_markdown(contents)?;
+
+            projects.push(Project {
+                title: frontmatter.title,
+                url: frontmatter.url,
+                from: frontmatter.from,
+                to: frontmatter.to,
+                active: frontmatter.active,
+                content_html,
+            });
+        }
+
+        // No end date means the project is still active
+        projects.sort_by(|a, b| match (a.to, b.to) {
+            (Some(a), Some(b)) => a.cmp(&b),
+            (Some(a), None) => return Ordering::Less, // b is still active
+            (None, Some(b)) => return Ordering::Greater, // a is still active
+            (None, None) => return Ordering::Equal,
+        });
+
+        Ok(projects)
     }
 }
 

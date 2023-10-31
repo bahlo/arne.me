@@ -51,6 +51,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         fs::write(&path, templates::page(page)?.into_string())?;
     }
 
+    // Generat projects page
+    fs::create_dir_all("dist/projects")?;
+    fs::write(
+        "dist/projects/index.html",
+        templates::projects(&content.projects)?.into_string(),
+    )?;
+
     Ok(())
 }
 
