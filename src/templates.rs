@@ -98,6 +98,37 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
                     }
                 }
                 (PreEscaped(weekly.content_html.clone()))
+                @if let Some(toot_of_the_week) = &weekly.toot_of_the_week {
+                    h2 { "Toot of the Week" }
+                    blockquote {
+                        (toot_of_the_week.text)
+                        (PreEscaped("&mdash;&nbsp;"))
+                        a href=(toot_of_the_week.url) {
+                            (toot_of_the_week.author)
+                        }
+                    }
+                }
+                @if let Some(tweet_of_the_week) = &weekly.tweet_of_the_week {
+                    h2 { "Tweet of the Week" }
+                    blockquote {
+                        (tweet_of_the_week.text)
+                        @if let Some(media) = &tweet_of_the_week.media {
+                            img src=(media.image) alt=(media.alt);
+                        }
+                        (PreEscaped("&mdash;&nbsp;"))
+                        a href=(tweet_of_the_week.url) {
+                            (tweet_of_the_week.author)
+                        }
+                    }
+                }
+                @if let Some(quote_of_the_week) = &weekly.quote_of_the_week {
+                    h2 { "Quote of the Week" }
+                    blockquote {
+                        (quote_of_the_week.text)
+                        (PreEscaped("&mdash;&nbsp;"))
+                        (quote_of_the_week.author)
+                    }
+                }
                 @for category in weekly.categories.iter() {
                     h2 { (category.title) }
                     ul {
