@@ -1,9 +1,8 @@
 ---
-title: "How to Win Friends and Influence People"
-author: "Dale Carnegie"
-dateRead: "2023-08-12"
-rating: 4
-cover: "./_cover.jpg"
+title: "Book Review: How to Win Friends and Influence People"
+description: "A review of the book How to Win Friends and Influence People by Dale Carnegie"
+published: "2023-08-12"
+location: "Frankfurt, Germany"
 ---
 
 When I first heard of this book I immediately dismissed it, mostly due to the
@@ -11,6 +10,8 @@ title sounding weird to me.
 But this book popped up again on reading lists and recommendation threads all 
 over the internet and people were praising it. 
 When I finally decided to check it out, I was pleasantly surprised.
+
+<!-- more -->
 
 Dale Carnegie shares 30 principles for dealing with people in four parts: 
 1. Fundamental techniques in handling people
