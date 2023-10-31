@@ -1,9 +1,5 @@
 use anyhow::{bail, Result};
-use async_recursion::async_recursion;
-use std::path::Path;
-use tokio::fs;
-use tracing::info;
-use tracing_subscriber::{filter::LevelFilter, fmt, prelude::*, EnvFilter};
+use std::{fs, path::Path};
 
 mod content;
 mod layout;
@@ -11,47 +7,33 @@ mod templates;
 
 use crate::content::Content;
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    tracing_subscriber::registry()
-        .with(fmt::layer())
-        .with(
-            EnvFilter::builder()
-                .with_default_directive(LevelFilter::INFO.into())
-                .from_env_lossy(),
-        )
-        .init();
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let content = Content::parse(fs::read_dir("content")?)?;
 
-    let content = Content::parse(fs::read_dir("content").await?).await?;
+    fs::remove_dir_all("dist").ok();
+    fs::create_dir_all("dist")?;
 
-    dbg!(&content);
+    copy_dir("static", "dist/")?;
 
-    info!("Recreating dist/ directory");
-    fs::remove_dir_all("dist").await.ok();
-    fs::create_dir_all("dist").await?;
-
-    info!("Copying static files");
-    copy_dir("static", "dist/").await?;
-
-    fs::write("dist/index.html", templates::index(&content).into_string()).await?;
+    fs::write("dist/index.html", templates::index(&content).into_string())?;
 
     for article in &content.articles {
-        fs::create_dir_all(format!("dist/articles/{}", article.slug)).await?;
+        fs::create_dir_all(format!("dist/articles/{}", article.slug))?;
         let path = format!("dist/articles/{}/index.html", article.slug);
-        fs::write(&path, templates::article(article).into_string()).await?;
+        fs::write(&path, templates::article(article).into_string())?;
     }
 
     Ok(())
 }
 
-#[async_recursion]
-async fn copy_dir<F, T>(from: F, to: T) -> Result<()>
+fn copy_dir<F, T>(from: F, to: T) -> Result<()>
 where
     F: AsRef<Path> + Send + Sync,
     T: AsRef<Path> + Send,
 {
-    let mut dir = fs::read_dir(&from).await?;
-    while let Some(item) = dir.next_entry().await? {
+    // TODO: Turn this into functional code
+    let mut dir = fs::read_dir(&from)?;
+    while let Some(item) = dir.next().transpose()? {
         let file_name = item.file_name();
 
         if file_name.to_string_lossy().starts_with('.') {
@@ -64,12 +46,11 @@ where
         }
 
         if item.path().is_dir() {
-            fs::create_dir(&new_path).await?;
-            copy_dir(item.path(), &new_path).await?;
+            fs::create_dir(&new_path)?;
+            copy_dir(item.path(), &new_path)?;
         } else {
             let path = item.path();
-            info!(path = item.path().to_str(), "Copying static file");
-            fs::copy(path, new_path).await?;
+            fs::copy(path, new_path)?;
         }
     }
 

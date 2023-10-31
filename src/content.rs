@@ -1,8 +1,8 @@
+use std::{fs::{self, File}, io::prelude::*};
 use anyhow::{anyhow, Context, Result};
 use chrono::NaiveDate;
 use gray_matter::{engine::YAML, Matter};
 use serde::Deserialize;
-use tokio::{fs::File, io::AsyncReadExt};
 
 #[derive(Debug, Default)]
 pub struct Content {
@@ -29,27 +29,27 @@ pub struct ArticleFrontmatter {
 }
 
 impl Content {
-    pub async fn parse(mut dir: tokio::fs::ReadDir) -> Result<Self> {
+    pub fn parse(mut dir: fs::ReadDir) -> Result<Self> {
         let matter = Matter::<YAML>::new();
 
         let mut content = Content::default();
-        while let Some(entry) = dir.next_entry().await? {
-            if entry.file_type().await?.is_dir() && entry.file_name() == "articles" {
-                let dir = tokio::fs::read_dir(entry.path()).await?;
-                content.articles = Self::parse_articles(&matter, dir).await?;
+        while let Some(entry) = dir.next().transpose()? {
+            if entry.file_type()?.is_dir() && entry.file_name() == "articles" {
+                let dir = fs::read_dir(entry.path())?;
+                content.articles = Self::parse_articles(&matter, dir)?;
             }
         }
 
         Ok(content)
     }
 
-    async fn parse_articles(
+    fn parse_articles(
         matter: &Matter<YAML>,
-        mut dir: tokio::fs::ReadDir,
+        mut dir: fs::ReadDir,
     ) -> Result<Vec<Article>> {
         let mut articles = Vec::new();
-        while let Some(entry) = dir.next_entry().await? {
-            if entry.file_type().await?.is_dir() {
+        while let Some(entry) = dir.next().transpose()? {
+            if entry.file_type()?.is_dir() {
                 continue;
             }
 
@@ -69,9 +69,9 @@ impl Content {
                 .to_string_lossy()
                 .to_string();
 
-            let mut file = File::open(entry.path()).await?;
+            let mut file = File::open(entry.path())?;
             let mut contents = String::new();
-            file.read_to_string(&mut contents).await?;
+            file.read_to_string(&mut contents)?;
 
             let frontmatter = matter
                 .parse(&contents)
