@@ -10,13 +10,20 @@ use crate::content::Content;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let content = Content::parse(fs::read_dir("content")?)?;
 
+    // Recreate dir
     fs::remove_dir_all("dist").ok();
     fs::create_dir_all("dist")?;
 
+    // Copy static files
     copy_dir("static", "dist/")?;
 
-    fs::write("dist/index.html", templates::index(&content).into_string())?;
+    // Generate CSS
+    let sass_options = grass::Options::default().load_path("styles/");
+    let css = grass::from_path("styles/main.scss", &sass_options)?;
+    fs::write("dist/main.css", css)?;
 
+    // Generate HTML
+    fs::write("dist/index.html", templates::index(&content).into_string())?;
     for article in &content.articles {
         fs::create_dir_all(format!("dist/articles/{}", article.slug))?;
         let path = format!("dist/articles/{}/index.html", article.slug);

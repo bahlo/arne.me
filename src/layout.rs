@@ -45,6 +45,7 @@ pub fn render(meta: Head, content: Markup) -> Markup {
                 meta property="og:url" content=(meta.url);
                 meta property="og:title" content=(meta.title);
                 meta property="og:description" content=(meta.description);
+                link rel="stylesheet" href="/main.css";
                 link rel="alternate" type="application/rss+xml" title="Arne's Writing" href="/writing/atom.xml";
                 link rel="alternate" type="application/rss+xml" title="Arne's Weekly" href="/weekly/atom.xml";
                 link rel="alternate" type="application/rss+xml" title="Arne's Reading" href="/reading/atom.xml";
