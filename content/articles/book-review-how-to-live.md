@@ -1,10 +1,8 @@
 ---
-title: "How to Live"
-subtitle: "27 conflicting answers and one weird conclusion"
-author: "Derek Sivers"
-dateRead: "2023-04-18"
-rating: 5
-cover: "./_cover.jpg"
+title: "Book Review: How to Live"
+description: "A review of How to Live by Derek Sivers"
+published: "2023-04-18"
+location: "Frankfurt, Germany"
 ---
 
 This book gives you exact instructions how to live.
