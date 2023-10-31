@@ -196,7 +196,7 @@ fn render_project(project: &Project) -> Markup {
     }
 }
 
-pub fn projects(project: &Vec<Project>) -> Result<Markup> {
+pub fn projects(project: &[Project]) -> Result<Markup> {
     Ok(layout::render(
         Head {
             title: "Projects".to_string(),

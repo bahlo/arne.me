@@ -142,7 +142,7 @@ impl Content {
                 continue;
             }
 
-            if entry.file_name().to_string_lossy().starts_with(".")
+            if entry.file_name().to_string_lossy().starts_with('.')
                 || entry.path().extension().ok_or(anyhow!(
                     "Failed to get file extension for {:?}",
                     entry.path()
@@ -210,7 +210,7 @@ impl Content {
                 continue;
             }
 
-            if entry.file_name().to_string_lossy().starts_with(".")
+            if entry.file_name().to_string_lossy().starts_with('.')
                 || entry.path().extension().ok_or(anyhow!(
                     "Failed to get file extension for {:?}",
                     entry.path()
@@ -278,7 +278,7 @@ impl Content {
                 continue;
             }
 
-            if entry.file_name().to_string_lossy().starts_with(".")
+            if entry.file_name().to_string_lossy().starts_with('.')
                 || entry.path().extension().ok_or(anyhow!(
                     "Failed to get file extension for {:?}",
                     entry.path()
@@ -334,7 +334,7 @@ impl Content {
                 continue;
             }
 
-            if entry.file_name().to_string_lossy().starts_with(".")
+            if entry.file_name().to_string_lossy().starts_with('.')
                 || entry.path().extension().ok_or(anyhow!(
                     "Failed to get file extension for {:?}",
                     entry.path()
@@ -379,8 +379,8 @@ impl Content {
         // No end date means the project is still active
         projects.sort_by(|a, b| match (a.to, b.to) {
             (Some(a_to), Some(b_to)) => a_to.cmp(&b_to),
-            (Some(_a_to), None) => return Ordering::Less, // b is still active
-            (None, Some(_b_to)) => return Ordering::Greater, // a is still active
+            (Some(_a_to), None) => Ordering::Less, // b is still active
+            (None, Some(_b_to)) => Ordering::Greater, // a is still active
             (None, None) => b.from.cmp(&a.from),
         });
 
