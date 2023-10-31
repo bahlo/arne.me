@@ -1,11 +1,12 @@
-use anyhow::{anyhow, Context, Result};
+use anyhow::{anyhow, bail, Context, Result};
 use chrono::NaiveDate;
 use gray_matter::{engine::YAML, Matter};
 use serde::Deserialize;
 use std::{
     cmp::Ordering,
-    fs::{self, File},
+    fs::{self, DirEntry, File},
     io::prelude::*,
+    path::Path,
 };
 use url::Url;
 
@@ -107,7 +108,14 @@ impl Content {
 
         let mut content = Content::default();
         while let Some(entry) = dir.next().transpose()? {
-            if !entry.file_type()?.is_dir() {
+            if !entry.file_type()?.is_dir()
+                && !entry.file_name().to_string_lossy().starts_with('.')
+                && entry.path().extension().ok_or(anyhow!(
+                    "Failed to get file extension for {:?}",
+                    entry.path()
+                ))? == "md"
+            {
+                content.pages.push(Self::parse_page(&matter, entry)?);
                 continue;
             }
 
@@ -119,10 +127,6 @@ impl Content {
                 "weekly" => {
                     let dir = fs::read_dir(entry.path())?;
                     content.weekly = Self::parse_weekly(&matter, dir)?;
-                }
-                "pages" => {
-                    let dir = fs::read_dir(entry.path())?;
-                    content.pages = Self::parse_pages(&matter, dir)?;
                 }
                 "projects" => {
                     let dir = fs::read_dir(entry.path())?;
@@ -281,60 +285,42 @@ impl Content {
         Ok(weekly_issues)
     }
 
-    fn parse_pages(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<Page>> {
-        let mut pages = Vec::new();
-        while let Some(entry) = dir.next().transpose()? {
-            if entry.file_type()?.is_dir() {
-                continue;
-            }
+    fn parse_page(matter: &Matter<YAML>, entry: DirEntry) -> Result<Page> {
+        let slug = entry
+            .path()
+            .file_stem()
+            .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
+            .to_string_lossy()
+            .to_string();
 
-            if entry.file_name().to_string_lossy().starts_with('.')
-                || entry.path().extension().ok_or(anyhow!(
-                    "Failed to get file extension for {:?}",
-                    entry.path()
-                ))? != "md"
-            {
-                continue;
-            }
+        let mut file = File::open(entry.path())?;
+        let mut contents = String::new();
+        file.read_to_string(&mut contents)?;
 
-            let slug = entry
-                .path()
-                .file_stem()
-                .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
-                .to_string_lossy()
-                .to_string();
-
-            let mut file = File::open(entry.path())?;
-            let mut contents = String::new();
-            file.read_to_string(&mut contents)?;
-
-            #[derive(Debug, Deserialize)]
-            struct Frontmatter {
-                pub title: String,
-                pub description: String,
-            }
-
-            let frontmatter: Frontmatter = matter
-                .parse(&contents)
-                .data
-                .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
-                .deserialize()
-                .context(format!(
-                    "Couldn't deserialize frontmatter for {:?}",
-                    entry.path()
-                ))?;
-
-            let content_html = render_markdown(contents)?;
-
-            pages.push(Page {
-                slug,
-                title: frontmatter.title,
-                description: frontmatter.description,
-                content_html,
-            });
+        #[derive(Debug, Deserialize)]
+        struct Frontmatter {
+            pub title: String,
+            pub description: String,
         }
 
-        Ok(pages)
+        let frontmatter: Frontmatter = matter
+            .parse(&contents)
+            .data
+            .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
+            .deserialize()
+            .context(format!(
+                "Couldn't deserialize frontmatter for {:?}",
+                entry.path()
+            ))?;
+
+        let content_html = render_markdown(contents)?;
+
+        Ok(Page {
+            slug,
+            title: frontmatter.title,
+            description: frontmatter.description,
+            content_html,
+        })
     }
 
     fn parse_projects(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<Project>> {
