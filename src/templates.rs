@@ -1,4 +1,7 @@
+use std::collections::HashMap;
+
 use anyhow::{anyhow, Result};
+use chrono::Utc;
 use maud::{html, Markup, PreEscaped};
 use url::Url;
 
@@ -70,6 +73,21 @@ pub fn article(article: &Article) -> Result<Markup> {
 }
 
 pub fn weekly_index(content: &Content) -> Result<Markup> {
+    let mut weekly_by_year = content
+        .weekly
+        .iter()
+        .fold(HashMap::new(), |mut acc, weekly| {
+            acc.entry(weekly.published.format("%Y").to_string())
+                .or_insert_with(Vec::new)
+                .push(weekly);
+            acc
+        })
+        .into_iter()
+        .collect::<Vec<_>>();
+    weekly_by_year.sort_by(|a, b| b.0.cmp(&a.0));
+
+    let current_year = Utc::now().format("%Y").to_string();
+
     Ok(layout::render(
         Head {
             title: "Arne’s Weekly".to_string(),
@@ -80,15 +98,22 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
         html! {
             h1 { "Arne’s Weekly" }
             p { "A weekly newsletter with the best stories of the internet." }
-            ul.weekly__list {
-                @for weekly in &content.weekly {
-                    li.weekly__item {
-                        a href=(format!("/weekly/{}", weekly.num)) {
-                            (weekly.title)
-                        }
-                        br;
-                        em {
-                            "Published on " (weekly.published.format("%B %e, %Y"))
+            .weekly__overview {
+                @for (year, issues) in weekly_by_year {
+                    @if year != current_year {
+                        h2 { (year) }
+                    }
+                    ul.weekly__list {
+                        @for weekly in issues {
+                            li.weekly__item {
+                                a href=(format!("/weekly/{}", weekly.num)) {
+                                    (weekly.title)
+                                }
+                                br;
+                                em {
+                                    "Published on " (weekly.published.format("%B %e, %Y"))
+                                }
+                            }
                         }
                     }
                 }

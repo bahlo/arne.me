@@ -1,11 +1,18 @@
 .weekly {
-  &__list {
-    padding-left: 32px;
+  &__overview {
     column-width: 316px;
     @include stack(.5rem);
 
     @media (max-width: $site-width) {
       column-width: 100%;
     }
+  }
+
+  &__list {
+    padding-left: 32px;
+  }
+
+  &__item {
+    break-inside: avoid;
   }
 }
