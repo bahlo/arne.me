@@ -59,7 +59,7 @@ pub fn article(article: &Article) -> Result<Markup> {
             article.article {
                 header {
                     h1 { (article.title) }
-                    span.article__byline {
+                    em.article__byline {
                         "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
                     }
                 }
@@ -78,6 +78,8 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
             og_type: OgType::Website,
         },
         html! {
+            h1 { "Arne’s Weekly" }
+            p { "A weekly newsletter with the best stories of the internet." }
             @for weekly in &content.weekly {
                 ul {
                     li {
@@ -103,7 +105,7 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
             article.article {
                 header {
                     h1 { (weekly.title) }
-                    span.article__byline {
+                    em.article__byline {
                         "Published on " (weekly.published.format("%B %e, %Y"))
                     }
                 }
