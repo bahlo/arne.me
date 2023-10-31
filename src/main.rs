@@ -10,6 +10,8 @@ use crate::content::Content;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let content = Content::parse(fs::read_dir("content")?)?;
 
+    dbg!(&content);
+
     // Recreate dir
     fs::remove_dir_all("dist").ok();
     fs::create_dir_all("dist")?;
