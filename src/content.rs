@@ -95,10 +95,9 @@ pub struct WeeklyQuoteOfTheWeek {
 #[derive(Debug)]
 pub struct Project {
     pub title: String,
-    pub url: Url,
+    pub url: Option<Url>,
     pub from: u16,
     pub to: Option<u16>,
-    pub active: bool,
     pub content_html: String,
 }
 
@@ -351,10 +350,9 @@ impl Content {
             #[derive(Debug, Deserialize)]
             struct Frontmatter {
                 pub title: String,
-                pub url: Url,
+                pub url: Option<Url>,
                 pub from: u16,
                 pub to: Option<u16>,
-                pub active: bool,
             }
 
             let frontmatter: Frontmatter = matter
@@ -374,7 +372,6 @@ impl Content {
                 url: frontmatter.url,
                 from: frontmatter.from,
                 to: frontmatter.to,
-                active: frontmatter.active,
                 content_html,
             });
         }

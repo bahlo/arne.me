@@ -171,10 +171,14 @@ pub fn page(page: &Page) -> Result<Markup> {
 
 fn render_project(project: &Project) -> Markup {
     html! {
-        details {
+        details open[project.to.is_none()] {
             summary {
                 strong {
-                    a href=(project.url) {
+                    @if let Some(url) = &project.url {
+                        a href=(url) {
+                            (project.title)
+                        }
+                    } @else {
                         (project.title)
                     }
                 }
@@ -205,13 +209,13 @@ pub fn projects(project: &Vec<Project>) -> Result<Markup> {
                 header {
                     h1 { "Projects" }
                 }
-                p { "Here are some projects I've worked on:" }
-                @for project in project.iter().filter(|project| project.active) {
+                p { "Here are the projects I'm currently working on:" }
+                @for project in project.iter().filter(|project| project.to.is_none()) {
                     (render_project(project))
                 }
 
                 h2 { "Inactive/Abandoned Projects" }
-                @for project in project.iter().filter(|project| !project.active) {
+                @for project in project.iter().filter(|project| project.to.is_some()) {
                     (render_project(project))
                 }
             }

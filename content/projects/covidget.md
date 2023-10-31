@@ -3,7 +3,6 @@ title: COVIDget
 url: "https://github.com/bahlo/COVIDget"
 from: 2020
 to: 2020
-active: false
 ---
 
 An iOS app I wrote to play around with widgets when they were new in iOS 14.

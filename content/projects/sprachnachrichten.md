@@ -3,7 +3,6 @@ title: "Sprachnachrichten"
 url: "https://sprachnachrichten.fm"
 from: 2020
 to: 2023
-active: false
 ---
 
 A podcast I did with my good friend [Jan](https://jan.work) in German.
