@@ -1,9 +1,7 @@
 ---
-title: "Digital Minimalism"
-author: "Cal Newport"
-dateRead: "2023-05-11"
-rating: 5
-cover: "./_cover.jpg"
+title: "Book Review: Digital Minimalism"
+description: "A review of the book Digital Minimalism by Cal Newport"
+published: "2023-05-11"
 ---
 
 Do you feel naked without your phone with you? 
@@ -12,6 +10,8 @@ Are you spending too much time on social media?
 It's not your fault, but you can do something against it. 
 Humans have evolved over millions of years to read social cues in face-to-face
 conversations and we're having a hard time figuring out the digital "replacements" that came up in the last decades.
+
+<!-- more -->
 
 Cal Newport takes on the attention economy and helps you to reflect on your digital consumption.
 Not only social media, but also checking the news and texting can be a waste of time and even harmful to you.

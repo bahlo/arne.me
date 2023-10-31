@@ -10,6 +10,8 @@ institutional forbearance.
 Donald Trump openly violated these norms, but he wasn't the first—in fact the 
 GOP has been on a shift away from democracy's guard rails since 2008.
 
+<!-- more -->
+
 Steven Levitsky and Daniel Ziblatt start by talking about the ways democracies
 fell apart in the past. Some of them by coup and some, more recently, by 
 autocrats undermining democratic values.

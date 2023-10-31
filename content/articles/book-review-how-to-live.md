@@ -8,6 +8,8 @@ location: "Frankfurt, Germany"
 This book gives you exact instructions how to live.
 And then it does it again, 26 times, and they're all incompatible.
 
+<!-- more -->
+
 One chapter tells you to get a rural off-the-grid home with your own 
 electricity, water and food.
 Another tells you to go into a small village that hasn't adapted to new 
