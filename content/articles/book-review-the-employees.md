@@ -1,9 +1,8 @@
 ---
-title: "The Employees"
-author: "Olga Ravn"
-dateRead: "2023-09-06"
-rating: 3
-cover: "./_cover.jpg"
+title: "Book Review: The Employees"
+description: "A review of The Employees by Olga Ravn"
+published: "2023-09-06"
+location: "Frankfurt, Germany"
 ---
 
 This book is strange.
@@ -13,6 +12,8 @@ space ship after the crew took on some "objects" from the planet
 _New Discovery_. 
 The statements are not ordered so you only get pieces to the puzzle and nothing 
 makes sense in the beginning.
+
+<!-- more -->
 
 I loved the weird and unique way of storytelling and how it showed different 
 perspectives, struggles and tensions. 
