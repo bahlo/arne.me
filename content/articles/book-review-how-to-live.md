@@ -1,6 +1,6 @@
 ---
 title: "Book Review: How to Live"
-description: "A review of How to Live by Derek Sivers"
+description: "A review of the book How to Live by Derek Sivers"
 published: "2023-04-18"
 location: "Frankfurt, Germany"
 ---

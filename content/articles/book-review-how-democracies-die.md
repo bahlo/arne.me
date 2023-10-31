@@ -1,9 +1,8 @@
 ---
-title: "How Democracies Die"
-author: "Steven Levitsky and Daniel Ziblatt"
-dateRead: "2023-05-03"
-rating: 4
-cover: "./_cover.jpg"
+title: "Book Review: How Democracies Die"
+description: "A review of the book How Democracies Die by Steven Levitsky and Daniel Ziblatt"
+published: "2023-05-03"
+location: "Frankfurt, Germany"
 ---
 
 American democracy has worked by relying on two norms: Mutual tolerance and

@@ -1,6 +1,6 @@
 ---
 title: "Book Review: The Design of Everyday Things"
-description: "A review of The Design of Everyday Things by Don Norman"
+description: "A review of the book The Design of Everyday Things by Don Norman"
 published: "2023-04-03"
 location: "Frankfurt, Germany"
 ---

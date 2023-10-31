@@ -1,6 +1,6 @@
 ---
 title: "Book Review: Invisible Women"
-description: "A review of Invisible Women by Caroline Criado Perez"
+description: "A review of the book Invisible Women by Caroline Criado Perez"
 published: "2023-03-30"
 location: "Frankfurt, Germany"
 ---
