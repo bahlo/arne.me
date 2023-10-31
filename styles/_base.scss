@@ -1,0 +1,33 @@
+body {
+  padding: 1rem;
+  font-family: sans-serif;
+  font-size: 90%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: $font-size-large;
+}
+
+footer {
+  text-align: center;
+  font-size: $font-size-small;
+}
+
+.sitewrapper {
+  max-width: $site-width;
+  margin: 0 auto;
+  @include stack;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  transform: translateY(-100%);
+  background: var(--color-code-bg);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}

@@ -25,7 +25,7 @@ pub fn index(content: &Content) -> Result<Markup> {
                                     (article.title)
                                 }
                             }
-                            span.article__byline {
+                            em.article__byline {
                                 "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
                             }
                         }

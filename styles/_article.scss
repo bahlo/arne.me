@@ -1,0 +1,7 @@
+.article {
+  @include stack(.5rem);
+
+  &__byline {
+    font-size: $font-size-small;
+  }
+}
