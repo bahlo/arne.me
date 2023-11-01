@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# OpenAI
+# User-agent: GPTBot
+# Disallow: /
+# User-agent: ChatGPT-User
+# Disallow: /
+
+# Bard
+# User-Agent: Google-Extended
+# Disallow: /
+
+# Block Common Crawl
+# User-agent: CCBot
+# Disallow: /
