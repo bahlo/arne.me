@@ -48,6 +48,7 @@ pub struct WeeklyIssue {
     pub tweet_of_the_week: Option<WeeklyTweetOfTheWeek>,
     pub quote_of_the_week: Option<WeeklyQuoteOfTheWeek>,
     pub categories: Vec<WeeklyCategory>,
+    pub content: String,
     pub content_html: String,
 }
 
@@ -64,6 +65,8 @@ pub struct WeeklyStory {
     pub url: Url,
     pub reading_time_minutes: i16,
     pub description: String,
+    #[serde(default)]
+    pub description_html: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -179,8 +182,8 @@ impl Content {
                 pub collections: Vec<String>,
             }
 
-            let frontmatter: Frontmatter = matter
-                .parse(&contents)
+            let markdown = matter.parse(&contents);
+            let frontmatter: Frontmatter = markdown
                 .data
                 .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
                 .deserialize()
@@ -189,7 +192,8 @@ impl Content {
                     entry.path()
                 ))?;
 
-            let excerpt_html: Option<String> = contents
+            let excerpt_html: Option<String> = markdown
+                .content
                 .splitn(2, "<!-- more -->")
                 .collect::<Vec<_>>()
                 .first()
@@ -199,7 +203,7 @@ impl Content {
                 })
                 .transpose()?;
 
-            let content_html = render_markdown(contents)?;
+            let content_html = render_markdown(markdown.content)?;
 
             articles.push(Article {
                 slug,
@@ -263,16 +267,16 @@ impl Content {
                 fn render_descriptions(mut self) -> Result<Self> {
                     for category in self.categories.iter_mut() {
                         for story in category.stories.iter_mut() {
-                            // TODO: This should be in description_html instead
-                            story.description = render_markdown(story.description.clone())?;
+                            story.description_html = render_markdown(story.description.clone())?;
                         }
                     }
                     Ok(self)
                 }
             }
 
-            let frontmatter: Frontmatter = matter
-                .parse(&contents)
+            let markdown = matter.parse(&contents);
+
+            let frontmatter: Frontmatter = markdown
                 .data
                 .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
                 .deserialize::<Frontmatter>()
@@ -282,7 +286,7 @@ impl Content {
                 ))?
                 .render_descriptions()?;
 
-            let content_html = render_markdown(contents)?;
+            let content_html = render_markdown(markdown.content.clone())?;
 
             weekly_issues.push(WeeklyIssue {
                 num,
@@ -292,6 +296,7 @@ impl Content {
                 tweet_of_the_week: frontmatter.tweet_of_the_week,
                 quote_of_the_week: frontmatter.quote_of_the_week,
                 categories: frontmatter.categories,
+                content: markdown.content,
                 content_html,
             });
         }
@@ -319,8 +324,8 @@ impl Content {
             pub description: String,
         }
 
-        let frontmatter: Frontmatter = matter
-            .parse(&contents)
+        let markdown = matter.parse(&contents);
+        let frontmatter: Frontmatter = markdown
             .data
             .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
             .deserialize()
@@ -329,7 +334,7 @@ impl Content {
                 entry.path()
             ))?;
 
-        let content_html = render_markdown(contents)?;
+        let content_html = render_markdown(markdown.content)?;
 
         Ok(Page {
             slug,
@@ -367,8 +372,8 @@ impl Content {
                 pub to: Option<u16>,
             }
 
-            let frontmatter: Frontmatter = matter
-                .parse(&contents)
+            let markdown = matter.parse(&contents);
+            let frontmatter: Frontmatter = markdown
                 .data
                 .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
                 .deserialize()
@@ -377,7 +382,7 @@ impl Content {
                     entry.path()
                 ))?;
 
-            let content_html = render_markdown(contents)?;
+            let content_html = render_markdown(markdown.content)?;
 
             projects.push(Project {
                 title: frontmatter.title,
@@ -407,7 +412,6 @@ fn render_markdown(markdown: String) -> Result<String> {
         .table(true)
         .superscript(true)
         .footnotes(true)
-        .front_matter_delimiter(Some("---".to_string()))
         .build()
         .context("Failed to build extension options")?;
     let options = comrak::Options {

@@ -188,7 +188,7 @@ pub fn weekly_content(weekly: &WeeklyIssue) -> Result<Markup> {
                             (story.title)
                         }
                         span { (format!(" ({})", host.strip_prefix("www.").unwrap_or(host))) }
-                        p { (PreEscaped(story.description.clone())) }
+                        p { (PreEscaped(story.description_html.clone())) }
                     }
                 }
             }
