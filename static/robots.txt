@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /subscribed
+Disallow: /unsubscribed
 
 # OpenAI
 # User-agent: GPTBot
