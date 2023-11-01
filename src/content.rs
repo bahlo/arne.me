@@ -34,6 +34,7 @@ pub struct Article {
     pub published: NaiveDate,
     pub updated: Option<NaiveDate>,
     pub hidden: bool,
+    pub collections: Vec<String>,
     pub excerpt_html: Option<String>,
     pub content_html: String,
 }
@@ -174,6 +175,8 @@ impl Content {
                 pub updated: Option<NaiveDate>,
                 #[serde(default)]
                 pub hidden: bool,
+                #[serde(default)]
+                pub collections: Vec<String>,
             }
 
             let frontmatter: Frontmatter = matter
@@ -206,6 +209,7 @@ impl Content {
                 published: frontmatter.published,
                 updated: frontmatter.updated,
                 hidden: frontmatter.hidden,
+                collections: frontmatter.collections,
                 excerpt_html,
                 content_html,
             });
