@@ -114,7 +114,7 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
             section.weekly {
                 h1 { "Arne’s Weekly" }
                 p { "A weekly newsletter with the best stories of the internet. There’s an "
-                    a href="/weekly/atom.xml" { "RSS Feed" }
+                    a href="/weekly/feed.xml" { "RSS Feed" }
                     " available, but you should really subscribe:" }
                 (subscribe_form())
                 h2 { "Archive" }
@@ -143,6 +143,59 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
     ))
 }
 
+pub fn weekly_content(weekly: &WeeklyIssue) -> Result<Markup> {
+    Ok(html! {
+        (PreEscaped(weekly.content_html.clone()))
+        @if let Some(toot_of_the_week) = &weekly.toot_of_the_week {
+            h2 { "Toot of the Week" }
+            blockquote {
+                (toot_of_the_week.text)
+                (PreEscaped("&mdash;&nbsp;"))
+                a href=(toot_of_the_week.url) {
+                    (toot_of_the_week.author)
+                }
+            }
+        }
+        @if let Some(tweet_of_the_week) = &weekly.tweet_of_the_week {
+            h2 { "Tweet of the Week" }
+            blockquote {
+                (tweet_of_the_week.text)
+                @if let Some(media) = &tweet_of_the_week.media {
+                    img src=(media.image) alt=(media.alt);
+                }
+                (PreEscaped("&mdash;&nbsp;"))
+                a href=(tweet_of_the_week.url) {
+                    (tweet_of_the_week.author)
+                }
+            }
+        }
+        @if let Some(quote_of_the_week) = &weekly.quote_of_the_week {
+            h2 { "Quote of the Week" }
+            blockquote {
+                (quote_of_the_week.text)
+                (PreEscaped("&mdash;&nbsp;"))
+                (quote_of_the_week.author)
+            }
+        }
+        @for category in weekly.categories.iter() {
+            h2 { (category.title) }
+            ul {
+                @for story in &category.stories {
+                    @let host = story.url.host_str().ok_or(anyhow!("Failed to get host for {} in weekly issue #{}", story.url, weekly.num))?;
+
+                    li {
+                        a href=(story.url) {
+                            (story.title)
+                        }
+                        span { (format!(" ({})", host.strip_prefix("www.").unwrap_or(host))) }
+                        p { (PreEscaped(story.description.clone())) }
+                    }
+                }
+            }
+        }
+    })
+}
+
 pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
     Ok(layout::render(
         Head {
@@ -159,54 +212,7 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
                         "Published on " (weekly.published.format("%B %e, %Y"))
                     }
                 }
-                (PreEscaped(weekly.content_html.clone()))
-                @if let Some(toot_of_the_week) = &weekly.toot_of_the_week {
-                    h2 { "Toot of the Week" }
-                    blockquote {
-                        (toot_of_the_week.text)
-                        (PreEscaped("&mdash;&nbsp;"))
-                        a href=(toot_of_the_week.url) {
-                            (toot_of_the_week.author)
-                        }
-                    }
-                }
-                @if let Some(tweet_of_the_week) = &weekly.tweet_of_the_week {
-                    h2 { "Tweet of the Week" }
-                    blockquote {
-                        (tweet_of_the_week.text)
-                        @if let Some(media) = &tweet_of_the_week.media {
-                            img src=(media.image) alt=(media.alt);
-                        }
-                        (PreEscaped("&mdash;&nbsp;"))
-                        a href=(tweet_of_the_week.url) {
-                            (tweet_of_the_week.author)
-                        }
-                    }
-                }
-                @if let Some(quote_of_the_week) = &weekly.quote_of_the_week {
-                    h2 { "Quote of the Week" }
-                    blockquote {
-                        (quote_of_the_week.text)
-                        (PreEscaped("&mdash;&nbsp;"))
-                        (quote_of_the_week.author)
-                    }
-                }
-                @for category in weekly.categories.iter() {
-                    h2 { (category.title) }
-                    ul {
-                        @for story in &category.stories {
-                            @let host = story.url.host_str().ok_or(anyhow!("Failed to get host for {} in weekly issue #{}", story.url, weekly.num))?;
-
-                            li {
-                                a href=(story.url) {
-                                    (story.title)
-                                }
-                                span { (format!(" ({})", host.strip_prefix("www.").unwrap_or(host))) }
-                                p { (PreEscaped(story.description.clone())) }
-                            }
-                        }
-                    }
-                }
+                (weekly_content(weekly)?)
                 h2 { "Subscribe" }
                 p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans."}
                 (subscribe_form())

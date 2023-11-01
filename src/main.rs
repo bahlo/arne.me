@@ -59,7 +59,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     )?;
 
     // Generate RSS feeds
-    fs::write("dist/feed.xml", rss::render_feed(&content))?;
+    fs::write("dist/feed.xml", rss::render_articles(&content))?;
+    fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
 
     Ok(())
 }
