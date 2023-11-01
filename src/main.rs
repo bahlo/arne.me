@@ -3,6 +3,7 @@ use std::{fs, path::Path};
 
 mod content;
 mod layout;
+mod rss;
 mod templates;
 
 use crate::content::Content;
@@ -50,12 +51,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         fs::write(&path, templates::page(page)?.into_string())?;
     }
 
-    // Generat projects page
+    // Generate projects page
     fs::create_dir_all("dist/projects")?;
     fs::write(
         "dist/projects/index.html",
         templates::projects(&content.projects)?.into_string(),
     )?;
+
+    // Generate RSS feeds
+    fs::write("dist/feed.xml", rss::render_feed(&content))?;
 
     Ok(())
 }
