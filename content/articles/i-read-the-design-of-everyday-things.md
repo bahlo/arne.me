@@ -1,8 +1,9 @@
 ---
-title: "Book Review: The Design of Everyday Things"
+title: "I read The Design of Everyday Things by Don Norman"
 description: "A review of the book The Design of Everyday Things by Don Norman"
 published: "2023-04-03"
 location: "Frankfurt, Germany"
+collections: ["reading"]
 ---
 
 Did you ever push on a door that's pull only or the other way around?

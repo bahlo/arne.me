@@ -1,8 +1,9 @@
 ---
-title: "Book Review: Never Split the Difference"
-description: "A review of the book Never Split the Difference by Chriss Voss"
+title: "I read Never Split the Difference by Chris Voss"
+description: "A review of the book Never Split the Difference by Chris Voss"
 published: "2023-03-21"
 location: "Frankfurt, Germany"
+collections: ["reading"]
 ---
 
 Chris Voss makes this non-fiction book exciting by telling stories from real 

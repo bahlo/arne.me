@@ -1,8 +1,9 @@
 ---
-title: "Book Review: Invisible Women"
+title: "I read Invisible Women by Caroline Criado Perez"
 description: "A review of the book Invisible Women by Caroline Criado Perez"
 published: "2023-03-30"
 location: "Frankfurt, Germany"
+collections: ["reading"]
 ---
 
 This book opened my eyes to the systematic exclusion of women in areas I didn't see before.
