@@ -11,6 +11,12 @@ footer {
   font-size: $font-size-small;
 }
 
+blockquote {
+  font-style: italic;
+  border-left: 2px solid black;
+  padding-left: 8px;
+}
+
 .sitewrapper {
   max-width: $site-width;
   margin: 0 auto;
