@@ -23,6 +23,6 @@ export async function get(context) {
       content: sanitizeHtml(parser.render(book.body)),
     })),
     customData:
-      "<language>en-us</language><link>https://arne.me/reading</link>",
+      "<language>en-us</language><link>https://2023.arne.me/reading</link>",
   });
 }

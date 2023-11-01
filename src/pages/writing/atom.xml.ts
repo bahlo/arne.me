@@ -21,6 +21,6 @@ export async function get(context) {
       content: sanitizeHtml(parser.render(post.body)),
     })),
     customData:
-      "<language>en-us</language><link>https://arne.me/writing</link>",
+      "<language>en-us</language><link>https://2023.arne.me/writing</link>",
   });
 }

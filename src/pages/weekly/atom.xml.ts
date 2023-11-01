@@ -25,6 +25,6 @@ export async function get(context) {
         parser.render(issue.body) + renderWeeklyIssue(issue.slug, issue.data)
       ),
     })),
-    customData: "<language>en-us</language><link>https://arne.me/weekly</link>",
+    customData: "<language>en-us</language><link>https://2023.arne.me/weekly</link>",
   });
 }

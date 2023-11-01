@@ -6,7 +6,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://arne.me",
+  site: "https://2023.arne.me",
   integrations: [mdx(), sitemap()],
   experimental: {
     assets: true,
