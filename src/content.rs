@@ -255,15 +255,28 @@ impl Content {
                 pub categories: Vec<WeeklyCategory>,
             }
 
+            impl Frontmatter {
+                fn render_descriptions(mut self) -> Result<Self> {
+                    for category in self.categories.iter_mut() {
+                        for story in category.stories.iter_mut() {
+                            // TODO: This should be in description_html instead
+                            story.description = render_markdown(story.description.clone())?;
+                        }
+                    }
+                    Ok(self)
+                }
+            }
+
             let frontmatter: Frontmatter = matter
                 .parse(&contents)
                 .data
                 .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
-                .deserialize()
+                .deserialize::<Frontmatter>()
                 .context(format!(
                     "Couldn't deserialize frontmatter for {:?}",
                     entry.path()
-                ))?;
+                ))?
+                .render_descriptions()?;
 
             let content_html = render_markdown(contents)?;
 

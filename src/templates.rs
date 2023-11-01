@@ -1,8 +1,7 @@
-use std::collections::HashMap;
-
 use anyhow::{anyhow, Result};
 use chrono::Utc;
 use maud::{html, Markup, PreEscaped};
+use std::collections::HashMap;
 use url::Url;
 
 use crate::{
@@ -203,7 +202,7 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
                                     (story.title)
                                 }
                                 span { (format!(" ({})", host.strip_prefix("www.").unwrap_or(host))) }
-                                p { (story.description) } // TODO: Parse markdown
+                                p { (PreEscaped(story.description.clone())) }
                             }
                         }
                     }
