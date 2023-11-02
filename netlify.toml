@@ -1,3 +1,3 @@
 [build]
-command = "cargo run build"
+command = "rustup default stable && cargo run build"
 publish = "dist/"
