@@ -103,7 +103,8 @@ where
     while let Some(item) = dir.next().transpose()? {
         let file_name = item.file_name();
 
-        if file_name.to_string_lossy().starts_with('.') {
+        let file_name_str = file_name.to_string_lossy();
+        if file_name_str.starts_with('.') && file_name_str != ".well-known" {
             continue;
         }
 
