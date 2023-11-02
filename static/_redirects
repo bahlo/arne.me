@@ -1,0 +1,21 @@
+# Book reviews
+/books /
+/books/how-to-win-friends-and-influence-people /articles/i-read-how-to-win-friends
+/reading /
+/reading/how-to-win-friends-and-influence-people /articles/i-read-how-to-win-friends
+/reading/* /articles/i-read-:splat
+
+# Articles
+/blog /articles
+/blog/* /articles/:splat
+/writing /articles
+/writing/* /articles/:splat
+
+# Pages
+/work /projects
+/projects/* /projects
+
+# RSS Feeds
+/reading/atom.xml https://2023.arne.me/reading/atom.xml
+/articles/atom.xml /feed.xml
+/weekly/atom.xml /weekly/feed.xml
