@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use chrono::NaiveDate;
 use serde::Serialize;
 use url::Url;
@@ -44,12 +44,43 @@ impl TryFrom<&Content> for Sitemap {
 
     fn try_from(value: &Content) -> Result<Self> {
         let static_urls = vec![
-            LocUrl::new("https://arne.me".parse().unwrap()), // index
-            LocUrl::new("https://arne.me/projects".parse().unwrap()), // dynamic page
+            LocUrl {
+                loc: "https://arne.me".parse()?,
+                lastmod: Some(
+                    value
+                        .articles
+                        .first()
+                        .ok_or(anyhow!("No articles found"))?
+                        .published,
+                ),
+                changefreq: Some("monthly".to_string()),
+                priority: Some(1.0),
+            },
+            LocUrl {
+                loc: "https://arne.me/projects".parse()?,
+                changefreq: Some("monthly".to_string()),
+                lastmod: None,
+                priority: Some(0.8),
+            },
+            LocUrl {
+                loc: "https://arne.me/weekly".parse()?,
+                lastmod: Some(
+                    value
+                        .weekly
+                        .first()
+                        .ok_or(anyhow!("No weekly issue found"))?
+                        .published,
+                ),
+                changefreq: Some("weekly".to_string()),
+                priority: Some(0.9),
+            },
         ];
         let page_urls = value
             .pages
             .iter()
+            .filter(|page| {
+                page.slug != "404" && page.slug != "subscribed" && page.slug != "unsubscribed"
+            })
             .map(|page| {
                 Ok(LocUrl::new(Url::parse(&format!(
                     "https://arne.me/{}",
@@ -76,7 +107,7 @@ impl TryFrom<&Content> for Sitemap {
                 Ok(LocUrl {
                     loc: Url::parse(&format!("https://arne.me/weekly/{}", weekly.num))?,
                     lastmod: Some(weekly.published),
-                    changefreq: Some("weekly".to_string()),
+                    changefreq: None,
                     priority: None,
                 })
             })
