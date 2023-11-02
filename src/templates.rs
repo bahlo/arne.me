@@ -270,7 +270,7 @@ pub fn page(page: &Page) -> Result<Markup> {
 
 fn render_project(project: &Project) -> Markup {
     html! {
-        details open[project.to.is_none()] {
+        details.project open[project.to.is_none()] {
             summary {
                 strong {
                     @if let Some(url) = &project.url {
@@ -290,7 +290,9 @@ fn render_project(project: &Project) -> Markup {
                 ")"
             }
 
-            (PreEscaped(project.content_html.clone()))
+            .project__description {
+                (PreEscaped(project.content_html.clone()))
+            }
         }
     }
 }
