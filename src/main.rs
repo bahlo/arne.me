@@ -5,6 +5,7 @@ use std::{fs, path::Path};
 mod content;
 mod layout;
 mod rss;
+mod sitemap;
 mod templates;
 
 use crate::content::Content;
@@ -85,6 +86,9 @@ fn build() -> Result<()> {
     // Generate RSS feeds
     fs::write("dist/feed.xml", rss::render_articles(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
+
+    // Generate sitemap.xml
+    fs::write("dist/sitemap.xml", sitemap::render(&content)?)?;
 
     Ok(())
 }
