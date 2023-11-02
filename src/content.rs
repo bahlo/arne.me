@@ -411,6 +411,7 @@ fn render_markdown(markdown: String) -> Result<String> {
         .tagfilter(true)
         .table(true)
         .superscript(true)
+        .header_ids(Some("".to_string()))
         .footnotes(true)
         .build()
         .context("Failed to build extension options")?;

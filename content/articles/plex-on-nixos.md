@@ -18,6 +18,15 @@ decided to move to the cloud.
 
 ## Table of Contents
 
+- [Choosing a server and storage method](#choosing-a-server-and-storage-method)
+- [Setting up NixOS](#setting-up-nixos)
+- [Setting up storage](#setting-up-storage)
+- [Configuring Plex](#configuring-plex)
+  - [Adding an Audiobooks Plugin](#adding-an-audiobooks-plugin)
+- [Configuring Nginx](#configuring-nginx)
+- [How much does it cost?](#how-much-does-it-cost)
+- [Wrapping up](#wrapping-up)
+
 ## Choosing a server and storage method
 
 I chose [Hetzner Cloud](https://cloud.hetzner.com) because I like their service,
