@@ -17,6 +17,21 @@ blockquote {
   padding-left: 8px;
 }
 
+aside {
+  font-style: italic;
+  font-size: $font-size-small;
+  line-height: 1.6rem; // TODO: Figure out why this has to be 1.6
+  display: block;
+  float: left;
+  margin-left: -160px;
+  text-align: right;
+  width: calc(160px - 1rem);
+
+  @media (max-width: calc($site-width + 260px)) {
+    display: none;
+  }
+}
+
 .sitewrapper {
   max-width: $site-width;
   margin: 0 auto;

@@ -1,5 +1,5 @@
 use anyhow::{anyhow, Result};
-use chrono::Utc;
+use chrono::{NaiveDate, Utc};
 use maud::{html, Markup, PreEscaped};
 use std::collections::HashMap;
 use url::Url;
@@ -10,6 +10,29 @@ use crate::{
 };
 
 pub fn index(content: &Content) -> Result<Markup> {
+    // The behemoth
+    let mut article_by_month = content
+        .articles
+        .iter()
+        .fold(HashMap::new(), |mut acc, article| {
+            acc.entry(article.published.format("%Y-%m-01").to_string())
+                .or_insert_with(Vec::new)
+                .push(article);
+            acc
+        })
+        .into_iter()
+        .collect::<Vec<_>>();
+    article_by_month.sort_by(|a, b| b.0.cmp(&a.0));
+    article_by_month = article_by_month
+        .into_iter()
+        .map(|(date_str, articles)| {
+            let date_str = NaiveDate::parse_from_str(&date_str, "%Y-%m-%d")?
+                .format("%B %Y")
+                .to_string();
+            Ok((date_str, articles))
+        })
+        .collect::<Result<Vec<_>>>()?;
+
     Ok(layout::render(
         Head {
             title: "Arne Bahlo".to_string(),
@@ -18,29 +41,34 @@ pub fn index(content: &Content) -> Result<Markup> {
             og_type: OgType::Website,
         },
         html! {
-            @for article in &content.articles {
-                @if !article.hidden {
-                    article.article {
-                        header {
-                            h2 {
-                                a href=(format!("/articles/{}", article.slug)) {
-                                    (article.title)
+            @for (month, articles) in article_by_month {
+                aside {
+                    date { (month) }
+                }
+                @for article in articles {
+                    @if !article.hidden {
+                        article.article {
+                            header {
+                                h2 {
+                                    a href=(format!("/articles/{}", article.slug)) {
+                                        (article.title)
+                                    }
+                                }
+                                em.article__byline {
+                                    "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
                                 }
                             }
-                            em.article__byline {
-                                "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
-                            }
-                        }
-                        @if let Some(excerpt_html) = &article.excerpt_html {
-                            (PreEscaped(excerpt_html.clone()))
+                            @if let Some(excerpt_html) = &article.excerpt_html {
+                                (PreEscaped(excerpt_html.clone()))
 
-                            p {
-                                a href=(format!("/articles/{}", article.slug)) {
-                                    "Read more" (PreEscaped("&hellip;"))
+                                p {
+                                    a href=(format!("/articles/{}", article.slug)) {
+                                        "Read more" (PreEscaped("&hellip;"))
+                                    }
                                 }
+                            } @else {
+                                p { (article.description) }
                             }
-                        } @else {
-                            p { (article.description) }
                         }
                     }
                 }
