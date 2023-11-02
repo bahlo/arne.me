@@ -32,6 +32,10 @@ aside {
   }
 }
 
+pre {
+  overflow-x: scroll;
+}
+
 .sitewrapper {
   max-width: $site-width;
   margin: 0 auto;
