@@ -71,8 +71,14 @@ fn build() -> Result<()> {
 
     // Generate pages
     for page in &content.pages {
-        fs::create_dir_all(format!("dist/{}", page.slug))?;
-        let path = format!("dist/{}/index.html", page.slug);
+        let path = match page.slug.as_str() {
+            "404" => "dist/404.html".to_string(),
+            _ => {
+                fs::create_dir_all(format!("dist/{}", page.slug))?;
+                format!("dist/{}/index.html", page.slug)
+            }
+        };
+
         fs::write(&path, templates::page(page)?.into_string())?;
     }
 
