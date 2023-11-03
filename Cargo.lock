@@ -109,6 +109,7 @@ dependencies = [
  "gray_matter",
  "maud",
  "quick-xml 0.31.0",
+ "regex",
  "rss",
  "serde",
  "url",

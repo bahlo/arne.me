@@ -15,6 +15,7 @@ grass = { version = "0.13", default-features = false }
 gray_matter = "0.2"
 maud = { version = "0.25", features = ["axum"] }
 quick-xml = { version ="0.31", features = ["serialize"] }
+regex = "1"
 rss = "2"
 serde = { version = "1", features = ["derive"] }
 url = { version = "2.4", features = ["serde"] }

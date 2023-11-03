@@ -1,6 +1,7 @@
 use anyhow::{anyhow, Context, Result};
 use chrono::NaiveDate;
 use gray_matter::{engine::YAML, Matter};
+use regex::Regex;
 use serde::Deserialize;
 use std::{
     cmp::Ordering,
@@ -143,6 +144,8 @@ impl Content {
     }
 
     fn parse_articles(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<Article>> {
+        let footnote_regex = Regex::new(r"\[\^(\d+)\]")?;
+
         let mut articles = Vec::new();
         while let Some(entry) = dir.next().transpose()? {
             if entry.file_type()?.is_dir() {
@@ -201,7 +204,8 @@ impl Content {
                     let excerpt_html = render_markdown(excerpt_markdown.to_string())?;
                     Ok(excerpt_html)
                 })
-                .transpose()?;
+                .transpose()?
+                .map(|excerpt_html| footnote_regex.replace_all(&excerpt_html, "").to_string());
 
             let content_html = render_markdown(markdown.content)?;
 
