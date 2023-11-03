@@ -6,8 +6,7 @@ description: "The Colophon of arne.me"
 This website was first published on June 19th 2021 near
 [Frankfurt, Germany](https://frankfurt.de).
 It's developed on a 2021 MacBook Pro with a custom Rust static site generator
-and hosted on 
-[Cloudflare Pages](https://www.cloudflare.com/en-gb/developer-platform/pages/).
+and hosted on [Netlify](https://netlify.com).
 The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 
 Testing was conducted in the latest versions of
