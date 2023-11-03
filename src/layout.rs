@@ -57,13 +57,13 @@ pub fn render(meta: Head, content: Markup) -> Markup {
                 .sitewrapper {
                     nav.nav {
                         h1.nav__title { a href="/" { "Arne Bahlo" } }
-                        a href="/" { "Articles" }
-                        span.nav__separator { " | " }
-                        a href="/weekly" { "Weekly" }
-                        span.nav__separator { " | " }
-                        a href="/projects" { "Projects" }
-                        span.nav__separator { " | " }
-                        a href="/contact" { "Contact" }
+                        a.nav__link href="/" { "Articles" }
+                        span.nav__separator { " // " }
+                        a.nav__link href="/weekly" { "Weekly" }
+                        span.nav__separator { " // " }
+                        a.nav__link href="/projects" { "Projects" }
+                        span.nav__separator { " // " }
+                        a.nav__link href="/contact" { "Contact" }
                     }
                     main #main {
                         (content)

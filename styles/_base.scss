@@ -1,9 +1,20 @@
 body {
   padding: 1rem;
+  background: $color-bg;
+}
+
+a {
+  color: $color-link;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-size: $font-size-large;
+  color: $color-heading;
 }
 
 footer {
@@ -20,7 +31,7 @@ blockquote {
 aside {
   font-style: italic;
   font-size: $font-size-small;
-  line-height: 1.6rem; // TODO: Figure out why this has to be 1.6
+  line-height: calc(1.067rem * 1.5);
   display: block;
   float: left;
   margin-left: -160px;
@@ -34,6 +45,18 @@ aside {
 
 pre {
   overflow-x: scroll;
+}
+
+.nav {
+  &__title a {
+    color: $color-nav-title;
+    text-decoration: none;
+    font-size: $font-size-larger;
+  }
+
+  &__link {
+    color: $color-nav-link;
+  }
 }
 
 .sitewrapper {
