@@ -1,25 +1,53 @@
 body {
   padding: 1rem;
   background: $color-bg;
-}
+  font-family: "Test SÖhne";
+  color: $color-fg;
 
-a {
-  color: $color-link;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
+  @media (prefers-color-scheme: dark) {
+    background: $color-dark-bg;
+    color: $color-dark-fg;
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-size: $font-size-large;
-  color: $color-heading;
+em {
+  font-family: "Test Signifier";
 }
 
-footer {
+a {
+  text-decoration: none;
+  color: $color-link;
+
+  @media (prefers-color-scheme: dark) {
+    color: $color-dark-link;
+  }
+
+  &:hover {
+    text-decoration: line-through;
+  }
+}
+
+h1 {
+  font-size: $font-size-large;
+}
+
+h2, h3, h4, h5, h6 {
+  font-size: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Test Signifier";
+
+  a {
+    border-bottom-width: 2px;
+  }
+}
+
+.footer {
+  &.footer { 
+    margin-top: 3rem;
+  }
   text-align: center;
-  font-size: $font-size-small;
 }
 
 blockquote {
@@ -29,9 +57,7 @@ blockquote {
 }
 
 aside {
-  font-style: italic;
-  font-size: $font-size-small;
-  line-height: calc(1.067rem * 1.5);
+  line-height: 2;
   display: block;
   float: left;
   margin-left: -160px;
@@ -48,14 +74,15 @@ pre {
 }
 
 .nav {
-  &__title a {
-    color: $color-nav-title;
-    text-decoration: none;
-    font-size: $font-size-larger;
+  &.nav {
+    margin-bottom: 2rem;
   }
 
-  &__link {
-    color: $color-nav-link;
+  &__title a {
+    font-family: "Test Signifier";
+    border: none;
+    font-size: $font-size-hero;
+    color: inherit;
   }
 }
 
@@ -66,7 +93,7 @@ pre {
 }
 
 main {
-  @include stack;
+  @include stack(2rem);
 }
 
 .skip-link {

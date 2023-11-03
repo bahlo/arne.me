@@ -43,13 +43,13 @@ pub fn index(content: &Content) -> Result<Markup> {
         html! {
             @for (month, articles) in article_by_month {
                 aside {
-                    date { (month) }
+                    em { (month) }
                 }
                 @for article in articles {
                     @if !article.hidden {
                         article.article {
                             header {
-                                h2 {
+                                h1 {
                                     a href=(format!("/articles/{}", article.slug)) {
                                         (article.title)
                                     }
