@@ -1,5 +1,5 @@
 ---
-title: "I read How Democracies Die by Steven Levitsky and Daniel Ziblatt"
+title: "Book Review: How Democracies Die by Steven Levitsky and Daniel Ziblatt"
 description: "A review of the book How Democracies Die by Steven Levitsky and Daniel Ziblatt"
 published: "2023-05-03"
 location: "Frankfurt, Germany"

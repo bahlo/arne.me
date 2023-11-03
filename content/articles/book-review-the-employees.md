@@ -1,5 +1,5 @@
 ---
-title: "I read The Employees by Olga Ravn"
+title: "Book Review: The Employees by Olga Ravn"
 description: "A review of The Employees by Olga Ravn"
 published: "2023-09-06"
 location: "Frankfurt, Germany"

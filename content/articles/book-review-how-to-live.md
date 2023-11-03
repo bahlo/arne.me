@@ -1,5 +1,5 @@
 ---
-title: "I read How to Live by Derek Sivers"
+title: "Book Review: How to Live by Derek Sivers"
 description: "A review of the book How to Live by Derek Sivers"
 published: "2023-04-18"
 location: "Frankfurt, Germany"

@@ -1,5 +1,5 @@
 ---
-title: "I read How to Win Friends and Influence People by Dale Carnegie"
+title: "Book Review: How to Win Friends and Influence People by Dale Carnegie"
 description: "A review of the book How to Win Friends and Influence People by Dale Carnegie"
 published: "2023-08-12"
 location: "Frankfurt, Germany"

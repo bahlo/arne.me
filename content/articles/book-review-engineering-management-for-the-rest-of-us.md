@@ -1,5 +1,5 @@
 ---
-title: "I read Engineering Management for the Rest of Us by Sarah Drasner"
+title: "Book Review: Engineering Management for the Rest of Us by Sarah Drasner"
 description: "A review of the book Engineering Management for the Rest of Us by Sarah Drasner"
 published: "2023-03-23"
 location: "Frankfurt, Germany"

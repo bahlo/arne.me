@@ -1,5 +1,5 @@
 ---
-title: "I read Dune by Frank Herbert"
+title: "Book Review: Dune by Frank Herbert"
 description: "A review of the book Dune by Frank Herbert"
 published: "2023-04-15"
 location: "Frankfurt, Germany"

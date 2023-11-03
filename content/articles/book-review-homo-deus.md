@@ -1,5 +1,5 @@
 ---
-title: "I read Homo Deus by Yuval Harari"
+title: "Book Review: Homo Deus by Yuval Harari"
 description: "A review of the book Homo Deus by Yuval Noah Harari"
 published: "2023-10-28"
 location: "Frankfurt, Germany"

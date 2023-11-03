@@ -1,5 +1,5 @@
 ---
-title: "I read Never Split the Difference by Chris Voss"
+title: "Book Review: Never Split the Difference by Chris Voss"
 description: "A review of the book Never Split the Difference by Chris Voss"
 published: "2023-03-21"
 location: "Frankfurt, Germany"

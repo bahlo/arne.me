@@ -1,5 +1,5 @@
 ---
-title: "I read The Psychology of Money by Morgan Housel"
+title: "Book Review: The Psychology of Money by Morgan Housel"
 description: "A review of the book The Psychology of Money by Morgan Housel"
 published: "2023-06-18"
 location: "Frankfurt, Germany"

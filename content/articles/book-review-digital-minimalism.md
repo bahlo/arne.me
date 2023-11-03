@@ -1,5 +1,5 @@
 ---
-title: "I read Digital Minimalism by Cal Newport"
+title: "Book Review: Digital Minimalism by Cal Newport"
 description: "A review of the book Digital Minimalism by Cal Newport"
 published: "2023-05-11"
 location: "Frankfurt, Germany"

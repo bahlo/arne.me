@@ -1,9 +1,10 @@
 # Book reviews
 /books /
-/books/how-to-win-friends-and-influence-people /articles/i-read-how-to-win-friends
 /reading /
-/reading/how-to-win-friends-and-influence-people /articles/i-read-how-to-win-friends
-/reading/* /articles/i-read-:splat
+/books/how-to-win-friends-and-influence-people /articles/book-review-how-to-win-friends
+/reading/how-to-win-friends-and-influence-people /articles/book-review-how-to-win-friends
+/reading/* /articles/book-review-:splat
+/articles/i-read-* /articles/book-review-:splat
 
 # Articles
 /blog /articles
