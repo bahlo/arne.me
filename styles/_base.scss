@@ -54,3 +54,8 @@ pre {
 .skip-link:focus {
   transform: translateY(0);
 }
+
+.footnotes {
+  font-size: $font-size-small;
+  padding-top: 1rem;
+}
