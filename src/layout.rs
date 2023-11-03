@@ -65,7 +65,9 @@ pub fn render(meta: Head, content: Markup) -> Markup {
                         span.nav__separator { " | " }
                         a href="/contact" { "Contact" }
                     }
-                    (content)
+                    main #main {
+                        (content)
+                    }
                     footer.footer {
                         span { (PreEscaped("&copy; 2021 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo" }
                     }
