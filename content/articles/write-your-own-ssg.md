@@ -92,8 +92,9 @@ If you're in the latter camp, you can check out the
 inspiration.
 But most importantly: Choose a tech stack that excites you and have fun!
 
-**Update:** There's some healthy discussion over at
-[Lobste.rs](https://lobste.rs/s/5hf7qf/why_you_should_write_your_own_static_site).
+**Update:** There's some discussion about this article happening on
+[Lobste.rs](https://lobste.rs/s/5hf7qf/why_you_should_write_your_own_static_site)
+and [Hackernews](https://news.ycombinator.com/item?id=38126210).
 
 [^1]: Static Site Generators, in case you didn't make that connection yet.
 [^2]: Heresy!
