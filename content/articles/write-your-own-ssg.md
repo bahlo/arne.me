@@ -83,9 +83,9 @@ libraries and just build it.
 
 ## What now?
 
-I hope this article left you either validated that rolling your own not worth it 
-and you want to keep using a framework or interested to see what's on the other
-side.
+I hope this article left you either validated that rolling your own is not worth 
+it and you want to keep using a framework, or interested to see what's on the 
+other side.
 
 If you're in the latter camp, you can check out the 
 [source of this website](https://github.com/bahlo/arne.me) to get some 
