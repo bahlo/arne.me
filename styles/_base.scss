@@ -39,6 +39,9 @@ pre {
 .sitewrapper {
   max-width: $site-width;
   margin: 0 auto;
+}
+
+main {
   @include stack;
 }
 
