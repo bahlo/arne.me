@@ -16,6 +16,7 @@
 /projects/* /projects
 
 # RSS Feeds
+/atom.xml /feed.xml
 /reading/atom.xml https://2023.arne.me/reading/atom.xml
 /articles/atom.xml /feed.xml
 /weekly/atom.xml /weekly/feed.xml
