@@ -118,8 +118,7 @@ main {
     align-items: start;
 
     &__column {
-      flex: 1 1 0;
-      width: 0;
+      width: 320px;
     }
   }
 }

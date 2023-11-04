@@ -60,11 +60,11 @@ pub fn index(content: &Content) -> Result<Markup> {
                     @for book_review in content.book_reviews.iter().take(5) {
                         article.article {
                             a.bold href=(format!("/book-reviews/{}", book_review.slug)) {
-                                (book_review.title)
+                                (book_review.title) " by " (book_review.author)
                             }
                             br;
                             em.article__byline {
-                                (book_review.author) ", read on " (book_review.read.format("%B %e, %Y"))
+                                "Read on " (book_review.read.format("%B %e, %Y"))
                             }
                         }
                     }
@@ -160,11 +160,11 @@ pub fn book_review_index(content: &Content) -> Result<Markup> {
                     header {
                         h2 {
                             a href=(format!("/book-reviews/{}", book_review.slug)) {
-                                (book_review.title)
+                                (book_review.title) " by " (book_review.author)
                             }
                         }
                         em.article__byline {
-                            (book_review.author) ", read on on " (book_review.read.format("%B %e, %Y"))
+                            "Read on on " (book_review.read.format("%B %e, %Y")) " in " (book_review.location) ", rated " (book_review.rating) "/5"
                         }
                     }
                     (PreEscaped(book_review.excerpt_html.clone()))
