@@ -30,7 +30,14 @@ impl Display for OgType {
     }
 }
 
-pub fn render(meta: Head, content: Markup) -> Markup {
+#[derive(Debug, Default)]
+pub struct Options {
+    pub is_index: bool,
+    pub full_width: bool,
+}
+
+pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) -> Markup {
+    let options = options.into().unwrap_or_default();
     html! {
         (DOCTYPE)
         html lang="en" {
@@ -54,19 +61,41 @@ pub fn render(meta: Head, content: Markup) -> Markup {
             }
             body {
                 a.skip-link href="#main" { "Skip to content" }
-                .sitewrapper {
-                    nav.nav {
-                        a.nav__title href="/" { "Arne Bahlo" }
-                        span.nav__separator { " // " }
-                        a.nav__link href="/projects" { "Projects" }
-                        span.nav__separator { " // " }
-                        a.nav__link href="/contact" { "Contact" }
+                div.sitewrapper.sitewrapper--page[!options.full_width] {
+                    @if options.is_index {
+                        .hero {
+                            h1.hero__heading { "Hey, I'm Arne—" }
+                            p {
+                                "a developer, podcaster & dad based near Frankfurt, Germany. Having worked with a variety of technologies and stacks, from frontend to backend to databases, I know my way around building accessible and safe applications and tools. "
+                                "In my free time I like to play with my kids, work on side projects, play chess and read books."
+                            }
+                        }
+                    } @else {
+                        a href="/" { "← Index" }
                     }
+                    // nav.nav {
+                    //     a.nav__title href="/" { "Arne Bahlo" }
+                    //     span.nav__separator { " // " }
+                    //     a.nav__link href="/projects" { "Projects" }
+                    //     span.nav__separator { " // " }
+                    //     a.nav__link href="/contact" { "Contact" }
+                    // }
                     main #main {
                         (content)
                     }
+                    br;
                     footer.footer {
-                        span { (PreEscaped("&copy; 2021 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo" }
+                        span.footer_copyright {
+                            (PreEscaped("&copy; 2021 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
+                        }
+                        br;
+                        span.footer__pages {
+                            a href="/projects" { "Projects" }
+                            " // "
+                            a href="/contact" { "Contact" }
+                            " // "
+                            a href="/imprint" { "Imprint" }
+                        }
                     }
                 }
             }

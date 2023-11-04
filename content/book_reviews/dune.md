@@ -1,9 +1,9 @@
 ---
-title: "Book Review: Dune by Frank Herbert"
-description: "A review of the book Dune by Frank Herbert"
-published: "2023-04-15"
+title: "Dune"
+author: "Frank Herbert"
+read: "2023-04-15"
+rating: 4
 location: "Frankfurt, Germany"
-collections: ["reading"]
 ---
 
 This book sat on my shelf for the better part of last year. 

@@ -1,9 +1,9 @@
 ---
-title: "Book Review: Homo Deus by Yuval Harari"
-description: "A review of the book Homo Deus by Yuval Noah Harari"
-published: "2023-10-28"
+title: "Homo Deus"
+author: "Yuval Harari"
+read: "2023-10-28"
+rating: 3
 location: "Frankfurt, Germany"
-collections: ["reading"]
 ---
 
 This book was tough, I was angry a lot.

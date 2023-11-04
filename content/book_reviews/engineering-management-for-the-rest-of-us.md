@@ -1,9 +1,9 @@
 ---
-title: "Book Review: Engineering Management for the Rest of Us by Sarah Drasner"
-description: "A review of the book Engineering Management for the Rest of Us by Sarah Drasner"
-published: "2023-03-23"
+title: "Engineering Management for the Rest of Us"
+author: "Sarah Drasner"
+read: "2023-03-23"
+rating: 4
 location: "Frankfurt, Germany"
-collections: ["reading"]
 ---
 
 I've read a few management books and this one stands out for being so hands-on.

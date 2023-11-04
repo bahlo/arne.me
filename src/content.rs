@@ -16,6 +16,7 @@ pub struct Content {
     pub weekly: Vec<WeeklyIssue>,
     pub pages: Vec<Page>,
     pub projects: Vec<Project>,
+    pub book_reviews: Vec<BookReview>,
 }
 
 #[derive(Debug)]
@@ -37,6 +38,17 @@ pub struct Article {
     pub hidden: bool,
     pub collections: Vec<String>,
     pub excerpt_html: Option<String>,
+    pub content_html: String,
+}
+
+#[derive(Debug)]
+pub struct BookReview {
+    pub slug: String,
+    pub title: String,
+    pub author: String,
+    pub read: NaiveDate,
+    pub rating: u8,
+    pub location: String,
     pub content_html: String,
 }
 
@@ -132,6 +144,10 @@ impl Content {
                     let dir = fs::read_dir(entry.path())?;
                     content.weekly = Self::parse_weekly(&matter, dir)?;
                 }
+                "book_reviews" => {
+                    let dir = fs::read_dir(entry.path())?;
+                    content.book_reviews = Self::parse_book_reviews(&matter, dir)?;
+                }
                 "projects" => {
                     let dir = fs::read_dir(entry.path())?;
                     content.projects = Self::parse_projects(&matter, dir)?;
@@ -226,6 +242,70 @@ impl Content {
         articles.sort_by(|a, b| b.published.cmp(&a.published));
 
         Ok(articles)
+    }
+
+    fn parse_book_reviews(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<BookReview>> {
+        let mut book_reviews = Vec::new();
+        while let Some(entry) = dir.next().transpose()? {
+            if entry.file_type()?.is_dir() {
+                continue;
+            }
+
+            if entry.file_name().to_string_lossy().starts_with('.')
+                || entry.path().extension().ok_or(anyhow!(
+                    "Failed to get file extension for {:?}",
+                    entry.path()
+                ))? != "md"
+            {
+                continue;
+            }
+
+            let slug = entry
+                .path()
+                .file_stem()
+                .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
+                .to_string_lossy()
+                .to_string();
+
+            let mut file = File::open(entry.path())?;
+            let mut contents = String::new();
+            file.read_to_string(&mut contents)?;
+
+            #[derive(Debug, Deserialize)]
+            struct Frontmatter {
+                pub title: String,
+                pub author: String,
+                pub read: NaiveDate,
+                pub rating: u8,
+                pub location: String,
+            }
+
+            let markdown = matter.parse(&contents);
+            let frontmatter: Frontmatter = markdown
+                .data
+                .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
+                .deserialize()
+                .context(format!(
+                    "Couldn't deserialize frontmatter for {:?}",
+                    entry.path()
+                ))?;
+
+            let content_html = render_markdown(markdown.content)?;
+
+            book_reviews.push(BookReview {
+                slug,
+                title: frontmatter.title,
+                author: frontmatter.author,
+                read: frontmatter.read,
+                rating: frontmatter.rating,
+                location: frontmatter.location,
+                content_html,
+            });
+        }
+
+        book_reviews.sort_by(|a, b| b.read.cmp(&a.read));
+
+        Ok(book_reviews)
     }
 
     fn parse_weekly(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<WeeklyIssue>> {

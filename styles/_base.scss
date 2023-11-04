@@ -1,17 +1,13 @@
 body {
   padding: 1rem;
   background: $color-bg;
-  font-family: "Test SÖhne";
+  font-family: "Test Signifier";
   color: $color-fg;
 
   @media (prefers-color-scheme: dark) {
     background: $color-dark-bg;
     color: $color-dark-fg;
   }
-}
-
-em {
-  font-family: "Test Signifier";
 }
 
 .bold {
@@ -48,29 +44,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .footer {
+  max-width: $page-width;
+  display: flex;
+  justify-content: space-between;
   &.footer { 
     margin-top: 3rem;
   }
-  text-align: center;
 }
 
 blockquote {
   font-style: italic;
   border-left: 2px solid black;
   padding-left: 8px;
-}
-
-aside {
-  line-height: 2;
-  display: block;
-  float: left;
-  margin-left: -160px;
-  text-align: right;
-  width: calc(160px - 1rem);
-
-  @media (max-width: calc($site-width + 260px)) {
-    display: none;
-  }
 }
 
 pre {
@@ -90,7 +75,12 @@ pre {
 
 .sitewrapper {
   margin: 0 auto;
+  max-width: $index-width;
   @include stack;
+
+  &--page > * {
+    max-width: $page-width;
+  }
 }
 
 main {
@@ -110,4 +100,24 @@ main {
 .footnotes {
   font-size: $font-size-small;
   padding-top: 1rem;
+}
+
+.index {
+  margin: 2rem 0;
+  display: flex;
+  gap: 1rem;
+
+  &__column {
+    flex: 1 1 0;
+    width: 0;
+  }
+}
+
+.hero {
+  margin-top: 4rem;
+  max-width: $page-width;
+
+  &__heading {
+    font-size: $font-size-large;
+  }
 }

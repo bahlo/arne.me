@@ -1,9 +1,9 @@
 ---
-title: "Book Review: How to Live by Derek Sivers"
-description: "A review of the book How to Live by Derek Sivers"
-published: "2023-04-18"
+title: "How to Live"
+author: "Derek Sivers"
+read: "2023-04-18"
+rating: 5
 location: "Frankfurt, Germany"
-collections: ["reading"]
 ---
 
 This book gives you exact instructions how to live.

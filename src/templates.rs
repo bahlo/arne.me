@@ -1,5 +1,5 @@
 use anyhow::{anyhow, Result};
-use chrono::{NaiveDate, Utc};
+use chrono::Utc;
 use maud::{html, Markup, PreEscaped};
 use std::collections::HashMap;
 use url::Url;
@@ -18,40 +18,64 @@ pub fn index(content: &Content) -> Result<Markup> {
             og_type: OgType::Website,
         },
         html! {
-            section.overview--articles {
-                h1 { "Articles" }
-                @for article in content.articles.iter().take(5) {
-                    @if !article.hidden {
+            section.index {
+                section.index__column {
+                    h1 { "Articles" }
+                    @for article in content.articles.iter().take(5) {
+                        @if !article.hidden {
+                            article.article {
+                                a.bold href=(format!("/articles/{}", article.slug)) {
+                                    (article.title)
+                                }
+                                br;
+                                em.article__byline {
+                                    "Published on " (article.published.format("%B %e, %Y")) " from " (article.location)
+                                }
+                            }
+                        }
+                    }
+                    @if content.articles.len() > 5 {
+                        br;
+                        a.index__more href="/articles" { (&(content.articles.len() - 5)) " more →" }
+                    }
+                }
+                section.index__column {
+                    h1 { "Weekly" }
+                    @for weekly_issue in content.weekly.iter().take(5) {
                         article.article {
-                            a.bold href=(format!("/articles/{}", article.slug)) {
-                                (article.title)
+                            a.bold href=(format!("/weekly/{}", weekly_issue.num)) {
+                                (weekly_issue.title)
                             }
                             br;
                             em.article__byline {
-                                "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
+                               "Published on " (weekly_issue.published.format("%B %e, %Y"))
                             }
                         }
                     }
+                    br;
+                    a.index__more href="/weekly" { (&(content.weekly.len() - 5)) " more →" }
                 }
-                @if content.articles.len() > 5 {
-                    a href="/articles" { (&(content.articles.len() - 5)) " more →" }
-                }
-            }
-            section.overview--weekly {
-                h1 { "Weekly" }
-                @for weekly_issue in content.weekly.iter().take(5) {
-                    article.article {
-                        a.bold href=(format!("/weekly/{}", weekly_issue.num)) {
-                            (weekly_issue.title)
-                        }
-                        br;
-                        em.article__byline {
-                            "Published on " (weekly_issue.published.format("%B %e, %Y"))
+                section.index_column {
+                    h1 { "Book Reviews" }
+                    @for book_review in content.book_reviews.iter().take(5) {
+                        article.article {
+                            a.bold href=(format!("/book-reviews/{}", book_review.slug)) {
+                                (book_review.title)
+                            }
+                            br;
+                            em.article__byline {
+                                (book_review.author) ", read on " (book_review.read.format("%B %e, %Y"))
+                            }
                         }
                     }
+                    br;
+                    a.index__more href="/weekly" { (&(content.book_reviews.len() - 5)) " more →" }
                 }
-                a href="/weekly" { (&(content.weekly.len() - 5)) " more →" }
             }
+        },
+        layout::Options {
+            full_width: true,
+            is_index: true,
         },
     ))
 }
@@ -75,6 +99,7 @@ pub fn article(article: &Article) -> Result<Markup> {
                 (PreEscaped(article.content_html.clone()))
             }
         },
+        None,
     ))
 }
 
@@ -146,6 +171,10 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
                     }
                 }
             }
+        },
+        layout::Options {
+            full_width: true,
+            ..Default::default()
         },
     ))
 }
@@ -225,6 +254,7 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
                 (subscribe_form())
             }
         },
+        None,
     ))
 }
 
@@ -244,6 +274,7 @@ pub fn page(page: &Page) -> Result<Markup> {
                 (PreEscaped(page.content_html.clone()))
             }
         },
+        None,
     ))
 }
 
@@ -300,5 +331,6 @@ pub fn projects(project: &[Project]) -> Result<Markup> {
                 }
             }
         },
+        None,
     ))
 }
