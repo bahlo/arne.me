@@ -58,6 +58,11 @@ h1, h2, h3, h4, h5, h6 {
   &.footer { 
     margin-top: 2rem;
   }
+
+  @media (max-width: $page-width) {
+    @include stack;
+    display: block;
+  }
 }
 
 blockquote {

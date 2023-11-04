@@ -73,13 +73,6 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
                     } @else {
                         a href="/" { "← Index" }
                     }
-                    // nav.nav {
-                    //     a.nav__title href="/" { "Arne Bahlo" }
-                    //     span.nav__separator { " // " }
-                    //     a.nav__link href="/projects" { "Projects" }
-                    //     span.nav__separator { " // " }
-                    //     a.nav__link href="/contact" { "Contact" }
-                    // }
                     main #main {
                         (content)
                     }
@@ -93,6 +86,10 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
                             a href="/projects" { "Projects" }
                             " // "
                             a href="/contact" { "Contact" }
+                            " // "
+                            a href="/colophon" { "Colophon" }
+                            " // "
+                            a href="/accessibility" { "A11y" }
                             " // "
                             a href="/imprint" { "Imprint" }
                         }
