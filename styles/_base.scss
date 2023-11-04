@@ -103,11 +103,19 @@ main {
 
 .index {
   margin: 2rem 0;
-  @include stack;
+
+  &__column {
+    @include stack(.5rem);
+  }
+
+  @media (max-width: $index-width) {
+    @include stack;
+  }
 
   @media (min-width: $index-width) {
     display: flex;
     gap: 1rem;
+    align-items: start;
 
     &__column {
       flex: 1 1 0;
