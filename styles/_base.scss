@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: space-between;
   &.footer { 
-    margin-top: 3rem;
+    margin-top: 2rem;
   }
 }
 
@@ -103,17 +103,24 @@ main {
 
 .index {
   margin: 2rem 0;
-  display: flex;
-  gap: 1rem;
+  @include stack;
 
-  &__column {
-    flex: 1 1 0;
-    width: 0;
+  @media (min-width: $index-width) {
+    display: flex;
+    gap: 1rem;
+
+    &__column {
+      flex: 1 1 0;
+      width: 0;
+    }
   }
 }
 
 .hero {
   margin-top: 4rem;
+  @media (max-width: $index-width) {
+    margin-top: 2rem;
+  }
   max-width: $page-width;
 
   &__heading {
