@@ -46,6 +46,12 @@ impl TryFrom<&Content> for Sitemap {
         let static_urls = vec![
             LocUrl {
                 loc: "https://arne.me".parse()?,
+                lastmod: None, // TODO: Set to latest article or weekly or book review
+                changefreq: Some("weekly".to_string()),
+                priority: Some(1.0),
+            },
+            LocUrl {
+                loc: "https://arne.me/articles".parse()?,
                 lastmod: Some(
                     value
                         .articles
@@ -54,7 +60,7 @@ impl TryFrom<&Content> for Sitemap {
                         .published,
                 ),
                 changefreq: Some("monthly".to_string()),
-                priority: Some(1.0),
+                priority: Some(0.9),
             },
             LocUrl {
                 loc: "https://arne.me/projects".parse()?,
@@ -73,6 +79,18 @@ impl TryFrom<&Content> for Sitemap {
                 ),
                 changefreq: Some("weekly".to_string()),
                 priority: Some(0.9),
+            },
+            LocUrl {
+                loc: "https://arne.me/book-reviews".parse()?,
+                lastmod: Some(
+                    value
+                        .book_reviews
+                        .first()
+                        .ok_or(anyhow!("No weekly issue found"))?
+                        .read,
+                ),
+                changefreq: Some("monthly".to_string()),
+                priority: Some(0.8),
             },
         ];
         let page_urls = value
@@ -112,6 +130,21 @@ impl TryFrom<&Content> for Sitemap {
                 })
             })
             .collect::<Result<Vec<LocUrl>>>()?;
+        let book_review_urls = value
+            .book_reviews
+            .iter()
+            .map(|book_review| {
+                Ok(LocUrl {
+                    loc: Url::parse(&format!(
+                        "https://arne.me/book-reviews/{}",
+                        book_review.slug
+                    ))?,
+                    lastmod: Some(book_review.read),
+                    changefreq: None,
+                    priority: None,
+                })
+            })
+            .collect::<Result<Vec<LocUrl>>>()?;
 
         let urlset = Urlset {
             xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9".to_string(),
@@ -120,6 +153,7 @@ impl TryFrom<&Content> for Sitemap {
                 .chain(page_urls.into_iter())
                 .chain(article_urls.into_iter())
                 .chain(weekly_urls.into_iter())
+                .chain(book_review_urls.into_iter())
                 .collect::<Vec<LocUrl>>(),
         };
 
