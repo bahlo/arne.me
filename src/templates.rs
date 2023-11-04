@@ -10,29 +10,6 @@ use crate::{
 };
 
 pub fn index(content: &Content) -> Result<Markup> {
-    // The behemoth
-    let mut article_by_month = content
-        .articles
-        .iter()
-        .fold(HashMap::new(), |mut acc, article| {
-            acc.entry(article.published.format("%Y-%m-01").to_string())
-                .or_insert_with(Vec::new)
-                .push(article);
-            acc
-        })
-        .into_iter()
-        .collect::<Vec<_>>();
-    article_by_month.sort_by(|a, b| b.0.cmp(&a.0));
-    article_by_month = article_by_month
-        .into_iter()
-        .map(|(date_str, articles)| {
-            let date_str = NaiveDate::parse_from_str(&date_str, "%Y-%m-%d")?
-                .format("%B %Y")
-                .to_string();
-            Ok((date_str, articles))
-        })
-        .collect::<Result<Vec<_>>>()?;
-
     Ok(layout::render(
         Head {
             title: "Arne Bahlo".to_string(),
@@ -41,37 +18,39 @@ pub fn index(content: &Content) -> Result<Markup> {
             og_type: OgType::Website,
         },
         html! {
-            @for (month, articles) in article_by_month {
-                aside {
-                    em { (month) }
-                }
-                @for article in articles {
+            section.overview--articles {
+                h1 { "Articles" }
+                @for article in content.articles.iter().take(5) {
                     @if !article.hidden {
                         article.article {
-                            header {
-                                h1 {
-                                    a href=(format!("/articles/{}", article.slug)) {
-                                        (article.title)
-                                    }
-                                }
-                                em.article__byline {
-                                    "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
-                                }
+                            a.bold href=(format!("/articles/{}", article.slug)) {
+                                (article.title)
                             }
-                            @if let Some(excerpt_html) = &article.excerpt_html {
-                                (PreEscaped(excerpt_html.clone()))
-
-                                p {
-                                    a href=(format!("/articles/{}", article.slug)) {
-                                        "Read more" (PreEscaped("&hellip;"))
-                                    }
-                                }
-                            } @else {
-                                p { (article.description) }
+                            br;
+                            em.article__byline {
+                                "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
                             }
                         }
                     }
                 }
+                @if content.articles.len() > 5 {
+                    a href="/articles" { (&(content.articles.len() - 5)) " more →" }
+                }
+            }
+            section.overview--weekly {
+                h1 { "Weekly" }
+                @for weekly_issue in content.weekly.iter().take(5) {
+                    article.article {
+                        a.bold href=(format!("/weekly/{}", weekly_issue.num)) {
+                            (weekly_issue.title)
+                        }
+                        br;
+                        em.article__byline {
+                            "Published on " (weekly_issue.published.format("%B %e, %Y"))
+                        }
+                    }
+                }
+                a href="/weekly" { (&(content.weekly.len() - 5)) " more →" }
             }
         },
     ))

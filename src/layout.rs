@@ -56,10 +56,7 @@ pub fn render(meta: Head, content: Markup) -> Markup {
                 a.skip-link href="#main" { "Skip to content" }
                 .sitewrapper {
                     nav.nav {
-                        h1.nav__title { a href="/" { "Arne Bahlo" } }
-                        a.nav__link href="/" { "Articles" }
-                        span.nav__separator { " // " }
-                        a.nav__link href="/weekly" { "Weekly" }
+                        a.nav__title href="/" { "Arne Bahlo" }
                         span.nav__separator { " // " }
                         a.nav__link href="/projects" { "Projects" }
                         span.nav__separator { " // " }

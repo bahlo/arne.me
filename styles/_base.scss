@@ -14,6 +14,10 @@ em {
   font-family: "Test Signifier";
 }
 
+.bold {
+  font-weight: 500;
+}
+
 a {
   text-decoration: none;
   color: $color-link;
@@ -78,22 +82,19 @@ pre {
     margin-bottom: 2rem;
   }
 
-  &__title a {
-    font-family: "Test Signifier";
-    border: none;
-    font-size: $font-size-hero;
+  &__title {
+    font-weight: 500;
     color: inherit;
   }
 }
 
 .sitewrapper {
-  max-width: $site-width;
   margin: 0 auto;
   @include stack;
 }
 
 main {
-  @include stack(2rem);
+  @include stack(.5rem);
 }
 
 .skip-link {
