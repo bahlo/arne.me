@@ -74,3 +74,40 @@ pub fn render_weekly(content: &Content) -> Result<String> {
         .build()
         .to_string())
 }
+
+pub fn render_book_reviews(content: &Content) -> String {
+    let items: Vec<Item> = content
+        .book_reviews
+        .iter()
+        .map(|book_review| {
+            ItemBuilder::default()
+                .title(format!("{} by {}", book_review.title, book_review.author))
+                .link(format!("https://arne.me/book-reviews/{}", book_review.slug))
+                .description(format!(
+                    "I read {} by {}",
+                    book_review.title, book_review.author
+                ))
+                .author("Arne Bahlo".to_string())
+                .guid(rss::Guid {
+                    value: format!("https://arne.me/book-reviews/{}", book_review.slug),
+                    permalink: true,
+                })
+                .pub_date(book_review.read.format(RFC_822_DATE).to_string())
+                .content(book_review.content_html.clone())
+                .build()
+        })
+        .collect();
+
+    ChannelBuilder::default()
+        .title("Arne Bahlo’s Book Reviews")
+        .language(Some("en-us".to_string()))
+        .copyright(format!("2021 – {} Arne Bahlo", Utc::now().format("%Y")))
+        .managing_editor(Some("hey@arne.me".to_string()))
+        .webmaster(Some("hey@arne.me".to_string()))
+        .last_build_date(Utc::now().format(RFC_822).to_string())
+        .link("https://arne.me/book-reviews")
+        .description("Every book I read gets a review and ends up here.")
+        .items(items)
+        .build()
+        .to_string()
+}

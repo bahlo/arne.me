@@ -172,7 +172,7 @@ pub fn book_review_index(content: &Content) -> Result<Markup> {
     Ok(layout::render(
         Head {
             title: "Book Reviews".to_string(),
-            description: "Book Reviews by Arne Bahlo".to_string(),
+            description: "Every book I read gets a review and ends up here.".to_string(),
             url: Url::parse("https://arne.me/book-reviews")?,
             og_type: OgType::Website,
         },

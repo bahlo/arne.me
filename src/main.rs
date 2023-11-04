@@ -111,6 +111,10 @@ fn build() -> Result<()> {
     // Generate RSS feeds
     fs::write("dist/feed.xml", rss::render_articles(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
+    fs::write(
+        "dist/book-reviews/feed.xml",
+        rss::render_book_reviews(&content),
+    )?;
 
     // Generate sitemap.xml
     fs::write("dist/sitemap.xml", sitemap::render(&content)?)?;
