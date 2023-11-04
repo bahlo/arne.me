@@ -103,6 +103,48 @@ pub fn article(article: &Article) -> Result<Markup> {
     ))
 }
 
+pub fn article_index(content: &Content) -> Result<Markup> {
+    Ok(layout::render(
+        Head {
+            title: "Arne Bahlo".to_string(),
+            description: "Arne Bahlo's personal website".to_string(),
+            url: Url::parse("https://arne.me")?,
+            og_type: OgType::Website,
+        },
+        html! {
+            h1 { "Articles" }
+            @for article in &content.articles {
+                @if !article.hidden {
+                    article.article {
+                        header {
+                            h2 {
+                                a href=(format!("/articles/{}", article.slug)) {
+                                    (article.title)
+                                }
+                            }
+                            em.article__byline {
+                                "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
+                            }
+                        }
+                        @if let Some(excerpt_html) = &article.excerpt_html {
+                            (PreEscaped(excerpt_html.clone()))
+
+                            p {
+                                a href=(format!("/articles/{}", article.slug)) {
+                                    "Read more" (PreEscaped("&hellip;"))
+                                }
+                            }
+                        } @else {
+                            p { (article.description) }
+                        }
+                    }
+                }
+            }
+        },
+        None,
+    ))
+}
+
 fn subscribe_form() -> Markup {
     html! {
         form.subscribe-form action="https://buttondown.email/api/emails/embed-subscribe/arnesweekly" method="post" {

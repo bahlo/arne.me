@@ -49,8 +49,15 @@ fn build() -> Result<()> {
     let css = grass::from_path("styles/main.scss", &sass_options)?;
     fs::write("dist/main.css", css)?;
 
-    // Generate articles
+    // Generate index
     fs::write("dist/index.html", templates::index(&content)?.into_string())?;
+
+    // Generate articles
+    fs::create_dir_all("dist/articles")?;
+    fs::write(
+        "dist/articles/index.html",
+        templates::article_index(&content)?.into_string(),
+    )?;
     for article in &content.articles {
         fs::create_dir_all(format!("dist/articles/{}", article.slug))?;
         let path = format!("dist/articles/{}/index.html", article.slug);
