@@ -82,6 +82,11 @@ fn build() -> Result<()> {
         "dist/book-reviews/index.html",
         templates::book_review_index(&content)?.into_string(),
     )?;
+    for book_review in &content.book_reviews {
+        fs::create_dir_all(format!("dist/book-reviews/{}", book_review.slug))?;
+        let path = format!("dist/book-reviews/{}/index.html", book_review.slug);
+        fs::write(&path, templates::book_review(book_review)?.into_string())?;
+    }
 
     // Generate pages
     for page in &content.pages {

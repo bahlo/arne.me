@@ -5,7 +5,7 @@ use std::collections::HashMap;
 use url::Url;
 
 use crate::{
-    content::{Article, Content, Page, Project, WeeklyIssue},
+    content::{Article, BookReview, Content, Page, Project, WeeklyIssue},
     layout::{self, Head, OgType},
 };
 
@@ -139,6 +139,29 @@ pub fn article_index(content: &Content) -> Result<Markup> {
                         }
                     }
                 }
+            }
+        },
+        None,
+    ))
+}
+
+pub fn book_review(book_review: &BookReview) -> Result<Markup> {
+    Ok(layout::render(
+        Head {
+            title: format!("{} by {}", book_review.title, book_review.author),
+            description: format!("I read {} by {}", book_review.title, book_review.author,),
+            url: Url::parse(&format!("https://arne.me/book-review/{}", book_review.slug))?,
+            og_type: OgType::Article,
+        },
+        html! {
+            article.article {
+                header {
+                    h1 { (book_review.title) " by " (book_review.author) }
+                    em.article__byline {
+                        "Read on " (book_review.read.format("%B %e, %Y")) " in " (book_review.location) ", rated " (book_review.rating) "/5"
+                    }
+                }
+                (PreEscaped(book_review.content_html.clone()))
             }
         },
         None,
