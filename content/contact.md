@@ -12,5 +12,6 @@ Here are some ways to contact me:
 - [@bahlo](https://github.com/bahlo) on GitHub
 - [@arne.me](https://bsky.app/profile/arne.me) on Bluesky
 - [bahlo](https://lobste.rs/~bahlo) on Lobsters
+- [arnebae](https://lichess.org/@/arnebae) on Lichess
 
 This site also has a [colophon](/colophon) and a page about [accessibility efforts](/accessibility).
