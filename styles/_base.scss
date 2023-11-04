@@ -83,7 +83,7 @@ pre {
 }
 
 main {
-  @include stack(.5rem);
+  @include stack;
 }
 
 .skip-link {

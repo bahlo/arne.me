@@ -69,7 +69,7 @@ pub fn index(content: &Content) -> Result<Markup> {
                         }
                     }
                     br;
-                    a.index__more href="/weekly" { (&(content.book_reviews.len() - 5)) " more →" }
+                    a.index__more href="/book-reviews" { (&(content.book_reviews.len() - 5)) " more →" }
                 }
             }
         },
@@ -106,9 +106,9 @@ pub fn article(article: &Article) -> Result<Markup> {
 pub fn article_index(content: &Content) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: "Arne Bahlo".to_string(),
-            description: "Arne Bahlo's personal website".to_string(),
-            url: Url::parse("https://arne.me")?,
+            title: "Articles".to_string(),
+            description: "Articles by Arne Bahlo.".to_string(),
+            url: Url::parse("https://arne.me/articles")?,
             og_type: OgType::Website,
         },
         html! {
@@ -136,6 +136,41 @@ pub fn article_index(content: &Content) -> Result<Markup> {
                             }
                         } @else {
                             p { (article.description) }
+                        }
+                    }
+                }
+            }
+        },
+        None,
+    ))
+}
+
+pub fn book_review_index(content: &Content) -> Result<Markup> {
+    Ok(layout::render(
+        Head {
+            title: "Book Reviews".to_string(),
+            description: "Book Reviews by Arne Bahlo".to_string(),
+            url: Url::parse("https://arne.me/book-reviews")?,
+            og_type: OgType::Website,
+        },
+        html! {
+            h1 { "Book reviews" }
+            @for book_review in &content.book_reviews {
+                article.article {
+                    header {
+                        h2 {
+                            a href=(format!("/book-reviews/{}", book_review.slug)) {
+                                (book_review.title)
+                            }
+                        }
+                        em.article__byline {
+                            (book_review.author) ", read on on " (book_review.read.format("%B %e, %Y"))
+                        }
+                    }
+                    (PreEscaped(book_review.excerpt_html.clone()))
+                    p {
+                        a href=(format!("/book-reviews/{}", book_review.slug)) {
+                            "Read more" (PreEscaped("&hellip;"))
                         }
                     }
                 }

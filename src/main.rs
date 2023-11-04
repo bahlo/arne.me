@@ -76,6 +76,13 @@ fn build() -> Result<()> {
         fs::write(&path, templates::weekly(weekly_issue)?.into_string())?;
     }
 
+    // Generate book reviews
+    fs::create_dir_all("dist/book-reviews")?;
+    fs::write(
+        "dist/book-reviews/index.html",
+        templates::book_review_index(&content)?.into_string(),
+    )?;
+
     // Generate pages
     for page in &content.pages {
         let path = match page.slug.as_str() {

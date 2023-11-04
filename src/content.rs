@@ -49,6 +49,7 @@ pub struct BookReview {
     pub read: NaiveDate,
     pub rating: u8,
     pub location: String,
+    pub excerpt_html: String,
     pub content_html: String,
 }
 
@@ -290,6 +291,18 @@ impl Content {
                     entry.path()
                 ))?;
 
+            let excerpt_html: String = markdown
+                .content
+                .splitn(2, "<!-- more -->")
+                .collect::<Vec<_>>()
+                .first()
+                .map(|excerpt_markdown| -> Result<String> {
+                    let excerpt_html = render_markdown(excerpt_markdown.to_string())?;
+                    Ok(excerpt_html)
+                })
+                .transpose()?
+                .ok_or(anyhow!("Couldn't parse excerpt for {:?}", entry.path()))?;
+
             let content_html = render_markdown(markdown.content)?;
 
             book_reviews.push(BookReview {
@@ -299,6 +312,7 @@ impl Content {
                 read: frontmatter.read,
                 rating: frontmatter.rating,
                 location: frontmatter.location,
+                excerpt_html,
                 content_html,
             });
         }
