@@ -1,9 +1,9 @@
 ---
-title: "Book Review: The Employees by Olga Ravn"
-description: "A review of The Employees by Olga Ravn"
-published: "2023-09-06"
+title: "The Employees"
+author: "Olga Ravn"
+read: "2023-09-06"
+rating: 3
 location: "Frankfurt, Germany"
-collections: ["reading"]
 ---
 
 This book is strange.

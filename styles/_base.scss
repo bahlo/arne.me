@@ -1,6 +1,12 @@
 body {
   padding: 1rem;
   background: $color-bg;
+  color: $color-fg;
+
+  @media (prefers-color-scheme: dark) {
+    background: $color-dark-bg;
+    color: $color-dark-fg;
+  }
 }
 
 a {
@@ -12,14 +18,46 @@ a {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-size: $font-size-large;
-  color: $color-heading;
+.bold {
+  font-weight: 500;
 }
 
-footer {
-  text-align: center;
-  font-size: $font-size-small;
+a {
+  text-decoration: none;
+  color: $color-link;
+
+  @media (prefers-color-scheme: dark) {
+    color: $color-dark-link;
+  }
+
+  &:hover {
+    text-decoration: line-through;
+  }
+}
+
+h1 {
+  font-size: $font-size-large;
+}
+
+h2, h3, h4, h5, h6 {
+  font-size: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Test Signifier";
+
+  a {
+    border-bottom-width: 2px;
+  }
+}
+
+.footer {
+  max-width: $page-width;
+  display: flex;
+  justify-content: space-between;
+  &.footer { 
+    margin-top: 2rem;
+  }
 }
 
 blockquote {
@@ -28,41 +66,29 @@ blockquote {
   padding-left: 8px;
 }
 
-aside {
-  font-style: italic;
-  font-size: $font-size-small;
-  line-height: calc(1.067rem * 1.5);
-  display: block;
-  float: left;
-  margin-left: -160px;
-  text-align: right;
-  width: calc(160px - 1rem);
-
-  @media (max-width: calc($site-width + 260px)) {
-    display: none;
-  }
-}
-
 pre {
   overflow-x: scroll;
 }
 
 .nav {
-  &__title a {
-    color: $color-nav-title;
-    text-decoration: none;
-    font-size: $font-size-larger;
+  &.nav {
+    margin-bottom: 2rem;
   }
 
-  &__link {
-    color: $color-nav-link;
+  &__title {
+    font-weight: 500;
+    color: inherit;
   }
 }
 
 .sitewrapper {
-  max-width: $site-width;
   margin: 0 auto;
+  max-width: $index-width;
   @include stack;
+
+  &--page > * {
+    max-width: $page-width;
+  }
 }
 
 main {
@@ -82,4 +108,38 @@ main {
 .footnotes {
   font-size: $font-size-small;
   padding-top: 1rem;
+}
+
+.index {
+  margin: 2rem 0;
+
+  &__column {
+    @include stack(.5rem);
+  }
+
+  @media (max-width: $index-width) {
+    @include stack;
+  }
+
+  @media (min-width: $index-width) {
+    display: flex;
+    gap: 1rem;
+    align-items: start;
+
+    &__column {
+      width: 320px;
+    }
+  }
+}
+
+.hero {
+  margin-top: 4rem;
+  @media (max-width: $index-width) {
+    margin-top: 2rem;
+  }
+  max-width: $page-width;
+
+  &__heading {
+    font-size: $font-size-large;
+  }
 }

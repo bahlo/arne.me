@@ -2,10 +2,10 @@
   @include stack(.5rem);
 
   &__overview {
-    column-width: 316px;
+    column-width: 308px;
     @include stack(.5rem);
 
-    @media (max-width: $site-width) {
+    @media (max-width: $index-width) {
       column-width: 100%;
     }
   }

@@ -1,38 +1,15 @@
 use anyhow::{anyhow, Result};
-use chrono::{NaiveDate, Utc};
+use chrono::Utc;
 use maud::{html, Markup, PreEscaped};
 use std::collections::HashMap;
 use url::Url;
 
 use crate::{
-    content::{Article, Content, Page, Project, WeeklyIssue},
+    content::{Article, BookReview, Content, Page, Project, WeeklyIssue},
     layout::{self, Head, OgType},
 };
 
 pub fn index(content: &Content) -> Result<Markup> {
-    // The behemoth
-    let mut article_by_month = content
-        .articles
-        .iter()
-        .fold(HashMap::new(), |mut acc, article| {
-            acc.entry(article.published.format("%Y-%m-01").to_string())
-                .or_insert_with(Vec::new)
-                .push(article);
-            acc
-        })
-        .into_iter()
-        .collect::<Vec<_>>();
-    article_by_month.sort_by(|a, b| b.0.cmp(&a.0));
-    article_by_month = article_by_month
-        .into_iter()
-        .map(|(date_str, articles)| {
-            let date_str = NaiveDate::parse_from_str(&date_str, "%Y-%m-%d")?
-                .format("%B %Y")
-                .to_string();
-            Ok((date_str, articles))
-        })
-        .collect::<Result<Vec<_>>>()?;
-
     Ok(layout::render(
         Head {
             title: "Arne Bahlo".to_string(),
@@ -41,38 +18,64 @@ pub fn index(content: &Content) -> Result<Markup> {
             og_type: OgType::Website,
         },
         html! {
-            @for (month, articles) in article_by_month {
-                aside {
-                    date { (month) }
-                }
-                @for article in articles {
-                    @if !article.hidden {
-                        article.article {
-                            header {
-                                h2 {
-                                    a href=(format!("/articles/{}", article.slug)) {
-                                        (article.title)
-                                    }
+            section.index {
+                section.index__column {
+                    h1 { "Articles" }
+                    @for article in content.articles.iter().take(5) {
+                        @if !article.hidden {
+                            article.article {
+                                a.bold href=(format!("/articles/{}", article.slug)) {
+                                    (article.title)
                                 }
+                                br;
                                 em.article__byline {
-                                    "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
+                                    "Published on " (article.published.format("%B %e, %Y")) " from " (article.location)
                                 }
-                            }
-                            @if let Some(excerpt_html) = &article.excerpt_html {
-                                (PreEscaped(excerpt_html.clone()))
-
-                                p {
-                                    a href=(format!("/articles/{}", article.slug)) {
-                                        "Read more" (PreEscaped("&hellip;"))
-                                    }
-                                }
-                            } @else {
-                                p { (article.description) }
                             }
                         }
                     }
+                    @if content.articles.len() > 5 {
+                        br;
+                        a.index__more href="/articles" { (&(content.articles.len() - 5)) " more →" }
+                    }
+                }
+                section.index__column {
+                    h1 { "Weekly" }
+                    @for weekly_issue in content.weekly.iter().take(5) {
+                        article.article {
+                            a.bold href=(format!("/weekly/{}", weekly_issue.num)) {
+                                (weekly_issue.title)
+                            }
+                            br;
+                            em.article__byline {
+                               "Published on " (weekly_issue.published.format("%B %e, %Y"))
+                            }
+                        }
+                    }
+                    br;
+                    a.index__more href="/weekly" { (&(content.weekly.len() - 5)) " more →" }
+                }
+                section.index_column {
+                    h1 { "Book Reviews" }
+                    @for book_review in content.book_reviews.iter().take(5) {
+                        article.article {
+                            a.bold href=(format!("/book-reviews/{}", book_review.slug)) {
+                                (book_review.title) " by " (book_review.author)
+                            }
+                            br;
+                            em.article__byline {
+                                "Read on " (book_review.read.format("%B %e, %Y"))
+                            }
+                        }
+                    }
+                    br;
+                    a.index__more href="/book-reviews" { (&(content.book_reviews.len() - 5)) " more →" }
                 }
             }
+        },
+        layout::Options {
+            full_width: true,
+            is_index: true,
         },
     ))
 }
@@ -96,6 +99,107 @@ pub fn article(article: &Article) -> Result<Markup> {
                 (PreEscaped(article.content_html.clone()))
             }
         },
+        None,
+    ))
+}
+
+pub fn article_index(content: &Content) -> Result<Markup> {
+    Ok(layout::render(
+        Head {
+            title: "Articles".to_string(),
+            description: "Articles by Arne Bahlo.".to_string(),
+            url: Url::parse("https://arne.me/articles")?,
+            og_type: OgType::Website,
+        },
+        html! {
+            h1 { "Articles" }
+            @for article in &content.articles {
+                @if !article.hidden {
+                    article.article {
+                        header {
+                            h2 {
+                                a href=(format!("/articles/{}", article.slug)) {
+                                    (article.title)
+                                }
+                            }
+                            em.article__byline {
+                                "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
+                            }
+                        }
+                        @if let Some(excerpt_html) = &article.excerpt_html {
+                            (PreEscaped(excerpt_html.clone()))
+
+                            p {
+                                a href=(format!("/articles/{}", article.slug)) {
+                                    "Read more" (PreEscaped("&hellip;"))
+                                }
+                            }
+                        } @else {
+                            p { (article.description) }
+                        }
+                    }
+                }
+            }
+        },
+        None,
+    ))
+}
+
+pub fn book_review(book_review: &BookReview) -> Result<Markup> {
+    Ok(layout::render(
+        Head {
+            title: format!("{} by {}", book_review.title, book_review.author),
+            description: format!("I read {} by {}", book_review.title, book_review.author,),
+            url: Url::parse(&format!("https://arne.me/book-review/{}", book_review.slug))?,
+            og_type: OgType::Article,
+        },
+        html! {
+            article.article {
+                header {
+                    h1 { (book_review.title) " by " (book_review.author) }
+                    em.article__byline {
+                        "Read on " (book_review.read.format("%B %e, %Y")) " in " (book_review.location) ", rated " (book_review.rating) "/5"
+                    }
+                }
+                (PreEscaped(book_review.content_html.clone()))
+            }
+        },
+        None,
+    ))
+}
+
+pub fn book_review_index(content: &Content) -> Result<Markup> {
+    Ok(layout::render(
+        Head {
+            title: "Book Reviews".to_string(),
+            description: "Every book I read gets a review and ends up here.".to_string(),
+            url: Url::parse("https://arne.me/book-reviews")?,
+            og_type: OgType::Website,
+        },
+        html! {
+            h1 { "Book reviews" }
+            @for book_review in &content.book_reviews {
+                article.article {
+                    header {
+                        h2 {
+                            a href=(format!("/book-reviews/{}", book_review.slug)) {
+                                (book_review.title) " by " (book_review.author)
+                            }
+                        }
+                        em.article__byline {
+                            "Read on on " (book_review.read.format("%B %e, %Y")) " in " (book_review.location) ", rated " (book_review.rating) "/5"
+                        }
+                    }
+                    (PreEscaped(book_review.excerpt_html.clone()))
+                    p {
+                        a href=(format!("/book-reviews/{}", book_review.slug)) {
+                            "Read more" (PreEscaped("&hellip;"))
+                        }
+                    }
+                }
+            }
+        },
+        None,
     ))
 }
 
@@ -167,6 +271,10 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
                     }
                 }
             }
+        },
+        layout::Options {
+            full_width: true,
+            ..Default::default()
         },
     ))
 }
@@ -246,6 +354,7 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
                 (subscribe_form())
             }
         },
+        None,
     ))
 }
 
@@ -265,6 +374,7 @@ pub fn page(page: &Page) -> Result<Markup> {
                 (PreEscaped(page.content_html.clone()))
             }
         },
+        None,
     ))
 }
 
@@ -321,5 +431,6 @@ pub fn projects(project: &[Project]) -> Result<Markup> {
                 }
             }
         },
+        None,
     ))
 }

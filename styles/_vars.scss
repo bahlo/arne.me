@@ -1,11 +1,17 @@
-$site-width: 680px;
+$index-width: 960px;
+$page-width: 640px;
 
-$font-size-larger: 1.138rem;
-$font-size-large: 1.067rem;
-$font-size-small: 0.937rem;
+// Typescale: 1.333 Perfect Fourth
+$font-size-hero: 2.369rem;
+$font-size-larger: 1.777rem;
+$font-size-large: 1.333rem;
+$font-size-small: 0.75rem;
 
-$color-bg: default;
-$color-link: #0000ff;
-$color-nav-link: $color-link;
-$color-heading: inherit;
-$color-nav-title: $color-heading;
+$color-bg: #fff;
+$color-fg: #111;
+$color-link: rgb(64, 64, 255);
+
+// Dark mode
+$color-dark-bg: #111;
+$color-dark-fg: #eee;
+$color-dark-link: rgb(77 116 255)

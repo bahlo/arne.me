@@ -1,9 +1,9 @@
 ---
-title: "Book Review: How to Win Friends and Influence People by Dale Carnegie"
-description: "A review of the book How to Win Friends and Influence People by Dale Carnegie"
-published: "2023-08-12"
+title: "How to Win Friends and Influence People"
+author: "Dale Carnegie"
+read: "2023-08-12"
+rating: 4
 location: "Frankfurt, Germany"
-collections: ["reading"]
 ---
 
 When I first heard of this book I immediately dismissed it, mostly due to the

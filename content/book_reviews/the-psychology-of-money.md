@@ -1,9 +1,9 @@
 ---
-title: "Book Review: The Psychology of Money by Morgan Housel"
-description: "A review of the book The Psychology of Money by Morgan Housel"
-published: "2023-06-18"
+title: "The Psychology of Money"
+author: "Morgan Housel"
+read: "2023-06-18"
+rating: 5
 location: "Frankfurt, Germany"
-collections: ["reading"]
 ---
 
 If you struggle with managing money or making smart investments, this book is your lifeline. 

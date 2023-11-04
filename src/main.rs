@@ -49,8 +49,15 @@ fn build() -> Result<()> {
     let css = grass::from_path("styles/main.scss", &sass_options)?;
     fs::write("dist/main.css", css)?;
 
-    // Generate articles
+    // Generate index
     fs::write("dist/index.html", templates::index(&content)?.into_string())?;
+
+    // Generate articles
+    fs::create_dir_all("dist/articles")?;
+    fs::write(
+        "dist/articles/index.html",
+        templates::article_index(&content)?.into_string(),
+    )?;
     for article in &content.articles {
         fs::create_dir_all(format!("dist/articles/{}", article.slug))?;
         let path = format!("dist/articles/{}/index.html", article.slug);
@@ -67,6 +74,18 @@ fn build() -> Result<()> {
         fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
         let path = format!("dist/weekly/{}/index.html", weekly_issue.num);
         fs::write(&path, templates::weekly(weekly_issue)?.into_string())?;
+    }
+
+    // Generate book reviews
+    fs::create_dir_all("dist/book-reviews")?;
+    fs::write(
+        "dist/book-reviews/index.html",
+        templates::book_review_index(&content)?.into_string(),
+    )?;
+    for book_review in &content.book_reviews {
+        fs::create_dir_all(format!("dist/book-reviews/{}", book_review.slug))?;
+        let path = format!("dist/book-reviews/{}/index.html", book_review.slug);
+        fs::write(&path, templates::book_review(book_review)?.into_string())?;
     }
 
     // Generate pages
@@ -92,6 +111,10 @@ fn build() -> Result<()> {
     // Generate RSS feeds
     fs::write("dist/feed.xml", rss::render_articles(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
+    fs::write(
+        "dist/book-reviews/feed.xml",
+        rss::render_book_reviews(&content),
+    )?;
 
     // Generate sitemap.xml
     fs::write("dist/sitemap.xml", sitemap::render(&content)?)?;
