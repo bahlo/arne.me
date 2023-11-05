@@ -6,6 +6,9 @@ body {
   padding: 1rem;
   background: $color-bg;
   color: $color-fg;
+  font-family: "Rebond Grotesque";
+  font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
+
 
   @media (prefers-color-scheme: dark) {
     background: $color-dark-bg;
@@ -23,7 +26,7 @@ a {
 }
 
 .bold {
-  font-weight: 500;
+  font-weight: bold;
 }
 
 a {
@@ -49,7 +52,7 @@ h2, h3, h4, h5, h6 {
 
 h1, h2, h3, h4, h5, h6 {
   color: $color-heading;
-  font-weight: 500;
+  font-weight: bold;
 
   @media (prefers-color-scheme: dark) {
     color: $color-dark-heading;
@@ -87,7 +90,7 @@ pre {
   }
 
   &__title {
-    font-weight: 500;
+    font-weight: bold;
     color: inherit;
   }
 }
