@@ -244,11 +244,6 @@ fn download_fonts() -> Result<()> {
             None => continue,
         };
 
-        if file.name() == "__MACOSX" {
-            // Skip macOS metadata
-            continue;
-        }
-
         if file.name().ends_with('/') {
             fs::create_dir_all(&outpath)?;
         } else {
