@@ -1,5 +1,5 @@
 use anyhow::{anyhow, Result};
-use chrono::Utc;
+use chrono::{NaiveDate, Utc};
 use maud::{html, Markup, PreEscaped};
 use std::collections::HashMap;
 use url::Url;
@@ -8,6 +8,10 @@ use crate::{
     content::{Article, BookReview, Content, Page, Project, WeeklyIssue},
     layout::{self, Head, OgType},
 };
+
+fn format_date(date: NaiveDate) -> String {
+    date.format("%B %e, %Y").to_string()
+}
 
 pub fn index(content: &Content) -> Result<Markup> {
     Ok(layout::render(
@@ -29,7 +33,7 @@ pub fn index(content: &Content) -> Result<Markup> {
                                 }
                                 br;
                                 em.article__byline {
-                                    "Published on " (article.published.format("%B %e, %Y")) " from " (article.location)
+                                    "Published on " (format_date(article.published)) " from " (article.location)
                                 }
                             }
                         }
@@ -48,7 +52,7 @@ pub fn index(content: &Content) -> Result<Markup> {
                             }
                             br;
                             em.article__byline {
-                               "Published on " (weekly_issue.published.format("%B %e, %Y"))
+                               "Published on " (format_date(weekly_issue.published))
                             }
                         }
                     }
@@ -64,7 +68,7 @@ pub fn index(content: &Content) -> Result<Markup> {
                             }
                             br;
                             em.article__byline {
-                                "Read on " (book_review.read.format("%B %e, %Y"))
+                                "Read on " (format_date(book_review.read))
                             }
                         }
                     }
@@ -93,7 +97,7 @@ pub fn article(article: &Article) -> Result<Markup> {
                 header {
                     h1 { (article.title) }
                     em.article__byline {
-                        "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
+                        "Posted on " (format_date(article.published)) " from " (article.location)
                     }
                 }
                 (PreEscaped(article.content_html.clone()))
@@ -123,7 +127,7 @@ pub fn article_index(content: &Content) -> Result<Markup> {
                                 }
                             }
                             em.article__byline {
-                                "Posted on " (article.published.format("%B %e, %Y")) " from " (article.location)
+                                "Posted on " (format_date(article.published)) " from " (article.location)
                             }
                         }
                         @if let Some(excerpt_html) = &article.excerpt_html {
@@ -161,7 +165,7 @@ pub fn book_review(book_review: &BookReview) -> Result<Markup> {
                 header {
                     h1 { (book_review.title) " by " (book_review.author) }
                     em.article__byline {
-                        "Read on " (book_review.read.format("%B %e, %Y")) " in " (book_review.location) ", rated " (book_review.rating) "/5"
+                        "Read on " (format_date(book_review.read)) " in " (book_review.location) ", rated " (book_review.rating) "/5"
                     }
                 }
                 (PreEscaped(book_review.content_html.clone()))
@@ -190,7 +194,7 @@ pub fn book_review_index(content: &Content) -> Result<Markup> {
                             }
                         }
                         em.article__byline {
-                            "Read on on " (book_review.read.format("%B %e, %Y")) " in " (book_review.location) ", rated " (book_review.rating) "/5"
+                            "Read on on " (format_date(book_review.read)) " in " (book_review.location) ", rated " (book_review.rating) "/5"
                         }
                     }
                     (PreEscaped(book_review.excerpt_html.clone()))
@@ -266,7 +270,7 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
                                     }
                                     br;
                                     em {
-                                        "Published on " (weekly.published.format("%B %e, %Y"))
+                                        "Published on " (format_date(weekly.published))
                                     }
                                 }
                             }
@@ -348,7 +352,7 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
                 header {
                     h1 { (weekly.title) }
                     em.article__byline {
-                        "Published on " (weekly.published.format("%B %e, %Y"))
+                        "Published on " (format_date(weekly.published))
                     }
                 }
                 (weekly_content(weekly)?)

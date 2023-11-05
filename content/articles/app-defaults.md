@@ -7,6 +7,8 @@ location: "Frankfurt, Germany"
 
 In episode 097 of the [Hemispheric Views](https://hemisphericviews.com/) podcast, the hosts talk about their app defaults, which has inspired some people to share their own[^1].
 
+<!-- more -->
+
 These are mine:
 
 Mail Client
