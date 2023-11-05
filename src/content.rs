@@ -511,6 +511,7 @@ fn render_markdown(markdown: String) -> Result<String> {
         .superscript(true)
         .header_ids(Some("".to_string()))
         .footnotes(true)
+        .description_lists(true)
         .build()
         .context("Failed to build extension options")?;
     let options = comrak::Options {

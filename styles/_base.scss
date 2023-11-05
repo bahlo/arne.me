@@ -84,6 +84,22 @@ pre {
   overflow-x: scroll;
 }
 
+dl {
+  dt {
+    font-weight: bold;
+    float: left;
+    margin-right: 4px;
+
+    &:after {
+      content: ':';
+    }
+  }
+}
+
+sup {
+  vertical-align: top;
+}
+
 .nav {
   &.nav {
     margin-bottom: 2rem;
