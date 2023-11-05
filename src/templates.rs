@@ -148,7 +148,10 @@ pub fn article_index(content: &Content) -> Result<Markup> {
 pub fn book_review(book_review: &BookReview) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: format!("{} by {}", book_review.title, book_review.author),
+            title: format!(
+                "Book Review: {} by {}",
+                book_review.title, book_review.author
+            ),
             description: format!("I read {} by {}", book_review.title, book_review.author,),
             url: Url::parse(&format!("https://arne.me/book-review/{}", book_review.slug))?,
             og_type: OgType::Article,
