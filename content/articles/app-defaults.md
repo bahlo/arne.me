@@ -59,7 +59,7 @@ Chat
 
 Bookmarks
 
-: n/a
+: Safari
 
 Read It Later
 
