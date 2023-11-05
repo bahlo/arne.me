@@ -25,20 +25,18 @@ pub fn index(content: &Content) -> Result<Markup> {
             section.index {
                 section.index__column {
                     h1 { "Articles" }
-                    @for article in content.articles.iter().take(5) {
-                        @if !article.hidden {
-                            article.article {
-                                a.bold href=(format!("/articles/{}", article.slug)) {
-                                    (article.title)
-                                }
-                                br;
-                                em.article__byline {
-                                    "Published on " (format_date(article.published)) " from " (article.location)
-                                }
+                    @for article in content.articles.iter().filter(|article| !article.hidden).take(5) {
+                        article.article {
+                            a.bold href=(format!("/articles/{}", article.slug)) {
+                                (article.title)
+                            }
+                            br;
+                            em.article__byline {
+                                "Published on " (format_date(article.published)) " from " (article.location)
                             }
                         }
                     }
-                    @if content.articles.len() > 5 {
+                    @if content.articles.len() > 6 { // HACK: one is hidden
                         br;
                         a.index__more href="/articles" { (&(content.articles.len() - 5)) " more →" }
                     }
