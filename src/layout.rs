@@ -64,10 +64,9 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
                 div.sitewrapper.sitewrapper--page[!options.full_width] {
                     @if options.is_index {
                         .hero {
-                            h1.hero__heading { "Hey, I'm Arne—" }
-                            p {
-                                "a developer, podcaster & dad based near Frankfurt, Germany. Having worked with a variety of technologies and stacks, from frontend to backend to databases, I know my way around building accessible and safe applications and tools. "
-                                "In my free time I like to play with my kids, work on side projects, play chess and read books."
+                            h1.hero__heading { "Hej, I'm Arne—" }
+                            p.hero__subheading {
+                                "a developer, podcaster & dad based near Frankfurt, Germany."
                             }
                         }
                     } @else {

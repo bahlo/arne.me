@@ -1,3 +1,7 @@
+html {
+  font-size: 110%;
+}
+
 body {
   padding: 1rem;
   background: $color-bg;
@@ -44,10 +48,11 @@ h2, h3, h4, h5, h6 {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Test Signifier";
+  color: $color-heading;
+  font-weight: 500;
 
-  a {
-    border-bottom-width: 2px;
+  @media (prefers-color-scheme: dark) {
+    color: $color-dark-heading;
   }
 }
 
@@ -55,8 +60,9 @@ h1, h2, h3, h4, h5, h6 {
   max-width: $page-width;
   display: flex;
   justify-content: space-between;
+  font-size: $font-size-small;
   &.footer { 
-    margin-top: 2rem;
+    margin-top: 0; // We already have a br
   }
 
   @media (max-width: $page-width) {
@@ -145,6 +151,10 @@ main {
   max-width: $page-width;
 
   &__heading {
+    font-size: $font-size-larger;
+  }
+
+  &__subheading {
     font-size: $font-size-large;
   }
 }

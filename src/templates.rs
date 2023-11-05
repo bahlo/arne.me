@@ -55,7 +55,7 @@ pub fn index(content: &Content) -> Result<Markup> {
                     br;
                     a.index__more href="/weekly" { (&(content.weekly.len() - 5)) " more →" }
                 }
-                section.index_column {
+                section.index__column {
                     h1 { "Book Reviews" }
                     @for book_review in content.book_reviews.iter().take(5) {
                         article.article {
