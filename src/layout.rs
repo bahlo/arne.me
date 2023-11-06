@@ -45,10 +45,11 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
         html lang="en" {
             head {
                 title { (meta.title) }
+                meta charset="utf-8";
                 meta name="title" content=(smart_quotes(meta.title.clone()));
                 meta name="description" content=(smart_quotes(meta.description.clone()));
                 meta name="author" content="Arne Bahlo";
-                meta charset="utf-8";
+                meta name="theme-color" content="rgb(64, 64, 255)";
                 meta name="viewport" content="width=device-width,initial-scale=1";
                 meta property="og:type" content=(meta.og_type);
                 meta property="og:url" content=(meta.url);
