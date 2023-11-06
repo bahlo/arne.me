@@ -3,6 +3,7 @@
 
   &__byline {
     color: $color-light;
+    font-size: $font-size-small;
 
     @media (prefers-color-scheme: dark) {
       color: $color-dark-light;

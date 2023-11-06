@@ -25,10 +25,6 @@ a {
   }
 }
 
-.bold {
-  font-weight: bold;
-}
-
 a {
   text-decoration: none;
   color: $color-link;
@@ -53,6 +49,7 @@ h2, h3, h4, h5, h6 {
 h1, h2, h3, h4, h5, h6 {
   color: $color-heading;
   font-weight: bold;
+  line-height: 1.2;
 
   @media (prefers-color-scheme: dark) {
     color: $color-dark-heading;

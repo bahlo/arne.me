@@ -36,10 +36,11 @@ pub fn index(content: &Content) -> Result<Markup> {
                     h1 { "Articles" }
                     @for article in content.articles.iter().filter(|article| !article.hidden).take(5) {
                         article.article {
-                            a.bold href=(format!("/articles/{}", article.slug)) {
-                                (article.title)
+                            h2 {
+                                a href=(format!("/articles/{}", article.slug)) {
+                                    (article.title)
+                                }
                             }
-                            br;
                             em.article__byline {
                                 (format_date(article.published))
                             }
@@ -54,10 +55,11 @@ pub fn index(content: &Content) -> Result<Markup> {
                     h1 { "Weekly" }
                     @for weekly_issue in content.weekly.iter().take(5) {
                         article.article {
-                            a.bold href=(format!("/weekly/{}", weekly_issue.num)) {
-                                (weekly_issue.title)
+                            h2 {
+                                a href=(format!("/weekly/{}", weekly_issue.num)) {
+                                    (weekly_issue.title)
+                                }
                             }
-                            br;
                             em.article__byline {
                                (format_date(weekly_issue.published))
                             }
@@ -70,10 +72,11 @@ pub fn index(content: &Content) -> Result<Markup> {
                     h1 { "Book Reviews" }
                     @for book_review in content.book_reviews.iter().take(5) {
                         article.article {
-                            a.bold href=(format!("/book-reviews/{}", book_review.slug)) {
-                                (book_review.title) " by " (book_review.author)
+                            h2 {
+                                a href=(format!("/book-reviews/{}", book_review.slug)) {
+                                    (book_review.title) " by " (book_review.author)
+                                }
                             }
-                            br;
                             em.article__byline {
                                 (format_date(book_review.read))
                             }
