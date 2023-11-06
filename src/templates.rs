@@ -274,11 +274,12 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
                         ul.weekly__list {
                             @for weekly in issues {
                                 li.weekly__item {
-                                    a href=(format!("/weekly/{}", weekly.num)) {
-                                        (weekly.title)
+                                    h3 {
+                                        a href=(format!("/weekly/{}", weekly.num)) {
+                                            (weekly.title)
+                                        }
                                     }
-                                    br;
-                                    em {
+                                    .weekly__byline {
                                         (format_date(weekly.published))
                                     }
                                 }

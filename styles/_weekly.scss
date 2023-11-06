@@ -30,4 +30,13 @@
       margin-top: .5rem;
     }
   }
+
+  &__byline {
+    color: $color-light;
+    font-style: italic;
+
+    @media (prefers-color-scheme: dark) {
+      color: $color-dark-light;
+    }
+  }
 }

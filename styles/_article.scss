@@ -1,3 +1,11 @@
 .article {
   @include stack(.5rem);
+
+  &__byline {
+    color: $color-light;
+
+    @media (prefers-color-scheme: dark) {
+      color: $color-dark-light;
+    }
+  }
 }
