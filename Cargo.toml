@@ -29,6 +29,7 @@ quick-xml = { version ="0.31", features = ["serialize"] }
 regex = "1"
 rss = "2"
 serde = { version = "1", features = ["derive"] }
+syntect = "5.1.0"
 tempdir = "0.3.7"
 tungstenite = { version = "0.20", optional = true }
 ureq = "2.8.0"

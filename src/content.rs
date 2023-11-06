@@ -1,15 +1,17 @@
 use anyhow::{anyhow, Context, Result};
 use chrono::NaiveDate;
-use comrak::Arena;
+use comrak::markdown_to_html_with_plugins;
 use crowbook_text_processing::clean;
 use gray_matter::{engine::YAML, Matter};
 use regex::Regex;
 use serde::Deserialize;
 use std::{
     cmp::Ordering,
+    collections::HashMap,
     fs::{self, DirEntry, File},
-    io::prelude::*,
+    io::{self, prelude::*},
 };
+use syntect::{html::ClassedHTMLGenerator, parsing::SyntaxSet, util::LinesWithEndings};
 use url::Url;
 
 pub fn smart_quotes(text: impl Into<String>) -> String {
@@ -524,8 +526,77 @@ impl Content {
     }
 }
 
+struct SyntectAdapter {
+    syntax_set: syntect::parsing::SyntaxSet,
+}
+
+impl SyntectAdapter {
+    pub fn new() -> Self {
+        SyntectAdapter {
+            syntax_set: syntect::parsing::SyntaxSet::load_defaults_newlines(),
+        }
+    }
+}
+
+impl comrak::adapters::SyntaxHighlighterAdapter for SyntectAdapter {
+    fn write_highlighted(
+        &self,
+        output: &mut dyn Write,
+        lang: Option<&str>,
+        code: &str,
+    ) -> Result<(), io::Error> {
+        let lang: &str = match lang {
+            Some("nix") | Some("shell") | Some("typescript") => "Plain Text",
+            Some(l) if !l.is_empty() => l,
+            _ => "Plain Text",
+        };
+
+        dbg!(&lang);
+
+        let syntax = self
+            .syntax_set
+            .find_syntax_by_token(lang)
+            .ok_or(io::Error::new(
+                io::ErrorKind::Other,
+                format!("No syntax highlighting for {}", lang),
+            ))?;
+        let syntax_set = SyntaxSet::load_defaults_newlines();
+
+        let mut html_generator = ClassedHTMLGenerator::new_with_class_style(
+            syntax,
+            &syntax_set,
+            syntect::html::ClassStyle::Spaced,
+        );
+
+        for line in LinesWithEndings::from(code) {
+            html_generator
+                .parse_html_for_line_which_includes_newline(line)
+                .map_err(|e| {
+                    io::Error::new(io::ErrorKind::Other, format!("Failed to parse line: {}", e))
+                })?;
+        }
+
+        output.write_all(html_generator.finalize().as_bytes())
+    }
+
+    fn write_pre_tag(
+        &self,
+        output: &mut dyn Write,
+        attributes: HashMap<String, String>,
+    ) -> Result<(), io::Error> {
+        comrak::html::write_opening_tag(output, "pre", attributes)
+    }
+
+    fn write_code_tag(
+        &self,
+        output: &mut dyn Write,
+        attributes: HashMap<String, String>,
+    ) -> Result<(), io::Error> {
+        comrak::html::write_opening_tag(output, "pre", attributes)
+    }
+}
+
 fn render_markdown(markdown: String) -> Result<String> {
-    let arena = Arena::new();
     let render = comrak::RenderOptionsBuilder::default()
         .unsafe_(true)
         .build()
@@ -549,10 +620,15 @@ fn render_markdown(markdown: String) -> Result<String> {
         extension,
         parse,
     };
+    let syntect_adapter = SyntectAdapter::new();
+    let render_plugins = comrak::RenderPluginsBuilder::default()
+        .codefence_syntax_highlighter(Some(&syntect_adapter))
+        .build()
+        .context("Failed to build render plugins")?;
+    let plugins = comrak::PluginsBuilder::default()
+        .render(render_plugins)
+        .build()
+        .context("Failed to build plugins")?;
 
-    let root = comrak::parse_document(&arena, &markdown, &options);
-
-    let mut html = vec![];
-    comrak::format_html(root, &options, &mut html)?;
-    Ok(String::from_utf8(html)?)
+    Ok(markdown_to_html_with_plugins(&markdown, &options, &plugins))
 }

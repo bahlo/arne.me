@@ -98,7 +98,7 @@ If you follow along, make sure to replace `<keyID>` and `<applicationKey>`.
 By the way, NixOS comes with nano preinstalled, so if you want a real editor,
 you can get it with the following command:
 
-```shell
+```sh
 $ nix-shell -p vim
 ```
 
@@ -205,7 +205,7 @@ Plex needs an initial configuration, but only allows it if it's coming from a
 local connection.
 One way to do this is an SSH tunnel, which I opened like this:
 
-```shell
+```sh
 $ ssh -L 32400:localhost:32400 user@domain-or-ip
 ```
 

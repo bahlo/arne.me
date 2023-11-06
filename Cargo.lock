@@ -143,6 +143,7 @@ dependencies = [
  "rss",
  "scraper",
  "serde",
+ "syntect",
  "tempdir",
  "tungstenite",
  "ureq",
