@@ -85,7 +85,7 @@ blockquote {
   padding: .5rem 1rem;
 
   border-left: 4px solid $color-blockquote;
-  background: $color-dark-blockquote-bg;
+  background: $color-blockquote-bg;
 
   @media (prefers-color-scheme: dark) {
     border-color: $color-dark-blockquote;
