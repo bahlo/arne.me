@@ -1,5 +1,5 @@
 use anyhow::{anyhow, Result};
-use chrono::{NaiveDate, Utc};
+use chrono::{Datelike, NaiveDate, Utc};
 use maud::{html, Markup, PreEscaped};
 use std::collections::HashMap;
 use url::Url;
@@ -9,8 +9,17 @@ use crate::{
     layout::{self, Head, OgType},
 };
 
-fn format_date(date: NaiveDate) -> String {
-    date.format("%B %e, %Y").to_string()
+fn format_date(date: NaiveDate) -> Markup {
+    html! {
+        (date.format("%B %e").to_string())
+        @match date.day() {
+            1 => sup { "st" },
+            2 => sup { "nd" },
+            3 => sup { "rd" },
+            _ => sup { "th" },
+        }
+        (date.format(", %Y").to_string())
+    }
 }
 
 pub fn index(content: &Content) -> Result<Markup> {
