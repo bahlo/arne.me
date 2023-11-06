@@ -82,8 +82,15 @@ code {
 
 blockquote {
   font-style: italic;
-  border-left: 2px solid black;
-  padding-left: 8px;
+  padding: .5rem 1rem;
+
+  border-left: 4px solid $color-blockquote;
+  background: $color-dark-blockquote-bg;
+
+  @media (prefers-color-scheme: dark) {
+    border-color: $color-dark-blockquote;
+    background: $color-dark-blockquote-bg;
+  }
 }
 
 pre {
