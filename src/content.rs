@@ -1,5 +1,7 @@
 use anyhow::{anyhow, Context, Result};
 use chrono::NaiveDate;
+use comrak::Arena;
+use crowbook_text_processing::clean;
 use gray_matter::{engine::YAML, Matter};
 use regex::Regex;
 use serde::Deserialize;
@@ -9,6 +11,10 @@ use std::{
     io::prelude::*,
 };
 use url::Url;
+
+pub fn smart_quotes(text: impl Into<String>) -> String {
+    clean::quotes(text.into()).to_string()
+}
 
 #[derive(Debug, Default)]
 pub struct Content {
@@ -228,9 +234,9 @@ impl Content {
 
             articles.push(Article {
                 slug,
-                title: frontmatter.title,
-                description: frontmatter.description,
-                location: frontmatter.location,
+                title: smart_quotes(frontmatter.title),
+                description: smart_quotes(frontmatter.description),
+                location: smart_quotes(frontmatter.location),
                 published: frontmatter.published,
                 updated: frontmatter.updated,
                 hidden: frontmatter.hidden,
@@ -307,11 +313,11 @@ impl Content {
 
             book_reviews.push(BookReview {
                 slug,
-                title: frontmatter.title,
-                author: frontmatter.author,
+                title: smart_quotes(frontmatter.title),
+                author: smart_quotes(frontmatter.author),
                 read: frontmatter.read,
                 rating: frontmatter.rating,
-                location: frontmatter.location,
+                location: smart_quotes(frontmatter.location),
                 excerpt_html,
                 content_html,
             });
@@ -388,7 +394,7 @@ impl Content {
 
             weekly_issues.push(WeeklyIssue {
                 num,
-                title: frontmatter.title,
+                title: smart_quotes(frontmatter.title),
                 published: frontmatter.date, // TODO: Rename frontmatter to published
                 toot_of_the_week: frontmatter.toot_of_the_week,
                 tweet_of_the_week: frontmatter.tweet_of_the_week,
@@ -436,8 +442,8 @@ impl Content {
 
         Ok(Page {
             slug,
-            title: frontmatter.title,
-            description: frontmatter.description,
+            title: smart_quotes(frontmatter.title),
+            description: smart_quotes(frontmatter.description),
             content_html,
         })
     }
@@ -483,7 +489,7 @@ impl Content {
             let content_html = render_markdown(markdown.content)?;
 
             projects.push(Project {
-                title: frontmatter.title,
+                title: smart_quotes(frontmatter.title),
                 url: frontmatter.url,
                 from: frontmatter.from,
                 to: frontmatter.to,
@@ -504,6 +510,7 @@ impl Content {
 }
 
 fn render_markdown(markdown: String) -> Result<String> {
+    let arena = Arena::new();
     let extension = comrak::ExtensionOptionsBuilder::default()
         .strikethrough(true)
         .tagfilter(true)
@@ -518,11 +525,26 @@ fn render_markdown(markdown: String) -> Result<String> {
         extension,
         ..Default::default()
     };
-    // let syntex_adapter = SyntectAdapter::new(
-    //     "InspiredGitHub"
-    // );
-    // let mut plugins = comrak::Plugins::default();
-    // plugins.render.codefence_syntax_highlighter = Some(&syntex_adapter);
-    // let content_html = comrak::markdown_to_html_with_plugins(&contents, &options, &plugins);
-    Ok(comrak::markdown_to_html(&markdown, &options))
+
+    let root = comrak::parse_document(&arena, &markdown, &options);
+
+    // Convert to smart quotes
+    fn iter_nodes<'a, F>(node: &'a comrak::nodes::AstNode<'a>, f: &F)
+    where
+        F: Fn(&'a comrak::nodes::AstNode<'a>),
+    {
+        f(node);
+        for c in node.children() {
+            iter_nodes(c, f);
+        }
+    }
+    iter_nodes(root, &|node| {
+        if let comrak::nodes::NodeValue::Text(text) = &mut node.data.borrow_mut().value {
+            *text = smart_quotes((*text).clone());
+        }
+    });
+
+    let mut html = vec![];
+    comrak::format_html(root, &options, &mut html)?;
+    Ok(String::from_utf8(html)?)
 }

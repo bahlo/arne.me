@@ -116,6 +116,7 @@ dependencies = [
  "chrono",
  "clap",
  "comrak",
+ "crowbook-text-processing",
  "grass",
  "gray_matter",
  "maud",
@@ -412,6 +413,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5a22b2d63d4d1dc0b7f1b6b2747dd0088008a9be28b6ddf0b1e7d335e3037294"
 dependencies = [
  "cfg-if",
+]
+
+[[package]]
+name = "crowbook-text-processing"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a749441fe0b30ba727c31367438f7e2f001e6ec23d3c5f417834f2fa17098a27"
+dependencies = [
+ "lazy_static",
+ "regex",
 ]
 
 [[package]]
@@ -820,6 +831,12 @@ checksum = "aeb7b21a526375c5ca55f1a6dfd4e1fad9fa4edd750f530252a718a44b2608f0"
 dependencies = [
  "hashbrown 0.11.2",
 ]
+
+[[package]]
+name = "lazy_static"
+version = "1.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "libc"
