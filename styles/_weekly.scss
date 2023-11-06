@@ -22,4 +22,12 @@
   &__item {
     break-inside: avoid;
   }
+
+  &__subscribe_form {
+    small {
+      display: block;
+      line-height: 1.2;
+      margin-top: .5rem;
+    }
+  }
 }

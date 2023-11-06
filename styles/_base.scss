@@ -106,6 +106,41 @@ sup {
   vertical-align: top;
 }
 
+input {
+  border-radius: 4px;
+  border: none;
+  padding: .25rem .5rem;
+  margin-left: 4px;
+  line-height: 1.5;
+
+  &[type="email"] {
+    background: $color-input-bg;
+
+    @media (prefers-color-scheme: dark) {
+      background: $color-dark-input-bg;
+    }
+  }
+
+  &[type="submit"] {
+    background: $color-link;
+    color: $color-button;
+    cursor: pointer;
+
+    &:hover {
+      background: darken($color-dark-button-bg, 10%);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: $color-dark-button-bg;
+      color: $color-dark-fg;
+
+      &:hover {
+        background: darken($color-button-bg, 10%);
+      }
+    }
+  }
+}
+
 .nav {
   &.nav {
     margin-bottom: 2rem;

@@ -12,9 +12,14 @@ $color-bg: #f5f5f5;
 $color-fg: #333;
 $color-heading: #111;
 $color-link: rgb(64, 64, 255);
+$color-input-bg: #ddd;
+$color-button-bg: darken($color-link, 10%);
+$color-button: #fff;
 
 // Dark mode
 $color-dark-bg: #111;
 $color-dark-fg: #ccc;
 $color-dark-heading: #eee;
-$color-dark-link: rgb(77 116 255)
+$color-dark-link: lighten($color-link, 10%);
+$color-dark-input-bg: #333;
+$color-dark-button-bg: darken($color-dark-link, 10%);

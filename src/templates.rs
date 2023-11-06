@@ -219,7 +219,7 @@ pub fn book_review_index(content: &Content) -> Result<Markup> {
 
 fn subscribe_form() -> Markup {
     html! {
-        form.subscribe-form action="https://buttondown.email/api/emails/embed-subscribe/arnesweekly" method="post" {
+        form.weekly__subscribe_form action="https://buttondown.email/api/emails/embed-subscribe/arnesweekly" method="post" {
             label for="email" { "Email address:" }
             input required type="email" name="email" id="email" placeholder="you@example.org";
             input type="submit" value="Subscribe";
