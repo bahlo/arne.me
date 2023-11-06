@@ -1,5 +1,10 @@
 .weekly {
-  @include stack(.5rem);
+  @include stack;
+
+  &__header {
+    max-width: $page-width;
+    @include stack(.5rem);
+  }
 
   &__overview {
     column-width: 308px;

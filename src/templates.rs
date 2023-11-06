@@ -258,11 +258,13 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
         },
         html! {
             section.weekly {
-                h1 { "Arne’s Weekly" }
-                p { "A weekly newsletter with the best stories of the internet. There’s an "
-                    a href="/weekly/feed.xml" { "RSS Feed" }
-                    " available, but you should really subscribe:" }
-                (subscribe_form())
+                header.weekly__header {
+                    h1 { "Arne’s Weekly" }
+                    p { "A weekly newsletter with the best stories of the internet. There’s an "
+                        a href="/weekly/feed.xml" { "RSS Feed" }
+                        " available, but you should really subscribe:" }
+                    (subscribe_form())
+                }
                 h2 { "Archive" }
                 .weekly__overview {
                     @for (year, issues) in weekly_by_year {

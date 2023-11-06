@@ -155,6 +155,7 @@ main {
 
   @media (max-width: $index-width) {
     @include stack;
+    max-width: $page-width;
   }
 
   @media (min-width: $index-width) {
