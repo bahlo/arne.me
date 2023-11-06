@@ -170,7 +170,7 @@ extensions.
 If you want to see real, working code (I know I often do), check out the endpoint
 that powers the OG images of my book reviews:
 [`pages/books/[...slug]/og-image.png.ts`](https://github.com/bahlo/arne.me/blob/main/src/pages/books/%5B...slug%5D/og-image.png.ts). 
-This is what it looks like: [OG image of a book review](/books/the-design-of-everyday-things/og-image.png).
+This is what it looks like: [OG image of a book review](https://2023.arne.me/books/the-design-of-everyday-things/og-image.png).
 
 Did I miss anything? Can this workflow be further improved?
 [Drop me an email](mailto:hey@arne.me) or [@ me in the Fediverse](https://spezi.social/@arne), 
