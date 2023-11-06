@@ -3,7 +3,7 @@ use maud::{html, Markup, PreEscaped, DOCTYPE};
 use std::fmt::Display;
 use url::Url;
 
-use crate::content::smart_quotes;
+use crate::{content::smart_quotes, GIT_SHA, GIT_SHA_SHORT};
 
 #[derive(Debug)]
 pub struct Head {
@@ -80,20 +80,37 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
                     }
                     br;
                     footer.footer {
+                        nav.footer__pages {
+                            div {
+                                a href="/articles" { "Articles" }
+                                br;
+                                a href="/weekly" { "Weekly" }
+                                br;
+                                a href="/book-reviews" { "Book Reviews" }
+                            }
+                            div {
+                                a href="/now" { "Now" }
+                                br;
+                                a href="/projects" { "Projects" }
+                                br;
+                                a href="/contact" { "Contact" }
+                            }
+                            div {
+                                a href="/colophon" { "Colophon" }
+                                br;
+                                a href="/accessibility" { "Accessibility" }
+                                br;
+                                a href="/imprint" { "Imprint" }
+                            }
+                            br; // Looks better with this in HTML only
+                        }
                         span.footer_copyright {
                             (PreEscaped("&copy; 2021 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
-                        }
-                        br;
-                        span.footer__pages {
-                            a href="/projects" { "Projects" }
-                            " // "
-                            a href="/contact" { "Contact" }
-                            " // "
-                            a href="/colophon" { "Colophon" }
-                            " // "
-                            a href="/accessibility" { "A11y" }
-                            " // "
-                            a href="/imprint" { "Imprint" }
+                            br;
+                            "Commit "
+                            a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
+                            br;
+                            "Made with ♥"
                         }
                     }
                 }

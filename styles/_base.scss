@@ -70,13 +70,36 @@ code {
   display: flex;
   justify-content: space-between;
   font-size: $font-size-small;
+  color: $color-light;
   &.footer { 
     margin-top: 0; // We already have a br
   }
 
-  @media (max-width: $page-width) {
-    @include stack;
+  @media (prefers-color-scheme: dark) {
+    color: $color-dark-light;
+  }
+
+  @media (max-width: 600px) {
     display: block;
+
+    &__pages {
+      margin-bottom: 1rem;
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__pages {
+    display: flex;
+    gap: 1rem;
+    order: 1;
   }
 }
 

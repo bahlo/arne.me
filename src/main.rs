@@ -1,10 +1,12 @@
 use anyhow::{anyhow, bail, Result};
 use clap::Parser;
+use lazy_static::lazy_static;
 use std::{
     env,
     fs::{self, File},
     io,
     path::Path,
+    process::Command,
 };
 use tempdir::TempDir;
 use zip::ZipArchive;
@@ -16,6 +18,17 @@ mod sitemap;
 mod templates;
 
 use crate::content::Content;
+
+lazy_static! {
+    pub static ref GIT_SHA: String = {
+        let output = Command::new("git")
+            .args(&["rev-parse", "HEAD"])
+            .output()
+            .expect("Failed to eecute git command");
+        String::from_utf8(output.stdout).expect("Failed to parse git output")
+    };
+    pub static ref GIT_SHA_SHORT: String = GIT_SHA.chars().take(7).collect();
+}
 
 #[derive(Debug, Parser)]
 struct Cli {

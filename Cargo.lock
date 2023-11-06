@@ -119,6 +119,7 @@ dependencies = [
  "crowbook-text-processing",
  "grass",
  "gray_matter",
+ "lazy_static",
  "maud",
  "quick-xml 0.31.0",
  "regex",
