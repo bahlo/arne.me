@@ -34,6 +34,9 @@
   &__byline {
     color: $color-light;
     font-style: italic;
+    font-size: $font-size-small;
+    display: block;
+    margin-top: 0;
 
     @media (prefers-color-scheme: dark) {
       color: $color-dark-light;

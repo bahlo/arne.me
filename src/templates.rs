@@ -279,7 +279,7 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
                                             (weekly.title)
                                         }
                                     }
-                                    .weekly__byline {
+                                    span.weekly__byline {
                                         (format_date(weekly.published))
                                     }
                                 }
