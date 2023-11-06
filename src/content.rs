@@ -521,28 +521,17 @@ fn render_markdown(markdown: String) -> Result<String> {
         .description_lists(true)
         .build()
         .context("Failed to build extension options")?;
+    let parse = comrak::ParseOptionsBuilder::default()
+        .smart(true)
+        .build()
+        .context("Failed to build parse options")?;
     let options = comrak::Options {
         extension,
+        parse,
         ..Default::default()
     };
 
     let root = comrak::parse_document(&arena, &markdown, &options);
-
-    // Convert to smart quotes
-    fn iter_nodes<'a, F>(node: &'a comrak::nodes::AstNode<'a>, f: &F)
-    where
-        F: Fn(&'a comrak::nodes::AstNode<'a>),
-    {
-        f(node);
-        for c in node.children() {
-            iter_nodes(c, f);
-        }
-    }
-    iter_nodes(root, &|node| {
-        if let comrak::nodes::NodeValue::Text(text) = &mut node.data.borrow_mut().value {
-            *text = smart_quotes((*text).clone());
-        }
-    });
 
     let mut html = vec![];
     comrak::format_html(root, &options, &mut html)?;
