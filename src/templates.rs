@@ -32,7 +32,7 @@ pub fn index(content: &Content) -> Result<Markup> {
                             }
                             br;
                             em.article__byline {
-                                "Published on " (format_date(article.published)) " from " (article.location)
+                                (format_date(article.published))
                             }
                         }
                     }
@@ -50,7 +50,7 @@ pub fn index(content: &Content) -> Result<Markup> {
                             }
                             br;
                             em.article__byline {
-                               "Published on " (format_date(weekly_issue.published))
+                               (format_date(weekly_issue.published))
                             }
                         }
                     }
@@ -66,7 +66,7 @@ pub fn index(content: &Content) -> Result<Markup> {
                             }
                             br;
                             em.article__byline {
-                                "Read on " (format_date(book_review.read))
+                                (format_date(book_review.read))
                             }
                         }
                     }
@@ -268,7 +268,7 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
                                     }
                                     br;
                                     em {
-                                        "Published on " (format_date(weekly.published))
+                                        (format_date(weekly.published))
                                     }
                                 }
                             }
