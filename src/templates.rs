@@ -22,13 +22,14 @@ fn format_date(date: NaiveDate) -> Markup {
     }
 }
 
-pub fn index(content: &Content) -> Result<Markup> {
+pub fn index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: "Arne Bahlo".to_string(),
-            description: "Arne Bahlo's personal website".to_string(),
+            title: "Arne Bahlo",
+            description: "Arne Bahlo's personal website",
             url: Url::parse("https://arne.me")?,
             og_type: OgType::Website,
+            css_hash: css_hash.as_ref(),
         },
         html! {
             section.index {
@@ -91,13 +92,14 @@ pub fn index(content: &Content) -> Result<Markup> {
     ))
 }
 
-pub fn article(article: &Article) -> Result<Markup> {
+pub fn article(article: &Article, css_hash: impl AsRef<str>) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: article.title.clone(),
-            description: article.description.clone(),
+            title: &article.title,
+            description: &article.description,
             url: Url::parse(&format!("https://arne.me/articles/{}", article.slug))?,
             og_type: OgType::Article,
+            css_hash: css_hash.as_ref(),
         },
         html! {
             article.article {
@@ -114,13 +116,14 @@ pub fn article(article: &Article) -> Result<Markup> {
     ))
 }
 
-pub fn article_index(content: &Content) -> Result<Markup> {
+pub fn article_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: "Articles".to_string(),
-            description: "Articles by Arne Bahlo.".to_string(),
+            title: "Articles",
+            description: "Articles by Arne Bahlo.",
             url: Url::parse("https://arne.me/articles")?,
             og_type: OgType::Website,
+            css_hash: css_hash.as_ref(),
         },
         html! {
             h1 { "Articles" }
@@ -156,16 +159,17 @@ pub fn article_index(content: &Content) -> Result<Markup> {
     ))
 }
 
-pub fn book_review(book_review: &BookReview) -> Result<Markup> {
+pub fn book_review(book_review: &BookReview, css_hash: impl AsRef<str>) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: format!(
+            title: &format!(
                 "Book Review: {} by {}",
                 book_review.title, book_review.author
             ),
-            description: format!("I read {} by {}", book_review.title, book_review.author,),
+            description: &format!("I read {} by {}", book_review.title, book_review.author,),
             url: Url::parse(&format!("https://arne.me/book-review/{}", book_review.slug))?,
             og_type: OgType::Article,
+            css_hash: css_hash.as_ref(),
         },
         html! {
             article.article {
@@ -182,13 +186,14 @@ pub fn book_review(book_review: &BookReview) -> Result<Markup> {
     ))
 }
 
-pub fn book_review_index(content: &Content) -> Result<Markup> {
+pub fn book_review_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: "Book Reviews".to_string(),
-            description: "Every book I read gets a review and ends up here.".to_string(),
+            title: "Book Reviews",
+            description: "Every book I read gets a review and ends up here.",
             url: Url::parse("https://arne.me/book-reviews")?,
             og_type: OgType::Website,
+            css_hash: css_hash.as_ref(),
         },
         html! {
             h1 { "Book reviews" }
@@ -233,7 +238,7 @@ fn subscribe_form() -> Markup {
     }
 }
 
-pub fn weekly_index(content: &Content) -> Result<Markup> {
+pub fn weekly_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
     let mut weekly_by_year = content
         .weekly
         .iter()
@@ -251,10 +256,11 @@ pub fn weekly_index(content: &Content) -> Result<Markup> {
 
     Ok(layout::render(
         Head {
-            title: "Arne’s Weekly".to_string(),
-            description: "A weekly newsletter with the best stories of the internet.".to_string(),
+            title: "Arne’s Weekly",
+            description: "A weekly newsletter with the best stories of the internet.",
             url: Url::parse("https://arne.me/weekly")?,
             og_type: OgType::Website,
+            css_hash: css_hash.as_ref(),
         },
         html! {
             section.weekly {
@@ -349,13 +355,14 @@ pub fn weekly_content(weekly: &WeeklyIssue) -> Result<Markup> {
     })
 }
 
-pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
+pub fn weekly(weekly: &WeeklyIssue, css_hash: impl AsRef<str>) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: weekly.title.clone(),
-            description: format!("Arne's Weekly #{}", weekly.num),
+            title: &weekly.title,
+            description: &format!("Arne's Weekly #{}", weekly.num),
             url: Url::parse(&format!("https://arne.me/weekly/{}", weekly.num))?,
             og_type: OgType::Article,
+            css_hash: css_hash.as_ref(),
         },
         html! {
             article.article {
@@ -375,13 +382,14 @@ pub fn weekly(weekly: &WeeklyIssue) -> Result<Markup> {
     ))
 }
 
-pub fn page(page: &Page) -> Result<Markup> {
+pub fn page(page: &Page, css_hash: impl AsRef<str>) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: page.title.clone(),
-            description: page.description.clone(),
+            title: &page.title,
+            description: &page.description,
             url: Url::parse(&format!("https://arne.me/{}", page.slug))?,
             og_type: OgType::Website,
+            css_hash: css_hash.as_ref(),
         },
         html! {
             section.page {
@@ -424,13 +432,14 @@ fn render_project(project: &Project) -> Markup {
     }
 }
 
-pub fn projects(project: &[Project]) -> Result<Markup> {
+pub fn projects(project: &[Project], css_hash: impl AsRef<str>) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: "Projects".to_string(),
-            description: "Some projects I've worked on".to_string(),
+            title: "Projects",
+            description: "Some projects I've worked on",
             url: Url::parse("https://arne.me/projects")?,
             og_type: OgType::Website,
+            css_hash: css_hash.as_ref(),
         },
         html! {
             article.article {

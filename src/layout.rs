@@ -6,11 +6,12 @@ use url::Url;
 use crate::{content::smart_quotes, GIT_SHA, GIT_SHA_SHORT};
 
 #[derive(Debug)]
-pub struct Head {
-    pub title: String,
-    pub description: String,
+pub struct Head<'a> {
+    pub title: &'a str,
+    pub description: &'a str,
     pub url: Url,
     pub og_type: OgType,
+    pub css_hash: &'a str,
 }
 
 #[allow(dead_code)]
@@ -46,8 +47,8 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
             head {
                 title { (meta.title) }
                 meta charset="utf-8";
-                meta name="title" content=(smart_quotes(meta.title.clone()));
-                meta name="description" content=(smart_quotes(meta.description.clone()));
+                meta name="title" content=(smart_quotes(meta.title));
+                meta name="description" content=(smart_quotes(meta.description));
                 meta name="author" content="Arne Bahlo";
                 meta name="theme-color" content="#eee";
                 meta name="viewport" content="width=device-width,initial-scale=1";
@@ -56,7 +57,7 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
                 meta property="og:title" content=(smart_quotes(meta.title));
                 meta property="og:description" content=(smart_quotes(meta.description));
                 link rel="sitemap" href="/sitemap.xml";
-                link rel="stylesheet" href="/main.css";
+                link rel="stylesheet" href=(format!("/main.css?hash={}", meta.css_hash));
                 link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Articles")) href="/feed.xml";
                 link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Weekly")) href="/weekly/feed.xml";
                 link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Book Reviews")) href="/book-reviews/feed.xml";
