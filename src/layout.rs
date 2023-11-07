@@ -111,7 +111,7 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
                             "Commit "
                             a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
                             br;
-                            "Made with ♥"
+                            "Made with ♥ by a human."
                         }
                     }
                 }
