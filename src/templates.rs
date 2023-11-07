@@ -42,7 +42,7 @@ pub fn index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
                             }
                             br;
                             em.article__byline {
-                                (format_date(article.published))
+                                time datetime=(article.published.format("%Y-%m-%d")) { (format_date(article.published)) }
                             }
                         }
                     }
@@ -60,7 +60,7 @@ pub fn index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
                             }
                             br;
                             em.article__byline {
-                               (format_date(weekly_issue.published))
+                                time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                             }
                         }
                     }
@@ -76,7 +76,7 @@ pub fn index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
                             }
                             br;
                             em.article__byline {
-                                (format_date(book_review.read))
+                                time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
                             }
                         }
                     }
@@ -106,7 +106,9 @@ pub fn article(article: &Article, css_hash: impl AsRef<str>) -> Result<Markup> {
                 header {
                     h1 { (article.title) }
                     em.article__byline {
-                        "Posted on " (format_date(article.published)) " from " (article.location)
+                        "Posted on "
+                        time datetime=(article.published.format("%Y-%m-%d")) { (format_date(article.published)) }
+                        " from " (article.location)
                     }
                 }
                 (PreEscaped(article.content_html.clone()))
@@ -137,7 +139,9 @@ pub fn article_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Mar
                                 }
                             }
                             em.article__byline {
-                                "Posted on " (format_date(article.published)) " from " (article.location)
+                                "Posted on "
+                                time datetime=(article.published.format("%Y-%m-%d")) { (format_date(article.published)) }
+                                " from " (article.location)
                             }
                         }
                         @if let Some(excerpt_html) = &article.excerpt_html {
@@ -176,7 +180,9 @@ pub fn book_review(book_review: &BookReview, css_hash: impl AsRef<str>) -> Resul
                 header {
                     h1 { (book_review.title) " by " (book_review.author) }
                     em.article__byline {
-                        "Read on " (format_date(book_review.read)) " in " (book_review.location) ", rated " (book_review.rating) "/5"
+                        "Read on "
+                        time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
+                        " in " (book_review.location) ", rated " (book_review.rating) "/5"
                     }
                 }
                 (PreEscaped(book_review.content_html.clone()))
@@ -206,7 +212,9 @@ pub fn book_review_index(content: &Content, css_hash: impl AsRef<str>) -> Result
                             }
                         }
                         em.article__byline {
-                            "Read on on " (format_date(book_review.read)) " in " (book_review.location) ", rated " (book_review.rating) "/5"
+                            "Read on on "
+                            time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
+                            " in " (book_review.location) ", rated " (book_review.rating) "/5"
                         }
                     }
                     (PreEscaped(book_review.excerpt_html.clone()))
@@ -278,15 +286,15 @@ pub fn weekly_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Mark
                             h2 { (year) }
                         }
                         ul.weekly__list {
-                            @for weekly in issues {
+                            @for weekly_issue in issues {
                                 li.weekly__item {
                                     h3 {
-                                        a href=(format!("/weekly/{}", weekly.num)) {
-                                            (weekly.title)
+                                        a href=(format!("/weekly/{}", weekly_issue.num)) {
+                                            (weekly_issue.title)
                                         }
                                     }
                                     span.weekly__byline {
-                                        (format_date(weekly.published))
+                                        time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                                     }
                                 }
                             }
@@ -355,24 +363,25 @@ pub fn weekly_content(weekly: &WeeklyIssue) -> Result<Markup> {
     })
 }
 
-pub fn weekly(weekly: &WeeklyIssue, css_hash: impl AsRef<str>) -> Result<Markup> {
+pub fn weekly(weekly_issue: &WeeklyIssue, css_hash: impl AsRef<str>) -> Result<Markup> {
     Ok(layout::render(
         Head {
-            title: &weekly.title,
-            description: &format!("Arne's Weekly #{}", weekly.num),
-            url: Url::parse(&format!("https://arne.me/weekly/{}", weekly.num))?,
+            title: &weekly_issue.title,
+            description: &format!("Arne's Weekly #{}", weekly_issue.num),
+            url: Url::parse(&format!("https://arne.me/weekly/{}", weekly_issue.num))?,
             og_type: OgType::Article,
             css_hash: css_hash.as_ref(),
         },
         html! {
             article.article {
                 header {
-                    h1 { (weekly.title) }
+                    h1 { (weekly_issue.title) }
                     em.article__byline {
-                        "Published on " (format_date(weekly.published))
+                        "Published on "
+                        time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                     }
                 }
-                (weekly_content(weekly)?)
+                (weekly_content(weekly_issue)?)
                 h2 { "Subscribe" }
                 p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans."}
                 (subscribe_form())
