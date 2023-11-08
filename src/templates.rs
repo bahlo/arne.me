@@ -48,7 +48,7 @@ pub fn index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
                     }
                     @if content.articles.len() > 6 { // HACK: one is hidden
                         br;
-                        a.index__more href="/articles" { (&(content.articles.len() - 5)) " more →" }
+                        a.index__more href="/articles" { (&(content.articles.len() - 6)) " more →" }
                     }
                 }
                 section.index__column {
