@@ -1,12 +1,14 @@
 use anyhow::{anyhow, bail, Result};
 use clap::Parser;
 use lazy_static::lazy_static;
+use notify_debouncer_mini::{new_debouncer, notify::RecursiveMode, DebounceEventResult};
 use std::{
     env,
     fs::{self, File},
     io,
     path::Path,
-    process::Command,
+    process::{Command, Stdio},
+    time::Duration,
 };
 use tempdir::TempDir;
 use zip::ZipArchive;
@@ -40,6 +42,8 @@ struct Cli {
 enum Commands {
     #[clap(name = "build")]
     Build,
+    #[clap(name = "watch")]
+    Watch,
     #[clap(name = "export-weekly")]
     ExportWeekly { num: u16 },
     #[clap(name = "download-fonts")]
@@ -51,6 +55,7 @@ fn main() -> Result<()> {
 
     match cli.command {
         Commands::Build => build(),
+        Commands::Watch => watch(),
         Commands::ExportWeekly { num } => export_weekly(num),
         Commands::DownloadFonts => download_fonts(),
     }
@@ -155,6 +160,70 @@ fn build() -> Result<()> {
 
     // Generate sitemap.xml
     fs::write("dist/sitemap.xml", sitemap::render(&content)?)?;
+
+    Ok(())
+}
+
+fn watch() -> Result<()> {
+    // Build on start
+    build()?;
+
+    let mut debouncer =
+        new_debouncer(
+            Duration::from_millis(500),
+            |res: DebounceEventResult| match res {
+                Ok(_event) => {
+                    let mut child = match Command::new("cargo")
+                        .arg("run")
+                        .arg("build")
+                        .stdout(Stdio::inherit())
+                        .stderr(Stdio::inherit())
+                        .spawn()
+                    {
+                        Ok(child) => child,
+                        Err(e) => {
+                            eprintln!("Error: {:?}", e);
+                            return;
+                        }
+                    };
+
+                    match child.wait() {
+                        Ok(status) => {
+                            if !status.success() {
+                                eprintln!("Error: Received status {:?}", status);
+                            }
+                        }
+                        Err(e) => eprintln!("Error: {:?}", e),
+                    }
+                }
+                Err(e) => eprintln!("Errro: {:?}", e),
+            },
+        )?;
+
+    debouncer
+        .watcher()
+        .watch(Path::new("./content"), RecursiveMode::Recursive)?;
+    debouncer
+        .watcher()
+        .watch(Path::new("./src"), RecursiveMode::Recursive)?;
+    debouncer
+        .watcher()
+        .watch(Path::new("./static"), RecursiveMode::Recursive)?;
+    debouncer
+        .watcher()
+        .watch(Path::new("./styles"), RecursiveMode::Recursive)?;
+    debouncer
+        .watcher()
+        .watch(Path::new("./Cargo.toml"), RecursiveMode::NonRecursive)?;
+    debouncer
+        .watcher()
+        .watch(Path::new("./Cargo.lock"), RecursiveMode::NonRecursive)?;
+
+    let dist = std::env::current_dir()?.join("dist");
+    let server = file_serve::Server::new(&dist);
+    println!("Running on http://{}", server.addr());
+    println!("Hit CTRL-C to stop");
+    server.serve()?;
 
     Ok(())
 }
