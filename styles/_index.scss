@@ -1,0 +1,38 @@
+.index {
+  margin: 2rem 0;
+
+  &__column {
+    @include stack(.75rem);
+  }
+
+  @media (max-width: $index-width) {
+    @include stack;
+    max-width: $page-width;
+  }
+
+  @media (min-width: $index-width) {
+    display: flex;
+    gap: 1rem;
+    align-items: start;
+
+    &__column {
+      width: 320px;
+    }
+  }
+}
+
+.hero {
+  margin-top: 4rem;
+  @media (max-width: $index-width) {
+    margin-top: 2rem;
+  }
+  max-width: $page-width;
+
+  &__heading {
+    font-size: $font-size-hero;
+  }
+
+  &__subheading {
+    font-size: $font-size-large;
+  }
+}

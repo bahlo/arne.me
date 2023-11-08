@@ -168,15 +168,8 @@ input {
   }
 }
 
-.nav {
-  &.nav {
-    margin-bottom: 2rem;
-  }
-
-  &__title {
-    font-weight: bold;
-    color: inherit;
-  }
+main {
+  @include stack;
 }
 
 .sitewrapper {
@@ -187,10 +180,6 @@ input {
   &--page > * {
     max-width: $page-width;
   }
-}
-
-main {
-  @include stack;
 }
 
 .skip-link {
@@ -206,43 +195,4 @@ main {
 .footnotes {
   font-size: $font-size-small;
   padding-top: 1rem;
-}
-
-.index {
-  margin: 2rem 0;
-
-  &__column {
-    @include stack(.75rem);
-  }
-
-  @media (max-width: $index-width) {
-    @include stack;
-    max-width: $page-width;
-  }
-
-  @media (min-width: $index-width) {
-    display: flex;
-    gap: 1rem;
-    align-items: start;
-
-    &__column {
-      width: 320px;
-    }
-  }
-}
-
-.hero {
-  margin-top: 4rem;
-  @media (max-width: $index-width) {
-    margin-top: 2rem;
-  }
-  max-width: $page-width;
-
-  &__heading {
-    font-size: $font-size-hero;
-  }
-
-  &__subheading {
-    font-size: $font-size-large;
-  }
 }
