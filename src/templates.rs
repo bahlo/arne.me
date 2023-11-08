@@ -354,7 +354,7 @@ pub fn weekly_content(weekly: &WeeklyIssue) -> Result<Markup> {
                         a href=(story.url) {
                             (story.title)
                         }
-                        span { (format!(" ({})", host.strip_prefix("www.").unwrap_or(host))) }
+                        span.weekly__url { (format!(" ({})", host.strip_prefix("www.").unwrap_or(host))) }
                         p { (PreEscaped(story.description_html.clone())) }
                     }
                 }

@@ -42,4 +42,14 @@
       color: $color-dark-light;
     }
   }
+
+  &__url {
+    color: $color-light;
+    font-style: italic;
+    font-size: $font-size-small;
+
+    @media (prefers-color-scheme: dark) {
+      color: $color-dark-light;
+    }
+  }
 }
