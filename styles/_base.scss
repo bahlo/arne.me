@@ -97,6 +97,16 @@ code {
     display: flex;
     gap: 1rem;
     order: 1;
+
+    @media print {
+      display: none;
+    }
+  }
+}
+
+.back_link {
+  @media print {
+    display: none;
   }
 }
 

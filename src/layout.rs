@@ -74,7 +74,7 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
                             }
                         }
                     } @else {
-                        a href="/" { "← Index" }
+                        a.back_link href="/" { "← Index" }
                     }
                     main #main {
                         (content)
