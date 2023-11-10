@@ -18,23 +18,10 @@ body {
 
 a {
   color: $color-link;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: line-through;
-  }
-}
-
-a {
-  text-decoration: none;
-  color: $color-link;
+  text-decoration: underlined;
 
   @media (prefers-color-scheme: dark) {
     color: $color-dark-link;
-  }
-
-  &:hover {
-    text-decoration: line-through;
   }
 }
 
@@ -86,11 +73,6 @@ code {
 
   a {
     color: inherit;
-    text-decoration: underline;
-
-    &:hover {
-      text-decoration: none;
-    }
   }
 
   &__pages {
@@ -105,6 +87,8 @@ code {
 }
 
 .back_link {
+  text-decoration: none;
+
   @media print {
     display: none;
   }

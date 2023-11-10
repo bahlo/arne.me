@@ -19,6 +19,14 @@
       width: 320px;
     }
   }
+
+  &__more {
+    text-decoration: none;
+
+    @media print {
+      display: none;
+    }
+  }
 }
 
 .hero {
