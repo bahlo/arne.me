@@ -6,8 +6,9 @@ body {
   padding: 1rem;
   background: $color-bg;
   color: $color-fg;
-  font-family: "Rebond Grotesque";
+  font-family: "Rebond Grotesque", sans-serif;
   font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
+  font-display: swap;
 
 
   @media (prefers-color-scheme: dark) {
