@@ -85,33 +85,36 @@ fn build() -> Result<()> {
     // Generate index
     fs::write(
         "dist/index.html",
-        templates::index(&content, &css_hash)?.into_string(),
+        templates::index::render(&content, &css_hash)?.into_string(),
     )?;
 
     // Generate articles
     fs::create_dir_all("dist/articles")?;
     fs::write(
         "dist/articles/index.html",
-        templates::article_index(&content, &css_hash)?.into_string(),
+        templates::article::render_index(&content, &css_hash)?.into_string(),
     )?;
     for article in &content.articles {
         fs::create_dir_all(format!("dist/articles/{}", article.slug))?;
         let path = format!("dist/articles/{}/index.html", article.slug);
-        fs::write(&path, templates::article(article, &css_hash)?.into_string())?;
+        fs::write(
+            &path,
+            templates::article::render(article, &css_hash)?.into_string(),
+        )?;
     }
 
     // Generate weekly
     fs::create_dir_all("dist/weekly")?;
     fs::write(
         "dist/weekly/index.html",
-        templates::weekly_index(&content, &css_hash)?.into_string(),
+        templates::weekly::render_index(&content, &css_hash)?.into_string(),
     )?;
     for weekly_issue in &content.weekly {
         fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
         let path = format!("dist/weekly/{}/index.html", weekly_issue.num);
         fs::write(
             &path,
-            templates::weekly(weekly_issue, &css_hash)?.into_string(),
+            templates::weekly::render(weekly_issue, &css_hash)?.into_string(),
         )?;
     }
 
@@ -119,14 +122,14 @@ fn build() -> Result<()> {
     fs::create_dir_all("dist/book-reviews")?;
     fs::write(
         "dist/book-reviews/index.html",
-        templates::book_review_index(&content, &css_hash)?.into_string(),
+        templates::book_review::render_index(&content, &css_hash)?.into_string(),
     )?;
     for book_review in &content.book_reviews {
         fs::create_dir_all(format!("dist/book-reviews/{}", book_review.slug))?;
         let path = format!("dist/book-reviews/{}/index.html", book_review.slug);
         fs::write(
             &path,
-            templates::book_review(book_review, &css_hash)?.into_string(),
+            templates::book_review::render(book_review, &css_hash)?.into_string(),
         )?;
     }
 
@@ -140,14 +143,17 @@ fn build() -> Result<()> {
             }
         };
 
-        fs::write(&path, templates::page(page, &css_hash)?.into_string())?;
+        fs::write(
+            &path,
+            templates::page::render(page, &css_hash)?.into_string(),
+        )?;
     }
 
     // Generate projects page
     fs::create_dir_all("dist/projects")?;
     fs::write(
         "dist/projects/index.html",
-        templates::projects(&content.projects, &css_hash)?.into_string(),
+        templates::project::render(&content.projects, &css_hash)?.into_string(),
     )?;
 
     // Generate RSS feeds
