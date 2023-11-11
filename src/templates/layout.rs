@@ -109,7 +109,7 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
                             br; // Looks better with this in HTML only
                         }
                         span.footer_copyright {
-                            (PreEscaped("&copy; 2021 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
+                            (PreEscaped("&copy; 2018 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
                             br;
                             "Commit "
                             a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
