@@ -14,7 +14,6 @@ use tempdir::TempDir;
 use zip::ZipArchive;
 
 mod content;
-mod layout;
 mod rss;
 mod sitemap;
 mod templates;

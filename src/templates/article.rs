@@ -5,8 +5,10 @@ use url::Url;
 use crate::content::Article;
 use crate::{
     content::Content,
-    layout::{self, Head, OgType},
-    templates::format_date,
+    templates::{
+        format_date,
+        layout::{self, Head, OgType},
+    },
 };
 
 pub fn render(article: &Article, css_hash: impl AsRef<str>) -> Result<Markup> {

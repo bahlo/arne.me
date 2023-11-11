@@ -4,7 +4,7 @@ use url::Url;
 
 use crate::{
     content::Project,
-    layout::{self, Head, OgType},
+    templates::layout::{self, Head, OgType},
 };
 
 fn render_project(project: &Project) -> Markup {

@@ -6,8 +6,10 @@ use url::Url;
 
 use crate::{
     content::{Content, WeeklyIssue},
-    layout::{self, Head, OgType},
-    templates::format_date,
+    templates::{
+        format_date,
+        layout::{self, Head, OgType},
+    },
 };
 
 fn subscribe_form() -> Markup {

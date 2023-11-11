@@ -4,7 +4,7 @@ use url::Url;
 
 use crate::{
     content::Page,
-    layout::{self, Head, OgType},
+    templates::layout::{self, Head, OgType},
 };
 
 pub fn render(page: &Page, css_hash: impl AsRef<str>) -> Result<Markup> {
