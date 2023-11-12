@@ -5,7 +5,7 @@ published: "2023-11-05"
 location: "Frankfurt, Germany"
 ---
 
-In episode 097 of the [Hemispheric Views](https://hemisphericviews.com/) podcast, the hosts talk about their app defaults, which has inspired some people to share their own[^1].
+In episode 097 of the [Hemispheric Views](https://hemisphericviews.com/) podcast, the hosts discuss their app defaults, which has inspired some people to share their own[^1].
 
 <!-- more -->
 
@@ -107,7 +107,7 @@ Password Management
 
 : [1Password](https://1password.com)
 
-Now there's a few categories I want to add myself:
+Now there are a few categories I want to add myself:
 
 Weather
 
@@ -131,4 +131,4 @@ Photo Editor
 
 [^1]: [Robb](https://rknight.me/) made [a list](https://defaults.rknight.me).
 [^2]: FastMail is handling the domains and forwarding to HEY. Don't ask.
-[^3]: A _very_ good German news podcast.
+[^3]: An excellent German news podcast.

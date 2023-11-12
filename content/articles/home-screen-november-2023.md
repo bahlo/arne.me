@@ -5,7 +5,7 @@ published: "2023-11-10"
 location: "Frankfurt, Germany"
 ---
 
-Every month I'm sharing my current home screen.
+Every month, I'm sharing my current home screen.
 This is the one for November 2023.
 
 <!-- more -->
@@ -14,7 +14,7 @@ Notable changes since [my last post in October](https://spezi.social/@arne/11121
 * Black background is back!
 * I'm now using the new iOS 17 Overcast widget.
 * Obsidian has made it back to the home screen.
-* I'm evaluating Omni Focus 4 again after switching to Things because of speed
+* I'm evaluating OmniFocus 4 again after switching to Things because of speed
   issues[^1].
 
 ![An iPhone Home Screen with a black background. At the top are two small widgets: CARROT weather and Overcast. Below that are three rows of apps: CouchTimes, WhatsApp, Signal, Obsidian, Gentler Streak, BeReal, Music, Photos, Ivory, HEY, Calendar and Camera. The dock has three apps: Safari, Messages & OmniFocus 4](/articles/home-screen-november-2023/home-screen.png)
