@@ -24,6 +24,10 @@ a {
   @media (prefers-color-scheme: dark) {
     color: $color-dark-link;
   }
+
+  &.no-underline {
+    text-decoration: none;
+  }
 }
 
 h1 {

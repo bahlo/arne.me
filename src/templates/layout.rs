@@ -114,6 +114,12 @@ pub fn render(meta: Head, content: Markup, options: impl Into<Option<Options>>) 
                             "Commit "
                             a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
                             br;
+                            a.no-underline href="https://firechicken.club/arne/prev" { "←" }
+                            " "
+                            a href="https://firechicken.club" { "Fire Chicken Webring" }
+                            " "
+                            a.no-underline href="https://firechicken.club/arne/next" { "→" }
+                            br;
                             "Made with ♥ by a human."
                         }
                     }
