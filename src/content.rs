@@ -511,6 +511,10 @@ impl Content {
 
 fn render_markdown(markdown: String) -> Result<String> {
     let arena = Arena::new();
+    let render = comrak::RenderOptionsBuilder::default()
+        .unsafe_(true)
+        .build()
+        .context("Failed to build render options")?;
     let extension = comrak::ExtensionOptionsBuilder::default()
         .strikethrough(true)
         .tagfilter(true)
@@ -526,9 +530,9 @@ fn render_markdown(markdown: String) -> Result<String> {
         .build()
         .context("Failed to build parse options")?;
     let options = comrak::Options {
+        render,
         extension,
         parse,
-        ..Default::default()
     };
 
     let root = comrak::parse_document(&arena, &markdown, &options);
