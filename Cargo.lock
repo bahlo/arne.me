@@ -117,6 +117,7 @@ dependencies = [
  "chrono",
  "clap",
  "comrak",
+ "crossbeam-channel",
  "crowbook-text-processing",
  "file-serve",
  "grass",

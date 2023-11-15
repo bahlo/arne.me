@@ -8,6 +8,7 @@ use std::{
     io,
     path::Path,
     process::{Command, Stdio},
+    thread,
     time::Duration,
 };
 use tempdir::TempDir;
@@ -173,11 +174,13 @@ fn watch() -> Result<()> {
     // Build on start
     build()?;
 
-    let mut debouncer =
-        new_debouncer(
-            Duration::from_millis(500),
-            |res: DebounceEventResult| match res {
-                Ok(_event) => {
+    let (tx, rx) = crossbeam_channel::unbounded::<DebounceEventResult>();
+    let mut debouncer = new_debouncer(Duration::from_millis(500), tx)?;
+
+    thread::spawn(move || {
+        for rx in rx {
+            match rx {
+                Ok(_events) => {
                     let mut child = match Command::new("cargo")
                         .arg("run")
                         .arg("build")
@@ -201,9 +204,10 @@ fn watch() -> Result<()> {
                         Err(e) => eprintln!("Error: {:?}", e),
                     }
                 }
-                Err(e) => eprintln!("Errro: {:?}", e),
-            },
-        )?;
+                Err(e) => println!("Error: {:?}", e),
+            }
+        }
+    });
 
     debouncer
         .watcher()
