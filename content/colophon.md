@@ -18,6 +18,7 @@ Any issue you encounter on this website can be submitted as
 [GitHub issues](https://github.com/bahlo/arne.me/issues/new).
 
 A [sitemap](/sitemap-index.xml) is available and there are RSS feeds for
-the [weekly](/weekly/atom.xml) and [articles](/articles/atom.xml).
+[articles](/articles/atom.xml), the [weekly](/weekly/atom.xml), 
+and [book reviews](/book-reviews/feed.xml).
 
 All of the code and content on this site is written by a human.
