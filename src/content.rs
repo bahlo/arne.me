@@ -105,9 +105,18 @@ pub struct WeeklyTweetOfTheWeek {
 }
 
 #[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct WeeklyTweetOfTheWeekMedia {
     pub alt: String,
     pub image: String,
+    pub src_set: Vec<SrcSet>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SrcSet {
+    pub src: String,
+    #[serde(rename = "type")]
+    pub typ: String,
 }
 
 #[derive(Debug, Deserialize)]

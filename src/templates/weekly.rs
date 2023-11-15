@@ -110,7 +110,16 @@ pub fn render_content(weekly: &WeeklyIssue) -> Result<Markup> {
             blockquote {
                 (tweet_of_the_week.text)
                 @if let Some(media) = &tweet_of_the_week.media {
-                    img src=(media.image) alt=(media.alt);
+                    @if media.src_set.len() > 0 {
+                        picture {
+                            @for source in &media.src_set {
+                                source srcset=(source.src) type=(source.typ);
+                            }
+                            img src=(media.image) alt=(media.alt);
+                        }
+                    } @else {
+                        img src=(media.image) alt=(media.alt);
+                    }
                 }
                 (PreEscaped("&mdash;&nbsp;"))
                 a href=(tweet_of_the_week.url) {
