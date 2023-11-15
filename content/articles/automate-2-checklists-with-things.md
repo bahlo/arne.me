@@ -43,7 +43,10 @@ I wanted one shortcut to start all checklists from. Sadly you cannot get a direc
 
 This is what the Shortcut looks like:
 
-![An iOS shortcut: Select from a list of items, get the file from iCloud Drive, copy it to the clipboard, run the Scriptable script, get the clipboard, url encode it and open Things using the URL scheme](/articles/automate-2-checklists-with-things/shortcut.png)
+<picture>
+  <source srcset="/articles/automate-2-checklists-with-things/shortcut.avif" type="image/avif" />
+  <img src="/articles/automate-2-checklists-with-things/shortcut.png" alt="An iOS shortcut: Select from a list of items, get the file from iCloud Drive, copy it to the clipboard, run the Scriptable script, get the clipboard, url encode it and open Things using the URL scheme" />
+</picture>
 
 After a checklist was chosen, the shortcut gets the file from iCloud Drive (it has to be in the Shortcuts application folder to be accessible).
 Then it copies the file contents to the Clipboard and runs the script (the Scriptable action should appear automatically in your Shortcuts app once you created it). After that, it retrieves the Things JSON from the clipboard, url-encodes it and opens Things with its URL scheme.

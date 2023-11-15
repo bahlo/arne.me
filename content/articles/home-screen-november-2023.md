@@ -17,7 +17,10 @@ Notable changes since [my last post in October](https://spezi.social/@arne/11121
 * I'm evaluating OmniFocus 4 again after switching to Things because of speed
   issues[^1].
 
-![An iPhone Home Screen with a black background. At the top are two small widgets: CARROT weather and Overcast. Below that are three rows of apps: CouchTimes, WhatsApp, Signal, Obsidian, Gentler Streak, BeReal, Music, Photos, Ivory, HEY, Calendar and Camera. The dock has three apps: Safari, Messages & OmniFocus 4](/articles/home-screen-november-2023/home-screen.png)
+<picture>
+  <source srcset="/articles/home-screen-november-2023/home-screen.avif" type="image/avif" />
+  <img class="article__homescreen_image" src="/articles/home-screen-november-2023/home-screen.png" alt="An iPhone Home Screen with a black background. At the top are two small widgets: CARROT weather and Overcast. Below that are three rows of apps: CouchTimes, WhatsApp, Signal, Obsidian, Gentler Streak, BeReal, Music, Photos, Ivory, HEY, Calendar and Camera. The dock has three apps: Safari, Messages & OmniFocus 4" />
+</picture>
 
 All in all I'm still very happy with the layout. Two small widgets, three rows
 of apps and a three apps in the dock works really well for me.

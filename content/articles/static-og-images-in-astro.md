@@ -27,7 +27,10 @@ JavaScript library which can render a HTML tree as SVG.
 Vercel also has a great [OG Image Playground](https://og-playground.vercel.app/), 
 where you can play around and quickly get results.
 
-![A screenshot of the OG Image Playground showing a code editor on the left and a preview and some settings on the right.](/articles/static-og-images-in-astro/og-image-playground.png)
+<picture>
+  <source srcset="/articles/static-og-images-in-astro/og-image-playground.avif" type="image/avif" />
+  <img src="/articles/static-og-images-in-astro/og-image-playground.png" alt="A screenshot of the OG Image Playground showing a code editor on the left and a preview and some settings on the right." />
+</picture>
 
 Set the size to 1200&times;630px as that's what Facebook 
 recommends in [their guidelines](https://developers.facebook.com/docs/sharing/webmasters/images/).

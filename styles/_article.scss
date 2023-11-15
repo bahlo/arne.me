@@ -24,4 +24,8 @@
       color: $color-dark-light;
     }
   }
+
+  &__homescreen_image {
+    max-width: 480px;
+  }
 }

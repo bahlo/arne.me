@@ -30,7 +30,10 @@ Audio Hijack is an application that can do complex audio pipelines, often used f
 To prepare things, start Audio Hijack and create a new session based on the `Application Audio` template. 
 This post assumes you only have on session. If you have multiple, make sure it's at the first position. In the session, select Spotify as Application and change the Recorder to 128 kbps (or whatever you prefer). I recommend disabling the Output Device, but it's helpful if you want to debug something. After saving, it should look similar to this:
 
-![An AudioHijack session with Spotify and a Recorder](/articles/automate-1-spotify-podcast-mirror/audio_hijack_session.png)
+<picture>
+  <source srcset="/articles/automate-1-spotify-podcast-mirror/audio_hijack_session.avif" type="image/avif" />
+  <img src="/articles/automate-1-spotify-podcast-mirror/audio_hijack_session.png" alt="An AudioHijack session with Spotify and a Recorder" />
+</picture>
 
 ### Spotify Credentials
 
