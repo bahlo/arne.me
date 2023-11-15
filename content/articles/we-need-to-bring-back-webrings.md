@@ -44,7 +44,9 @@ If not, here's some other modern webrings[^2]:
 [Hotline Webring](https://hotlinewebring.club), 
 [Sidebar.io Webring](https://sidebar.io/webring),
 [a11y-webring.club](https://a11y-webring.club),
-and [CS.Sjoy.lol](https://cs.sjoy.lol/#webring).
+[CS.Sjoy.lol](https://cs.sjoy.lol/#webring),
+[Fediring.net](https://fediring.net),
+and [Appliance Ring](https://applianceri.ng).
 
 Own a niche website? Why not start your own webring?
 
