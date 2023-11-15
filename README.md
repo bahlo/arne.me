@@ -4,7 +4,5 @@ My personal website.
 
 ## Development
 
-Run `cargo run build` to build the site. 
-
-You can use [watchexec](https://github.com/watchexec/watchexec) to automatically
-rebuild the site on changes. One day I'll build hot reload.
+Run `cargo run watch` to start a dev server.
+One day I'll build hot reload.
