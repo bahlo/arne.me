@@ -5,7 +5,7 @@ use rss::{ChannelBuilder, Item, ItemBuilder};
 use crate::{content::Content, templates};
 
 const RFC_822: &str = "%a, %d %b %Y %T %z";
-const RFC_822_DATE: &str = "%a, %d %b %Y 00:00:00 +0000<";
+const RFC_822_DATE: &str = "%a, %d %b %Y 00:00:00 +0000";
 
 pub fn render_articles(content: &Content) -> String {
     let items: Vec<Item> = content
