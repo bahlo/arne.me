@@ -29,3 +29,11 @@
     max-width: 480px;
   }
 }
+
+.book_review {
+  &__cover {
+    width: 40%;
+    float: right;
+    margin: 0 0 .5rem .5rem;
+  }
+}

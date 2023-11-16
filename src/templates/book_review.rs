@@ -33,6 +33,10 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
                         " in " (book_review.location) ", rated " (book_review.rating) "/5"
                     }
                 }
+                picture {
+                    source srcset=(format!("/book-reviews/{}/cover.avif", book_review.slug)) type="image/avif";
+                    img.book_review__cover src=(format!("/book-reviews/{}/cover.jpg", book_review.slug)) alt=(format!("The cover of {} by {}", book_review.title, book_review.author));
+                }
                 (PreEscaped(book_review.content_html.clone()))
             }
         },

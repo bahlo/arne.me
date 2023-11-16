@@ -304,7 +304,9 @@ fn watch() -> Result<()> {
         .watch(Path::new("./Cargo.lock"), RecursiveMode::NonRecursive)?;
 
     let dist = std::env::current_dir()?.join("dist");
-    let server = file_serve::Server::new(&dist);
+    let server = file_serve::ServerBuilder::new(&dist)
+        .hostname("0.0.0.0")
+        .build();
     println!("Running on http://{}", server.addr());
     println!("Hit CTRL-C to stop");
     server.serve()?;
