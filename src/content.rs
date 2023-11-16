@@ -160,7 +160,7 @@ impl Content {
                     let dir = fs::read_dir(entry.path())?;
                     content.weekly = Self::parse_weekly(&matter, dir)?;
                 }
-                "book_reviews" => {
+                "book-reviews" => {
                     let dir = fs::read_dir(entry.path())?;
                     content.book_reviews = Self::parse_book_reviews(&matter, dir)?;
                 }
