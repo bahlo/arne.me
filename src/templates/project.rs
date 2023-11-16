@@ -4,7 +4,7 @@ use url::Url;
 
 use crate::{
     content::Project,
-    templates::layout::{self, Head, OgType},
+    templates::layout::{Context, Head, OgType},
 };
 
 fn render_project(project: &Project) -> Markup {
@@ -36,14 +36,13 @@ fn render_project(project: &Project) -> Markup {
     }
 }
 
-pub fn render(project: &[Project], css_hash: impl AsRef<str>) -> Result<Markup> {
-    Ok(layout::render(
+pub fn render(project: &[Project]) -> Result<Context> {
+    Ok(Context::new(
         Head {
-            title: "Projects",
-            description: "Some projects I've worked on",
+            title: "Projects".to_string(),
+            description: "Some projects I've worked on".to_string(),
             url: Url::parse("https://arne.me/projects")?,
             og_type: OgType::Website,
-            css_hash: css_hash.as_ref(),
         },
         html! {
             article.article {
@@ -61,6 +60,5 @@ pub fn render(project: &[Project], css_hash: impl AsRef<str>) -> Result<Markup> 
                 }
             }
         },
-        None,
     ))
 }

@@ -1,5 +1,5 @@
 use anyhow::Result;
-use maud::{html, Markup};
+use maud::html;
 use url::Url;
 
 use crate::{
@@ -10,14 +10,15 @@ use crate::{
     },
 };
 
-pub fn render(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
-    Ok(layout::render(
+use super::layout::Context;
+
+pub fn render(content: &Content) -> Result<Context> {
+    Ok(Context::new_with_options(
         Head {
-            title: "Arne Bahlo",
-            description: "Arne Bahlo's personal website",
+            title: "Arne Bahlo".to_string(),
+            description: "Arne Bahlo's personal website".to_string(),
             url: Url::parse("https://arne.me")?,
             og_type: OgType::Website,
-            css_hash: css_hash.as_ref(),
         },
         html! {
             section.index {

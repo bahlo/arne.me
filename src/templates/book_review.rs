@@ -1,26 +1,27 @@
 use anyhow::Result;
-use maud::{html, Markup, PreEscaped};
+use maud::{html, PreEscaped};
 use url::Url;
 
 use crate::{
     content::{BookReview, Content},
     templates::{
         format_date,
-        layout::{self, Head, OgType},
+        layout::{Head, OgType},
     },
 };
 
-pub fn render(book_review: &BookReview, css_hash: impl AsRef<str>) -> Result<Markup> {
-    Ok(layout::render(
+use super::layout::Context;
+
+pub fn render(book_review: &BookReview) -> Result<Context> {
+    Ok(Context::new(
         Head {
-            title: &format!(
+            title: format!(
                 "Book Review: {} by {}",
                 book_review.title, book_review.author
             ),
-            description: &format!("I read {} by {}", book_review.title, book_review.author,),
+            description: format!("I read {} by {}", book_review.title, book_review.author,),
             url: Url::parse(&format!("https://arne.me/book-review/{}", book_review.slug))?,
             og_type: OgType::Article,
-            css_hash: css_hash.as_ref(),
         },
         html! {
             article.article {
@@ -35,18 +36,16 @@ pub fn render(book_review: &BookReview, css_hash: impl AsRef<str>) -> Result<Mar
                 (PreEscaped(book_review.content_html.clone()))
             }
         },
-        None,
     ))
 }
 
-pub fn render_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
-    Ok(layout::render(
+pub fn render_index(content: &Content) -> Result<Context> {
+    Ok(Context::new(
         Head {
-            title: "Book Reviews",
-            description: "Every book I read gets a review and ends up here.",
+            title: "Book Reviews".to_string(),
+            description: "Every book I read gets a review and ends up here.".to_string(),
             url: Url::parse("https://arne.me/book-reviews")?,
             og_type: OgType::Website,
-            css_hash: css_hash.as_ref(),
         },
         html! {
             h1 { "Book reviews" }
@@ -73,6 +72,5 @@ pub fn render_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Mark
                 }
             }
         },
-        None,
     ))
 }

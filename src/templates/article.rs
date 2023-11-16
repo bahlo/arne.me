@@ -1,24 +1,22 @@
 use anyhow::Result;
-use maud::{html, Markup, PreEscaped};
+use maud::{html, PreEscaped};
 use url::Url;
 
-use crate::content::Article;
 use crate::{
-    content::Content,
+    content::{Article, Content},
     templates::{
         format_date,
-        layout::{self, Head, OgType},
+        layout::{Context, Head, OgType},
     },
 };
 
-pub fn render(article: &Article, css_hash: impl AsRef<str>) -> Result<Markup> {
-    Ok(layout::render(
+pub fn render(article: &Article) -> Result<Context> {
+    Ok(Context::new(
         Head {
-            title: &article.title,
-            description: &article.description,
+            title: article.title.clone(),
+            description: article.description.clone(),
             url: Url::parse(&format!("https://arne.me/articles/{}", article.slug))?,
             og_type: OgType::Article,
-            css_hash: css_hash.as_ref(),
         },
         html! {
             article.article {
@@ -33,18 +31,16 @@ pub fn render(article: &Article, css_hash: impl AsRef<str>) -> Result<Markup> {
                 (PreEscaped(article.content_html.clone()))
             }
         },
-        None,
     ))
 }
 
-pub fn render_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
-    Ok(layout::render(
+pub fn render_index(content: &Content) -> Result<Context> {
+    Ok(Context::new(
         Head {
-            title: "Articles",
-            description: "Articles by Arne Bahlo.",
+            title: "Articles".to_string(),
+            description: "Articles by Arne Bahlo.".to_string(),
             url: Url::parse("https://arne.me/articles")?,
             og_type: OgType::Website,
-            css_hash: css_hash.as_ref(),
         },
         html! {
             h1 { "Articles" }
@@ -78,6 +74,5 @@ pub fn render_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Mark
                 }
             }
         },
-        None,
     ))
 }

@@ -1,20 +1,19 @@
 use anyhow::Result;
-use maud::{html, Markup, PreEscaped};
+use maud::{html, PreEscaped};
 use url::Url;
 
 use crate::{
     content::Page,
-    templates::layout::{self, Head, OgType},
+    templates::layout::{Context, Head, OgType},
 };
 
-pub fn render(page: &Page, css_hash: impl AsRef<str>) -> Result<Markup> {
-    Ok(layout::render(
+pub fn render(page: &Page) -> Result<Context> {
+    Ok(Context::new(
         Head {
-            title: &page.title,
-            description: &page.description,
+            title: page.title.clone(),
+            description: page.description.clone(),
             url: Url::parse(&format!("https://arne.me/{}", page.slug))?,
             og_type: OgType::Website,
-            css_hash: css_hash.as_ref(),
         },
         html! {
             section.page {
@@ -24,6 +23,5 @@ pub fn render(page: &Page, css_hash: impl AsRef<str>) -> Result<Markup> {
                 (PreEscaped(page.content_html.clone()))
             }
         },
-        None,
     ))
 }

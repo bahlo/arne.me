@@ -6,12 +6,15 @@ use std::{
     env,
     fs::{self, File},
     io,
+    net::{TcpListener, TcpStream},
     path::Path,
     process::{Command, Stdio},
+    sync::{Arc, Mutex},
     thread,
     time::Duration,
 };
 use tempdir::TempDir;
+use templates::layout::Layout;
 use zip::ZipArchive;
 
 mod content;
@@ -41,7 +44,10 @@ struct Cli {
 #[derive(Debug, Parser)]
 enum Commands {
     #[clap(name = "build")]
-    Build,
+    Build {
+        #[clap(long)]
+        websocket_port: Option<u16>,
+    },
     #[clap(name = "watch")]
     Watch,
     #[clap(name = "export-weekly")]
@@ -54,14 +60,14 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Build => build(),
+        Commands::Build { websocket_port } => build(websocket_port),
         Commands::Watch => watch(),
         Commands::ExportWeekly { num } => export_weekly(num),
         Commands::DownloadFonts => download_fonts(),
     }
 }
 
-fn build() -> Result<()> {
+fn build(websocket_port: Option<u16>) -> Result<()> {
     // Parse content
     let content = Content::parse(fs::read_dir("content")?)?;
 
@@ -82,24 +88,33 @@ fn build() -> Result<()> {
         .collect();
     fs::write("dist/main.css", css)?;
 
+    // Create layout
+    let layout = Layout::new(css_hash, websocket_port);
+
     // Generate index
     fs::write(
         "dist/index.html",
-        templates::index::render(&content, &css_hash)?.into_string(),
+        layout
+            .render(templates::index::render(&content)?)
+            .into_string(),
     )?;
 
     // Generate articles
     fs::create_dir_all("dist/articles")?;
     fs::write(
         "dist/articles/index.html",
-        templates::article::render_index(&content, &css_hash)?.into_string(),
+        layout
+            .render(templates::article::render_index(&content)?)
+            .into_string(),
     )?;
     for article in &content.articles {
         fs::create_dir_all(format!("dist/articles/{}", article.slug))?;
         let path = format!("dist/articles/{}/index.html", article.slug);
         fs::write(
             &path,
-            templates::article::render(article, &css_hash)?.into_string(),
+            layout
+                .render(templates::article::render(article)?)
+                .into_string(),
         )?;
     }
 
@@ -107,14 +122,18 @@ fn build() -> Result<()> {
     fs::create_dir_all("dist/weekly")?;
     fs::write(
         "dist/weekly/index.html",
-        templates::weekly::render_index(&content, &css_hash)?.into_string(),
+        layout
+            .render(templates::weekly::render_index(&content)?)
+            .into_string(),
     )?;
     for weekly_issue in &content.weekly {
         fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
         let path = format!("dist/weekly/{}/index.html", weekly_issue.num);
         fs::write(
             &path,
-            templates::weekly::render(weekly_issue, &css_hash)?.into_string(),
+            layout
+                .render(templates::weekly::render(weekly_issue)?)
+                .into_string(),
         )?;
     }
 
@@ -122,14 +141,18 @@ fn build() -> Result<()> {
     fs::create_dir_all("dist/book-reviews")?;
     fs::write(
         "dist/book-reviews/index.html",
-        templates::book_review::render_index(&content, &css_hash)?.into_string(),
+        layout
+            .render(templates::book_review::render_index(&content)?)
+            .into_string(),
     )?;
     for book_review in &content.book_reviews {
         fs::create_dir_all(format!("dist/book-reviews/{}", book_review.slug))?;
         let path = format!("dist/book-reviews/{}/index.html", book_review.slug);
         fs::write(
             &path,
-            templates::book_review::render(book_review, &css_hash)?.into_string(),
+            layout
+                .render(templates::book_review::render(book_review)?)
+                .into_string(),
         )?;
     }
 
@@ -145,7 +168,7 @@ fn build() -> Result<()> {
 
         fs::write(
             &path,
-            templates::page::render(page, &css_hash)?.into_string(),
+            layout.render(templates::page::render(page)?).into_string(),
         )?;
     }
 
@@ -153,7 +176,9 @@ fn build() -> Result<()> {
     fs::create_dir_all("dist/projects")?;
     fs::write(
         "dist/projects/index.html",
-        templates::project::render(&content.projects, &css_hash)?.into_string(),
+        layout
+            .render(templates::project::render(&content.projects)?)
+            .into_string(),
     )?;
 
     // Generate RSS feeds
@@ -171,19 +196,25 @@ fn build() -> Result<()> {
 }
 
 fn watch() -> Result<()> {
+    let websocket_server = TcpListener::bind("127.0.0.1:0")?;
+    let websocket_port = websocket_server.local_addr()?.port();
+
     // Build on start
-    build()?;
+    build(Some(websocket_port))?;
 
-    let (tx, rx) = crossbeam_channel::unbounded::<DebounceEventResult>();
-    let mut debouncer = new_debouncer(Duration::from_millis(500), tx)?;
+    let (notify_tx, notify_rx) = crossbeam_channel::unbounded::<DebounceEventResult>();
+    let mut debouncer = new_debouncer(Duration::from_millis(500), notify_tx)?;
 
-    thread::spawn(move || {
-        for rx in rx {
+    let (build_tx, build_rx) = crossbeam_channel::unbounded::<()>();
+
+    let build_thread = thread::spawn(move || {
+        for rx in notify_rx {
             match rx {
                 Ok(_events) => {
                     let mut child = match Command::new("cargo")
                         .arg("run")
                         .arg("build")
+                        .args(&["--websocket-port", &websocket_port.to_string()])
                         .stdout(Stdio::inherit())
                         .stderr(Stdio::inherit())
                         .spawn()
@@ -196,15 +227,59 @@ fn watch() -> Result<()> {
                     };
 
                     match child.wait() {
+                        Ok(status) if status.success() => {
+                            build_tx.send(()).unwrap();
+                        }
                         Ok(status) => {
-                            if !status.success() {
-                                eprintln!("Error: Received status {:?}", status);
-                            }
+                            eprintln!("Error: Received status {:?}", status);
                         }
                         Err(e) => eprintln!("Error: {:?}", e),
                     }
                 }
                 Err(e) => println!("Error: {:?}", e),
+            }
+        }
+    });
+
+    let sockets: Arc<Mutex<Vec<tungstenite::WebSocket<TcpStream>>>> =
+        Arc::new(Mutex::new(Vec::new()));
+    let sockets_clone = sockets.clone();
+    let websocket_thread = thread::spawn(move || {
+        for stream in websocket_server.incoming() {
+            let websocket = tungstenite::accept(stream.unwrap()).unwrap();
+            sockets.lock().unwrap().push(websocket);
+        }
+    });
+
+    let reload_thread = thread::spawn(move || {
+        while build_rx.recv().is_ok() {
+            let mut sockets = sockets_clone.lock().unwrap();
+            let mut broken = vec![];
+
+            for (i, socket) in sockets.iter_mut().enumerate() {
+                match socket.send("reload".into()) {
+                    Ok(_) => {}
+                    Err(tungstenite::error::Error::Io(e)) => {
+                        if e.kind() == io::ErrorKind::BrokenPipe {
+                            broken.push(i);
+                        }
+                    }
+                    Err(e) => {
+                        eprintln!("Error: {:?}", e);
+                    }
+                }
+            }
+
+            for i in broken.into_iter().rev() {
+                sockets.remove(i);
+            }
+
+            // Close all but the last 10 connections
+            let len = sockets.len();
+            if len > 10 {
+                for mut socket in sockets.drain(0..len - 10) {
+                    socket.close(None).ok();
+                }
             }
         }
     });
@@ -233,6 +308,10 @@ fn watch() -> Result<()> {
     println!("Running on http://{}", server.addr());
     println!("Hit CTRL-C to stop");
     server.serve()?;
+
+    build_thread.join().unwrap();
+    reload_thread.join().unwrap();
+    websocket_thread.join().unwrap();
 
     Ok(())
 }

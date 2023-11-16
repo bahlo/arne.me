@@ -26,6 +26,7 @@ regex = "1"
 rss = "2"
 serde = { version = "1", features = ["derive"] }
 tempdir = "0.3.7"
+tungstenite = "0.20.1"
 ureq = "2.8.0"
 url = { version = "2.4", features = ["serde"] }
 zip = "0.6.6"

@@ -4,5 +4,4 @@ My personal website.
 
 ## Development
 
-Run `cargo run watch` to start a dev server.
-One day I'll build hot reload.
+Run `cargo run watch` to start a dev server with hot reload.

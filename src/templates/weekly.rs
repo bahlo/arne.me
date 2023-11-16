@@ -8,7 +8,7 @@ use crate::{
     content::{Content, WeeklyIssue},
     templates::{
         format_date,
-        layout::{self, Head, OgType},
+        layout::{self, Context, Head, OgType},
     },
 };
 
@@ -28,7 +28,7 @@ fn subscribe_form() -> Markup {
     }
 }
 
-pub fn render_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Markup> {
+pub fn render_index(content: &Content) -> Result<Context> {
     let mut weekly_by_year = content
         .weekly
         .iter()
@@ -44,13 +44,12 @@ pub fn render_index(content: &Content, css_hash: impl AsRef<str>) -> Result<Mark
 
     let current_year = Utc::now().format("%Y").to_string();
 
-    Ok(layout::render(
+    Ok(Context::new_with_options(
         Head {
-            title: "Arne’s Weekly",
-            description: "A weekly newsletter with the best stories of the internet.",
+            title: "Arne’s Weekly".to_string(),
+            description: "A weekly newsletter with the best stories of the internet.".to_string(),
             url: Url::parse("https://arne.me/weekly")?,
             og_type: OgType::Website,
-            css_hash: css_hash.as_ref(),
         },
         html! {
             section.weekly {
@@ -154,14 +153,13 @@ pub fn render_content(weekly: &WeeklyIssue) -> Result<Markup> {
     })
 }
 
-pub fn render(weekly_issue: &WeeklyIssue, css_hash: impl AsRef<str>) -> Result<Markup> {
-    Ok(layout::render(
+pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
+    Ok(Context::new(
         Head {
-            title: &weekly_issue.title,
-            description: &format!("Arne's Weekly #{}", weekly_issue.num),
+            title: weekly_issue.title.clone(),
+            description: format!("Arne's Weekly #{}", weekly_issue.num),
             url: Url::parse(&format!("https://arne.me/weekly/{}", weekly_issue.num))?,
             og_type: OgType::Article,
-            css_hash: css_hash.as_ref(),
         },
         html! {
             article.article {
@@ -178,6 +176,5 @@ pub fn render(weekly_issue: &WeeklyIssue, css_hash: impl AsRef<str>) -> Result<M
                 (subscribe_form())
             }
         },
-        None,
     ))
 }
