@@ -9,7 +9,8 @@ I'm turning 30 this year.
 
 Inspired by Kevin Kelly's incredible
 [68 Bits of Unsolicited Advice](https://kk.org/thetechnium/68-bits-of-unsolicited-advice/)[^1], 
-I too collected bits of advice which accumulated over the years.
+I collected bits of advice I've picked up over the years—mostly by people wiser
+than me.
 
 <!-- more -->
 
