@@ -26,3 +26,4 @@
 /reading/* /book-reviews/:splat
 /articles/i-read-* /book-review/:splat
 
+/defaults /articles/app-defaults
