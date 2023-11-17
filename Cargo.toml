@@ -19,7 +19,6 @@ grass = { version = "0.13", default-features = false }
 gray_matter = "0.2"
 lazy_static = "1"
 maud = { version = "0.25", features = ["axum"] }
-notify = "6.1.1"
 notify-debouncer-mini = "0.4.1"
 quick-xml = { version ="0.31", features = ["serialize"] }
 regex = "1"

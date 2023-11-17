@@ -124,7 +124,6 @@ dependencies = [
  "gray_matter",
  "lazy_static",
  "maud",
- "notify",
  "notify-debouncer-mini",
  "quick-xml 0.31.0",
  "regex",
