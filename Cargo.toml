@@ -6,26 +6,30 @@ publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+default = ["watch"]
+watch = ["notify-debouncer-mini", "tungstenite", "crossbeam-channel", "file-serve"]
+
 [dependencies]
 anyhow = "1"
 blake3 = "1.5.0"
 chrono = { version = "0.4.31", default-features = false, features = ["std", "clock", "serde"] }
 clap = { version = "4", features = ["derive"] }
 comrak = { version = "0.19.0", default-features = false, features = ["emojis", "syntect" ] }
-crossbeam-channel = "0.5.8"
+crossbeam-channel = { version = "0.5.8", optional = true }
 crowbook-text-processing = "1"
-file-serve = "0.3"
+file-serve = { version = "0.3", optional = true }
 grass = { version = "0.13", default-features = false }
 gray_matter = "0.2"
 lazy_static = "1"
-maud = { version = "0.25", features = ["axum"] }
-notify-debouncer-mini = "0.4.1"
+maud = { version = "0.25" }
+notify-debouncer-mini = { version = "0.4.1", optional = true }
 quick-xml = { version ="0.31", features = ["serialize"] }
 regex = "1"
 rss = "2"
 serde = { version = "1", features = ["derive"] }
 tempdir = "0.3.7"
-tungstenite = "0.20.1"
+tungstenite = { version = "0.20", optional = true }
 ureq = "2.8.0"
 url = { version = "2.4", features = ["serde"] }
 zip = "0.6.6"
