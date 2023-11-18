@@ -3,6 +3,8 @@ title: "Archive Your Old Projects"
 description: "In this post I describe how I wish I had archived all my old projects and my approach going forward."
 published: "2023-11-12"
 location: "Frankfurt, Germany"
+lobsters: "https://lobste.rs/s/eat48g/archive_your_old_projects"
+hackernews: "https://news.ycombinator.com/item?id=38239358"
 ---
 
 Yesterday, while looking through a folder called _old things lol glhf_, I fell 

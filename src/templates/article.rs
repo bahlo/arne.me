@@ -26,6 +26,21 @@ pub fn render(article: &Article) -> Result<Context> {
                         "Posted on "
                         time datetime=(article.published.format("%Y-%m-%d")) { (format_date(article.published)) }
                         " from " (article.location)
+                        @if article.hackernews.is_some() || article.lobsters.is_some() {
+                            (PreEscaped(". Discuss on "))
+
+                            @if let Some(hackernews) = &article.hackernews {
+                                a href=(hackernews) { "HN" }
+                                @if article.lobsters.is_some() {
+                                    " or "
+                                }
+                            }
+                            @if let Some(lobsters) = &article.lobsters {
+                                a href=(lobsters) { "Lobsters" }
+                            }
+                            "."
+                        }
+
                     }
                 }
                 (PreEscaped(article.content_html.clone()))

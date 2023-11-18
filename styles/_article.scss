@@ -23,6 +23,10 @@
     @media (prefers-color-scheme: dark) {
       color: $color-dark-light;
     }
+
+    a {
+      color: inherit;
+    }
   }
 
   &__homescreen_image {

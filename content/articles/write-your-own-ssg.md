@@ -3,6 +3,8 @@ title: "Why You Should Write Your Own Static Site Generator"
 description: "I rewrote my personal website using basic libraries and the flexibility is incredible."
 published: "2023-11-03"
 location: "Frankfurt, Germany"
+hackernews: "https://news.ycombinator.com/item?id=38126210"
+lobsters: "https://lobste.rs/s/5hf7qf/why_you_should_write_your_own_static_site"
 ---
 
 I've used [a](https://jekyllrb.com) [lot](https://gohugo.io) 
@@ -91,10 +93,6 @@ If you're in the latter camp, you can check out the
 [source of this website](https://github.com/bahlo/arne.me) to get some 
 inspiration.
 But most importantly: Choose a tech stack that excites you and have fun!
-
-**Update:** There's some discussion about this article happening on
-[Lobste.rs](https://lobste.rs/s/5hf7qf/why_you_should_write_your_own_static_site)
-and [Hackernews](https://news.ycombinator.com/item?id=38126210).
 
 [^1]: Static Site Generators, in case you didn't make that connection yet.
 [^2]: Heresy!

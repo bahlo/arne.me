@@ -45,6 +45,8 @@ pub struct Article {
     pub collections: Vec<String>,
     pub excerpt_html: Option<String>,
     pub content_html: String,
+    pub hackernews: Option<Url>,
+    pub lobsters: Option<Url>,
 }
 
 #[derive(Debug)]
@@ -215,6 +217,8 @@ impl Content {
                 pub hidden: bool,
                 #[serde(default)]
                 pub collections: Vec<String>,
+                pub hackernews: Option<Url>,
+                pub lobsters: Option<Url>,
             }
 
             let markdown = matter.parse(&contents);
@@ -252,6 +256,8 @@ impl Content {
                 collections: frontmatter.collections,
                 excerpt_html,
                 content_html,
+                hackernews: frontmatter.hackernews,
+                lobsters: frontmatter.lobsters,
             });
         }
 

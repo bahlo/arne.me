@@ -3,6 +3,8 @@ title: "30 Bits of Advice for 30 Years"
 published: "2023-11-17"
 description: "This article contains some advice I've collected in my life so far."
 location: "Frankfurt, Germany"
+hackernews: "https://news.ycombinator.com/item?id=38305234"
+lobsters: "https://lobste.rs/s/vdbzqo/30_bits_advice_for_30_years"
 ---
 
 I'm turning 30 this year.

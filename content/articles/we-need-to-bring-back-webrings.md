@@ -3,6 +3,8 @@ title: "We Need to Bring Back Webrings"
 description: "I built a webring for personal websites."
 published: "2023-11-14"
 location: "Frankfurt, Germany"
+hackernews: "https://news.ycombinator.com/item?id=38268706"
+lobsters: "https://lobste.rs/s/foo1n7/we_need_bring_back_webrings"
 ---
 
 The year is 1996. 
