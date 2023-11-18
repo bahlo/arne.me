@@ -21,4 +21,7 @@ A [sitemap](/sitemap-index.xml) is available and there are RSS feeds for
 [articles](/articles/atom.xml), the [weekly](/weekly/atom.xml), 
 and [book reviews](/book-reviews/feed.xml).
 
+This site is using the [Axiom integration for Netlify](https://axiom.co) for
+request logs and server-side analytics.
+
 All of the code and content on this site is written by a human.
