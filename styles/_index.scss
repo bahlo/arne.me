@@ -30,11 +30,11 @@
 }
 
 .hero {
-  margin-top: 4rem;
-  @media (max-width: $index-width) {
-    margin-top: 2rem;
-  }
+  margin-top: 2rem;
   max-width: $page-width;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 
   &__heading {
     font-size: $font-size-hero;
@@ -42,5 +42,25 @@
 
   &__subheading {
     font-size: $font-size-large;
+  }
+
+  &__arne {
+    max-height: 130px;
+
+    &:hover {
+      .eyes-1 {
+        visibility: hidden;
+      }
+
+      .eyes-2, .tounge {
+        visibility: visible;
+      }
+      // .mouth-1 {
+      //   visibilty: hidden;
+      // }
+      // .mouth-2 {
+      //   visibility: visible;
+      // }
+    }
   }
 }
