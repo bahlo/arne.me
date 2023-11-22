@@ -18,7 +18,7 @@
     font-size: $font-size-small;
     display: block;
     line-height: 1.2;
-    margin-top: .25rem;
+    margin-top: 0;
 
     @media (prefers-color-scheme: dark) {
       color: $color-dark-light;
