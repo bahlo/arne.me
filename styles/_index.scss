@@ -47,20 +47,37 @@
   &__arne {
     max-height: 130px;
 
-    &:hover {
-      .eyes-1 {
-        visibility: hidden;
+    &--alt-1 {
+      .mouth-1 {
+        visibilty: hidden;
+      }
+      .mouth-2 {
+        visibility: visible;
+      }
+    }
+
+    &--alt-2 {
+      .eyes-1, .mouth-2 {
+        visibility: hidden !important;
       }
 
       .eyes-2, .tounge {
         visibility: visible;
       }
-      // .mouth-1 {
-      //   visibilty: hidden;
-      // }
-      // .mouth-2 {
-      //   visibility: visible;
-      // }
     }
+  }
+}
+
+html.js .hero__arne {
+  cursor: pointer;
+}
+
+html:not(.js) .hero__arne:hover {
+  // alt-1
+  .mouth-1 {
+    visibilty: hidden;
+  }
+  .mouth-2 {
+    visibility: visible;
   }
 }
