@@ -1,5 +1,5 @@
 .index {
-  margin: 2rem 0;
+  margin: 2rem 0 0;
 
   &__column {
     @include stack(.75rem);
@@ -22,6 +22,7 @@
 
   &__more {
     text-decoration: none;
+    display: inline-block;
 
     @media print {
       display: none;

@@ -35,10 +35,8 @@ pub fn render(content: &Content) -> Result<Context> {
                             }
                         }
                     }
-                    @if content.articles.len() > 6 { // HACK: one is hidden
-                        br;
-                        a.index__more href="/articles" { (&(content.articles.len() - 6)) " more →" }
-                    }
+                    br.hidden; // We only want this in HTML-only
+                    a.index__more href="/articles" { (&(content.articles.len() - 6)) " more →" }
                 }
                 section.index__column {
                     h1 { "Weekly" }
@@ -53,7 +51,7 @@ pub fn render(content: &Content) -> Result<Context> {
                             }
                         }
                     }
-                    br;
+                    br.hidden; // We only want this in HTML-only
                     a.index__more href="/weekly" { (&(content.weekly.len() - 5)) " more →" }
                 }
                 section.index__column {
@@ -69,7 +67,7 @@ pub fn render(content: &Content) -> Result<Context> {
                             }
                         }
                     }
-                    br;
+                    br.hidden; // We only want this in HTML-only
                     a.index__more href="/book-reviews" { (&(content.book_reviews.len() - 5)) " more →" }
                 }
             }
