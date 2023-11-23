@@ -47,6 +47,10 @@
   &__arne {
     max-height: 130px;
 
+    &::selection {
+      background: none;
+    }
+
     &--alt-1 {
       .mouth-1 {
         visibilty: hidden;
