@@ -12,6 +12,8 @@ The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 The fonts used are [Rebond Grotesque](https://extraset.ch/typefaces/rebond-grotesque/)
 and [Berkeley Mono](https://berkeleygraphics.com/typefaces/berkeley-mono/).
 
+The logo was made by [Ekaterina Kapranova](https://www.instagram.com/ekkapranova/).
+
 Testing was conducted in the latest versions of
 Edge, Chrome, Firefox, and Safari.
 Any issue you encounter on this website can be submitted as
