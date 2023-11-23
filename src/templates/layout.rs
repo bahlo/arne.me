@@ -95,11 +95,6 @@ impl Layout {
                     meta property="og:description" content=(smart_quotes(head.description));
                     link rel="sitemap" href="/sitemap.xml";
                     link rel="stylesheet" href=(format!("/main.css?hash={}", self.css_hash));
-                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Articles")) href="/feed.xml";
-                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Weekly")) href="/weekly/feed.xml";
-                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Book Reviews")) href="/book-reviews/feed.xml";
-                    link rel="me" href="https://spezi.social/@arne";
-                    link rel="me" href="mailto:hey@arne.me";
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Regular.woff2" as="font" type="font/woff2";
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Bold.woff2" as="font" type="font/woff2";
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Italic.woff2" as="font" type="font/woff2";
@@ -107,6 +102,12 @@ impl Layout {
                     link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png";
                     link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png";
                     link rel="manifest" href="/site.webmanifest";
+                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Articles")) href="/feed.xml";
+                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Weekly")) href="/weekly/feed.xml";
+                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Book Reviews")) href="/book-reviews/feed.xml";
+                    link rel="me" href="https://spezi.social/@arne";
+                    link rel="me" href="mailto:hey@arne.me";
+                    link rel="webmention" href="https://webmention.io/arne.me/webmention";
 
                     @if let Some(port) = self.hot_reload_websocket_port {
                         script {
