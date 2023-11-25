@@ -22,6 +22,7 @@ mod watch;
 mod webmentions;
 
 use crate::content::Content;
+#[cfg(feature = "send-webmentions")]
 use webmentions::send_webmentions;
 
 lazy_static! {
@@ -73,6 +74,7 @@ fn main() -> Result<()> {
         Commands::Watch => watch::watch(),
         Commands::ExportWeekly { num } => export_weekly(num),
         Commands::DownloadFonts => download_fonts(),
+        #[cfg(feature = "send-webmentions")]
         Commands::SendWebmentions { path, dry_run } => send_webmentions(path, dry_run),
     }
 }
