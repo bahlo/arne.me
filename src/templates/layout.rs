@@ -187,6 +187,8 @@ impl Layout {
                                 div {
                                     a href="/now" { "Now" }
                                     br;
+                                    a href="/blogroll" { "Blogroll" }
+                                    br;
                                     a href="/projects" { "Projects" }
                                     br;
                                     a href="/contact" { "Contact" }
