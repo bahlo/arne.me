@@ -7,8 +7,9 @@ publish = false
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = ["watch"]
+default = ["watch", "send-webmentions"]
 watch = ["notify-debouncer-mini", "tungstenite", "crossbeam-channel", "file-serve"]
+send-webmentions = ["scraper"]
 
 [dependencies]
 anyhow = "1"
@@ -33,3 +34,4 @@ tungstenite = { version = "0.20", optional = true }
 ureq = "2.8.0"
 url = { version = "2.4", features = ["serde"] }
 zip = "0.6.6"
+scraper = { version = "0.18", optional = true }

@@ -18,8 +18,11 @@ mod sitemap;
 mod templates;
 #[cfg(feature = "watch")]
 mod watch;
+#[cfg(feature = "send-webmentions")]
+mod webmentions;
 
 use crate::content::Content;
+use webmentions::send_webmentions;
 
 lazy_static! {
     pub static ref GIT_SHA: String = {
@@ -52,6 +55,13 @@ enum Commands {
     ExportWeekly { num: u16 },
     #[clap(name = "download-fonts")]
     DownloadFonts,
+    #[cfg(feature = "send-webmentions")]
+    #[clap(name = "send-webmentions")]
+    SendWebmentions {
+        path: String,
+        #[clap(long, short, default_value = "false")]
+        dry_run: bool,
+    },
 }
 
 fn main() -> Result<()> {
@@ -63,6 +73,7 @@ fn main() -> Result<()> {
         Commands::Watch => watch::watch(),
         Commands::ExportWeekly { num } => export_weekly(num),
         Commands::DownloadFonts => download_fonts(),
+        Commands::SendWebmentions { path, dry_run } => send_webmentions(path, dry_run),
     }
 }
 
