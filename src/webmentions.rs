@@ -39,19 +39,12 @@ fn send_webmentions_weekly(dry_run: bool, content: Content, slug: impl AsRef<str
 
     for category in weekly_issue.categories.iter() {
         for story in category.stories.iter() {
-            let html = ureq::get(&story.url.to_string()).call()?.into_string()?;
-            let document = Html::parse_document(&html);
-            let webmention_endpoint = document
-                .select(&SELECTOR)
-                .next()
-                .and_then(|element| element.value().attr("href"));
-            if let Some(webmention_endpoint) = webmention_endpoint {
-                send_webmention(
-                    dry_run,
-                    &webmention_endpoint,
-                    &format!("https://arne.me/weekly/{}", num),
-                    &story.url,
-                )?;
+            if let Err(e) = send_webmention(
+                dry_run,
+                &format!("https://arne.me/weekly/{}", num),
+                &story.url,
+            ) {
+                eprintln!("Failed to send webmention for {}: {}", &story.url, e);
             }
         }
     }
@@ -59,16 +52,21 @@ fn send_webmentions_weekly(dry_run: bool, content: Content, slug: impl AsRef<str
     Ok(())
 }
 
-fn send_webmention(
-    dry_run: bool,
-    endpoint: impl AsRef<str>,
-    source: impl AsRef<str>,
-    target: impl AsRef<str>,
-) -> Result<()> {
+fn send_webmention(dry_run: bool, source: impl AsRef<str>, target: impl AsRef<str>) -> Result<()> {
+    let html = ureq::get(target.as_ref()).call()?.into_string()?;
+    let document = Html::parse_document(&html);
+    let endpoint = document
+        .select(&SELECTOR)
+        .next()
+        .and_then(|element| element.value().attr("href"));
+    let Some(endpoint) = endpoint else {
+        return Ok(()); // No webmention endpoint found
+    };
+
     if dry_run {
         println!(
             "Would send webmention to {}, source: {}, target: {}",
-            endpoint.as_ref(),
+            endpoint,
             source.as_ref(),
             target.as_ref()
         );
@@ -77,7 +75,7 @@ fn send_webmention(
             .send_form(&[("source", source.as_ref()), ("target", target.as_ref())])?;
         println!(
             "Sent webmention to {}, source: {}, target: {}",
-            endpoint.as_ref(),
+            endpoint,
             source.as_ref(),
             target.as_ref()
         );
