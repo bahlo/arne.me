@@ -356,19 +356,19 @@ fn syntax_definition_from_path(
 fn compile_syntax() -> Result<()> {
     let mut ps_builder = SyntaxSet::load_defaults_newlines().into_builder();
 
-    let ts_syntax = syntax_definition_from_path("assets/TypeScript.sublime-syntax", "typescript")?;
+    let ts_syntax = syntax_definition_from_path("syntax/TypeScript.sublime-syntax", "typescript")?;
     ps_builder.add(ts_syntax);
 
-    let viml_syntax = syntax_definition_from_path("assets/viml.sublime-syntax", "vim")?;
+    let viml_syntax = syntax_definition_from_path("syntax/viml.sublime-syntax", "vim")?;
     ps_builder.add(viml_syntax);
 
-    let nix_syntax = syntax_definition_from_path("assets/nix.sublime-syntax", "nix")?;
+    let nix_syntax = syntax_definition_from_path("syntax/nix.sublime-syntax", "nix")?;
     ps_builder.add(nix_syntax);
 
     let syntax_set = ps_builder.build();
 
     let bytes = bincode::serialize(&syntax_set)?;
-    let file = File::create("assets/syntax_set")?;
+    let file = File::create("syntax/syntax_set")?;
     let mut writer = BufWriter::new(file);
     writer.write_all(&bytes)?;
 

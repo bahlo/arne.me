@@ -630,7 +630,7 @@ struct SyntectAdapter {
 
 impl SyntectAdapter {
     pub fn new() -> Result<Self> {
-        let file = File::open("assets/syntax_set").context(
+        let file = File::open("syntax/syntax_set").context(
             "Failed to find compiled syntax set, please run `cargo run serialize-syntax-set`",
         )?;
         let syntax_set = bincode::deserialize_from(file)?;
