@@ -138,8 +138,53 @@ pub struct Project {
     pub content_html: String,
 }
 
+struct MarkdownContext<'a> {
+    plugins: comrak::Plugins<'a>,
+    options: comrak::Options,
+}
+
+impl<'a> MarkdownContext<'a> {
+    fn new(syntect_adapter: &'a SyntectAdapter) -> Result<Self> {
+        let render = comrak::RenderOptionsBuilder::default()
+            .unsafe_(true)
+            .build()
+            .context("Failed to build render options")?;
+        let extension = comrak::ExtensionOptionsBuilder::default()
+            .strikethrough(true)
+            .tagfilter(true)
+            .table(true)
+            .superscript(true)
+            .header_ids(Some("".to_string()))
+            .footnotes(true)
+            .description_lists(true)
+            .build()
+            .context("Failed to build extension options")?;
+        let parse = comrak::ParseOptionsBuilder::default()
+            .smart(true)
+            .build()
+            .context("Failed to build parse options")?;
+        let options = comrak::Options {
+            render,
+            extension,
+            parse,
+        };
+        let render_plugins = comrak::RenderPluginsBuilder::default()
+            .codefence_syntax_highlighter(Some(syntect_adapter))
+            .build()
+            .context("Failed to build render plugins")?;
+        let plugins = comrak::PluginsBuilder::default()
+            .render(render_plugins)
+            .build()
+            .context("Failed to build plugins")?;
+
+        Ok(Self { plugins, options })
+    }
+}
+
 impl Content {
     pub fn parse(mut dir: fs::ReadDir) -> Result<Self> {
+        let syntect_adapter = SyntectAdapter::new()?;
+        let markdown_context = MarkdownContext::new(&syntect_adapter)?;
         let matter = Matter::<YAML>::new();
 
         let mut content = Content::default();
@@ -151,26 +196,29 @@ impl Content {
                     entry.path()
                 ))? == "md"
             {
-                content.pages.push(Self::parse_page(&matter, entry)?);
+                content
+                    .pages
+                    .push(Self::parse_page(&matter, &markdown_context, entry)?);
                 continue;
             }
 
             match entry.file_name().to_string_lossy().as_ref() {
                 "articles" => {
                     let dir = fs::read_dir(entry.path())?;
-                    content.articles = Self::parse_articles(&matter, dir)?;
+                    content.articles = Self::parse_articles(&matter, &markdown_context, dir)?;
                 }
                 "weekly" => {
                     let dir = fs::read_dir(entry.path())?;
-                    content.weekly = Self::parse_weekly(&matter, dir)?;
+                    content.weekly = Self::parse_weekly(&matter, &markdown_context, dir)?;
                 }
                 "book-reviews" => {
                     let dir = fs::read_dir(entry.path())?;
-                    content.book_reviews = Self::parse_book_reviews(&matter, dir)?;
+                    content.book_reviews =
+                        Self::parse_book_reviews(&matter, &markdown_context, dir)?;
                 }
                 "projects" => {
                     let dir = fs::read_dir(entry.path())?;
-                    content.projects = Self::parse_projects(&matter, dir)?;
+                    content.projects = Self::parse_projects(&matter, &markdown_context, dir)?;
                 }
                 _ => continue,
             }
@@ -179,7 +227,11 @@ impl Content {
         Ok(content)
     }
 
-    fn parse_articles(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<Article>> {
+    fn parse_articles(
+        matter: &Matter<YAML>,
+        markdown_context: &MarkdownContext,
+        mut dir: fs::ReadDir,
+    ) -> Result<Vec<Article>> {
         let footnote_regex = Regex::new(r"\[\^(\d+)\]")?;
 
         let mut articles = Vec::new();
@@ -239,13 +291,21 @@ impl Content {
                 .collect::<Vec<_>>()
                 .first()
                 .map(|excerpt_markdown| -> Result<String> {
-                    let excerpt_html = render_markdown(excerpt_markdown.to_string())?;
+                    let excerpt_html = markdown_to_html_with_plugins(
+                        &excerpt_markdown,
+                        &markdown_context.options,
+                        &markdown_context.plugins,
+                    );
                     Ok(excerpt_html)
                 })
                 .transpose()?
                 .map(|excerpt_html| footnote_regex.replace_all(&excerpt_html, "").to_string());
 
-            let content_html = render_markdown(markdown.content)?;
+            let content_html = markdown_to_html_with_plugins(
+                &markdown.content,
+                &markdown_context.options,
+                &markdown_context.plugins,
+            );
 
             articles.push(Article {
                 slug,
@@ -268,7 +328,11 @@ impl Content {
         Ok(articles)
     }
 
-    fn parse_book_reviews(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<BookReview>> {
+    fn parse_book_reviews(
+        matter: &Matter<YAML>,
+        markdown_context: &MarkdownContext,
+        mut dir: fs::ReadDir,
+    ) -> Result<Vec<BookReview>> {
         let mut book_reviews = Vec::new();
         while let Some(entry) = dir.next().transpose()? {
             if entry.file_type()?.is_dir() {
@@ -320,13 +384,21 @@ impl Content {
                 .collect::<Vec<_>>()
                 .first()
                 .map(|excerpt_markdown| -> Result<String> {
-                    let excerpt_html = render_markdown(excerpt_markdown.to_string())?;
+                    let excerpt_html = markdown_to_html_with_plugins(
+                        excerpt_markdown,
+                        &markdown_context.options,
+                        &markdown_context.plugins,
+                    );
                     Ok(excerpt_html)
                 })
                 .transpose()?
                 .ok_or(anyhow!("Couldn't parse excerpt for {:?}", entry.path()))?;
 
-            let content_html = render_markdown(markdown.content)?;
+            let content_html = markdown_to_html_with_plugins(
+                &markdown.content,
+                &markdown_context.options,
+                &markdown_context.plugins,
+            );
 
             book_reviews.push(BookReview {
                 slug,
@@ -345,7 +417,11 @@ impl Content {
         Ok(book_reviews)
     }
 
-    fn parse_weekly(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<WeeklyIssue>> {
+    fn parse_weekly(
+        matter: &Matter<YAML>,
+        markdown_context: &MarkdownContext,
+        mut dir: fs::ReadDir,
+    ) -> Result<Vec<WeeklyIssue>> {
         let mut weekly_issues = Vec::new();
         while let Some(entry) = dir.next().transpose()? {
             if entry.file_type()?.is_dir() {
@@ -384,16 +460,18 @@ impl Content {
                 pub categories: Vec<WeeklyCategory>,
             }
 
-            impl Frontmatter {
-                fn render_descriptions(mut self) -> Result<Self> {
-                    for category in self.categories.iter_mut() {
-                        for story in category.stories.iter_mut() {
-                            story.description_html = render_markdown(story.description.clone())?;
-                        }
+            let render_descriptions = |mut frontmatter: Frontmatter| -> Result<Frontmatter> {
+                for category in frontmatter.categories.iter_mut() {
+                    for story in category.stories.iter_mut() {
+                        story.description_html = markdown_to_html_with_plugins(
+                            &story.description,
+                            &markdown_context.options,
+                            &markdown_context.plugins,
+                        );
                     }
-                    Ok(self)
                 }
-            }
+                Ok(frontmatter)
+            };
 
             let markdown = matter.parse(&contents);
 
@@ -404,10 +482,14 @@ impl Content {
                 .context(format!(
                     "Couldn't deserialize frontmatter for {:?}",
                     entry.path()
-                ))?
-                .render_descriptions()?;
+                ))?;
+            let frontmatter = render_descriptions(frontmatter)?;
 
-            let content_html = render_markdown(markdown.content.clone())?;
+            let content_html = markdown_to_html_with_plugins(
+                &markdown.content,
+                &markdown_context.options,
+                &markdown_context.plugins,
+            );
 
             weekly_issues.push(WeeklyIssue {
                 num,
@@ -427,7 +509,11 @@ impl Content {
         Ok(weekly_issues)
     }
 
-    fn parse_page(matter: &Matter<YAML>, entry: DirEntry) -> Result<Page> {
+    fn parse_page(
+        matter: &Matter<YAML>,
+        markdown_context: &MarkdownContext,
+        entry: DirEntry,
+    ) -> Result<Page> {
         let slug = entry
             .path()
             .file_stem()
@@ -455,7 +541,11 @@ impl Content {
                 entry.path()
             ))?;
 
-        let content_html = render_markdown(markdown.content)?;
+        let content_html = markdown_to_html_with_plugins(
+            &markdown.content,
+            &markdown_context.options,
+            &markdown_context.plugins,
+        );
 
         Ok(Page {
             slug,
@@ -465,7 +555,11 @@ impl Content {
         })
     }
 
-    fn parse_projects(matter: &Matter<YAML>, mut dir: fs::ReadDir) -> Result<Vec<Project>> {
+    fn parse_projects(
+        matter: &Matter<YAML>,
+        markdown_context: &MarkdownContext,
+        mut dir: fs::ReadDir,
+    ) -> Result<Vec<Project>> {
         let mut projects = Vec::new();
         while let Some(entry) = dir.next().transpose()? {
             if entry.file_type()?.is_dir() {
@@ -503,7 +597,11 @@ impl Content {
                     entry.path()
                 ))?;
 
-            let content_html = render_markdown(markdown.content)?;
+            let content_html = markdown_to_html_with_plugins(
+                &markdown.content,
+                &markdown_context.options,
+                &markdown_context.plugins,
+            );
 
             projects.push(Project {
                 title: smart_quotes(frontmatter.title),
@@ -527,14 +625,16 @@ impl Content {
 }
 
 struct SyntectAdapter {
-    syntax_set: syntect::parsing::SyntaxSet,
+    syntax_set: SyntaxSet,
 }
 
 impl SyntectAdapter {
-    pub fn new() -> Self {
-        SyntectAdapter {
-            syntax_set: syntect::parsing::SyntaxSet::load_defaults_newlines(),
-        }
+    pub fn new() -> Result<Self> {
+        let file = File::open("assets/syntax_set").context(
+            "Failed to find compiled syntax set, please run `cargo run serialize-syntax-set`",
+        )?;
+        let syntax_set = bincode::deserialize_from(file)?;
+        Ok(SyntectAdapter { syntax_set })
     }
 }
 
@@ -546,12 +646,9 @@ impl comrak::adapters::SyntaxHighlighterAdapter for SyntectAdapter {
         code: &str,
     ) -> Result<(), io::Error> {
         let lang: &str = match lang {
-            Some("nix") | Some("shell") | Some("typescript") => "Plain Text",
             Some(l) if !l.is_empty() => l,
             _ => "Plain Text",
         };
-
-        dbg!(&lang);
 
         let syntax = self
             .syntax_set
@@ -560,11 +657,10 @@ impl comrak::adapters::SyntaxHighlighterAdapter for SyntectAdapter {
                 io::ErrorKind::Other,
                 format!("No syntax highlighting for {}", lang),
             ))?;
-        let syntax_set = SyntaxSet::load_defaults_newlines();
 
         let mut html_generator = ClassedHTMLGenerator::new_with_class_style(
             syntax,
-            &syntax_set,
+            &self.syntax_set,
             syntect::html::ClassStyle::Spaced,
         );
 
@@ -581,10 +677,11 @@ impl comrak::adapters::SyntaxHighlighterAdapter for SyntectAdapter {
 
     fn write_pre_tag(
         &self,
-        output: &mut dyn Write,
-        attributes: HashMap<String, String>,
+        _output: &mut dyn Write,
+        _attributes: HashMap<String, String>,
     ) -> Result<(), io::Error> {
-        comrak::html::write_opening_tag(output, "pre", attributes)
+        // Syntect is taking care of that
+        Ok(())
     }
 
     fn write_code_tag(
@@ -594,41 +691,4 @@ impl comrak::adapters::SyntaxHighlighterAdapter for SyntectAdapter {
     ) -> Result<(), io::Error> {
         comrak::html::write_opening_tag(output, "pre", attributes)
     }
-}
-
-fn render_markdown(markdown: String) -> Result<String> {
-    let render = comrak::RenderOptionsBuilder::default()
-        .unsafe_(true)
-        .build()
-        .context("Failed to build render options")?;
-    let extension = comrak::ExtensionOptionsBuilder::default()
-        .strikethrough(true)
-        .tagfilter(true)
-        .table(true)
-        .superscript(true)
-        .header_ids(Some("".to_string()))
-        .footnotes(true)
-        .description_lists(true)
-        .build()
-        .context("Failed to build extension options")?;
-    let parse = comrak::ParseOptionsBuilder::default()
-        .smart(true)
-        .build()
-        .context("Failed to build parse options")?;
-    let options = comrak::Options {
-        render,
-        extension,
-        parse,
-    };
-    let syntect_adapter = SyntectAdapter::new();
-    let render_plugins = comrak::RenderPluginsBuilder::default()
-        .codefence_syntax_highlighter(Some(&syntect_adapter))
-        .build()
-        .context("Failed to build render plugins")?;
-    let plugins = comrak::PluginsBuilder::default()
-        .render(render_plugins)
-        .build()
-        .context("Failed to build plugins")?;
-
-    Ok(markdown_to_html_with_plugins(&markdown, &options, &plugins))
 }

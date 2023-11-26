@@ -4,10 +4,11 @@ use lazy_static::lazy_static;
 use std::{
     env,
     fs::{self, File},
-    io,
+    io::{self, BufWriter, Read, Write},
     path::Path,
     process::Command,
 };
+use syntect::parsing::{SyntaxDefinition, SyntaxSet};
 use tempdir::TempDir;
 use templates::layout::Layout;
 use zip::ZipArchive;
@@ -63,6 +64,8 @@ enum Commands {
         #[clap(long, short, default_value = "false")]
         dry_run: bool,
     },
+    #[clap(name = "compile-syntax")]
+    CompileSyntax,
 }
 
 fn main() -> Result<()> {
@@ -76,6 +79,7 @@ fn main() -> Result<()> {
         Commands::DownloadFonts => download_fonts(),
         #[cfg(feature = "send-webmentions")]
         Commands::SendWebmentions { path, dry_run } => send_webmentions(path, dry_run),
+        Commands::CompileSyntax => compile_syntax(),
     }
 }
 
@@ -334,5 +338,39 @@ fn download_fonts() -> Result<()> {
     }
 
     temp_dir.close()?;
+    Ok(())
+}
+
+fn syntax_definition_from_path(
+    path: impl AsRef<Path>,
+    lang: impl AsRef<str>,
+) -> Result<SyntaxDefinition> {
+    let mut file = File::open(path)?;
+    let mut buffer = Vec::new();
+    file.read_to_end(&mut buffer)?;
+    let syntax_string = String::from_utf8(buffer)?;
+    let syntax = SyntaxDefinition::load_from_str(&syntax_string, true, Some(lang.as_ref()))?;
+    Ok(syntax)
+}
+
+fn compile_syntax() -> Result<()> {
+    let mut ps_builder = SyntaxSet::load_defaults_newlines().into_builder();
+
+    let ts_syntax = syntax_definition_from_path("assets/TypeScript.sublime-syntax", "typescript")?;
+    ps_builder.add(ts_syntax);
+
+    let viml_syntax = syntax_definition_from_path("assets/viml.sublime-syntax", "vim")?;
+    ps_builder.add(viml_syntax);
+
+    let nix_syntax = syntax_definition_from_path("assets/nix.sublime-syntax", "nix")?;
+    ps_builder.add(nix_syntax);
+
+    let syntax_set = ps_builder.build();
+
+    let bytes = bincode::serialize(&syntax_set)?;
+    let file = File::create("assets/syntax_set")?;
+    let mut writer = BufWriter::new(file);
+    writer.write_all(&bytes)?;
+
     Ok(())
 }

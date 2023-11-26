@@ -36,3 +36,4 @@ ureq = "2.8.0"
 url = { version = "2.4", features = ["serde"] }
 zip = "0.6.6"
 scraper = { version = "0.18", optional = true }
+bincode = "1.3"
