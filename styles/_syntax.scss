@@ -1,0 +1,49 @@
+pre[class*="language-"] {
+  background: #fbfbfb;
+  padding: .5rem;
+  border-radius: 4px;
+
+  .keyword, .modifier {
+    color: $color-orange;
+  }
+
+  .variable {
+    color: $color-blue;
+  }
+
+  .type, .entity {
+    color: $color-purple;
+  }
+
+  .string {
+    color: $color-green;
+  }
+
+  .comment {
+    color: $color-light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background: #111;
+
+    .keyword, .modifier {
+      color: $color-dark-orange;
+    }
+
+    .variable {
+      color: $color-dark-blue;
+    }
+
+    .type, .entity {
+      color: $color-dark-purple;
+    }
+
+    .string {
+      color: $color-dark-green;
+    }
+
+    .comment {
+      color: $color-dark-light;
+    }
+  }
+}
