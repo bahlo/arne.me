@@ -1,4 +1,5 @@
 use anyhow::{anyhow, Context, Result};
+use bat::assets::HighlightingAssets;
 use chrono::NaiveDate;
 use comrak::markdown_to_html_with_plugins;
 use crowbook_text_processing::clean;
@@ -630,11 +631,11 @@ struct SyntectAdapter {
 
 impl SyntectAdapter {
     pub fn new() -> Result<Self> {
-        let file = File::open("syntax/syntax_set").context(
-            "Failed to find compiled syntax set, please run `cargo run serialize-syntax-set`",
-        )?;
-        let syntax_set = bincode::deserialize_from(file)?;
-        Ok(SyntectAdapter { syntax_set })
+        let assets = HighlightingAssets::from_binary();
+        let syntax_set = assets.get_syntax_set()?;
+        Ok(SyntectAdapter {
+            syntax_set: syntax_set.clone(),
+        })
     }
 }
 
