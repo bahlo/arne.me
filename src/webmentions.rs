@@ -1,5 +1,5 @@
 use crate::content::Content;
-use anyhow::{anyhow, bail, Context, Result};
+use anyhow::{anyhow, Context, Result};
 use lazy_static::lazy_static;
 use regex::Regex;
 use scraper::{Html, Selector};
@@ -18,12 +18,12 @@ pub fn send_webmentions(path: impl AsRef<str>, dry_run: bool) -> Result<()> {
     let (kind, slug) = path
         .as_ref()
         .split_once("/")
-        .ok_or(anyhow!("Invalid path"))?;
+        .unwrap_or_else(|| ("", path.as_ref()));
 
     match kind {
         "weekly" => send_webmentions_weekly(dry_run, content, slug)?,
         "articles" => send_webmentions_article(dry_run, content, slug)?,
-        _ => bail!("Invalid kind, expected 'weekly'"),
+        _ => send_webmentions_page(dry_run, content, slug)?,
     }
 
     Ok(())
@@ -68,6 +68,25 @@ fn send_webmentions_article(dry_run: bool, content: Content, slug: impl AsRef<st
         .for_each(|capture| {
             let url = capture.get(1).unwrap().as_str();
             send_webmention(dry_run, format!("https://arne.me/articles/{}", slug), url)
+                .unwrap_or_else(|e| println!("Failed to send webmention for {}: {}", url, e));
+        });
+
+    Ok(())
+}
+
+fn send_webmentions_page(dry_run: bool, content: Content, slug: impl AsRef<str>) -> Result<()> {
+    let slug = slug.as_ref();
+    let page = content
+        .pages
+        .iter()
+        .find(|page| page.slug == slug)
+        .ok_or_else(|| anyhow!("Page not found"))?;
+
+    LINK_REGEX
+        .captures_iter(&page.content_html)
+        .for_each(|capture| {
+            let url = capture.get(1).unwrap().as_str();
+            send_webmention(dry_run, format!("https://arne.me/{}", slug), url)
                 .unwrap_or_else(|e| println!("Failed to send webmention for {}: {}", url, e));
         });
 
