@@ -87,7 +87,7 @@ impl Layout {
                     meta name="title" content=(smart_quotes(head.title.clone()));
                     meta name="description" content=(smart_quotes(head.description.clone()));
                     meta name="author" content="Arne Bahlo";
-                    meta name="theme-color" content="#eee";
+                    meta name="theme-color" content="rgb(100, 134, 102)";
                     meta name="viewport" content="width=device-width,initial-scale=1";
                     meta property="og:type" content=(head.og_type);
                     meta property="og:url" content=(head.url);

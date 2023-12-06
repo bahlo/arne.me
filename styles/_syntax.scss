@@ -1,5 +1,5 @@
 pre[class*="language-"] {
-  background: #f0f0f0;
+  background: $color-code-bg;
   border-radius: 4px;
 
   padding: .5rem;
@@ -32,7 +32,7 @@ pre[class*="language-"] {
   }
 
   @media (prefers-color-scheme: dark) {
-    background: #111;
+    background: $color-dark-code-bg;
 
     .keyword, .modifier {
       color: $color-dark-orange;
