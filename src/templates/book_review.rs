@@ -24,10 +24,10 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
             og_type: OgType::Article,
         },
         html! {
-            article.article {
+            article.book_review {
                 header {
                     h1 { (book_review.title) " by " (book_review.author) }
-                    em.article__byline {
+                    em.book_review__byline {
                         "Read on "
                         time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
                         " in " (book_review.location) ", rated " (book_review.rating) "/5"
@@ -54,14 +54,14 @@ pub fn render_index(content: &Content) -> Result<Context> {
         html! {
             h1 { "Book reviews" }
             @for book_review in &content.book_reviews {
-                article.article {
+                article.book_review {
                     header {
                         h2 {
                             a href=(format!("/book-reviews/{}", book_review.slug)) {
                                 (book_review.title) " by " (book_review.author)
                             }
                         }
-                        em.article__byline {
+                        em.book_review__byline {
                             "Read on on "
                             time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
                             " in " (book_review.location) ", rated " (book_review.rating) "/5"
