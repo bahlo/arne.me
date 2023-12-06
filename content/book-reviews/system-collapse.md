@@ -6,7 +6,7 @@ rating: 5
 location: "Frankfurt, Germany"
 ---
 
-Like the seven before, it follows a construct—a bot with organic 
+Like the seven before, this book follows a construct—a bot with organic 
 parts—called Murderbot protecting its humans.
 The Barish-Estranza corporation wants to take over a planet and force the colony 
 of humans living there to work for them.
