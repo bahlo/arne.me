@@ -65,3 +65,7 @@ Robin Rendle
 Joshua Wuyts
 
 : [blog.yoshuawuyts.com](https://blog.yoshuawuyts.com)
+
+Bartosz Ciechanowski
+
+: [ciechanow.ski](https://ciechanow.ski)
