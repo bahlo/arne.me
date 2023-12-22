@@ -27,3 +27,7 @@
 /articles/i-read-* /book-review/:splat
 
 /defaults /articles/app-defaults
+
+# Renamed articles
+/articles/emacs-from-scratch-part-one-the-foundation /articles/emacs-from-scratch-part-one-foundations
+/articles/emacs-from-scratch-part-one-the-foundation/* /articles/emacs-from-scratch-part-one-foundations/*
