@@ -40,8 +40,8 @@ brew reinstall emacs-plus \
 And this is what it looks like when we start Emacs for the first time:
 
 <picture>
-  <source srcset="/articles/emacs-from-scratch-part-1-foundations/vanilla-emacs.avif" type="image/avif" />
-  <img src="/articles/emacs-from-scratch-part-1-foundations/vanilla-emacs.avif" alt="A default Emacs window showing outdated (euphemismus) butons and generally looking like it screams to be customized." />
+  <source srcset="/articles/emacs-from-scratch-part-one-foundations/vanilla-emacs.avif" type="image/avif" />
+  <img src="/articles/emacs-from-scratch-part-one-foundations/vanilla-emacs.avif" alt="A default Emacs window showing outdated (euphemismus) butons and generally looking like it screams to be customized." />
 </picture>
 
 ## Remove UI elements
@@ -68,8 +68,8 @@ Let's fix that by adding these lines to `$HOME/.emacs.d/early-init.el`[^2]:
 This is better:
 
 <picture>
-  <source srcset="/articles/emacs-from-scratch-part-1-foundations/no-gui-emacs.avif" type="image/avif" />
-  <img src="/articles/emacs-from-scratch-part-1-foundations/no-gui-emacs.avif" alt="Emacs without GUI elements and the scratch buffer open." />
+  <source srcset="/articles/emacs-from-scratch-part-one-foundations/no-gui-emacs.avif" type="image/avif" />
+  <img src="/articles/emacs-from-scratch-part-one-foundations/no-gui-emacs.avif" alt="Emacs without GUI elements and the scratch buffer open." />
 </picture>
 
 We'll take care of the default scratch text and the `C-h C-a` hint down below.
@@ -270,14 +270,14 @@ in your modeline to indicate position in the open buffer.
 This is what looks like:
 
 <picture>
-  <source srcset="/articles/emacs-from-scratch-part-1-foundations/final.avif" type="image/avif" />
-  <img src="/articles/emacs-from-scratch-part-1-foundations/final.avif" alt="Emacs with relative line numbers, a nice fond and color scheme." />
+  <source srcset="/articles/emacs-from-scratch-part-one-foundations/final.avif" type="image/avif" />
+  <img src="/articles/emacs-from-scratch-part-one-foundations/final.avif" alt="Emacs with relative line numbers, a nice fond and color scheme." />
 </picture>
 
 We have sane defaults, we can open a file with `:e`, navigate around and we 
 have a nice color scheme[^4] and modeline.
-Here's the the final [`init.el`](/articles/emacs-from-scratch-part-1-foundations/init.el) 
-and [`early-init.el`](/articles/emacs-from-scratch-part-1-foundations/early-init.el)
+Here's the the final [`init.el`](/articles/emacs-from-scratch-part-one-foundations/init.el) 
+and [`early-init.el`](/articles/emacs-from-scratch-part-one-foundations/early-init.el)
 
 In part 2, we'll add a project manager, our own keybindings, the best Git TUI,
 a handy shortcut to restart Emacs and a ton of small tweaks.
