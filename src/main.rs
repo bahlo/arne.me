@@ -53,7 +53,10 @@ enum Commands {
     #[clap(name = "watch")]
     Watch,
     #[clap(name = "export-weekly")]
-    ExportWeekly { num: u16 },
+    ExportWeekly { 
+        /// Weekly issue # (defaults to latest)
+        num: Option<u16> 
+    },
     #[clap(name = "download-fonts")]
     DownloadFonts,
     #[cfg(feature = "send-webmentions")]
@@ -239,8 +242,13 @@ where
     Ok(())
 }
 
-fn export_weekly(num: u16) -> Result<()> {
+fn export_weekly(num: Option<u16>) -> Result<()> {
     let content = Content::parse(fs::read_dir("content")?)?;
+
+    // Default to the latest weekly issue
+    let latest_issue = content.weekly.first().ok_or(anyhow!("No weekly issues found"))?.num;
+    let num = num.unwrap_or(latest_issue);
+
     let weekly_issue = content
         .weekly
         .iter()
