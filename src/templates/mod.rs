@@ -13,9 +13,9 @@ pub fn format_date(date: NaiveDate) -> Markup {
     html! {
         (date.format("%B %e").to_string())
         @match date.day() {
-            1 => sup { "st" },
-            2 => sup { "nd" },
-            3 => sup { "rd" },
+            1 | 21 | 31 => sup { "st" },
+            2 | 22 => sup { "nd" },
+            3 | 23 => sup { "rd" },
             _ => sup { "th" },
         }
         (date.format(", %Y").to_string())
