@@ -20,7 +20,7 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
                 book_review.title, book_review.author
             ),
             description: format!("I read {} by {}", book_review.title, book_review.author,),
-            url: Url::parse(&format!("https://arne.me/book-review/{}", book_review.slug))?,
+            url: Url::parse(&format!("https://arne.me/book-reviews/{}", book_review.slug))?,
             og_type: OgType::Article,
         },
         html! {

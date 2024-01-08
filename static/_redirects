@@ -24,7 +24,7 @@
 /books/how-to-win-friends-and-influence-people /book-reviews/how-to-win-friends
 /reading/how-to-win-friends-and-influence-people /book-reviews/how-to-win-friends
 /reading/* /book-reviews/:splat
-/articles/i-read-* /book-review/:splat
+/articles/i-read-* /book-reviews/:splat
 
 /defaults /articles/app-defaults
 
