@@ -1,6 +1,6 @@
 use anyhow::{anyhow, Context, Result};
 use bat::assets::HighlightingAssets;
-use chrono::NaiveDate;
+use chrono::{Datelike, NaiveDate};
 use comrak::markdown_to_html_with_plugins;
 use crowbook_text_processing::clean;
 use gray_matter::{engine::YAML, Matter};
@@ -21,11 +21,13 @@ pub fn smart_quotes(text: impl Into<String>) -> String {
 
 #[derive(Debug, Default)]
 pub struct Content {
+    // Stream
     pub articles: Vec<Article>,
     pub weekly: Vec<WeeklyIssue>,
+    pub book_reviews: Vec<BookReview>,
+
     pub pages: Vec<Page>,
     pub projects: Vec<Project>,
-    pub book_reviews: Vec<BookReview>,
 }
 
 #[derive(Debug)]
@@ -36,7 +38,7 @@ pub struct Page {
     pub content_html: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd)]
 pub struct Article {
     pub slug: String,
     pub title: String,
@@ -52,7 +54,7 @@ pub struct Article {
     pub lobsters: Option<Url>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd)]
 pub struct BookReview {
     pub slug: String,
     pub title: String,
@@ -64,7 +66,7 @@ pub struct BookReview {
     pub content_html: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, PartialOrd)]
 pub struct WeeklyIssue {
     pub num: u16,
     pub title: String,
@@ -77,13 +79,13 @@ pub struct WeeklyIssue {
     pub content_html: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
 pub struct WeeklyCategory {
     pub title: String,
     pub stories: Vec<WeeklyStory>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
 #[serde(rename_all = "camelCase")]
 pub struct WeeklyStory {
     pub title: String,
@@ -94,14 +96,14 @@ pub struct WeeklyStory {
     pub description_html: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
 pub struct WeeklyTootOfTheWeek {
     pub text: String,
     pub author: String,
     pub url: Url,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
 pub struct WeeklyTweetOfTheWeek {
     pub text: String,
     pub author: String,
@@ -109,7 +111,7 @@ pub struct WeeklyTweetOfTheWeek {
     pub media: Option<WeeklyTweetOfTheWeekMedia>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
 #[serde(rename_all = "camelCase")]
 pub struct WeeklyTweetOfTheWeekMedia {
     pub alt: String,
@@ -117,14 +119,14 @@ pub struct WeeklyTweetOfTheWeekMedia {
     pub src_set: Vec<SrcSet>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
 pub struct SrcSet {
     pub src: String,
     #[serde(rename = "type")]
     pub typ: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
 pub struct WeeklyQuoteOfTheWeek {
     pub text: String,
     pub author: String,
@@ -137,6 +139,62 @@ pub struct Project {
     pub from: u16,
     pub to: Option<u16>,
     pub content_html: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd)]
+pub enum StreamItem<'a> {
+    Article(&'a Article),
+    BookReview(&'a BookReview),
+    WeeklyIssue(&'a WeeklyIssue),
+}
+
+impl<'a> Ord for StreamItem<'a> {
+    fn cmp(&self, other: &Self) -> Ordering {
+        match (self, other) {
+            (StreamItem::Article(a), StreamItem::Article(b)) => b.published.cmp(&a.published),
+            (StreamItem::Article(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
+            (StreamItem::Article(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.published),
+
+            (StreamItem::BookReview(a), StreamItem::BookReview(b)) => b.read.cmp(&a.read),
+            (StreamItem::BookReview(a), StreamItem::Article(b)) => a.read.cmp(&b.published),
+            (StreamItem::BookReview(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.read),
+
+            (StreamItem::WeeklyIssue(a), StreamItem::WeeklyIssue(b)) => {
+                b.published.cmp(&a.published)
+            }
+            (StreamItem::WeeklyIssue(a), StreamItem::Article(b)) => a.published.cmp(&b.published),
+            (StreamItem::WeeklyIssue(a), StreamItem::BookReview(b)) => a.published.cmp(&b.read),
+        }
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, Hash, Clone)]
+pub struct Month {
+    pub year: i32,
+    pub month: u32,
+}
+
+impl Month {
+    pub fn new(date: chrono::NaiveDate) -> Self {
+        Self {
+            year: date.year(),
+            month: date.month(),
+        }
+    }
+}
+
+impl PartialOrd for Month {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Ord for Month {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.year
+            .cmp(&other.year)
+            .then_with(|| self.month.cmp(&other.month))
+    }
 }
 
 struct MarkdownContext<'a> {
@@ -622,6 +680,47 @@ impl Content {
         });
 
         Ok(projects)
+    }
+
+    pub fn stream(&self) -> Vec<StreamItem> {
+        let articles = self
+            .articles
+            .iter()
+            .filter(move |article| !article.hidden)
+            .map(StreamItem::Article);
+        let book_reviews = self.book_reviews.iter().map(StreamItem::BookReview);
+        let weekly = self.weekly.iter().map(StreamItem::WeeklyIssue);
+
+        let mut stream: Vec<StreamItem> = articles.chain(book_reviews).chain(weekly).collect();
+        stream.sort();
+        stream
+    }
+
+    pub fn stream_by_month(
+        &self,
+        limit: impl Into<Option<usize>>,
+    ) -> Vec<(Month, Vec<StreamItem>)> {
+        self.stream()
+            .iter_mut()
+            .take(limit.into().unwrap_or(usize::MAX))
+            // group by month
+            .fold(HashMap::new(), |mut acc, item| {
+                let date = match item {
+                    StreamItem::Article(article) => article.published,
+                    StreamItem::BookReview(book_review) => book_review.read,
+                    StreamItem::WeeklyIssue(weekly_issue) => weekly_issue.published,
+                };
+                acc.entry(Month::new(date))
+                    .or_insert_with(Vec::new)
+                    .push(item.clone());
+                acc
+            })
+            .into_iter()
+            // convert to vec
+            .fold(Vec::new(), |mut acc, (month, items)| {
+                acc.push((month, items));
+                acc
+            })
     }
 }
 
