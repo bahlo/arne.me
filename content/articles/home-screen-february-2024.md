@@ -1,0 +1,24 @@
+---
+title: "My Home Screen in Feburary '24"
+description: "This is my home screen in February 2024."
+location: "Frankfurt, Germany"
+published: "2024-02-11"
+---
+
+Every month, I'm sharing my current home screen.
+
+<!-- more -->
+
+This is the one for February 2024.
+Notable changes since [my last post in January](/articles/home-screen-january-2024):
+
+- I moved away from HEY. Still miss it, but it's not worth the drama.
+- Doppler is gone for now, still figuring out how I want to listen to music.
+- Trying a medium Home widget at the top, we'll see if it sticks.
+- CouchTimes has widgets now!
+- I already miss my empty bottom row.
+
+<picture>
+  <source srcset="/articles/home-screen-february-2024/home-screen.avif" type="image/avif" />
+  <img class="article__homescreen_image" src="/articles/home-screen-february-2024/home-screen.png" alt="An iOS home screen with a black background and a medium Home.app widget at the top, showing 8 devices or scenes. Then there's a small CouchTimes widget showing the next unwatched episode of Sex Education. After that comes three rows of apps: Gentler Streak, Obsidian, WhatsApp, Signal, Music, BeReal, YNAB, Photos, Overcast, Calendar, Mail and Camera. The Dock has three apps: Safari, Messages and OmniFocus." />
+</picture>
