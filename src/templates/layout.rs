@@ -94,7 +94,7 @@ impl Layout {
                     meta property="og:title" content=(smart_quotes(head.title));
                     meta property="og:description" content=(smart_quotes(head.description));
                     link rel="sitemap" href="/sitemap.xml";
-                    link rel="stylesheet" href=(format!("/main.css?hash={}", self.css_hash));
+                    // link rel="stylesheet" href=(format!("/main.css?hash={}", self.css_hash));
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Regular.woff2" as="font" type="font/woff2";
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Bold.woff2" as="font" type="font/woff2";
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Italic.woff2" as="font" type="font/woff2";

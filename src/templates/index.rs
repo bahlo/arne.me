@@ -22,54 +22,19 @@ pub fn render(content: &Content) -> Result<Context> {
         },
         html! {
             section.index {
-                section.index__column {
-                    h1 { "Articles" }
-                    @for article in content.articles.iter().filter(|article| !article.hidden).take(5) {
-                        article.article {
-                            a.article__heading href=(format!("/articles/{}", article.slug)) {
-                                (article.title)
-                            }
-                            br;
-                            em.article__byline {
-                                time datetime=(article.published.format("%Y-%m-%d")) { (format_date(article.published)) }
+                @for (month, entries) in content.stream_by_month(100) {
+                    article.index__month {
+                        h1.index__month-heading { (month) }
+                        ul.index__month-stream {
+                            @for entry in entries {
+                                li.index__month-stream-entry {
+                                    a.index__month-stream-entry-link href=(entry.url()) { (entry.title()) }
+                                }
                             }
                         }
                     }
-                    br.hidden; // We only want this in HTML-only
-                    a.index__more href="/articles" { (&(content.articles.len() - 6)) " more →" }
                 }
-                section.index__column {
-                    h1 { "Weekly" }
-                    @for weekly_issue in content.weekly.iter().take(5) {
-                        article.article {
-                            a.article__heading href=(format!("/weekly/{}", weekly_issue.num)) {
-                                (weekly_issue.title)
-                            }
-                            br;
-                            em.article__byline {
-                                time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
-                            }
-                        }
-                    }
-                    br.hidden; // We only want this in HTML-only
-                    a.index__more href="/weekly" { (&(content.weekly.len() - 5)) " more →" }
-                }
-                section.index__column {
-                    h1 { "Book Reviews" }
-                    @for book_review in content.book_reviews.iter().take(5) {
-                        article.article {
-                            a.article__heading href=(format!("/book-reviews/{}", book_review.slug)) {
-                                (book_review.title) " by " (book_review.author)
-                            }
-                            br;
-                            em.article__byline {
-                                time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
-                            }
-                        }
-                    }
-                    br.hidden; // We only want this in HTML-only
-                    a.index__more href="/book-reviews" { (&(content.book_reviews.len() - 5)) " more →" }
-                }
+                a href="/all" { "All entries →" }
             }
         },
         layout::Options {

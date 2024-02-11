@@ -9,6 +9,7 @@ use serde::Deserialize;
 use std::{
     cmp::Ordering,
     collections::HashMap,
+    fmt::Display,
     fs::{self, DirEntry, File},
     io::{self, prelude::*},
 };
@@ -141,11 +142,43 @@ pub struct Project {
     pub content_html: String,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum StreamItem<'a> {
     Article(&'a Article),
     BookReview(&'a BookReview),
     WeeklyIssue(&'a WeeklyIssue),
+}
+
+impl<'a> StreamItem<'a> {
+    pub fn url(&self) -> String {
+        match self {
+            StreamItem::Article(article) => format!("/articles/{}", article.slug),
+            StreamItem::BookReview(book_review) => format!("/book-reviews/{}", book_review.slug),
+            StreamItem::WeeklyIssue(weekly_issue) => format!("/weekly/{}", weekly_issue.num),
+        }
+    }
+
+    pub fn title(&self) -> &str {
+        match self {
+            StreamItem::Article(article) => &article.title,
+            StreamItem::BookReview(book_review) => &book_review.title,
+            StreamItem::WeeklyIssue(weekly_issue) => &weekly_issue.title,
+        }
+    }
+
+    pub fn published(&self) -> NaiveDate {
+        match self {
+            StreamItem::Article(article) => article.published,
+            StreamItem::BookReview(book_review) => book_review.read,
+            StreamItem::WeeklyIssue(weekly_issue) => weekly_issue.published,
+        }
+    }
+}
+
+impl<'a> PartialOrd for StreamItem<'a> {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl<'a> Ord for StreamItem<'a> {
@@ -156,14 +189,14 @@ impl<'a> Ord for StreamItem<'a> {
             (StreamItem::Article(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.published),
 
             (StreamItem::BookReview(a), StreamItem::BookReview(b)) => b.read.cmp(&a.read),
-            (StreamItem::BookReview(a), StreamItem::Article(b)) => a.read.cmp(&b.published),
+            (StreamItem::BookReview(a), StreamItem::Article(b)) => b.published.cmp(&a.read),
             (StreamItem::BookReview(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.read),
 
             (StreamItem::WeeklyIssue(a), StreamItem::WeeklyIssue(b)) => {
                 b.published.cmp(&a.published)
             }
-            (StreamItem::WeeklyIssue(a), StreamItem::Article(b)) => a.published.cmp(&b.published),
-            (StreamItem::WeeklyIssue(a), StreamItem::BookReview(b)) => a.published.cmp(&b.read),
+            (StreamItem::WeeklyIssue(a), StreamItem::Article(b)) => b.published.cmp(&a.published),
+            (StreamItem::WeeklyIssue(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
         }
     }
 }
@@ -194,6 +227,15 @@ impl Ord for Month {
         self.year
             .cmp(&other.year)
             .then_with(|| self.month.cmp(&other.month))
+    }
+}
+
+impl Display for Month {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let month_name = chrono::NaiveDate::from_ymd_opt(self.year, self.month, 1)
+            .unwrap()
+            .format("%B");
+        write!(f, "{} {}", month_name, self.year)
     }
 }
 
@@ -693,6 +735,7 @@ impl Content {
 
         let mut stream: Vec<StreamItem> = articles.chain(book_reviews).chain(weekly).collect();
         stream.sort();
+
         stream
     }
 
@@ -700,7 +743,8 @@ impl Content {
         &self,
         limit: impl Into<Option<usize>>,
     ) -> Vec<(Month, Vec<StreamItem>)> {
-        self.stream()
+        let mut by_month = self
+            .stream()
             .iter_mut()
             .take(limit.into().unwrap_or(usize::MAX))
             // group by month
@@ -720,7 +764,9 @@ impl Content {
             .fold(Vec::new(), |mut acc, (month, items)| {
                 acc.push((month, items));
                 acc
-            })
+            });
+        by_month.sort_by(|a, b| b.0.cmp(&a.0));
+        by_month
     }
 }
 
