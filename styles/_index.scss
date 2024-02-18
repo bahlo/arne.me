@@ -1,23 +1,9 @@
 .index {
   margin: 2rem 0 0;
 
-  &__column {
-    @include stack(.5rem);
-  }
-
   @media (max-width: $index-width) {
     @include stack;
     max-width: $page-width;
-  }
-
-  @media (min-width: $index-width) {
-    display: flex;
-    gap: 1rem;
-    align-items: start;
-
-    &__column {
-      width: 320px;
-    }
   }
 
   &__more {

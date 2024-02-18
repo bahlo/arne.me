@@ -53,9 +53,9 @@ enum Commands {
     #[clap(name = "watch")]
     Watch,
     #[clap(name = "export-weekly")]
-    ExportWeekly { 
+    ExportWeekly {
         /// Weekly issue # (defaults to latest)
-        num: Option<u16> 
+        num: Option<u16>,
     },
     #[clap(name = "download-fonts")]
     DownloadFonts,
@@ -110,7 +110,20 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     fs::write(
         "dist/index.html",
         layout
-            .render(templates::index::render(&content)?)
+            .render(templates::index::render(
+                &content,
+                templates::index::Limit::Default,
+            )?)
+            .into_string(),
+    )?;
+    fs::create_dir_all("dist/all")?;
+    fs::write(
+        "dist/all/index.html",
+        layout
+            .render(templates::index::render(
+                &content,
+                templates::index::Limit::None,
+            )?)
             .into_string(),
     )?;
 
@@ -246,7 +259,11 @@ fn export_weekly(num: Option<u16>) -> Result<()> {
     let content = Content::parse(fs::read_dir("content")?)?;
 
     // Default to the latest weekly issue
-    let latest_issue = content.weekly.first().ok_or(anyhow!("No weekly issues found"))?.num;
+    let latest_issue = content
+        .weekly
+        .first()
+        .ok_or(anyhow!("No weekly issues found"))?
+        .num;
     let num = num.unwrap_or(latest_issue);
 
     let weekly_issue = content

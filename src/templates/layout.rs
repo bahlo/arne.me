@@ -60,6 +60,7 @@ impl Context {
 pub struct Options {
     pub is_index: bool,
     pub full_width: bool,
+    pub redesign: bool,
 }
 
 pub struct Layout {
@@ -80,7 +81,7 @@ impl Layout {
         let options = context.options.unwrap_or_default();
         html! {
             (DOCTYPE)
-            html lang="en" {
+            html.(if options.redesign { "redesign" } else { "" }) lang="en" {
                 head {
                     title { (head.title) }
                     meta charset="utf-8";
@@ -94,7 +95,7 @@ impl Layout {
                     meta property="og:title" content=(smart_quotes(head.title));
                     meta property="og:description" content=(smart_quotes(head.description));
                     link rel="sitemap" href="/sitemap.xml";
-                    // link rel="stylesheet" href=(format!("/main.css?hash={}", self.css_hash));
+                    link rel="stylesheet" href=(format!("/main.css?hash={}", self.css_hash));
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Regular.woff2" as="font" type="font/woff2";
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Bold.woff2" as="font" type="font/woff2";
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Italic.woff2" as="font" type="font/woff2";
@@ -177,13 +178,6 @@ impl Layout {
                         br;
                         footer.footer {
                             nav.footer__pages {
-                                div {
-                                    a href="/articles" { "Articles" }
-                                    br;
-                                    a href="/weekly" { "Weekly" }
-                                    br;
-                                    a href="/book-reviews" { "Book Reviews" }
-                                }
                                 div {
                                     a href="/now" { "Now" }
                                     br;

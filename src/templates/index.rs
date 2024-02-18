@@ -3,7 +3,7 @@ use maud::html;
 use url::Url;
 
 use crate::{
-    content::Content,
+    content::{Content, Month, StreamItem},
     templates::{
         format_date,
         layout::{self, Head, OgType},
@@ -12,7 +12,17 @@ use crate::{
 
 use super::layout::Context;
 
-pub fn render(content: &Content) -> Result<Context> {
+pub enum Limit {
+    Default,
+    None,
+}
+
+pub fn render(content: &Content, limit: Limit) -> Result<Context> {
+    let entries: Vec<(Month, Vec<StreamItem>)> = match limit {
+        Limit::Default => content.stream_by_month().take(3).collect(),
+        Limit::None => content.stream_by_month().collect(),
+    };
+
     Ok(Context::new_with_options(
         Head {
             title: "Arne Bahlo".to_string(),
@@ -22,24 +32,37 @@ pub fn render(content: &Content) -> Result<Context> {
         },
         html! {
             section.index {
-                @for (month, entries) in content.stream_by_month(100) {
+                "Filter by "
+                a href="/articles" { "Articles"}
+                " "
+                a href="/weekly" { "Weekly" }
+                " "
+                a href="/book-reviews" { "Book Reviews" }
+
+                @for (month, entries) in entries {
                     article.index__month {
                         h1.index__month-heading { (month) }
                         ul.index__month-stream {
                             @for entry in entries {
                                 li.index__month-stream-entry {
-                                    a.index__month-stream-entry-link href=(entry.url()) { (entry.title()) }
+                                    a href=(entry.url()) { (entry.title()) }
+                                    p { (entry.description()) }
                                 }
                             }
                         }
                     }
                 }
-                a href="/all" { "All entries →" }
+                @if let Limit::Default = limit {
+                    a href="/all" { "Show all ↓" }
+                } @else if let Limit::None = limit {
+                    a href="/" { "Show less ↑" }
+                }
             }
         },
         layout::Options {
             full_width: true,
             is_index: true,
+            redesign: true,
         },
     ))
 }
