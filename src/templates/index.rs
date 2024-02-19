@@ -45,6 +45,7 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
                     }
                 }
 
+                br.hidden;
                 @if let Limit::Latest(limit) = limit {
                     a.index__more href="/all" { (format!("Show {} more ↓", all_entries_len - limit)) }
                 } @else {
