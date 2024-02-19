@@ -189,24 +189,11 @@ impl<'a> StreamItem<'a> {
         }
     }
 
-    pub fn is_article(&self) -> bool {
+    pub fn collection_url(&self) -> String {
         match self {
-            StreamItem::Article(_) => true,
-            _ => false,
-        }
-    }
-
-    pub fn is_weekly_issue(&self) -> bool {
-        match self {
-            StreamItem::WeeklyIssue(_) => true,
-            _ => false,
-        }
-    }
-
-    pub fn is_book_review(&self) -> bool {
-        match self {
-            StreamItem::BookReview(_) => true,
-            _ => false,
+            StreamItem::Article(_) => "/articles".to_string(),
+            StreamItem::BookReview(_) => "/book-reviews".to_string(),
+            StreamItem::WeeklyIssue(_) => "/weekly".to_string(),
         }
     }
 }

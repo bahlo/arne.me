@@ -1,0 +1,39 @@
+body {
+  font-family: "Rebond Grotesque", sans-serif;
+  font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
+  font-display: swap;
+  -webkit-font-smoothing: antialiased;
+
+  background: #000;
+  color: #eee;
+
+  padding: 8rem;
+  max-width: 1024px;
+
+  @media (max-width: 1024px) {
+    padding: 2rem;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  transform: translateY(-100%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #fff;
+
+  a {
+    text-decoration-thickness: 2px;
+  }
+}
+
+a {
+  color: #eee;
+  text-underline-offset: 2px;
+}

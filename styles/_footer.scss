@@ -1,0 +1,25 @@
+.footer {
+  padding-top: 4rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #aaa;
+
+  &.footer { 
+    margin-top: 0; // We already have a br
+  }
+
+  a {
+    color: inherit;
+  }
+
+  &__pages {
+    display: flex;
+    gap: 1rem;
+    order: 1;
+
+    @media print {
+      display: none;
+    }
+  }
+}

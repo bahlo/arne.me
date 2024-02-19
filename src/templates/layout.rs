@@ -162,11 +162,9 @@ impl Layout {
                         @if options.is_index {
                             .hero {
                                 (PreEscaped(include_str!("../../static/arne.svg")))
-                                .hero__text {
-                                    h1.hero__heading { (smart_quotes("Hej, I'm Arne—")) }
-                                    p.hero__subheading {
-                                        (smart_quotes("a developer, podcaster & dad based near Frankfurt, Germany."))
-                                    }
+                                h1.hero__heading { (smart_quotes("Hej, I'm Arne—")) }
+                                p.hero__subheading {
+                                    (smart_quotes("a developer, podcaster & dad based near Frankfurt, Germany."))
                                 }
                             }
                         } @else {

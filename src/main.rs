@@ -112,7 +112,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
         layout
             .render(templates::index::render(
                 &content,
-                templates::index::Limit::Default,
+                templates::index::Limit::Latest(7),
             )?)
             .into_string(),
     )?;
@@ -122,7 +122,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
         layout
             .render(templates::index::render(
                 &content,
-                templates::index::Limit::None,
+                templates::index::Limit::All,
             )?)
             .into_string(),
     )?;

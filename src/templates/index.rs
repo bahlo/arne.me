@@ -1,5 +1,5 @@
 use anyhow::Result;
-use maud::html;
+use maud::{html, PreEscaped};
 use url::Url;
 
 use crate::{
@@ -13,14 +13,16 @@ use crate::{
 use super::layout::Context;
 
 pub enum Limit {
-    Default,
-    None,
+    All,
+    Latest(usize),
 }
 
 pub fn render(content: &Content, limit: Limit) -> Result<Context> {
-    let entries: Vec<(Month, Vec<StreamItem>)> = match limit {
-        Limit::Default => content.stream_by_month().take(3).collect(),
-        Limit::None => content.stream_by_month().collect(),
+    let all_entries = content.stream();
+    let all_entries_len = all_entries.len();
+    let entries = match limit {
+        Limit::All => all_entries,
+        Limit::Latest(n) => all_entries.iter().take(n).cloned().collect(),
     };
 
     Ok(Context::new_with_options(
@@ -32,30 +34,21 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
         },
         html! {
             section.index {
-                "Filter by "
-                a href="/articles" { "Articles"}
-                " "
-                a href="/weekly" { "Weekly" }
-                " "
-                a href="/book-reviews" { "Book Reviews" }
-
-                @for (month, entries) in entries {
-                    article.index__month {
-                        h1.index__month-heading { (month) }
-                        ul.index__month-stream {
-                            @for entry in entries {
-                                li.index__month-stream-entry {
-                                    a href=(entry.url()) { (entry.title()) }
-                                    p { (entry.description()) }
-                                }
-                            }
+                @for entry in entries {
+                    .index__entry {
+                        h3 { a href=(entry.url()) { (entry.title()) } }
+                        span.article__meta {
+                            a.article__collection_url href=(entry.collection_url())  { (entry.collection_url()) }
+                            (PreEscaped(" &middot; "))
+                            (format_date(entry.published()))
                         }
                     }
                 }
-                @if let Limit::Default = limit {
-                    a href="/all" { "Show all ↓" }
-                } @else if let Limit::None = limit {
-                    a href="/" { "Show less ↑" }
+
+                @if let Limit::Latest(limit) = limit {
+                    a.index__more href="/all" { (format!("Show {} more ↓", all_entries_len - limit)) }
+                } @else {
+                    a.index__more href="/" { "Show less ↑" }
                 }
             }
         },

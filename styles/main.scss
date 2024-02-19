@@ -1,9 +1,9 @@
 @import "_reset";
 @import "_mixins";
-@import "_vars";
 @import "_fonts";
 
 html:not(.redesign) {
+  @import "pre-redesign/_vars";
   @import "pre-redesign/_base";
   @import "pre-redesign/_index";
   @import "pre-redesign/_article";
@@ -11,4 +11,11 @@ html:not(.redesign) {
   @import "pre-redesign/_page";
   @import "pre-redesign/_projects";
   @import "pre-redesign/_syntax";
+}
+
+html.redesign {
+  @import "_base";
+  @import "_index";
+  @import "_footer";
+  @import "_article";
 }
