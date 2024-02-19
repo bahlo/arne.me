@@ -4,11 +4,11 @@
 @import "_fonts";
 
 html:not(.redesign) {
-  @import "_base";
-  @import "_index";
-  @import "_article";
-  @import "_weekly";
-  @import "_page";
-  @import "_projects";
-  @import "_syntax";
+  @import "pre-redesign/_base";
+  @import "pre-redesign/_index";
+  @import "pre-redesign/_article";
+  @import "pre-redesign/_weekly";
+  @import "pre-redesign/_page";
+  @import "pre-redesign/_projects";
+  @import "pre-redesign/_syntax";
 }
