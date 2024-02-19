@@ -1,6 +1,6 @@
 use anyhow::{anyhow, Context, Result};
 use bat::assets::HighlightingAssets;
-use chrono::{Datelike, NaiveDate};
+use chrono::NaiveDate;
 use comrak::markdown_to_html_with_plugins;
 use crowbook_text_processing::clean;
 use gray_matter::{engine::YAML, Matter};
@@ -9,7 +9,6 @@ use serde::Deserialize;
 use std::{
     cmp::Ordering,
     collections::HashMap,
-    fmt::Display,
     fs::{self, DirEntry, File},
     io::{self, prelude::*},
 };
@@ -176,19 +175,6 @@ impl<'a> StreamItem<'a> {
         }
     }
 
-    pub fn description(&self) -> String {
-        match self {
-            StreamItem::Article(article) => article.description.clone(),
-            StreamItem::BookReview(book_review) => format!(
-                "I read {} by {} and rated it {}/5.",
-                book_review.title, book_review.author, book_review.rating
-            ),
-            StreamItem::WeeklyIssue(weekly_issue) => {
-                format!("Issue #{} of Arne's Weekly.", weekly_issue.num)
-            }
-        }
-    }
-
     pub fn collection_url(&self) -> String {
         match self {
             StreamItem::Article(_) => "/articles".to_string(),
@@ -221,44 +207,6 @@ impl<'a> Ord for StreamItem<'a> {
             (StreamItem::WeeklyIssue(a), StreamItem::Article(b)) => b.published.cmp(&a.published),
             (StreamItem::WeeklyIssue(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
         }
-    }
-}
-
-#[derive(Debug, PartialEq, Eq, Hash, Clone)]
-pub struct Month {
-    pub year: i32,
-    pub month: u32,
-}
-
-impl Month {
-    pub fn new(date: chrono::NaiveDate) -> Self {
-        Self {
-            year: date.year(),
-            month: date.month(),
-        }
-    }
-}
-
-impl PartialOrd for Month {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.cmp(other))
-    }
-}
-
-impl Ord for Month {
-    fn cmp(&self, other: &Self) -> Ordering {
-        self.year
-            .cmp(&other.year)
-            .then_with(|| self.month.cmp(&other.month))
-    }
-}
-
-impl Display for Month {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let month_name = chrono::NaiveDate::from_ymd_opt(self.year, self.month, 1)
-            .unwrap()
-            .format("%b");
-        write!(f, "{} {}", month_name, self.year)
     }
 }
 
@@ -760,90 +708,6 @@ impl Content {
         stream.sort();
 
         stream
-    }
-
-    pub fn stream_by_month(&self) -> impl Iterator<Item = (Month, Vec<StreamItem>)> {
-        let mut by_month = self
-            .stream()
-            .iter_mut()
-            // group by month
-            .fold(HashMap::new(), |mut acc, item| {
-                let date = match item {
-                    StreamItem::Article(article) => article.published,
-                    StreamItem::BookReview(book_review) => book_review.read,
-                    StreamItem::WeeklyIssue(weekly_issue) => weekly_issue.published,
-                };
-                acc.entry(Month::new(date))
-                    .or_insert_with(Vec::new)
-                    .push(item.clone());
-                acc
-            })
-            .into_iter()
-            // convert to vec
-            .fold(Vec::new(), |mut acc, (month, items)| {
-                acc.push((month, items));
-                acc
-            });
-        by_month.sort_by(|a, b| b.0.cmp(&a.0));
-        by_month.into_iter()
-    }
-
-    pub fn stream_articles_by_month(&self) -> impl Iterator<Item = (Month, Vec<StreamItem>)> {
-        let mut by_month = self
-            .articles
-            .iter()
-            .filter(|article| !article.hidden)
-            .fold(HashMap::new(), |mut acc, article| {
-                acc.entry(Month::new(article.published))
-                    .or_insert_with(Vec::new)
-                    .push(StreamItem::Article(article));
-                acc
-            })
-            .into_iter()
-            .fold(Vec::new(), |mut acc, (month, articles)| {
-                acc.push((month, articles));
-                acc
-            });
-        by_month.sort_by(|a, b| b.0.cmp(&a.0));
-        by_month.into_iter()
-    }
-
-    pub fn stream_weekly_issues_by_month(&self) -> impl Iterator<Item = (Month, Vec<StreamItem>)> {
-        let mut by_month = self
-            .weekly
-            .iter()
-            .fold(HashMap::new(), |mut acc, weekly_issue| {
-                acc.entry(Month::new(weekly_issue.published))
-                    .or_insert_with(Vec::new)
-                    .push(StreamItem::WeeklyIssue(weekly_issue));
-                acc
-            })
-            .into_iter()
-            .fold(Vec::new(), |mut acc, (month, weekly_issues)| {
-                acc.push((month, weekly_issues));
-                acc
-            });
-        by_month.sort_by(|a, b| b.0.cmp(&a.0));
-        by_month.into_iter()
-    }
-
-    pub fn stream_book_reviews_by_month(&self) -> impl Iterator<Item = (Month, Vec<StreamItem>)> {
-        let mut by_month = self
-            .book_reviews
-            .iter()
-            .fold(HashMap::new(), |mut acc, book_review| {
-                acc.entry(Month::new(book_review.read))
-                    .or_insert_with(Vec::new)
-                    .push(StreamItem::BookReview(book_review));
-                acc
-            })
-            .into_iter()
-            .fold(Vec::new(), |mut acc, (month, book_reviews)| {
-                acc.push((month, book_reviews));
-                acc
-            });
-        by_month.sort_by(|a, b| b.0.cmp(&a.0));
-        by_month.into_iter()
     }
 }
 
