@@ -1,12 +1,38 @@
 .hero {
   padding-bottom: 4rem;
 
+  @media (max-width: 1024px) {
+    padding-bottom: 2rem;
+  }
+
   &__arne {
-    height: 4.77rem;
+    height: 5.5rem;
     width: auto;
     float: left;
     margin-right: 1rem;
-    margin-top: .4rem;
+
+    &::selection {
+      background: none;
+    }
+
+    &--alt-1 {
+      .mouth-1 {
+        visibility: hidden;
+      }
+      .mouth-2 {
+        visibility: visible;
+      }
+    }
+
+    &--alt-2 {
+      .eyes-1, .mouth-2 {
+        visibility: hidden !important;
+      }
+
+      .eyes-2, .tounge {
+        visibility: visible;
+      }
+    }
   }
 
   &__heading {
@@ -20,15 +46,15 @@
 
   @media (max-width: 960px) {
     &__arne {
-      height: 3.815rem;
+      height: 3.052rem;
     }
 
     &__heading {
-      font-size: 3.052rem;
+      font-size: 2.441rem;
     }
 
     &__subheading {
-      font-size: 2.441rem;
+      font-size: 1.953rem;
     }
   }
 }

@@ -5,6 +5,10 @@
   font-size: 1rem;
   color: #aaa;
 
+  @media (max-width: 1024px) {
+    padding-top: 2rem;
+  }
+
   &.footer { 
     margin-top: 0; // We already have a br
   }

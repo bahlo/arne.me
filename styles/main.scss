@@ -18,4 +18,11 @@ html.redesign {
   @import "_index";
   @import "_footer";
   @import "_article";
+
+  // TODO: Remove this once we got rid of the old design
+  &.js {
+    .hero__arne {
+      cursor: pointer;
+    }
+  }
 }
