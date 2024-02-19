@@ -131,30 +131,13 @@ impl Layout {
                         script {
                             (PreEscaped(r#"
                                 document.addEventListener("DOMContentLoaded", () => {
-                                    document.documentElement.classList.add("js");
+                                    const version = Math.floor(Math.random() * 3);
 
+                                    console.log(version);
                                     const arne = document.querySelector(".hero__arne");
-
-                                    const version = localStorage.getItem("arne");
-                                    if (version == "alt-1") {
-                                        arne.classList.add("hero__arne--alt-1");
-                                    } else if (version == "alt-2") {
-                                        arne.classList.add("hero__arne--alt-2");
+                                    if (version > 0) {
+                                        arne.classList.add("hero__arne--alt-" + version);
                                     }
-
-                                    arne.addEventListener("click", () => {
-                                        if (arne.classList.contains("hero__arne--alt-1")) {
-                                            arne.classList.remove("hero__arne--alt-1");
-                                            arne.classList.add("hero__arne--alt-2");
-                                            localStorage.setItem("arne", "alt-2");
-                                        } else if (arne.classList.contains("hero__arne--alt-2")) {
-                                            arne.classList.remove("hero__arne--alt-2");
-                                            localStorage.removeItem("arne");
-                                        } else {
-                                            arne.classList.add("hero__arne--alt-1");
-                                            localStorage.setItem("arne", "alt-1");
-                                        }
-                                    });
                                 });
                             "#))
                         }
