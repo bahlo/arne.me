@@ -63,6 +63,7 @@
   @include stack;
 
   &__more {
+    padding-top: 1rem;
     display: inline-block;
     color: #aaa;
   }
