@@ -60,13 +60,10 @@
 }
 
 .index {
-  &__entry {
-    margin-bottom: 1rem;
-  }
+  @include stack;
 
   &__more {
     display: inline-block;
-    margin-top: 1rem;
     color: #aaa;
   }
 }

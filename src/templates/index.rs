@@ -35,7 +35,7 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
         html! {
             section.index {
                 @for entry in entries {
-                    .index__entry {
+                    div {
                         h3 { a href=(entry.url()) { (entry.title()) } }
                         span.article__meta {
                             a.article__collection_url href=(entry.collection_url())  { (entry.collection_url()) }

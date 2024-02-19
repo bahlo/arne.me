@@ -5,7 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
 
   background: #000;
-  color: #eee;
+  color: #ddd;
 
   padding: 8rem;
   max-width: 1024px;
@@ -26,7 +26,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #fff;
+  color: #eee;
 
   a {
     text-decoration-thickness: 2px;
@@ -34,6 +34,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: #eee;
+  color: #ddd;
   text-underline-offset: 2px;
 }
