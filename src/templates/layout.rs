@@ -89,7 +89,7 @@ impl Layout {
                     meta name="description" content=(smart_quotes(head.description.clone()));
                     meta name="author" content="Arne Bahlo";
                     @if options.redesign {
-                        meta name="theme-color" content="#000";
+                        meta name="theme-color" content="#010101";
                     } @else {
                         meta name="theme-color" content="rgb(100, 134, 102)";
                     }
