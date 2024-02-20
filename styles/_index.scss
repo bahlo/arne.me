@@ -6,7 +6,7 @@
   }
 
   &__arne {
-    height: 5.5rem;
+    height: $typescale-xxxxl;
     width: auto;
     float: left;
     margin-right: 1rem;
@@ -36,25 +36,25 @@
   }
 
   &__heading {
-    font-size: $typescale-h1;
+    font-size: $typescale-xxxl;
   }
 
   &__subheading {
-    font-size: $typescale-h2;
+    font-size: $typescale-xxl;
     line-height: 1.2;
   }
 
   @media (max-width: 960px) {
     &__arne {
-      height: $typescale-h2;
+      height: $typescale-xxxl;
     }
 
     &__heading {
-      font-size: $typescale-h3;
+      font-size: $typescale-xxl;
     }
 
     &__subheading {
-      font-size: $typescale-h4;
+      font-size: $typescale-xl;
     }
   }
 }

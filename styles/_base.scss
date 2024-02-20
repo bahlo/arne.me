@@ -38,40 +38,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: $typescale-h1;
+  font-size: $typescale-xxxl;
 }
 
 h2 {
-  font-size: $typescale-h3;
+  font-size: $typescale-xl;
 }
 
 h3 {
-  font-size: $typescale-h4;
-}
-
-h4 {
-  font-size: $typescale-h5;
-}
-
-h5 {
-  font-size: $typescale-h6;
+  font-size: $typescale-l;
 }
 
 @media (max-width: $max-width) {
   h1 {
-    font-size: $typescale-h2;
+    font-size: $typescale-xxl;
   }
 
   h2 {
-    font-size: $typescale-h4;
+    font-size: $typescale-l;
   }
 
   h3 {
-    font-size: $typescale-h5;
-  }
-
-  h4 {
-    font-size: $typescale-h6;
+    font-size: 1rem;
   }
 }
 

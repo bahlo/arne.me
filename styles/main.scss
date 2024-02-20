@@ -14,6 +14,8 @@ html:not(.redesign) {
 }
 
 html.redesign {
+  font-size: 110%; // TODO: Move to html{} once the redesign is complete
+
   @import "_vars";
   @import "_base";
   @import "_index";
