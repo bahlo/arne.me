@@ -36,25 +36,25 @@
   }
 
   &__heading {
-    font-size: 3.815rem;
+    font-size: $typescale-h1;
   }
 
   &__subheading {
-    font-size: 3.052rem;
+    font-size: $typescale-h2;
     line-height: 1.2;
   }
 
   @media (max-width: 960px) {
     &__arne {
-      height: 3.052rem;
+      height: $typescale-h2;
     }
 
     &__heading {
-      font-size: 2.441rem;
+      font-size: $typescale-h3;
     }
 
     &__subheading {
-      font-size: 1.953rem;
+      font-size: $typescale-h4;
     }
   }
 }

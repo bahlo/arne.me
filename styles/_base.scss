@@ -37,7 +37,45 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+h1 {
+  font-size: $typescale-h1;
+}
+
+h2 {
+  font-size: $typescale-h3;
+}
+
+h3 {
+  font-size: $typescale-h4;
+}
+
+h4 {
+  font-size: $typescale-h5;
+}
+
+h5 {
+  font-size: $typescale-h6;
+}
+
 a {
   color: $color-text;
   text-underline-offset: 2px;
+}
+
+.back_link {
+  padding-bottom: 2rem;
+  display: inline-block;
+  color: $color-muted;
+}
+
+dl {
+  dt {
+    font-weight: bold;
+    float: left;
+    margin-right: 4px;
+
+    &:after {
+      content: ':';
+    }
+  }
 }
