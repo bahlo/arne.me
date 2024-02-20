@@ -36,7 +36,7 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
             section.index {
                 @for entry in entries {
                     div {
-                        h3 { a href=(entry.url()) { (entry.title()) } }
+                        h3.inheritFontSize { a href=(entry.url()) { (entry.title()) } }
                         span.article__meta {
                             a.article__collection_url href=(entry.collection_url())  { (entry.collection_url()) }
                             (PreEscaped(" &middot; "))

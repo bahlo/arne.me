@@ -6,7 +6,7 @@ use crate::{
     content::{Article, Content},
     templates::{
         format_date,
-        layout::{Context, Head, OgType},
+        layout::{self, Context, Head, OgType},
     },
 };
 
@@ -50,7 +50,7 @@ pub fn render(article: &Article) -> Result<Context> {
 }
 
 pub fn render_index(content: &Content) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: "Articles".to_string(),
             description: "Articles by Arne Bahlo.".to_string(),
@@ -58,36 +58,23 @@ pub fn render_index(content: &Content) -> Result<Context> {
             og_type: OgType::Website,
         },
         html! {
-            h1 { "Articles" }
-            @for article in &content.articles {
-                @if !article.hidden {
-                    article.article {
-                        header {
-                            h2 {
-                                a href=(format!("/articles/{}", article.slug)) {
-                                    (article.title)
-                                }
-                            }
-                            em.article__byline {
-                                "Posted on "
-                                time datetime=(article.published.format("%Y-%m-%d")) { (format_date(article.published)) }
-                                " from " (article.location)
-                            }
-                        }
-                        @if let Some(excerpt_html) = &article.excerpt_html {
-                            (PreEscaped(excerpt_html.clone()))
-
-                            p {
-                                a href=(format!("/articles/{}", article.slug)) {
-                                    "Read more" (PreEscaped("&hellip;"))
-                                }
-                            }
-                        } @else {
-                            p { (article.description) }
+            section.page {
+                h1 { "Articles" }
+                @for article in content.articles.iter().filter(|a| !a.hidden) {
+                    div {
+                        h3.inheritFontSize { a href=(format!("/articles/{}", article.slug)) { (article.title) } }
+                        span.article__meta {
+                            time datetime=(article.published.format("%Y-%m-%d")) {(format_date(article.published))}
+                            (PreEscaped(" &middot; "))
+                            (article.location)
                         }
                     }
                 }
             }
+        },
+        layout::Options {
+            redesign: true,
+            ..Default::default()
         },
     ))
 }

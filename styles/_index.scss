@@ -62,10 +62,6 @@
 .index {
   @include stack;
 
-  h3 {
-    font-size: inherit;
-  }
-
   &__more {
     padding-top: 1rem;
     display: inline-block;
