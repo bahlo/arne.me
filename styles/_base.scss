@@ -4,13 +4,13 @@ body {
   font-display: swap;
   -webkit-font-smoothing: antialiased;
 
-  background: #010101;
-  color: #ddd;
+  background: $color-background;
+  color: $color-text;
 
   padding: 8rem;
-  max-width: 1024px;
+  max-width: $max-width;
 
-  @media (max-width: 1024px) {
+  @media (max-width: $max-width) {
     padding: 1rem;
   }
 }
@@ -30,7 +30,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #eee;
+  color: $color-headings;
 
   a {
     text-decoration-thickness: 2px;
@@ -38,6 +38,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: #ddd;
+  color: $color-text;
   text-underline-offset: 2px;
 }

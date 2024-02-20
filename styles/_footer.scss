@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 1rem;
-  color: #aaa;
+  color: $color-muted;
 
   @media (max-width: 1024px) {
     padding-top: 2rem;

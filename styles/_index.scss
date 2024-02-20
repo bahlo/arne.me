@@ -1,7 +1,7 @@
 .hero {
   padding-bottom: 4rem;
 
-  @media (max-width: 1024px) {
+  @media (max-width: $max-width) {
     padding-bottom: 2rem;
   }
 
@@ -65,6 +65,6 @@
   &__more {
     padding-top: 1rem;
     display: inline-block;
-    color: #aaa;
+    color: $color-muted;
   }
 }
