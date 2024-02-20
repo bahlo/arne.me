@@ -57,6 +57,24 @@ h5 {
   font-size: $typescale-h6;
 }
 
+@media (max-width: $max-width) {
+  h1 {
+    font-size: $typescale-h2;
+  }
+
+  h2 {
+    font-size: $typescale-h4;
+  }
+
+  h3 {
+    font-size: $typescale-h5;
+  }
+
+  h4 {
+    font-size: $typescale-h6;
+  }
+}
+
 a {
   color: $color-text;
   text-underline-offset: 2px;
