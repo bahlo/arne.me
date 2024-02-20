@@ -13,6 +13,10 @@ body {
   @media (max-width: $max-width) {
     padding: 1rem;
   }
+
+  @media (max-width: 640px) {
+    padding: .5rem;
+  }
 }
 
 .hidden {

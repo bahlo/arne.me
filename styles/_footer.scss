@@ -4,9 +4,14 @@
   justify-content: space-between;
   font-size: 1rem;
   color: $color-muted;
+  gap: 1rem;
 
   @media (max-width: 1024px) {
     padding-top: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column-reverse;
   }
 
   &.footer { 
