@@ -4,7 +4,7 @@ use url::Url;
 
 use crate::{
     content::Project,
-    templates::layout::{Context, Head, OgType},
+    templates::layout::{self, Context, Head, OgType},
 };
 
 fn render_project(project: &Project) -> Markup {
@@ -37,7 +37,7 @@ fn render_project(project: &Project) -> Markup {
 }
 
 pub fn render(project: &[Project]) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: "Projects".to_string(),
             description: "Some projects I've worked on".to_string(),
@@ -45,7 +45,7 @@ pub fn render(project: &[Project]) -> Result<Context> {
             og_type: OgType::Website,
         },
         html! {
-            article.article {
+            section.page {
                 header {
                     h1 { "Projects" }
                 }
@@ -59,6 +59,10 @@ pub fn render(project: &[Project]) -> Result<Context> {
                     (render_project(project))
                 }
             }
+        },
+        layout::Options {
+            redesign: true,
+            ..Default::default()
         },
     ))
 }
