@@ -1,9 +1,15 @@
 .article {
-  &__meta {
+  &__byline {
     color: $color-muted;
   }
 
   &__collection_url {
     color: inherit;
+  }
+
+  @include stack;
+
+  &__header {
+    padding-bottom: 1rem;
   }
 }

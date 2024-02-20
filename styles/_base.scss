@@ -39,6 +39,8 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: $typescale-xxxl;
+  line-height: 1.2;
+  margin-bottom: .5rem;
 }
 
 h2 {
@@ -88,4 +90,26 @@ dl {
 
 .inheritFontSize {
   font-size: inherit;
+}
+
+pre, code {
+  font-family: "Berkerly Mono", monospace;
+  font-display: swap;
+  -webkit-font-smoothing: antialiased;
+  font-size: .9rem; // match the body font size
+}
+
+blockquote {
+  padding: .5rem 1rem;
+  border-left: 4px solid $color-text;
+  font-style: italic;
+}
+
+.footnotes {
+  padding-top: 2rem;
+  color: $color-muted;
+}
+
+pre {
+  overflow-x: scroll;
 }

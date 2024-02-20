@@ -11,7 +11,7 @@ use crate::{
 };
 
 pub fn render(article: &Article) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: article.title.clone(),
             description: article.description.clone(),
@@ -20,31 +20,33 @@ pub fn render(article: &Article) -> Result<Context> {
         },
         html! {
             article.article {
-                header {
+                header.article__header {
                     h1 { (article.title) }
                     em.article__byline {
-                        "Posted on "
                         time datetime=(article.published.format("%Y-%m-%d")) { (format_date(article.published)) }
-                        " from " (article.location)
+                        (PreEscaped(" &middot; "))
+                        (article.location)
                         @if article.hackernews.is_some() || article.lobsters.is_some() {
-                            (PreEscaped(". Discuss on "))
-
+                            (PreEscaped(" &middot; "))
                             @if let Some(hackernews) = &article.hackernews {
                                 a href=(hackernews) { "HN" }
                                 @if article.lobsters.is_some() {
-                                    " or "
+                                    ", "
                                 }
                             }
                             @if let Some(lobsters) = &article.lobsters {
                                 a href=(lobsters) { "Lobsters" }
                             }
-                            "."
                         }
 
                     }
                 }
                 (PreEscaped(article.content_html.clone()))
             }
+        },
+        layout::Options {
+            redesign: true,
+            ..Default::default()
         },
     ))
 }
@@ -63,7 +65,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 @for article in content.articles.iter().filter(|a| !a.hidden) {
                     div {
                         h3.inheritFontSize { a href=(format!("/articles/{}", article.slug)) { (article.title) } }
-                        span.article__meta {
+                        span.article__byline {
                             time datetime=(article.published.format("%Y-%m-%d")) {(format_date(article.published))}
                             (PreEscaped(" &middot; "))
                             (article.location)
