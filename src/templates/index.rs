@@ -53,6 +53,9 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
                 }
             }
         },
-        layout::Options { is_index: true },
+        layout::Options {
+            is_index: true,
+            ..Default::default()
+        },
     ))
 }

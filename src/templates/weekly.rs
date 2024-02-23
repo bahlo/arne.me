@@ -8,7 +8,7 @@ use crate::{
     content::{Content, WeeklyIssue},
     templates::{
         format_date,
-        layout::{Context, Head, OgType},
+        layout::{self, Context, Head, OgType},
     },
 };
 
@@ -147,7 +147,7 @@ pub fn render_content(weekly: &WeeklyIssue) -> Result<Markup> {
 }
 
 pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: weekly_issue.title.clone(),
             description: format!("Arne's Weekly #{}", weekly_issue.num),
@@ -167,6 +167,10 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
                 p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans."}
                 (subscribe_form())
             }
+        },
+        layout::Options {
+            back_link: Some("/weekly".to_string()),
+            ..Default::default()
         },
     ))
 }

@@ -6,12 +6,12 @@ use crate::{
     content::{Article, Content},
     templates::{
         format_date,
-        layout::{Context, Head, OgType},
+        layout::{self, Context, Head, OgType},
     },
 };
 
 pub fn render(article: &Article) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: article.title.clone(),
             description: article.description.clone(),
@@ -43,6 +43,10 @@ pub fn render(article: &Article) -> Result<Context> {
                 }
                 (PreEscaped(article.content_html.clone()))
             }
+        },
+        layout::Options {
+            back_link: Some("/articles".to_string()),
+            ..Default::default()
         },
     ))
 }

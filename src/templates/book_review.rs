@@ -6,14 +6,14 @@ use crate::{
     content::{BookReview, Content},
     templates::{
         format_date,
-        layout::{Head, OgType},
+        layout::{self, Head, OgType},
     },
 };
 
 use super::layout::Context;
 
 pub fn render(book_review: &BookReview) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: format!(
                 "Book Review: {} by {}",
@@ -30,10 +30,13 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
             article.book_review {
                 header {
                     h1 { (book_review.title) " by " (book_review.author) }
-                    em.article_review__byline {
-                        "Read on "
+                    em.article__byline {
                         time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
-                        " in " (book_review.location) ", rated " (book_review.rating) "/5"
+                        (PreEscaped(" &middot; "))
+                        (book_review.location)
+                        (PreEscaped(" &middot; "))
+                        (book_review.rating)
+                        "/5"
                     }
                 }
                 picture {
@@ -42,6 +45,10 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
                 }
                 (PreEscaped(book_review.content_html.clone()))
             }
+        },
+        layout::Options {
+            back_link: Some("/book-reviews".to_string()),
+            ..Default::default()
         },
     ))
 }

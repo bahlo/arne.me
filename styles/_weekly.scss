@@ -14,20 +14,12 @@
     }
 
     input[type="submit"] {
-      background: $color-headings;
-      color: $color-background;
+      background: $color-dark;
+      color: $color-text;
       padding: .25rem .5rem;
       border: none;
       cursor: pointer;
       margin-left: .5rem;
-
-      &:hover {
-        background: $color-text;
-      }
-
-      &:active {
-        background: $color-muted;
-      }
     }
 
     small {

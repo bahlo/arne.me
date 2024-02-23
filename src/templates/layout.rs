@@ -59,6 +59,7 @@ impl Context {
 #[derive(Debug, Default)]
 pub struct Options {
     pub is_index: bool,
+    pub back_link: Option<String>,
 }
 
 pub struct Layout {
@@ -150,6 +151,10 @@ impl Layout {
                             }
                         } @else {
                             a.back_link href="/" { "← Index" }
+                            @if let Some(path) = options.back_link {
+                                span.muted { (PreEscaped("&nbsp;&middot;&nbsp;")) }
+                                a.back_link href=(path) { (path) }
+                            }
                         }
                         main #main {
                             (context.content)
