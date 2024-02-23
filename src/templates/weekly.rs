@@ -16,6 +16,7 @@ fn subscribe_form() -> Markup {
     html! {
         form.weekly__subscribe_form action="https://buttondown.email/api/emails/embed-subscribe/arnesweekly" method="post" {
             label for="email" { "Email address:" }
+            br;
             input required type="email" name="email" id="email" placeholder="you@example.org";
             input type="submit" value="Subscribe";
             br;
@@ -64,20 +65,16 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 .weekly__overview {
                     @for (year, issues) in weekly_by_year {
                         @if year != current_year {
-                            h2 { (year) }
+                            h3 { (year) }
                         }
-                        ul.weekly__list {
-                            @for weekly_issue in issues {
-                                li.weekly__item {
-                                    h3 {
-                                        a href=(format!("/weekly/{}", weekly_issue.num)) {
-                                            (weekly_issue.title)
-                                        }
-                                    }
-                                    span.weekly__byline {
-                                        time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
-                                    }
+                        @for weekly_issue in issues {
+                            h4.inheritFontSize {
+                                a href=(format!("/weekly/{}", weekly_issue.num)) {
+                                    (weekly_issue.title)
                                 }
+                            }
+                            span.article__byline {
+                                time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                             }
                         }
                     }
@@ -86,6 +83,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
         },
         layout::Options {
             full_width: true,
+            redesign: true,
             ..Default::default()
         },
     ))
@@ -154,7 +152,7 @@ pub fn render_content(weekly: &WeeklyIssue) -> Result<Markup> {
 }
 
 pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: weekly_issue.title.clone(),
             description: format!("Arne's Weekly #{}", weekly_issue.num),
@@ -166,7 +164,6 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
                 header {
                     h1 { (weekly_issue.title) }
                     em.article__byline {
-                        "Published on "
                         time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                     }
                 }
@@ -175,6 +172,10 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
                 p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans."}
                 (subscribe_form())
             }
+        },
+        layout::Options {
+            redesign: true,
+            ..Default::default()
         },
     ))
 }

@@ -1,0 +1,43 @@
+.weekly {
+  @include stack;
+
+  &__header {
+    @include stack;
+  }
+
+  &__subscribe_form {
+    input[type="email"] {
+      background: none;
+      border: none;
+      padding: .25rem .5rem;
+      color: $color-text;
+    }
+
+    input[type="submit"] {
+      background: $color-headings;
+      color: $color-background;
+      padding: .25rem .5rem;
+      border: none;
+      cursor: pointer;
+      margin-left: .5rem;
+
+      &:hover {
+        background: $color-text;
+      }
+
+      &:active {
+        background: $color-muted;
+      }
+    }
+
+    small {
+      margin-top: .5rem;
+      line-height: 1.2;
+      display: block;
+    }
+  }
+
+  &__overview {
+    @include stack;
+  }
+}
