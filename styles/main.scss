@@ -1,26 +1,11 @@
 @import "_reset";
 @import "_mixins";
 @import "_fonts";
-
-html:not(.redesign) {
-  @import "pre-redesign/_vars";
-  @import "pre-redesign/_base";
-  @import "pre-redesign/_index";
-  @import "pre-redesign/_article";
-  @import "pre-redesign/_weekly";
-  @import "pre-redesign/_page";
-  @import "pre-redesign/_projects";
-  @import "pre-redesign/_syntax";
-}
-
-html.redesign {
-  font-size: 110%; // TODO: Move to html{} once the redesign is complete
-
-  @import "_vars";
-  @import "_base";
-  @import "_index";
-  @import "_footer";
-  @import "_article";
-  @import "_page";
-  @import "_weekly";
-}
+@import "_vars";
+@import "_base";
+@import "_index";
+@import "_footer";
+@import "_article";
+@import "_page";
+@import "_weekly";
+@import "_book_reviews";

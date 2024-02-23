@@ -6,12 +6,12 @@ use crate::{
     content::{Article, Content},
     templates::{
         format_date,
-        layout::{self, Context, Head, OgType},
+        layout::{Context, Head, OgType},
     },
 };
 
 pub fn render(article: &Article) -> Result<Context> {
-    Ok(Context::new_with_options(
+    Ok(Context::new(
         Head {
             title: article.title.clone(),
             description: article.description.clone(),
@@ -44,15 +44,11 @@ pub fn render(article: &Article) -> Result<Context> {
                 (PreEscaped(article.content_html.clone()))
             }
         },
-        layout::Options {
-            redesign: true,
-            ..Default::default()
-        },
     ))
 }
 
 pub fn render_index(content: &Content) -> Result<Context> {
-    Ok(Context::new_with_options(
+    Ok(Context::new(
         Head {
             title: "Articles".to_string(),
             description: "Articles by Arne Bahlo.".to_string(),
@@ -65,7 +61,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 @for article in content.articles.iter().filter(|a| !a.hidden) {
                     div {
                         h3.inheritFontSize { a href=(format!("/articles/{}", article.slug)) { (article.title) } }
-                        span.article__byline {
+                        em.article__byline {
                             time datetime=(article.published.format("%Y-%m-%d")) {(format_date(article.published))}
                             (PreEscaped(" &middot; "))
                             (article.location)
@@ -73,10 +69,6 @@ pub fn render_index(content: &Content) -> Result<Context> {
                     }
                 }
             }
-        },
-        layout::Options {
-            redesign: true,
-            ..Default::default()
         },
     ))
 }

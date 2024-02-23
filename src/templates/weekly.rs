@@ -8,7 +8,7 @@ use crate::{
     content::{Content, WeeklyIssue},
     templates::{
         format_date,
-        layout::{self, Context, Head, OgType},
+        layout::{Context, Head, OgType},
     },
 };
 
@@ -45,7 +45,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
 
     let current_year = Utc::now().format("%Y").to_string();
 
-    Ok(Context::new_with_options(
+    Ok(Context::new(
         Head {
             title: "Arne’s Weekly".to_string(),
             description: "A weekly newsletter with the best stories of the internet.".to_string(),
@@ -80,11 +80,6 @@ pub fn render_index(content: &Content) -> Result<Context> {
                     }
                 }
             }
-        },
-        layout::Options {
-            full_width: true,
-            redesign: true,
-            ..Default::default()
         },
     ))
 }
@@ -152,7 +147,7 @@ pub fn render_content(weekly: &WeeklyIssue) -> Result<Markup> {
 }
 
 pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
-    Ok(Context::new_with_options(
+    Ok(Context::new(
         Head {
             title: weekly_issue.title.clone(),
             description: format!("Arne's Weekly #{}", weekly_issue.num),
@@ -172,10 +167,6 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
                 p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans."}
                 (subscribe_form())
             }
-        },
-        layout::Options {
-            redesign: true,
-            ..Default::default()
         },
     ))
 }

@@ -53,10 +53,6 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
                 }
             }
         },
-        layout::Options {
-            full_width: true,
-            is_index: true,
-            redesign: true,
-        },
+        layout::Options { is_index: true },
     ))
 }

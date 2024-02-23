@@ -30,7 +30,7 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
             article.book_review {
                 header {
                     h1 { (book_review.title) " by " (book_review.author) }
-                    em.book_review__byline {
+                    em.article_review__byline {
                         "Read on "
                         time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
                         " in " (book_review.location) ", rated " (book_review.rating) "/5"
@@ -55,25 +55,22 @@ pub fn render_index(content: &Content) -> Result<Context> {
             og_type: OgType::Website,
         },
         html! {
-            h1 { "Book reviews" }
-            @for book_review in &content.book_reviews {
-                article.book_review {
-                    header {
-                        h2 {
-                            a href=(format!("/book-reviews/{}", book_review.slug)) {
-                                (book_review.title) " by " (book_review.author)
-                            }
+            section.book_reviews {
+                h1 { "Book reviews" }
+                @for book_review in &content.book_reviews {
+                    div {
+                        h2.inheritFontSize  {
+                                a href=(format!("/book-reviews/{}", book_review.slug)) {
+                                    (book_review.title) " by " (book_review.author)
+                                }
                         }
-                        em.book_review__byline {
-                            "Read on on "
+                        em.article__byline {
                             time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
-                            " in " (book_review.location) ", rated " (book_review.rating) "/5"
-                        }
-                    }
-                    (PreEscaped(book_review.excerpt_html.clone()))
-                    p {
-                        a href=(format!("/book-reviews/{}", book_review.slug)) {
-                            "Read more" (PreEscaped("&hellip;"))
+                            (PreEscaped(" &middot; "))
+                            (book_review.location)
+                            (PreEscaped(" &middot; "))
+                            (book_review.rating)
+                            "/5"
                         }
                     }
                 }

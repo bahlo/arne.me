@@ -59,8 +59,6 @@ impl Context {
 #[derive(Debug, Default)]
 pub struct Options {
     pub is_index: bool,
-    pub full_width: bool,
-    pub redesign: bool,
 }
 
 pub struct Layout {
@@ -81,18 +79,14 @@ impl Layout {
         let options = context.options.unwrap_or_default();
         html! {
             (DOCTYPE)
-            html.(if options.redesign { "redesign" } else { "" }) lang="en" {
+            html lang="en" {
                 head {
                     title { (head.title) }
                     meta charset="utf-8";
                     meta name="title" content=(smart_quotes(head.title.clone()));
                     meta name="description" content=(smart_quotes(head.description.clone()));
                     meta name="author" content="Arne Bahlo";
-                    @if options.redesign {
-                        meta name="theme-color" content="#010101";
-                    } @else {
-                        meta name="theme-color" content="rgb(100, 134, 102)";
-                    }
+                    meta name="theme-color" content="#010101";
                     meta name="viewport" content="width=device-width,initial-scale=1";
                     meta property="og:type" content=(head.og_type);
                     meta property="og:url" content=(head.url);
@@ -145,7 +139,7 @@ impl Layout {
                 }
                 body {
                     a.skip-link href="#main" { "Skip to content" }
-                    div.sitewrapper.sitewrapper--page[!options.full_width] {
+                    .sitewrapper {
                         @if options.is_index {
                             .hero {
                                 (PreEscaped(include_str!("../../static/arne.svg")))

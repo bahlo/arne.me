@@ -4,7 +4,7 @@ use url::Url;
 
 use crate::{
     content::Project,
-    templates::layout::{self, Context, Head, OgType},
+    templates::layout::{Context, Head, OgType},
 };
 
 fn render_project(project: &Project) -> Markup {
@@ -37,7 +37,7 @@ fn render_project(project: &Project) -> Markup {
 }
 
 pub fn render(project: &[Project]) -> Result<Context> {
-    Ok(Context::new_with_options(
+    Ok(Context::new(
         Head {
             title: "Projects".to_string(),
             description: "Some projects I've worked on".to_string(),
@@ -59,10 +59,6 @@ pub fn render(project: &[Project]) -> Result<Context> {
                     (render_project(project))
                 }
             }
-        },
-        layout::Options {
-            redesign: true,
-            ..Default::default()
         },
     ))
 }
