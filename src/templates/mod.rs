@@ -3,6 +3,7 @@ use maud::{html, Markup};
 
 pub mod article;
 pub mod book_review;
+pub mod home_screen;
 pub mod index;
 pub mod layout;
 pub mod page;

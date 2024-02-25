@@ -184,6 +184,25 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
         )?;
     }
 
+    // Generate home screens
+    fs::create_dir_all("dist/home-screens")?;
+    fs::write(
+        "dist/home-screens/index.html",
+        layout
+            .render(templates::home_screen::render_index(&content)?)
+            .into_string(),
+    )?;
+    for home_screen in &content.home_screens {
+        fs::create_dir_all(format!("dist/home-screens/{}", home_screen.slug))?;
+        let path = format!("dist/home-screens/{}/index.html", home_screen.slug);
+        fs::write(
+            &path,
+            layout
+                .render(templates::home_screen::render(home_screen)?)
+                .into_string(),
+        )?;
+    }
+
     // Generate pages
     for page in &content.pages {
         let path = match page.slug.as_str() {

@@ -145,6 +145,21 @@ impl TryFrom<&Content> for Sitemap {
                 })
             })
             .collect::<Result<Vec<LocUrl>>>()?;
+        let home_screen_urls = value
+            .home_screens
+            .iter()
+            .map(|home_screen| {
+                Ok(LocUrl {
+                    loc: Url::parse(&format!(
+                        "https://arne.me/home-screens/{}",
+                        home_screen.slug
+                    ))?,
+                    lastmod: Some(home_screen.published),
+                    changefreq: None,
+                    priority: None,
+                })
+            })
+            .collect::<Result<Vec<LocUrl>>>()?;
 
         let urlset = Urlset {
             xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9".to_string(),
@@ -154,6 +169,7 @@ impl TryFrom<&Content> for Sitemap {
                 .chain(article_urls.into_iter())
                 .chain(weekly_urls.into_iter())
                 .chain(book_review_urls.into_iter())
+                .chain(home_screen_urls.into_iter())
                 .collect::<Vec<LocUrl>>(),
         };
 
@@ -192,9 +208,13 @@ mod tests {
                 hidden: false,
                 updated: None,
                 location: "Nowhere".to_string(),
+                hackernews: None,
+                lobsters: None,
             }],
             weekly: vec![],
             pages: vec![],
+            book_reviews: vec![],
+            home_screens: vec![],
             projects: vec![],
         };
         assert_eq!("<xml version=\"1.0\" encoding=\"UTF-8\"/><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>https://arne.me/</loc></url></urlset>", render(&content));

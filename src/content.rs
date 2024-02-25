@@ -25,6 +25,7 @@ pub struct Content {
     pub articles: Vec<Article>,
     pub weekly: Vec<WeeklyIssue>,
     pub book_reviews: Vec<BookReview>,
+    pub home_screens: Vec<HomeScreen>,
 
     pub pages: Vec<Page>,
     pub projects: Vec<Project>,
@@ -52,6 +53,16 @@ pub struct Article {
     pub content_html: String,
     pub hackernews: Option<Url>,
     pub lobsters: Option<Url>,
+}
+
+#[derive(Debug, PartialEq, Eq, PartialOrd)]
+pub struct HomeScreen {
+    pub slug: String,
+    pub title: String,
+    pub description: String,
+    pub location: String,
+    pub published: NaiveDate,
+    pub content_html: String,
 }
 
 #[derive(Debug, PartialEq, Eq, PartialOrd)]
@@ -146,6 +157,7 @@ pub enum StreamItem<'a> {
     Article(&'a Article),
     BookReview(&'a BookReview),
     WeeklyIssue(&'a WeeklyIssue),
+    HomeScreen(&'a HomeScreen),
 }
 
 impl<'a> StreamItem<'a> {
@@ -154,6 +166,7 @@ impl<'a> StreamItem<'a> {
             StreamItem::Article(article) => format!("/articles/{}", article.slug),
             StreamItem::BookReview(book_review) => format!("/book-reviews/{}", book_review.slug),
             StreamItem::WeeklyIssue(weekly_issue) => format!("/weekly/{}", weekly_issue.num),
+            StreamItem::HomeScreen(home_screen) => format!("/home-screens/{}", home_screen.slug),
         }
     }
 
@@ -164,6 +177,7 @@ impl<'a> StreamItem<'a> {
                 format!("{} by {}", book_review.title, book_review.author)
             }
             StreamItem::WeeklyIssue(weekly_issue) => weekly_issue.title.clone(),
+            StreamItem::HomeScreen(home_screen) => home_screen.title.clone(),
         }
     }
 
@@ -172,6 +186,7 @@ impl<'a> StreamItem<'a> {
             StreamItem::Article(article) => article.published,
             StreamItem::BookReview(book_review) => book_review.read,
             StreamItem::WeeklyIssue(weekly_issue) => weekly_issue.published,
+            StreamItem::HomeScreen(home_screen) => home_screen.published,
         }
     }
 
@@ -180,6 +195,7 @@ impl<'a> StreamItem<'a> {
             StreamItem::Article(_) => "/articles".to_string(),
             StreamItem::BookReview(_) => "/book-reviews".to_string(),
             StreamItem::WeeklyIssue(_) => "/weekly".to_string(),
+            StreamItem::HomeScreen(_) => "/home-screens".to_string(),
         }
     }
 }
@@ -196,16 +212,28 @@ impl<'a> Ord for StreamItem<'a> {
             (StreamItem::Article(a), StreamItem::Article(b)) => b.published.cmp(&a.published),
             (StreamItem::Article(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
             (StreamItem::Article(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.published),
+            (StreamItem::Article(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.published),
 
             (StreamItem::BookReview(a), StreamItem::BookReview(b)) => b.read.cmp(&a.read),
             (StreamItem::BookReview(a), StreamItem::Article(b)) => b.published.cmp(&a.read),
             (StreamItem::BookReview(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.read),
+            (StreamItem::BookReview(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.read),
 
             (StreamItem::WeeklyIssue(a), StreamItem::WeeklyIssue(b)) => {
                 b.published.cmp(&a.published)
             }
             (StreamItem::WeeklyIssue(a), StreamItem::Article(b)) => b.published.cmp(&a.published),
             (StreamItem::WeeklyIssue(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
+            (StreamItem::WeeklyIssue(a), StreamItem::HomeScreen(b)) => {
+                b.published.cmp(&a.published)
+            }
+
+            (StreamItem::HomeScreen(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.published),
+            (StreamItem::HomeScreen(a), StreamItem::Article(b)) => b.published.cmp(&a.published),
+            (StreamItem::HomeScreen(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
+            (StreamItem::HomeScreen(a), StreamItem::WeeklyIssue(b)) => {
+                b.published.cmp(&a.published)
+            }
         }
     }
 }
@@ -291,6 +319,11 @@ impl Content {
                 "projects" => {
                     let dir = fs::read_dir(entry.path())?;
                     content.projects = Self::parse_projects(&matter, &markdown_context, dir)?;
+                }
+                "home-screens" => {
+                    let dir = fs::read_dir(entry.path())?;
+                    content.home_screens =
+                        Self::parse_home_screens(&matter, &markdown_context, dir)?;
                 }
                 _ => continue,
             }
@@ -398,6 +431,76 @@ impl Content {
         articles.sort_by(|a, b| b.published.cmp(&a.published));
 
         Ok(articles)
+    }
+
+    fn parse_home_screens(
+        matter: &Matter<YAML>,
+        markdown_context: &MarkdownContext,
+        mut dir: fs::ReadDir,
+    ) -> Result<Vec<HomeScreen>> {
+        let mut home_screens = Vec::new();
+        while let Some(entry) = dir.next().transpose()? {
+            if entry.file_type()?.is_dir() {
+                continue;
+            }
+
+            if entry.file_name().to_string_lossy().starts_with('.')
+                || entry.path().extension().ok_or(anyhow!(
+                    "Failed to get file extension for {:?}",
+                    entry.path()
+                ))? != "md"
+            {
+                continue;
+            }
+
+            let slug = entry
+                .path()
+                .file_stem()
+                .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
+                .to_string_lossy()
+                .to_string();
+
+            let mut file = File::open(entry.path())?;
+            let mut contents = String::new();
+            file.read_to_string(&mut contents)?;
+
+            #[derive(Debug, Deserialize)]
+            struct Frontmatter {
+                pub title: String,
+                pub description: String,
+                pub location: String,
+                pub published: NaiveDate,
+            }
+
+            let markdown = matter.parse(&contents);
+            let frontmatter: Frontmatter = markdown
+                .data
+                .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
+                .deserialize()
+                .context(format!(
+                    "Couldn't deserialize frontmatter for {:?}",
+                    entry.path()
+                ))?;
+
+            let content_html = markdown_to_html_with_plugins(
+                &markdown.content,
+                &markdown_context.options,
+                &markdown_context.plugins,
+            );
+
+            home_screens.push(HomeScreen {
+                slug,
+                title: smart_quotes(frontmatter.title),
+                description: smart_quotes(frontmatter.description),
+                location: smart_quotes(frontmatter.location),
+                published: frontmatter.published,
+                content_html,
+            });
+        }
+
+        home_screens.sort_by(|a, b| b.published.cmp(&a.published));
+
+        Ok(home_screens)
     }
 
     fn parse_book_reviews(
@@ -703,8 +806,13 @@ impl Content {
             .map(StreamItem::Article);
         let book_reviews = self.book_reviews.iter().map(StreamItem::BookReview);
         let weekly = self.weekly.iter().map(StreamItem::WeeklyIssue);
+        let home_screens = self.home_screens.iter().map(StreamItem::HomeScreen);
 
-        let mut stream: Vec<StreamItem> = articles.chain(book_reviews).chain(weekly).collect();
+        let mut stream: Vec<StreamItem> = articles
+            .chain(book_reviews)
+            .chain(weekly)
+            .chain(home_screens)
+            .collect();
         stream.sort();
 
         stream
