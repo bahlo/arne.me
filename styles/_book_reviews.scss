@@ -5,6 +5,10 @@
 .book_review {
   @include stack;
 
+  .e-content {
+    @include stack;
+  }
+
   &__cover {
     width: 40%;
     float: right;

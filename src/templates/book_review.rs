@@ -19,7 +19,7 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
                 "Book Review: {} by {}",
                 book_review.title, book_review.author
             ),
-            description: format!("I read {} by {}", book_review.title, book_review.author,),
+            description: format!("I read {} by {}", book_review.title, book_review.author),
             url: Url::parse(&format!(
                 "https://arne.me/book-reviews/{}",
                 book_review.slug
@@ -27,13 +27,16 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
             og_type: OgType::Article,
         },
         html! {
-            article.book_review {
+            article.book_review.h-entry {
                 header {
-                    h1 { (book_review.title) " by " (book_review.author) }
+                    h1.p-name { (book_review.title) " by " (book_review.author) }
+                    a.u-url hidden { (format!("/book-reviews/{}", book_review.slug)) }
+                    span.p-summary hidden { (format!("I read {} by {}", book_review.title, book_review.author)) }
+                    span.p-author hidden { "Arne Bahlo" }
                     em.article__byline {
-                        time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
+                        time.dt-published datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
                         (PreEscaped(" &middot; "))
-                        (book_review.location)
+                        span.p-location { (book_review.location) }
                         (PreEscaped(" &middot; "))
                         (book_review.rating)
                         "/5"
@@ -43,7 +46,9 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
                     source srcset=(format!("/book-reviews/{}/cover.avif", book_review.slug)) type="image/avif";
                     img.book_review__cover src=(format!("/book-reviews/{}/cover.jpg", book_review.slug)) alt=(format!("The cover of {} by {}", book_review.title, book_review.author));
                 }
-                (PreEscaped(book_review.content_html.clone()))
+                .e-content {
+                    (PreEscaped(book_review.content_html.clone()))
+                }
             }
         },
         layout::Options {

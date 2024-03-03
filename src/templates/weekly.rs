@@ -53,7 +53,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
             og_type: OgType::Website,
         },
         html! {
-            section.weekly {
+            section.weekly.h-entry {
                 header.weekly__header {
                     h1 { "Arne’s Weekly" }
                     p { "A weekly newsletter with the best stories of the internet. There’s an "
@@ -155,14 +155,19 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
             og_type: OgType::Article,
         },
         html! {
-            article.article {
+            article.weekly.h-entry {
                 header {
-                    h1 { (weekly_issue.title) }
+                    h1.p-name { (weekly_issue.title) }
+                    a.u-url hidden href=(format!("/weekly/{}", weekly_issue.num)) {}
+                    span.p-summary hidden { (format!("Arne's Weekly #{}", weekly_issue.num)) }
+                    span.p-author hidden { "Arne Bahlo" }
                     em.article__byline {
-                        time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
+                        time.dt-published datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                     }
                 }
-                (render_content(weekly_issue)?)
+                .e-content {
+                    (render_content(weekly_issue)?)
+                }
                 h2 { "Subscribe" }
                 p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans."}
                 (subscribe_form())

@@ -16,11 +16,16 @@ pub fn render(page: &Page) -> Result<Context> {
             og_type: OgType::Website,
         },
         html! {
-            section.page {
+            section.page.h-entry {
                 header {
-                    h1 { (page.title) }
+                    h1.p-name { (page.title) }
+                    a.u-url hidden href=(format!("/{}", page.slug)) {}
+                    span.p-summary hidden { (page.description) }
+                    span.p-author hidden { "Arne Bahlo" }
                 }
-                (PreEscaped(page.content_html.clone()))
+                .e-content {
+                    (PreEscaped(page.content_html.clone()))
+                }
             }
         },
     ))

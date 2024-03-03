@@ -5,6 +5,10 @@
     @include stack;
   }
 
+  .e-content {
+    @include stack;
+  }
+
   &__subscribe_form {
     input[type="email"] {
       background: none;

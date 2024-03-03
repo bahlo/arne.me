@@ -7,9 +7,11 @@
     color: inherit;
   }
 
-  @include stack;
-
   &__header {
     padding-bottom: 1rem;
+  }
+
+  .e-content {
+    @include stack;
   }
 }

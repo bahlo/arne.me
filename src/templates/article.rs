@@ -19,13 +19,16 @@ pub fn render(article: &Article) -> Result<Context> {
             og_type: OgType::Article,
         },
         html! {
-            article.article {
+            article.article.h-entry {
                 header.article__header {
-                    h1 { (article.title) }
+                    h1.p-name { (article.title) }
+                    a.u-url hidden href=(format!("/articles/{}", article.slug)) {}
+                    span.p-summary hidden { (article.description) }
+                    span.p-author hidden { "Arne Bahlo" }
                     em.article__byline {
-                        time datetime=(article.published.format("%Y-%m-%d")) { (format_date(article.published)) }
+                        time.dt-published datetime=(article.published.format("%Y-%m-%d")) { (format_date(article.published)) }
                         (PreEscaped(" &middot; "))
-                        (article.location)
+                        span.p-location { (article.location) }
                         @if article.hackernews.is_some() || article.lobsters.is_some() {
                             (PreEscaped(" &middot; "))
                             @if let Some(hackernews) = &article.hackernews {
@@ -41,7 +44,9 @@ pub fn render(article: &Article) -> Result<Context> {
 
                     }
                 }
-                (PreEscaped(article.content_html.clone()))
+                .e-content {
+                    (PreEscaped(article.content_html.clone()))
+                }
             }
         },
         layout::Options {

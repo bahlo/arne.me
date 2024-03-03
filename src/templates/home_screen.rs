@@ -22,16 +22,21 @@ pub fn render(home_screen: &HomeScreen) -> Result<Context> {
             og_type: OgType::Article,
         },
         html! {
-            article.article {
+            article.article.h-entry {
                 header.article__header {
-                    h1 { (home_screen.title) }
+                    h1.p-name { (home_screen.title) }
+                    a.u-url hidden href=(format!("/home-screens/{}", home_screen.slug)) {}
+                    span.p-summary hidden { (home_screen.description) }
+                    span.p-author hidden { "Arne Bahlo" }
                     em.article__byline {
-                        time datetime=(home_screen.published.format("%Y-%m-%d")) { (format_date(home_screen.published)) }
+                        time.dt-published datetime=(home_screen.published.format("%Y-%m-%d")) { (format_date(home_screen.published)) }
                         (PreEscaped(" &middot; "))
-                        (home_screen.location)
+                        span.p-location { (home_screen.location) }
                     }
                 }
-                (PreEscaped(home_screen.content_html.clone()))
+                .e-content {
+                    (PreEscaped(home_screen.content_html.clone()))
+                }
             }
         },
         layout::Options {
