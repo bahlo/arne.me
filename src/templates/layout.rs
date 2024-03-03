@@ -197,8 +197,12 @@ impl Layout {
                         }
                         .h-card hidden {
                             span.p-name { "Arne Bahlo" }
-                            a.u-url href="https://arne.me" {};
+                            img.u-photo src="/arne.svg" {}
+                            a.u-url href="https://arne.me" {}
                             a.u-email href="mailto:hey@arne.me" {}
+                            p.p-note {
+                                "A developer, podcaster & dad based near Frankfurt, Germany."
+                            }
                         }
                     }
                 }
