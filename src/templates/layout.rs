@@ -195,6 +195,11 @@ impl Layout {
                                 "Made with ♥ by a human."
                             }
                         }
+                        .h-card hidden {
+                            span.p-name { "Arne Bahlo" }
+                            a.u-url href="https://arne.me" {};
+                            a.u-email href="mailto:hey@arne.me" {}
+                        }
                     }
                 }
             }
