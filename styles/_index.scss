@@ -65,6 +65,8 @@
   &__more {
     padding-top: 1rem;
     display: inline-block;
-    color: $color-muted;
+    @include themed() {
+      color: t($muted);
+    }
   }
 }

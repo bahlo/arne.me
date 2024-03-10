@@ -1,8 +1,53 @@
-$color-background: #010101;
-$color-text: #ddd;
-$color-headings: #eee;
-$color-muted: #aaa;
-$color-dark: #222;
+$background: 'background';
+$text: 'text';
+$headings: 'headings';
+$muted: 'muted';
+$dark: 'dark';
+
+$color-schemes: (
+  light: (
+    background: #fefefe,
+    text: #222,
+    headings: #111,
+    muted: #666,
+    dark: #eee,
+  ),
+  dark: (
+    background: #010101,
+    text: #ddd,
+    headings: #eee,
+    muted: #aaa,
+    dark: #222,
+  )
+);
+
+@mixin themed() {
+  @each $scheme, $map in $color-schemes {
+    @if $scheme == "light" {
+      $scheme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($color-schemes, $scheme), '#{$key}');
+        $scheme-map: map-merge($scheme-map, ($key: $value)) !global;
+      }
+      @content;
+      $scheme-map: null !global;
+    } @else {
+      @media (prefers-color-scheme: #{$scheme}) {
+        $scheme-map: () !global;
+        @each $key, $submap in $map {
+          $value: map-get(map-get($color-schemes, $scheme), '#{$key}');
+          $scheme-map: map-merge($scheme-map, ($key: $value)) !global;
+        }
+        @content;
+        $scheme-map: null !global;
+      }
+    }
+  }
+}
+
+@function t($key) {
+  @return map-get($scheme-map, $key);
+}
 
 $max-width: 1080px;
 

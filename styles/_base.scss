@@ -8,8 +8,10 @@ body {
   font-display: swap;
   -webkit-font-smoothing: antialiased;
 
-  background: $color-background;
-  color: $color-text;
+  @include themed() {
+    background: t($background);
+    color: t($text);
+  }
 
   padding: 8rem;
   max-width: $max-width;
@@ -38,7 +40,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: $color-headings;
+  @include themed () {
+    color: t($headings);
+  }
 
   a {
     text-decoration-thickness: 2px;
@@ -74,14 +78,18 @@ h3 {
 }
 
 a {
-  color: $color-text;
+  @include themed() {
+    color: t($text);
+  }
   text-underline-offset: 2px;
 }
 
 .back_link {
   padding-bottom: 2rem;
   display: inline-block;
-  color: $color-muted;
+  @include themed() {
+    color: t($muted);
+  }
 }
 
 dl {
@@ -109,14 +117,18 @@ pre, code {
 
 blockquote {
   padding: .5rem 1rem;
-  border-left: 4px solid $color-text;
+  @include themed() {
+    border-left: 4px solid t($text);
+  }
   font-style: italic;
   font-size: $typescale-m;
 }
 
 .footnotes {
   padding-top: 2rem;
-  color: $color-muted;
+  @include themed() {
+    color: t($muted);
+  }
 }
 
 pre {
@@ -128,5 +140,7 @@ small {
 }
 
 .muted {
-  color: $color-muted;
+  @include themed() {
+    color: t($muted);
+  }
 }

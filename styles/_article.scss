@@ -1,6 +1,8 @@
 .article {
   &__byline {
-    color: $color-muted;
+    @include themed() {
+      color: t($muted);
+    }
   }
 
   &__collection_url {

@@ -3,7 +3,9 @@
   display: flex;
   justify-content: space-between;
   font-size: 1rem;
-  color: $color-muted;
+  @include themed() {
+    color: t($muted);
+  }
   gap: 1rem;
 
   @media (max-width: 1024px) {
