@@ -102,7 +102,7 @@ impl Layout {
                     link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png";
                     link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png";
                     link rel="manifest" href="/site.webmanifest";
-                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Articles")) href="/feed.xml";
+                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Blog")) href="/feed.xml";
                     link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Weekly")) href="/weekly/feed.xml";
                     link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Book Reviews")) href="/book-reviews/feed.xml";
                     link rel="me" href="https://spezi.social/@arne";

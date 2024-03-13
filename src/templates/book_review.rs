@@ -33,7 +33,7 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
                     a.u-url hidden { (format!("/book-reviews/{}", book_review.slug)) }
                     span.p-summary hidden { (format!("I read {} by {}", book_review.title, book_review.author)) }
                     span.p-author hidden { "Arne Bahlo" }
-                    em.article__byline {
+                    em.blogpost__byline {
                         time.dt-published datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
                         (PreEscaped(" &middot; "))
                         span.p-location { (book_review.location) }
@@ -76,7 +76,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                                     (book_review.title) " by " (book_review.author)
                                 }
                         }
-                        em.article__byline {
+                        em.blogpost__byline {
                             time datetime=(book_review.read.format("%Y-%m-%d")) { (format_date(book_review.read)) }
                             (PreEscaped(" &middot; "))
                             (book_review.location)

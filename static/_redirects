@@ -1,8 +1,8 @@
 # Articles
-/blog /articles
-/blog/* /articles/:splat
 /writing /articles
 /writing/* /articles/:splat
+/articles /blog
+/articles/* /blog/:splat
 
 # Pages
 /work /projects
@@ -12,6 +12,7 @@
 /atom.xml /feed.xml
 /reading/atom.xml /book-reviews/feed.xml
 /articles/atom.xml /feed.xml
+/blog/atom.xml /feed.xml
 /weekly/atom.xml /weekly/feed.xml
 
 # Subscribed/unsubscribed
@@ -25,12 +26,13 @@
 /reading/how-to-win-friends-and-influence-people /book-reviews/how-to-win-friends
 /reading/* /book-reviews/:splat
 /articles/i-read-* /book-reviews/:splat
+/blog/i-read-* /book-reviews/:splat
 
-/defaults /articles/app-defaults
+/defaults /blog/app-defaults
 
 # Renamed articles
-/articles/emacs-from-scratch-part-one-the-foundation /articles/emacs-from-scratch-part-one-foundations
-/articles/emacs-from-scratch-part-one-the-foundation/* /articles/emacs-from-scratch-part-one-foundations/*
+/articles/emacs-from-scratch-part-one-the-foundation /blog/emacs-from-scratch-part-one-foundations
+/articles/emacs-from-scratch-part-one-the-foundation/* /blog/emacs-from-scratch-part-one-foundations/*
 
 # Home Screens
 /articles/home-screen-november-2023 /home-screens/2023-11

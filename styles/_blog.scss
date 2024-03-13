@@ -1,4 +1,4 @@
-.article {
+.blogpost {
   &__byline {
     @include themed() {
       color: t($muted);

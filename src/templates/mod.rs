@@ -1,7 +1,7 @@
 use chrono::{Datelike, NaiveDate};
 use maud::{html, Markup};
 
-pub mod article;
+pub mod blog;
 pub mod book_review;
 pub mod home_screen;
 pub mod index;

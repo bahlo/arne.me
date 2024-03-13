@@ -7,22 +7,22 @@ use crate::{content::Content, templates};
 const RFC_822: &str = "%a, %d %b %Y %T %z";
 const RFC_822_DATE: &str = "%a, %d %b %Y 00:00:00 +0000";
 
-pub fn render_articles(content: &Content) -> String {
+pub fn render_blog(content: &Content) -> String {
     let items: Vec<Item> = content
-        .articles
+        .blog
         .iter()
-        .map(|article| {
+        .map(|blogpost| {
             ItemBuilder::default()
-                .title(article.title.clone())
-                .link(format!("https://arne.me/articles/{}", article.slug))
-                .description(article.description.clone())
+                .title(blogpost.title.clone())
+                .link(format!("https://arne.me/blog/{}", blogpost.slug))
+                .description(blogpost.description.clone())
                 .author("Arne Bahlo".to_string())
                 .guid(rss::Guid {
-                    value: format!("https://arne.me/articles/{}", article.slug),
+                    value: format!("https://arne.me/blog/{}", blogpost.slug),
                     permalink: true,
                 })
-                .pub_date(article.published.format(RFC_822_DATE).to_string())
-                .content(article.content_html.clone())
+                .pub_date(blogpost.published.format(RFC_822_DATE).to_string())
+                .content(blogpost.content_html.clone())
                 .build()
         })
         .collect();

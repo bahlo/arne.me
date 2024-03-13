@@ -20,7 +20,7 @@ Any issue you encounter on this website can be submitted as
 [GitHub issues](https://github.com/bahlo/arne.me/issues/new).
 
 A [sitemap](/sitemap-index.xml) is available and there are RSS feeds for
-[articles](/articles/atom.xml), the [weekly](/weekly/atom.xml), 
+the [blog](/blog/atom.xml), the [weekly](/weekly/atom.xml),
 and [book reviews](/book-reviews/feed.xml).
 
 This site is using the [Axiom integration for Netlify](https://axiom.co) for

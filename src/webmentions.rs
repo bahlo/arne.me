@@ -22,7 +22,7 @@ pub fn send_webmentions(path: impl AsRef<str>, dry_run: bool) -> Result<()> {
 
     match kind {
         "weekly" => send_webmentions_weekly(dry_run, content, slug)?,
-        "articles" => send_webmentions_article(dry_run, content, slug)?,
+        "blog" => send_webmentions_blogpost(dry_run, content, slug)?,
         _ => send_webmentions_page(dry_run, content, slug)?,
     }
 
@@ -55,19 +55,19 @@ fn send_webmentions_weekly(dry_run: bool, content: Content, slug: impl AsRef<str
     Ok(())
 }
 
-fn send_webmentions_article(dry_run: bool, content: Content, slug: impl AsRef<str>) -> Result<()> {
+fn send_webmentions_blogpost(dry_run: bool, content: Content, slug: impl AsRef<str>) -> Result<()> {
     let slug = slug.as_ref();
-    let article = content
-        .articles
+    let blogpost = content
+        .blog
         .iter()
-        .find(|article| article.slug == slug)
-        .ok_or_else(|| anyhow!("Article not found"))?;
+        .find(|blogpost| blogpost.slug == slug)
+        .ok_or_else(|| anyhow!("Blogpost not found"))?;
 
     LINK_REGEX
-        .captures_iter(&article.content_html)
+        .captures_iter(&blogpost.content_html)
         .for_each(|capture| {
             let url = capture.get(1).unwrap().as_str();
-            send_webmention(dry_run, format!("https://arne.me/articles/{}", slug), url)
+            send_webmention(dry_run, format!("https://arne.me/blog/{}", slug), url)
                 .unwrap_or_else(|e| println!("Failed to send webmention for {}: {}", url, e));
         });
 

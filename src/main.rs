@@ -127,21 +127,21 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .into_string(),
     )?;
 
-    // Generate articles
-    fs::create_dir_all("dist/articles")?;
+    // Generate blog
+    fs::create_dir_all("dist/blog")?;
     fs::write(
-        "dist/articles/index.html",
+        "dist/blog/index.html",
         layout
-            .render(templates::article::render_index(&content)?)
+            .render(templates::blog::render_index(&content)?)
             .into_string(),
     )?;
-    for article in &content.articles {
-        fs::create_dir_all(format!("dist/articles/{}", article.slug))?;
-        let path = format!("dist/articles/{}/index.html", article.slug);
+    for blogpost in &content.blog {
+        fs::create_dir_all(format!("dist/blog/{}", blogpost.slug))?;
+        let path = format!("dist/blog/{}/index.html", blogpost.slug);
         fs::write(
             &path,
             layout
-                .render(templates::article::render(article)?)
+                .render(templates::blog::render(blogpost)?)
                 .into_string(),
         )?;
     }
@@ -229,7 +229,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     )?;
 
     // Generate RSS feeds
-    fs::write("dist/feed.xml", rss::render_articles(&content))?;
+    fs::write("dist/feed.xml", rss::render_blog(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
     fs::write(
         "dist/book-reviews/feed.xml",

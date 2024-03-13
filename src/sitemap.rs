@@ -46,17 +46,17 @@ impl TryFrom<&Content> for Sitemap {
         let static_urls = vec![
             LocUrl {
                 loc: "https://arne.me".parse()?,
-                lastmod: None, // TODO: Set to latest article or weekly or book review
+                lastmod: None, // TODO: Set to latest blog or weekly or book review
                 changefreq: Some("weekly".to_string()),
                 priority: Some(1.0),
             },
             LocUrl {
-                loc: "https://arne.me/articles".parse()?,
+                loc: "https://arne.me/blog".parse()?,
                 lastmod: Some(
                     value
-                        .articles
+                        .blog
                         .first()
-                        .ok_or(anyhow!("No articles found"))?
+                        .ok_or(anyhow!("No blogposts found"))?
                         .published,
                 ),
                 changefreq: Some("monthly".to_string()),
@@ -106,13 +106,13 @@ impl TryFrom<&Content> for Sitemap {
                 ))?))
             })
             .collect::<Result<Vec<LocUrl>>>()?;
-        let article_urls = value
-            .articles
+        let blogpost_urls = value
+            .blog
             .iter()
-            .map(|article| {
+            .map(|blogpost| {
                 Ok(LocUrl {
-                    loc: Url::parse(&format!("https://arne.me/articles/{}", article.slug))?,
-                    lastmod: article.updated.or(Some(article.published)),
+                    loc: Url::parse(&format!("https://arne.me/blog/{}", blogpost.slug))?,
+                    lastmod: blogpost.updated.or(Some(blogpost.published)),
                     changefreq: None,
                     priority: None,
                 })
@@ -166,7 +166,7 @@ impl TryFrom<&Content> for Sitemap {
             url: static_urls
                 .into_iter()
                 .chain(page_urls.into_iter())
-                .chain(article_urls.into_iter())
+                .chain(blogpost_urls.into_iter())
                 .chain(weekly_urls.into_iter())
                 .chain(book_review_urls.into_iter())
                 .chain(home_screen_urls.into_iter())
@@ -190,14 +190,14 @@ pub fn render(content: &Content) -> Result<String> {
 
 #[cfg(test)]
 mod tests {
-    use crate::content::Article;
+    use crate::content::Blogpost;
 
     use super::*;
 
     #[test]
     fn test_sitemap() {
         let content = Content {
-            articles: vec![Article {
+            blog: vec![Blogpost {
                 slug: "test".to_string(),
                 title: "Test".to_string(),
                 published: NaiveDate::from_ymd_opt(2021, 1, 1).unwrap(),

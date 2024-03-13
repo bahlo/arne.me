@@ -73,7 +73,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                                     (weekly_issue.title)
                                 }
                             }
-                            span.article__byline {
+                            span.blog__byline {
                                 time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                             }
                         }
@@ -161,7 +161,7 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
                     a.u-url hidden href=(format!("/weekly/{}", weekly_issue.num)) {}
                     span.p-summary hidden { (format!("Arne's Weekly #{}", weekly_issue.num)) }
                     span.p-author hidden { "Arne Bahlo" }
-                    em.article__byline {
+                    em.blogpost__byline {
                         time.dt-published datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                     }
                 }

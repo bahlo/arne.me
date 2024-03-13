@@ -22,7 +22,7 @@ pub fn smart_quotes(text: impl Into<String>) -> String {
 #[derive(Debug, Default)]
 pub struct Content {
     // Stream
-    pub articles: Vec<Article>,
+    pub blog: Vec<Blogpost>,
     pub weekly: Vec<WeeklyIssue>,
     pub book_reviews: Vec<BookReview>,
     pub home_screens: Vec<HomeScreen>,
@@ -40,7 +40,7 @@ pub struct Page {
 }
 
 #[derive(Debug, PartialEq, Eq, PartialOrd)]
-pub struct Article {
+pub struct Blogpost {
     pub slug: String,
     pub title: String,
     pub description: String,
@@ -154,7 +154,7 @@ pub struct Project {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum StreamItem<'a> {
-    Article(&'a Article),
+    Blog(&'a Blogpost),
     BookReview(&'a BookReview),
     WeeklyIssue(&'a WeeklyIssue),
     HomeScreen(&'a HomeScreen),
@@ -163,7 +163,7 @@ pub enum StreamItem<'a> {
 impl<'a> StreamItem<'a> {
     pub fn url(&self) -> String {
         match self {
-            StreamItem::Article(article) => format!("/articles/{}", article.slug),
+            StreamItem::Blog(blogpost) => format!("/blog/{}", blogpost.slug),
             StreamItem::BookReview(book_review) => format!("/book-reviews/{}", book_review.slug),
             StreamItem::WeeklyIssue(weekly_issue) => format!("/weekly/{}", weekly_issue.num),
             StreamItem::HomeScreen(home_screen) => format!("/home-screens/{}", home_screen.slug),
@@ -172,7 +172,7 @@ impl<'a> StreamItem<'a> {
 
     pub fn title(&self) -> String {
         match self {
-            StreamItem::Article(article) => article.title.clone(),
+            StreamItem::Blog(blogpost) => blogpost.title.clone(),
             StreamItem::BookReview(book_review) => {
                 format!("{} by {}", book_review.title, book_review.author)
             }
@@ -183,7 +183,7 @@ impl<'a> StreamItem<'a> {
 
     pub fn published(&self) -> NaiveDate {
         match self {
-            StreamItem::Article(article) => article.published,
+            StreamItem::Blog(blogpost) => blogpost.published,
             StreamItem::BookReview(book_review) => book_review.read,
             StreamItem::WeeklyIssue(weekly_issue) => weekly_issue.published,
             StreamItem::HomeScreen(home_screen) => home_screen.published,
@@ -192,7 +192,7 @@ impl<'a> StreamItem<'a> {
 
     pub fn collection_url(&self) -> String {
         match self {
-            StreamItem::Article(_) => "/articles".to_string(),
+            StreamItem::Blog(_) => "/blog".to_string(),
             StreamItem::BookReview(_) => "/book-reviews".to_string(),
             StreamItem::WeeklyIssue(_) => "/weekly".to_string(),
             StreamItem::HomeScreen(_) => "/home-screens".to_string(),
@@ -209,27 +209,27 @@ impl<'a> PartialOrd for StreamItem<'a> {
 impl<'a> Ord for StreamItem<'a> {
     fn cmp(&self, other: &Self) -> Ordering {
         match (self, other) {
-            (StreamItem::Article(a), StreamItem::Article(b)) => b.published.cmp(&a.published),
-            (StreamItem::Article(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
-            (StreamItem::Article(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.published),
-            (StreamItem::Article(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.published),
+            (StreamItem::Blog(a), StreamItem::Blog(b)) => b.published.cmp(&a.published),
+            (StreamItem::Blog(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
+            (StreamItem::Blog(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.published),
+            (StreamItem::Blog(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.published),
 
             (StreamItem::BookReview(a), StreamItem::BookReview(b)) => b.read.cmp(&a.read),
-            (StreamItem::BookReview(a), StreamItem::Article(b)) => b.published.cmp(&a.read),
+            (StreamItem::BookReview(a), StreamItem::Blog(b)) => b.published.cmp(&a.read),
             (StreamItem::BookReview(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.read),
             (StreamItem::BookReview(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.read),
 
             (StreamItem::WeeklyIssue(a), StreamItem::WeeklyIssue(b)) => {
                 b.published.cmp(&a.published)
             }
-            (StreamItem::WeeklyIssue(a), StreamItem::Article(b)) => b.published.cmp(&a.published),
+            (StreamItem::WeeklyIssue(a), StreamItem::Blog(b)) => b.published.cmp(&a.published),
             (StreamItem::WeeklyIssue(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
             (StreamItem::WeeklyIssue(a), StreamItem::HomeScreen(b)) => {
                 b.published.cmp(&a.published)
             }
 
             (StreamItem::HomeScreen(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.published),
-            (StreamItem::HomeScreen(a), StreamItem::Article(b)) => b.published.cmp(&a.published),
+            (StreamItem::HomeScreen(a), StreamItem::Blog(b)) => b.published.cmp(&a.published),
             (StreamItem::HomeScreen(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
             (StreamItem::HomeScreen(a), StreamItem::WeeklyIssue(b)) => {
                 b.published.cmp(&a.published)
@@ -303,9 +303,9 @@ impl Content {
             }
 
             match entry.file_name().to_string_lossy().as_ref() {
-                "articles" => {
+                "blog" => {
                     let dir = fs::read_dir(entry.path())?;
-                    content.articles = Self::parse_articles(&matter, &markdown_context, dir)?;
+                    content.blog = Self::parse_blog(&matter, &markdown_context, dir)?;
                 }
                 "weekly" => {
                     let dir = fs::read_dir(entry.path())?;
@@ -332,14 +332,14 @@ impl Content {
         Ok(content)
     }
 
-    fn parse_articles(
+    fn parse_blog(
         matter: &Matter<YAML>,
         markdown_context: &MarkdownContext,
         mut dir: fs::ReadDir,
-    ) -> Result<Vec<Article>> {
+    ) -> Result<Vec<Blogpost>> {
         let footnote_regex = Regex::new(r"\[\^(\d+)\]")?;
 
-        let mut articles = Vec::new();
+        let mut blog = Vec::new();
         while let Some(entry) = dir.next().transpose()? {
             if entry.file_type()?.is_dir() {
                 continue;
@@ -412,7 +412,7 @@ impl Content {
                 &markdown_context.plugins,
             );
 
-            articles.push(Article {
+            blog.push(Blogpost {
                 slug,
                 title: smart_quotes(frontmatter.title),
                 description: smart_quotes(frontmatter.description),
@@ -428,9 +428,9 @@ impl Content {
             });
         }
 
-        articles.sort_by(|a, b| b.published.cmp(&a.published));
+        blog.sort_by(|a, b| b.published.cmp(&a.published));
 
-        Ok(articles)
+        Ok(blog)
     }
 
     fn parse_home_screens(
@@ -799,16 +799,16 @@ impl Content {
     }
 
     pub fn stream(&self) -> Vec<StreamItem> {
-        let articles = self
-            .articles
+        let blogposts = self
+            .blog
             .iter()
-            .filter(move |article| !article.hidden)
-            .map(StreamItem::Article);
+            .filter(move |blogpost| !blogpost.hidden)
+            .map(StreamItem::Blog);
         let book_reviews = self.book_reviews.iter().map(StreamItem::BookReview);
         let weekly = self.weekly.iter().map(StreamItem::WeeklyIssue);
         let home_screens = self.home_screens.iter().map(StreamItem::HomeScreen);
 
-        let mut stream: Vec<StreamItem> = articles
+        let mut stream: Vec<StreamItem> = blogposts
             .chain(book_reviews)
             .chain(weekly)
             .chain(home_screens)

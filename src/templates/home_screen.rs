@@ -22,13 +22,13 @@ pub fn render(home_screen: &HomeScreen) -> Result<Context> {
             og_type: OgType::Article,
         },
         html! {
-            article.article.h-entry {
-                header.article__header {
+            article.blogpost.h-entry {
+                header.blogpost__header {
                     h1.p-name { (home_screen.title) }
                     a.u-url hidden href=(format!("/home-screens/{}", home_screen.slug)) {}
                     span.p-summary hidden { (home_screen.description) }
                     span.p-author hidden { "Arne Bahlo" }
-                    em.article__byline {
+                    em.blogpost__byline {
                         time.dt-published datetime=(home_screen.published.format("%Y-%m-%d")) { (format_date(home_screen.published)) }
                         (PreEscaped(" &middot; "))
                         span.p-location { (home_screen.location) }
@@ -60,7 +60,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 @for home_screen in content.home_screens.iter() {
                     div {
                         h3.inheritFontSize { a href=(format!("/home-screens/{}", home_screen.slug)) { (home_screen.title) } }
-                        em.article__byline {
+                        em.blogpost__byline {
                             time datetime=(home_screen.published.format("%Y-%m-%d")) {(format_date(home_screen.published))}
                             (PreEscaped(" &middot; "))
                             (home_screen.location)

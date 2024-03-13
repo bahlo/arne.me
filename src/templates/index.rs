@@ -37,8 +37,8 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
                 @for entry in entries {
                     div {
                         h3.inheritFontSize { a href=(entry.url()) { (entry.title()) } }
-                        span.article__byline {
-                            a.article__collection_url href=(entry.collection_url())  { (entry.collection_url()) }
+                        span.blogpost__byline {
+                            a.blogpost__collection_url href=(entry.collection_url())  { (entry.collection_url()) }
                             (PreEscaped(" &middot; "))
                             (format_date(entry.published()))
                         }
