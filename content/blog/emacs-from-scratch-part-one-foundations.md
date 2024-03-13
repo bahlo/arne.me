@@ -25,8 +25,8 @@ basic UI tweaks to build a solid foundation.
 
 ## Install Emacs
 
-On macOS, everyone recommends 
-[Emacs Plus](https://github.com/d12frosted/homebrew-emacs-plus). 
+On macOS, everyone recommends
+[Emacs Plus](https://github.com/d12frosted/homebrew-emacs-plus).
 For other systems, check out [Doom's Emacs & dependencies](https://github.com/doomemacs/doomemacs/blob/master/docs/getting_started.org#emacs--dependencies) documentation.
 
 We're running this command:
@@ -40,14 +40,14 @@ brew reinstall emacs-plus \
 And this is what it looks like when we start Emacs for the first time:
 
 <picture>
-  <source srcset="/articles/emacs-from-scratch-part-one-foundations/vanilla-emacs.avif" type="image/avif" />
-  <img src="/articles/emacs-from-scratch-part-one-foundations/vanilla-emacs.avif" alt="A default Emacs window showing outdated (euphemismus) butons and generally looking like it screams to be customized." />
+  <source srcset="/blog/emacs-from-scratch-part-one-foundations/vanilla-emacs.avif" type="image/avif" />
+  <img src="/blog/emacs-from-scratch-part-one-foundations/vanilla-emacs.avif" alt="A default Emacs window showing outdated (euphemismus) butons and generally looking like it screams to be customized." />
 </picture>
 
 ## Remove UI elements
 
-We want to remove everything but the text. To do so, we first create a file in 
-`$HOME/.emacs.d/init.el`. 
+We want to remove everything but the text. To do so, we first create a file in
+`$HOME/.emacs.d/init.el`.
 
 ```lisp
 (tool-bar-mode -1)             ; Hide the outdated icons
@@ -68,8 +68,8 @@ Let's fix that by adding these lines to `$HOME/.emacs.d/early-init.el`[^2]:
 This is better:
 
 <picture>
-  <source srcset="/articles/emacs-from-scratch-part-one-foundations/no-gui-emacs.avif" type="image/avif" />
-  <img src="/articles/emacs-from-scratch-part-one-foundations/no-gui-emacs.avif" alt="Emacs without GUI elements and the scratch buffer open." />
+  <source srcset="/blog/emacs-from-scratch-part-one-foundations/no-gui-emacs.avif" type="image/avif" />
+  <img src="/blog/emacs-from-scratch-part-one-foundations/no-gui-emacs.avif" alt="Emacs without GUI elements and the scratch buffer open." />
 </picture>
 
 We'll take care of the default scratch text and the `C-h C-a` hint down below.
@@ -99,7 +99,7 @@ This is the installation code from the `straight.el` README:
   (load bootstrap-file nil 'nomessage))
 ```
 
-The docs also recommend adding this to our `early-init.el` to prevent 
+The docs also recommend adding this to our `early-init.el` to prevent
 `package.el` from loading:
 
 ```lisp
@@ -125,11 +125,11 @@ for lazy loading:
 
 It's good practice to specify Emacs-specific settings in a `use-package` block,
 even though this doesn't change anything functionally.
-In the following, I'll repeat the `use-package emacs` function, but you can, 
+In the following, I'll repeat the `use-package emacs` function, but you can,
 and probably should, move these all into a single `use-package` block.
 
-Let's start without the default scratch message and the text at the 
-bottom saying "For information about GNU Emacs and the GNU system, type 
+Let's start without the default scratch message and the text at the
+bottom saying "For information about GNU Emacs and the GNU system, type
 `C-h C-a`":
 
 ```lisp
@@ -140,7 +140,7 @@ bottom saying "For information about GNU Emacs and the GNU system, type
     (message "")))
 ```
 
-In confirmation dialogs, we want to be able to type `y` and `n` instead of 
+In confirmation dialogs, we want to be able to type `y` and `n` instead of
 having to spell the whole words:
 
 ```lisp
@@ -165,7 +165,7 @@ Make everything use UTF-8:
   (setq default-process-coding-system '(utf-8-unix . utf-8-unix)))
 ```
 
-Use spaces, but configure tab-width for modes that use tabs (looking at you, 
+Use spaces, but configure tab-width for modes that use tabs (looking at you,
 Go):
 
 ```lisp
@@ -175,7 +175,7 @@ Go):
   (setq-default tab-width 2))
 ```
 
-Map the correct keybindings for macOS: 
+Map the correct keybindings for macOS:
 
 ```lisp
 (use-package emacs
@@ -188,7 +188,7 @@ Map the correct keybindings for macOS:
 
 ## Become evil
 
-I'm used to Vim keybindings and want to keep them, so we'll use 
+I'm used to Vim keybindings and want to keep them, so we'll use
 [evil](https://github.com/emacs-evil/evil):
 
 ```lisp
@@ -206,12 +206,12 @@ typeface:
 ```lisp
 (use-package emacs
   :init
-  (set-face-attribute 'default nil 
-    :font "PragmataPro Mono Liga" 
+  (set-face-attribute 'default nil
+    :font "PragmataPro Mono Liga"
     :height 160))
 ```
 
-For themes, I can recommend the 
+For themes, I can recommend the
 [Doom Themes](https://github.com/doomemacs/themes), we'll be using
 `doom-challenger-deep`[^3]:
 
@@ -245,17 +245,17 @@ We'll install [doom-modeline](https://github.com/seagle0128/doom-modeline):
   :init (doom-modeline-mode 1))
 ```
 
-For pretty icons, we need to install 
+For pretty icons, we need to install
 [nerd-icons](https://github.com/rainstormstudio/nerd-icons.el) as well:
 
 ```lisp
 (use-package nerd-icons)
 ```
 
-After restarting Emacs, run `M-x nerd-icons-install-fonts` (`Option-x` on 
+After restarting Emacs, run `M-x nerd-icons-install-fonts` (`Option-x` on
 macOS) to install the icon font.
 
-And we'll install [Nyan Mode](https://github.com/TeMPOraL/nyan-mode), a minor 
+And we'll install [Nyan Mode](https://github.com/TeMPOraL/nyan-mode), a minor
 mode which shows a Nyan Cat (which is 12 years old at the point of writing this)
 in your modeline to indicate position in the open buffer.
 
@@ -270,24 +270,28 @@ in your modeline to indicate position in the open buffer.
 This is what looks like:
 
 <picture>
-  <source srcset="/articles/emacs-from-scratch-part-one-foundations/final.avif" type="image/avif" />
-  <img src="/articles/emacs-from-scratch-part-one-foundations/final.avif" alt="Emacs with relative line numbers, a nice fond and color scheme." />
+  <source srcset="/blog/emacs-from-scratch-part-one-foundations/final.avif" type="image/avif" />
+  <img src="/blog/emacs-from-scratch-part-one-foundations/final.avif" alt="Emacs with relative line numbers, a nice fond and color scheme." />
 </picture>
 
-We have sane defaults, we can open a file with `:e`, navigate around and we 
+We have sane defaults, we can open a file with `:e`, navigate around and we
 have a nice color scheme[^4] and modeline.
-Here's the the final [`init.el`](/articles/emacs-from-scratch-part-one-foundations/init.el) 
-and [`early-init.el`](/articles/emacs-from-scratch-part-one-foundations/early-init.el)
+Here's the the final [`init.el`](/blog/emacs-from-scratch-part-one-foundations/init.el)
+and [`early-init.el`](/blog/emacs-from-scratch-part-one-foundations/early-init.el)
 
 In part 2, we'll add a project manager, our own keybindings, the best Git TUI,
 a handy shortcut to restart Emacs and a ton of small tweaks.
 
-Subscribe to the [RSS Feed](/articles/atom.xml) so you don't miss the following 
+Subscribe to the [RSS Feed](/blog/atom.xml) so you don't miss the following
 parts, and [let me know](mailto:hey@arne.me) if I missed anything foundational!
 
-[^1]: If you don't want to have to configure everything and just want an editor that,
-works, ~use VS Code~ check out [Doom Emacs](https://https://github.com/doomemacs/doomemacs).
-[^2]: `early-init.el` is loaded during startup, see [The Early Init File](https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html). 
-      Unless explicitly noted, configuration should go in `init.el`.
+[^1]:
+    If you don't want to have to configure everything and just want an editor that,
+    works, ~use VS Code~ check out [Doom Emacs](https://https://github.com/doomemacs/doomemacs).
+
+[^2]:
+    `early-init.el` is loaded during startup, see [The Early Init File](https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html).
+    Unless explicitly noted, configuration should go in `init.el`.
+
 [^3]: Derived from the [incredible original](https://challenger-deep-theme.github.io)
 [^4]: Yes, I know that's what they're called in Vim.

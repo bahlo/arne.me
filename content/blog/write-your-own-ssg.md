@@ -7,14 +7,14 @@ hackernews: "https://news.ycombinator.com/item?id=38126210"
 lobsters: "https://lobste.rs/s/5hf7qf/why_you_should_write_your_own_static_site"
 ---
 
-I've used [a](https://jekyllrb.com) [lot](https://gohugo.io) 
-[of](https://www.11ty.dev) [static](https://www.getzola.org) 
-[site](https://nextjs.org) [generators](https://astro.build) in the past, and 
+I've used [a](https://jekyllrb.com) [lot](https://gohugo.io)
+[of](https://www.11ty.dev) [static](https://www.getzola.org)
+[site](https://nextjs.org) [generators](https://astro.build) in the past, and
 they all have their own features and quirks, but most importantly, you have to
 architect your website to match what the framework expects.
 
 Since yesterday, this website has been powered by my own SSG[^1].
-It's not meant to be reusable, it's just normal code—parsing and generating 
+It's not meant to be reusable, it's just normal code—parsing and generating
 files for this specific website.
 
 And oh boy do I love it.
@@ -23,24 +23,24 @@ And oh boy do I love it.
 
 ## Why??
 
-When Vercel released [Next.js 14](https://nextjs.org/blog/next-14) recently, 
-some friends I've talked to were still on Next.js 12 and really felt the 
+When Vercel released [Next.js 14](https://nextjs.org/blog/next-14) recently,
+some friends I've talked to were still on Next.js 12 and really felt the
 pressure to upgrade to not fall behind even more.
-This made me think about the longevity and robustness of my website, and so I 
+This made me think about the longevity and robustness of my website, and so I
 decided I don't want to depend on other people's decisions and run after version
 upgrades I don't care about.
 
 And even if your content is Markdown and media, almost everything around it
 needs to be updated when switching frameworks—sometimes even when upgrading.
-When I used Astro before, I wanted to statically generate OG images and, after 
+When I used Astro before, I wanted to statically generate OG images and, after
 some research, managed to build it and even wrote
-[an article](/articles/static-og-images-in-astro) explaining how. 
+[an article](/blog/static-og-images-in-astro) explaining how.
 You lose all of this custom logic.
 
-Plus, you get to choose your own stack. 
+Plus, you get to choose your own stack.
 Want to write your content in AsciiDoc? No-one can stop you!
 
-I know what you're thinking, and you're right, it's _way_ more work than using 
+I know what you're thinking, and you're right, it's _way_ more work than using
 something that already exists.
 But it's also so much more fun.
 You can do anything with this, and you don't need to read documentation or try
@@ -48,11 +48,11 @@ to understand other people's architectural decisions—just start writing code!
 
 ## Okay, tell me how you did it
 
-After contemplating building something dynamic[^2] for search without 
-JavaScript, I decided to stay with a static site. 
+After contemplating building something dynamic[^2] for search without
+JavaScript, I decided to stay with a static site.
 It's faster, and you don't have to worry about security or stability.
-And of course, I chose the best programming language on the planet, Rust (my 
-beloved). 
+And of course, I chose the best programming language on the planet, Rust (my
+beloved).
 Wait, come back, this is not a Rust post!
 
 A static site generator mostly needs to do five things:
@@ -64,7 +64,7 @@ A static site generator mostly needs to do five things:
 1. Generate a sitemap
 
 And of these, you might not even need the last three.
-Surely, your favorite programming language has a Markdown parser and a 
+Surely, your favorite programming language has a Markdown parser and a
 templating engine.
 
 For Rust, I chose these crates[^3]:
@@ -76,8 +76,8 @@ For Rust, I chose these crates[^3]:
 - [quick-xml](https://crates.io/crates/quick-xml) for generating the sitemap
 
 Once I got the tools I needed, I just started writing software.
-I built something to parse my content, something to render all the different 
-templates I needed, something to generate the RSS, something to generate a 
+I built something to parse my content, something to render all the different
+templates I needed, something to generate the RSS, something to generate a
 sitemap and…that's it, really!
 
 And when it's time to add OG images to this website, I can choose the best
@@ -85,12 +85,12 @@ libraries and just build it.
 
 ## What now?
 
-I hope this article left you either validated that rolling your own is not worth 
-it, and you want to keep using a framework, or interested to see what's on the 
+I hope this article left you either validated that rolling your own is not worth
+it, and you want to keep using a framework, or interested to see what's on the
 other side.
 
-If you're in the latter camp, you can check out the 
-[source of this website](https://github.com/bahlo/arne.me) to get some 
+If you're in the latter camp, you can check out the
+[source of this website](https://github.com/bahlo/arne.me) to get some
 inspiration.
 But most importantly: Choose a tech stack that excites you and have fun!
 

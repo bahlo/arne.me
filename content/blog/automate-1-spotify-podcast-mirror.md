@@ -27,35 +27,35 @@ You also need a bit of knowledge in Apple Script, Bash scripting and JSON and be
 
 Audio Hijack is an application that can do complex audio pipelines, often used for recording podcasts or live streaming. We use this to capture the output of Spotify to a file. Audio Hijack has a concept of _sessions_, meaning various saved pipelines.
 
-To prepare things, start Audio Hijack and create a new session based on the `Application Audio` template. 
+To prepare things, start Audio Hijack and create a new session based on the `Application Audio` template.
 This post assumes you only have on session. If you have multiple, make sure it's at the first position. In the session, select Spotify as Application and change the Recorder to 128 kbps (or whatever you prefer). I recommend disabling the Output Device, but it's helpful if you want to debug something. After saving, it should look similar to this:
 
 <picture>
-  <source srcset="/articles/automate-1-spotify-podcast-mirror/audio_hijack_session.avif" type="image/avif" />
-  <img src="/articles/automate-1-spotify-podcast-mirror/audio_hijack_session.png" alt="An AudioHijack session with Spotify and a Recorder" />
+  <source srcset="/blog/automate-1-spotify-podcast-mirror/audio_hijack_session.avif" type="image/avif" />
+  <img src="/blog/automate-1-spotify-podcast-mirror/audio_hijack_session.png" alt="An AudioHijack session with Spotify and a Recorder" />
 </picture>
 
 ### Spotify Credentials
 
-We need various metadata about the latest show, like title, Spotify uri or duration. 
-To get those, we use the [Spotify Web API](https://developer.spotify.com/documentation/web-api/). You need to create a Spotify App by going to the [developer dashboard](https://developer.spotify.com/dashboard) and create a client id. 
+We need various metadata about the latest show, like title, Spotify uri or duration.
+To get those, we use the [Spotify Web API](https://developer.spotify.com/documentation/web-api/). You need to create a Spotify App by going to the [developer dashboard](https://developer.spotify.com/dashboard) and create a client id.
 Fill out the fields and you'll get a `Client ID` and a `Client Secret`.
 
 ### Spotify ID
 
-We also need the Spotify ID of the podcast you want to mirror. To get that, click the three dots on the podcast page in Spotify, select `Share` and `Copy Spotify URI`. 
+We also need the Spotify ID of the podcast you want to mirror. To get that, click the three dots on the podcast page in Spotify, select `Share` and `Copy Spotify URI`.
 The uri looks something like `spotify:show:abcdef`, where `abcdef` is your Spotify ID.
 
 ### Folder Setup
 
-Lastly, there needs to be a folder where the podcast lives. We use a tool in our last step to generate the RSS feed, so we can subscribe to the podcast from our favourite podcast app. Fot the tool to work, we need to have a `podcast.toml` similar to this [example](https://github.com/bahlo/toml-podcast/blob/dffe266169567348cb5049f0bdc8c09a56e10879/examples/podcast.toml), but without the `[[episodes]]` parts in our folder. 
+Lastly, there needs to be a folder where the podcast lives. We use a tool in our last step to generate the RSS feed, so we can subscribe to the podcast from our favourite podcast app. Fot the tool to work, we need to have a `podcast.toml` similar to this [example](https://github.com/bahlo/toml-podcast/blob/dffe266169567348cb5049f0bdc8c09a56e10879/examples/podcast.toml), but without the `[[episodes]]` parts in our folder.
 There also needs to be an empty subfolder called `dist/`.
 
 ## Let's do this
 
 ### 1. Create an Automator Project
 
-Open the Automator app and choose `New Document`. 
+Open the Automator app and choose `New Document`.
 Then click on `Application` to build a `.app` file you can launch later.
 
 ### 2. Get Latest Episode Metadata
@@ -100,7 +100,7 @@ if [ -f "$PODCAST_PATH/dist/episodes/$RELEASE_DATE.mp3" ]; then
 	exit 1
 fi
 
-# Get and echo metadata, each line will be a parameter to the next action 
+# Get and echo metadata, each line will be a parameter to the next action
 # in the Automator workflow.
 echo "$ITEM" | /usr/local/bin/jq -r .uri
 echo "$ITEM" | /usr/local/bin/jq -r .duration_ms
@@ -124,15 +124,15 @@ on run {input, parameters}
 	set title to item 3 of input
 	set description to item 4 of input
 	set release_date to item 5 of input
-	
+
 	-- Prepare Spotify
 	tell application "Spotify"
 		-- Start spotify
 		activate
-		
+
 		-- Start playing our episode
 		play track uri
-		
+
 		-- Make sure we start at 0s
 		-- If we are at 0s, this will skip to the previous track
 		delay 1
@@ -145,12 +145,12 @@ on run {input, parameters}
 			pause
 		end if
 	end tell
-	
+
 	-- Start recording
 	tell application "Audio Hijack"
 		-- Start Audio Hijack
 		activate
-		
+
 		tell application "System Events"
 			-- CMD + 1 to open Sessions
 			keystroke "1" using command down
@@ -162,12 +162,12 @@ on run {input, parameters}
 			keystroke "r" using command down
 		end tell
 	end tell
-	
+
 	-- Play track
 	tell application "Spotify"
 		-- Bring to foreground
 		activate
-		
+
 		-- Start playing our track again
 		play track uri
 
@@ -176,21 +176,21 @@ on run {input, parameters}
 
 		-- Press pause
 		pause
-		
+
 		-- Quit spotify
 		quit
 	end tell
-	
+
 	tell application "Audio Hijack"
 		-- Bring Audio Hijack to foreground
 		activate
-		
+
 		tell application "System Events"
 			-- Stop recording
 			delay 1
 			keystroke "r" using command down
 		end tell
-		
+
 		-- Quit Audio Hijack
 		quit
 	end tell
@@ -203,7 +203,7 @@ We use the publish date of the episode as filename, so we need to get this first
 
 ```applescript
 on run {input, parameters}
-	-- Return the fifth parameter of our Metadata variable, 
+	-- Return the fifth parameter of our Metadata variable,
 	-- which is the release date
 	return item 5 of input
 end run
@@ -237,7 +237,7 @@ Now that we have our recording, we have to generate the RSS feed with the metada
 
 Use _Get Value of Variable_ to get the `Metadata` variable again.
 
-To generate the `feed.xml`, we append the metadata of an episode to a simple TOML file. I wrote a small tool for this, which you can find here: [toml-podcast](https://web.archive.org/web/20200923091609/https://github.com/bahlo/toml-podcast). 
+To generate the `feed.xml`, we append the metadata of an episode to a simple TOML file. I wrote a small tool for this, which you can find here: [toml-podcast](https://web.archive.org/web/20200923091609/https://github.com/bahlo/toml-podcast).
 After generating the `feed.xml`, we use the [AWS CLI](https://aws.amazon.com/cli) deploy it and the newly recorded episode to an AWS S3 bucket.
 
 Add a _Run Shell Script_ action with the following contents:
@@ -252,7 +252,7 @@ URI="$2"
 DURATION_MS="$3"
 TITLE="$4"
 # For description, we have to escape double quotes ("), because the TOML strings
-# use double quotes as well. 
+# use double quotes as well.
 # If the TOML is invalid, toml-podcast will crash.
 DESCRIPTION=$(echo "$5" | sed "s/\"/\\\\\"/g")
 RELEASE_DATE="$6"
@@ -268,10 +268,10 @@ description="$DESCRIPTION"
 EOT
 
 # Build feed.xml using toml-pdocast
-cd $PODCAST_PATH 
-/Users/arnebahlo/Developer/go/bin/toml-podcast 
-# Your $GOBIN will look different, find out your path by typing `which toml-podcast` 
-# in your terminal 
+cd $PODCAST_PATH
+/Users/arnebahlo/Developer/go/bin/toml-podcast
+# Your $GOBIN will look different, find out your path by typing `which toml-podcast`
+# in your terminal
 
 # Set AWS credentials (replace with your real credentials)
 export AWS_ACCESS_KEY_ID="ABCDEF"

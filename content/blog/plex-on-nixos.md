@@ -341,7 +341,7 @@ timezone, installed packages like `htop` and enabling
 [Automatic Upgrades](https://nixos.org/manual/nixos/stable/index.html#sec-upgrading-automatic).
 
 In case that's useful for you, here is the
-[configuration.nix](/articles/plex-on-nixos/configuration.nix)
+[configuration.nix](/blog/plex-on-nixos/configuration.nix)
 from when I tested this blog post.
 
 If you discover an issue or have a question, please don't hesitate to

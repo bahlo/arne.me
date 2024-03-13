@@ -8,9 +8,9 @@ description: |
   custom keybindings, interact with Git and open a terminal inside Emacs.
 ---
 
-This is the second post in my Emacs From Scratch series. 
+This is the second post in my Emacs From Scratch series.
 
-In [Part 1](/articles/emacs-from-scratch-part-one-foundations), we've set up
+In [Part 1](/blog/emacs-from-scratch-part-one-foundations), we've set up
 the UI and evil mode.
 Today we'll set up a way to manage projects, quickly find files, set up custom keybindings, interact with Git and open a terminal inside Emacs.
 
@@ -33,7 +33,7 @@ Today we'll set up a way to manage projects, quickly find files, set up custom k
 Vim is usually terminal-first; you navigate to a directory and open Vim.
 Emacs is the other way around; you start Emacs, open a project and maybe a terminal buffer (see [Terminal](#terminal) further down).
 
-Let's set up [Projectile](https://github.com/bbatsov/projectile) to manage our 
+Let's set up [Projectile](https://github.com/bbatsov/projectile) to manage our
 projects and quickly find files.
 
 ```lisp
@@ -43,15 +43,15 @@ projects and quickly find files.
   (projectile-mode +1))
 ```
 
-You can now run `M-x` (a.k.a. `Opt-x` on macOS) and type 
-`projectile-add-known-project` to add a project as well as 
-`projectile-switch-project` to open a project. 
+You can now run `M-x` (a.k.a. `Opt-x` on macOS) and type
+`projectile-add-known-project` to add a project as well as
+`projectile-switch-project` to open a project.
 
 This is neither fast, nor discoverable. Let's set up some custom keybindings.
 
 ## Custom keybindings
 
-Before we define our own keybindings, we need to do something to improve 
+Before we define our own keybindings, we need to do something to improve
 discoverability. [which-key](https://github.com/justbur/emacs-which-key) will
 show available commands as you start a keybinding sequence:
 
@@ -65,7 +65,7 @@ show available commands as you start a keybinding sequence:
 ```
 
 We'll use [general.el](https://github.com/noctuid/general.el) because it makes
-it super easy to define keybindings and allows us to define them in a 
+it super easy to define keybindings and allows us to define them in a
 `use-package` function.
 
 We'll have `SPC` as our leader key, which allows us to press `SPC` and have all our custom keybindings show up.
@@ -90,7 +90,7 @@ We'll have `SPC` as our leader key, which allows us to press `SPC` and have all 
     ;; Buffer
     "b" '(:ignore t :which-key "buffer")
     ;; Don't show an error because SPC b ESC is undefined, just abort
-    "b <escape>" '(keyboard-escape-quit :which-key t) 
+    "b <escape>" '(keyboard-escape-quit :which-key t)
     "bd"  'kill-current-buffer
   )
 ```
@@ -122,18 +122,18 @@ definition and move it after the `use-package general` function:
 ```
 
 Now we can press `SPC` and get suggestions that we can navigate along.
-`SPC SPC` lets you open a file in the current project (or a project if none is open), 
+`SPC SPC` lets you open a file in the current project (or a project if none is open),
 `SPC b` opens buffer options, `SPC p` project options, etc.
 
 This is what it looks like:
 
 <picture>
-  <source srcset="/articles/emacs-from-scratch-part-two/which-key.avif" type="image/avif" />
-  <img src="/articles/emacs-from-scratch-part-two/which-key.avif" alt="And Emacs window with a drawer open showing different shortcuts, e.g. SPC → find file, r → +buffer et al" />
+  <source srcset="/blog/emacs-from-scratch-part-two/which-key.avif" type="image/avif" />
+  <img src="/blog/emacs-from-scratch-part-two/which-key.avif" alt="And Emacs window with a drawer open showing different shortcuts, e.g. SPC → find file, r → +buffer et al" />
 </picture>
 
 But when you try to find a file, or add a project, you'll notice that this is
-clunky as you need to type the exact path for it to work. 
+clunky as you need to type the exact path for it to work.
 Let's fix that.
 
 ## Fuzzy finding
@@ -270,5 +270,5 @@ Starting with this post, I'm using this very setup to edit this series.
 
 In part 3, we'll set up Tree-sitter and, if available, LSP for Rust, Go, TypeScript and Markdown.
 
-Subscribe to the [RSS Feed](/articles/atom.xml) so you don't miss the following 
+Subscribe to the [RSS Feed](/blog/atom.xml) so you don't miss the following
 parts, and [let me know](/contact) what you think!
