@@ -3,6 +3,7 @@ $text: 'text';
 $headings: 'headings';
 $muted: 'muted';
 $dark: 'dark';
+$text-decoration: 'text-decoration';
 
 $color-schemes: (
   light: (
@@ -11,6 +12,7 @@ $color-schemes: (
     headings: #111,
     muted: #666,
     dark: #eee,
+    text-decoration:  rgb(105, 140, 255),
   ),
   dark: (
     background: #010101,
@@ -18,6 +20,7 @@ $color-schemes: (
     headings: #eee,
     muted: #aaa,
     dark: #222,
+    text-decoration:  rgb(105, 140, 255),
   )
 );
 

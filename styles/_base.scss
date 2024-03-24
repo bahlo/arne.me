@@ -80,8 +80,10 @@ h3 {
 a {
   @include themed() {
     color: t($text);
+    text-decoration-color: t($text-decoration);
   }
   text-underline-offset: 2px;
+  text-decoration-thickness: 2px;
 }
 
 .back_link {
@@ -90,6 +92,7 @@ a {
   @include themed() {
     color: t($muted);
   }
+  text-decoration-color: inherit;
 }
 
 dl {
