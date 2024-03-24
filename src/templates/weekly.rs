@@ -122,8 +122,10 @@ pub fn render_content(weekly: &WeeklyIssue) -> Result<Markup> {
         @if let Some(quote_of_the_week) = &weekly.quote_of_the_week {
             h2 { "Quote of the Week" }
             blockquote {
-                (quote_of_the_week.text)
-                (PreEscaped("&mdash;&nbsp;"))
+                "“"
+                (quote_of_the_week.text.trim())
+                "” "
+                (PreEscaped("&mdash;"))
                 (quote_of_the_week.author)
             }
         }
