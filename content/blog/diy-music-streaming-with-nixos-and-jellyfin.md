@@ -77,9 +77,10 @@ environment.systemPackages = with pkgs; [
 
 ### Jellyfin
 
-I install Jellyfin itself, the official Jellyfin web client, and a modified
-version of FFmpeg for
-[hardware acceleration](https://jellyfin.org/docs/general/administration/hardware-acceleration/#supported-acceleration-methods).
+Jellyfin is an open-source media server, comparable to Plex.
+I installed Jellyfin itself (`jellyfin`), the official Jellyfin web client
+(`jellyfin-web`), and a modified version of FFmpeg for
+[hardware acceleration](https://jellyfin.org/docs/general/administration/hardware-acceleration/#supported-acceleration-methods) (`jellyfin-ffmpeg`).
 Let's enable Jellyfin:
 
 ```nix
