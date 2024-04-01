@@ -1,3 +1,3 @@
 [build]
-command = "rustup default stable && cargo run --no-default-features download-fonts && cargo run --no-default-features build"
+command = "rustup update && rustup default stable && cargo run --no-default-features download-fonts && cargo run --no-default-features build"
 publish = "dist/"
