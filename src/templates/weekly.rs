@@ -1,7 +1,5 @@
 use anyhow::{anyhow, Result};
-use chrono::Utc;
 use maud::{html, Markup, PreEscaped};
-use std::collections::HashMap;
 use url::Url;
 
 use crate::{
@@ -139,11 +137,11 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
         html! {
             article.weekly.h-entry {
                 header {
-                    h1.p-name { (weekly_issue.title) }
+                    h1.p-name.weekly__heading { (weekly_issue.title) }
                     a.u-url hidden href=(format!("/weekly/{}", weekly_issue.num)) {}
                     span.p-summary hidden { (format!("Arne's Weekly #{}", weekly_issue.num)) }
                     span.p-author hidden { "Arne Bahlo" }
-                    em.blogpost__byline {
+                    em.weekly__byline {
                         time.dt-published datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                     }
                 }
