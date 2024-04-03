@@ -59,7 +59,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 h1 { "Home Screens" }
                 @for home_screen in content.home_screens.iter() {
                     div {
-                        h3.inheritFontSize { a href=(format!("/home-screens/{}", home_screen.slug)) { (home_screen.title) } }
+                        h3.blogpost__heading { a href=(format!("/home-screens/{}", home_screen.slug)) { (home_screen.title) } }
                         em.blogpost__byline {
                             time datetime=(home_screen.published.format("%Y-%m-%d")) {(format_date(home_screen.published))}
                             (PreEscaped(" &middot; "))

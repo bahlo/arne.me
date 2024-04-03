@@ -1,6 +1,8 @@
 body {
-    max-width: 960px;
+  max-width: 960px;
+  font-family: sans-serif;
 }
+
 .skip-link {
   position: absolute;
   top: 0;
@@ -33,4 +35,10 @@ body {
 
 img {
   max-width: 100%;
+}
+
+.blogpost__heading,
+.weekly__heading,
+.book_review__heading {
+  margin-bottom: .25rem;
 }

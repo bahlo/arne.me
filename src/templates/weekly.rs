@@ -30,21 +30,6 @@ fn subscribe_form() -> Markup {
 }
 
 pub fn render_index(content: &Content) -> Result<Context> {
-    let mut weekly_by_year = content
-        .weekly
-        .iter()
-        .fold(HashMap::new(), |mut acc, weekly| {
-            acc.entry(weekly.published.format("%Y").to_string())
-                .or_insert_with(Vec::new)
-                .push(weekly);
-            acc
-        })
-        .into_iter()
-        .collect::<Vec<_>>();
-    weekly_by_year.sort_by(|a, b| b.0.cmp(&a.0));
-
-    let current_year = Utc::now().format("%Y").to_string();
-
     Ok(Context::new(
         Head {
             title: "Arne’s Weekly".to_string(),
@@ -63,19 +48,14 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 }
                 h2 { "Archive" }
                 .weekly__overview {
-                    @for (year, issues) in weekly_by_year {
-                        @if year != current_year {
-                            h3 { (year) }
+                    @for weekly_issue in &content.weekly {
+                        h3.weekly__heading {
+                            a href=(format!("/weekly/{}", weekly_issue.num)) {
+                                (weekly_issue.title)
+                            }
                         }
-                        @for weekly_issue in issues {
-                            h4.inheritFontSize {
-                                a href=(format!("/weekly/{}", weekly_issue.num)) {
-                                    (weekly_issue.title)
-                                }
-                            }
-                            span.blog__byline {
-                                time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
-                            }
+                        span.blog__byline {
+                            time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                         }
                     }
                 }

@@ -71,7 +71,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 h1 { "Book reviews" }
                 @for book_review in &content.book_reviews {
                     div {
-                        h2.inheritFontSize  {
+                        h3.book_review__heading  {
                                 a href=(format!("/book-reviews/{}", book_review.slug)) {
                                     (book_review.title) " by " (book_review.author)
                                 }

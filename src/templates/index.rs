@@ -36,7 +36,7 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
             section.index {
                 @for entry in entries {
                     div {
-                        h3 { a href=(entry.url()) { (entry.title()) } }
+                        h3.blogpost__heading { a href=(entry.url()) { (entry.title()) } }
                         span.blogpost__byline {
                             a.blogpost__collection_url href=(entry.collection_url())  { (entry.collection_url()) }
                             (PreEscaped(" &middot; "))

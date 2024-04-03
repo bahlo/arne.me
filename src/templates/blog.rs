@@ -69,7 +69,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 h1 { "Blog" }
                 @for blogpost in content.blog.iter().filter(|a| !a.hidden) {
                     div {
-                        h3.inheritFontSize { a href=(format!("/blog/{}", blogpost.slug)) { (blogpost.title) } }
+                        h3.blogpost__heading { a href=(format!("/blog/{}", blogpost.slug)) { (blogpost.title) } }
                         em.blogpost__byline {
                             time datetime=(blogpost.published.format("%Y-%m-%d")) {(format_date(blogpost.published))}
                             (PreEscaped(" &middot; "))
