@@ -1,149 +1,32 @@
-html {
-  font-size: 110%;
-}
-
 body {
-  font-family: "Rebond Grotesque", sans-serif;
-  font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
-  font-display: swap;
-  -webkit-font-smoothing: antialiased;
-
-  @include themed() {
-    background: t($background);
-    color: t($text);
-  }
-
-  padding: 8rem;
-  max-width: $max-width;
-
-  @media (max-width: $max-width) {
-    padding: 1rem;
-  }
-
-  @media (max-width: 640px) {
-    padding: 1rem .5rem;
-  }
+    max-width: 960px;
 }
-
-.hidden {
-  display: none;
-}
-
 .skip-link {
   position: absolute;
   top: 0;
   transform: translateY(-100%);
-}
 
-.skip-link:focus {
-  transform: translateY(0);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  @include themed () {
-    color: t($headings);
-  }
-
-  a {
-    text-decoration-thickness: 2px;
+  &:focus {
+    transform: translateY(0);
   }
 }
 
-h1 {
-  font-size: $typescale-xxxl;
-  line-height: 1.2;
-  margin-bottom: .5rem;
-}
-
-h2 {
-  font-size: $typescale-xl;
-}
-
-h3 {
-  font-size: $typescale-l;
-}
-
-@media (max-width: $max-width) {
-  h1 {
-    font-size: $typescale-xxl;
-  }
-
-  h2 {
-    font-size: $typescale-l;
-  }
-
-  h3 {
-    font-size: 1rem;
-  }
-}
-
-a {
-  @include themed() {
-    color: t($text);
-    text-decoration-color: t($text-decoration);
-  }
-  text-underline-offset: 2px;
-  text-decoration-thickness: 2px;
-}
-
-.back_link {
-  padding-bottom: 2rem;
-  display: inline-block;
-  @include themed() {
-    color: t($muted);
-  }
-  text-decoration-color: inherit;
-}
-
-dl {
-  dt {
-    font-weight: bold;
-    float: left;
-    margin-right: 4px;
-
-    &:after {
-      content: ':';
+.hero {
+  &__arne--alt-1 {
+    .mouth-1 {
+      visibility: hidden;
+    }
+    .mouth-2 {
+      visibility: visible;
     }
   }
-}
 
-.inheritFontSize {
-  font-size: inherit;
-}
-
-pre, code {
-  font-family: "Berkerly Mono", monospace;
-  font-display: swap;
-  -webkit-font-smoothing: antialiased;
-  font-size: .9rem; // match the body font size
-}
-
-blockquote {
-  padding: .5rem 1rem;
-  @include themed() {
-    border-left: 4px solid t($text);
-  }
-  font-style: italic;
-  font-size: $typescale-m;
-}
-
-.footnotes {
-  padding-top: 2rem;
-  @include themed() {
-    color: t($muted);
-  }
-}
-
-pre {
-  overflow-x: scroll;
-}
-
-small {
-  font-size: $typescale-s;
-}
-
-.muted {
-  @include themed() {
-    color: t($muted);
+  &__arne--alt-2 {
+    .eyes-1, .mouth-2 {
+        visibility: hidden !important;
+    }
+    .eyes-2, .tounge {
+        visibility: visible;
+    }
   }
 }
