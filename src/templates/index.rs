@@ -42,6 +42,10 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
                             (PreEscaped(" &middot; "))
                             (format_date(entry.published()))
                         }
+                        @if let Ok(excerpt_html) = entry.excerpt_html() {
+                            p { (PreEscaped(excerpt_html)) }
+                            a href=(entry.url()) { "Continue reading..." }
+                        }
                     }
                 }
 

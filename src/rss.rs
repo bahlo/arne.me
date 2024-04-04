@@ -56,7 +56,7 @@ pub fn render_weekly(content: &Content) -> Result<String> {
                     permalink: true,
                 })
                 .pub_date(weekly_issue.published.format(RFC_822_DATE).to_string())
-                .content(templates::weekly::render_content(weekly_issue)?.into_string())
+                .content(templates::weekly::render_content(weekly_issue, None)?.into_string())
                 .build())
         })
         .collect::<Result<Vec<Item>>>()?;

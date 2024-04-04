@@ -62,7 +62,16 @@ pub fn render_index(content: &Content) -> Result<Context> {
     ))
 }
 
-pub fn render_content(weekly: &WeeklyIssue) -> Result<Markup> {
+#[derive(Debug, Default)]
+pub struct RenderOptions {
+    pub skip_stories: bool,
+}
+
+pub fn render_content(
+    weekly: &WeeklyIssue,
+    opts: impl Into<Option<RenderOptions>>,
+) -> Result<Markup> {
+    let opts = opts.into().unwrap_or_default();
     Ok(html! {
         (PreEscaped(weekly.content_html.clone()))
         @if let Some(toot_of_the_week) = &weekly.toot_of_the_week {
@@ -107,18 +116,20 @@ pub fn render_content(weekly: &WeeklyIssue) -> Result<Markup> {
                 (quote_of_the_week.author)
             }
         }
-        @for category in weekly.categories.iter() {
-            h2 { (category.title) }
-            ul {
-                @for story in &category.stories {
-                    @let host = story.url.host_str().ok_or(anyhow!("Failed to get host for {} in weekly issue #{}", story.url, weekly.num))?;
+        @if !opts.skip_stories {
+            @for category in weekly.categories.iter() {
+                h2 { (category.title) }
+                ul {
+                    @for story in &category.stories {
+                        @let host = story.url.host_str().ok_or(anyhow!("Failed to get host for {} in weekly issue #{}", story.url, weekly.num))?;
 
-                    li {
-                        a href=(story.url) {
-                            (story.title)
+                        li {
+                            a href=(story.url) {
+                                (story.title)
+                            }
+                            span.weekly__url { (format!(" ({})", host.strip_prefix("www.").unwrap_or(host))) }
+                            p { (PreEscaped(story.description_html.clone())) }
                         }
-                        span.weekly__url { (format!(" ({})", host.strip_prefix("www.").unwrap_or(host))) }
-                        p { (PreEscaped(story.description_html.clone())) }
                     }
                 }
             }
@@ -146,7 +157,7 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
                     }
                 }
                 .e-content {
-                    (render_content(weekly_issue)?)
+                    (render_content(weekly_issue, None)?)
                 }
                 h2 { "Subscribe" }
                 p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans."}

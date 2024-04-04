@@ -4,6 +4,7 @@ use chrono::NaiveDate;
 use comrak::markdown_to_html_with_plugins;
 use crowbook_text_processing::clean;
 use gray_matter::{engine::YAML, Matter};
+use lazy_static::lazy_static;
 use regex::Regex;
 use serde::Deserialize;
 use std::{
@@ -17,6 +18,11 @@ use url::Url;
 
 pub fn smart_quotes(text: impl Into<String>) -> String {
     clean::quotes(text.into()).to_string()
+}
+
+lazy_static! {
+    static ref FOOTNOTE_REGEX: Regex =
+        Regex::new(r"\[\^(\d+)\]").expect("Failed to compile footnote regex");
 }
 
 #[derive(Debug, Default)]
@@ -62,6 +68,7 @@ pub struct HomeScreen {
     pub description: String,
     pub location: String,
     pub published: NaiveDate,
+    pub excerpt_html: Option<String>,
     pub content_html: String,
 }
 
@@ -196,6 +203,21 @@ impl<'a> StreamItem<'a> {
             StreamItem::BookReview(_) => "/book-reviews".to_string(),
             StreamItem::WeeklyIssue(_) => "/weekly".to_string(),
             StreamItem::HomeScreen(_) => "/home-screens".to_string(),
+        }
+    }
+
+    pub fn excerpt_html(&self) -> Result<String> {
+        match self {
+            StreamItem::Blog(blogpost) => blogpost
+                .excerpt_html
+                .clone()
+                .ok_or(anyhow!("No excerpt for blog post {}", blogpost.slug)),
+            StreamItem::BookReview(book_review) => Ok(book_review.excerpt_html.clone()),
+            StreamItem::WeeklyIssue(weekly_issue) => Ok(weekly_issue.content_html.clone()),
+            StreamItem::HomeScreen(home_screen) => Ok(home_screen
+                .excerpt_html
+                .clone()
+                .ok_or(anyhow!("No excerpt for home screen {}", home_screen.slug))?),
         }
     }
 }
@@ -337,8 +359,6 @@ impl Content {
         markdown_context: &MarkdownContext,
         mut dir: fs::ReadDir,
     ) -> Result<Vec<Blogpost>> {
-        let footnote_regex = Regex::new(r"\[\^(\d+)\]")?;
-
         let mut blog = Vec::new();
         while let Some(entry) = dir.next().transpose()? {
             if entry.file_type()?.is_dir() {
@@ -404,7 +424,7 @@ impl Content {
                     Ok(excerpt_html)
                 })
                 .transpose()?
-                .map(|excerpt_html| footnote_regex.replace_all(&excerpt_html, "").to_string());
+                .map(|excerpt_html| FOOTNOTE_REGEX.replace_all(&excerpt_html, "").to_string());
 
             let content_html = markdown_to_html_with_plugins(
                 &markdown.content,
@@ -482,6 +502,22 @@ impl Content {
                     entry.path()
                 ))?;
 
+            let excerpt_html: Option<String> = markdown
+                .content
+                .splitn(2, "<!-- more -->")
+                .collect::<Vec<_>>()
+                .first()
+                .map(|excerpt_markdown| -> Result<String> {
+                    let excerpt_html = markdown_to_html_with_plugins(
+                        &excerpt_markdown,
+                        &markdown_context.options,
+                        &markdown_context.plugins,
+                    );
+                    Ok(excerpt_html)
+                })
+                .transpose()?
+                .map(|excerpt_html| FOOTNOTE_REGEX.replace_all(&excerpt_html, "").to_string());
+
             let content_html = markdown_to_html_with_plugins(
                 &markdown.content,
                 &markdown_context.options,
@@ -494,6 +530,7 @@ impl Content {
                 description: smart_quotes(frontmatter.description),
                 location: smart_quotes(frontmatter.location),
                 published: frontmatter.published,
+                excerpt_html,
                 content_html,
             });
         }
