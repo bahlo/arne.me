@@ -1,7 +1,3 @@
-body {
-  max-width: 640px;
-}
-
 .skip-link {
   position: absolute;
   top: 0;
@@ -40,4 +36,34 @@ img {
 .weekly__heading,
 .book_review__heading {
   margin-bottom: .25rem;
+}
+
+.sitewrapper {
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.top-part {
+  display: flex;
+}
+
+main {
+  width: 768px;
+  padding-right: 2rem;
+}
+
+@media (max-width: 960px) {
+  .top-part {
+    flex-direction: column;
+  }
+
+  main {
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
 }

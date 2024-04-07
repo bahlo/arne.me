@@ -141,45 +141,52 @@ impl Layout {
                 body {
                     a.skip-link href="#main" { "Skip to content" }
                     .sitewrapper {
-                        @if options.is_index {
-                            .hero {
+                        .top-part {
+                            main #main {
+                                (context.content)
+                            }
+                            br; // Looks better in HTML-only
+                            aside {
                                 (PreEscaped(include_str!("../../static/arne.svg")))
                                 h1.hero__heading { (smart_quotes("Hej, I'm Arne—")) }
                                 p.hero__subheading {
                                     (smart_quotes("a developer, podcaster & dad based near Frankfurt, Germany."))
                                 }
-                            }
-                        } @else {
-                            a.back_link href="/" { "← Index" }
-                            @if let Some(path) = options.back_link {
-                                span.muted { (PreEscaped("&nbsp;&middot;&nbsp;")) }
-                                a.back_link href=(path) { (path) }
+
+                                nav {
+                                    ul {
+                                        li {
+                                            a href="/" { "Home" }
+                                        }
+                                        li {
+                                            a href="/weekly" { "Newsletter" }
+                                        }
+                                        li {
+                                            a href="/book-reviews" { "Library" }
+                                        }
+                                        li {
+                                            a href="/home-screens" { "Home Screens" }
+                                        }
+                                    }
+                                    ul {
+                                        li {
+                                            a href="/now" { "/now" }
+                                        }
+                                        li {
+                                            a href="/blogroll" { "Blogroll" }
+                                        }
+                                        li {
+                                            a href="/projects" { "Projects" }
+                                        }
+                                        li {
+                                            a href="/contact" { "Contact" }
+                                        }
+                                    }
+                                }
                             }
                         }
-                        main #main {
-                            (context.content)
-                        }
-                        br;
+                        br; // Looks better in HTML-only
                         footer.footer {
-                            nav.footer__pages {
-                                div {
-                                    a href="/now" { "Now" }
-                                    br;
-                                    a href="/blogroll" { "Blogroll" }
-                                    br;
-                                    a href="/projects" { "Projects" }
-                                    br;
-                                    a href="/contact" { "Contact" }
-                                }
-                                div {
-                                    a href="/colophon" { "Colophon" }
-                                    br;
-                                    a href="/accessibility" { "Accessibility" }
-                                    br;
-                                    a href="/imprint" { "Imprint" }
-                                }
-                                br; // Looks better with this in HTML only
-                            }
                             span.footer_copyright {
                                 (PreEscaped("&copy; 2013 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
                                 br;
@@ -193,6 +200,20 @@ impl Layout {
                                 a.no-underline href="https://firechicken.club/arne/next" { "→" }
                                 br;
                                 "Made with ♥ by a human."
+                            }
+
+                            br;
+                            ul {
+                                li {
+                                    a href="/colophon" { "Colophon" }
+                                }
+                                li {
+                                    a href="/accessibility" { "Accessibility" }
+                                }
+                                li {
+                                    a href="/imprint" { "Imprint" }
+                                }
+
                             }
                         }
                         .h-card hidden {

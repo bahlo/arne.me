@@ -3,7 +3,7 @@ use maud::{html, PreEscaped};
 use url::Url;
 
 use crate::{
-    content::Content,
+    content::{Blogpost, Content, StreamItem},
     templates::{
         format_date,
         layout::{self, Head, OgType},
@@ -18,11 +18,17 @@ pub enum Limit {
 }
 
 pub fn render(content: &Content, limit: Limit) -> Result<Context> {
-    let all_entries = content.stream();
-    let all_entries_len = all_entries.len();
+    // let all_entries = content.stream();
+    // let all_entries_len = all_entries.len();
+    // let entries = match limit {
+    //     Limit::All => all_entries,
+    //     Limit::Latest(n) => all_entries.iter().take(n).cloned().collect(),
+    // };
+
+    let all_entries_len = content.blog.len();
     let entries = match limit {
-        Limit::All => all_entries,
-        Limit::Latest(n) => all_entries.iter().take(n).cloned().collect(),
+        Limit::All => content.blog.clone(),
+        Limit::Latest(n) => content.blog.clone().into_iter().take(n).collect(),
     };
 
     Ok(Context::new_with_options(
@@ -36,15 +42,14 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
             section.index {
                 @for entry in entries {
                     div {
-                        h3.blogpost__heading { a href=(entry.url()) { (entry.title()) } }
+                        @let url = format!("/blog/{}", entry.slug);
+                        h3.blogpost__heading { a href=(url) { (entry.title) } }
                         span.blogpost__byline {
-                            a.blogpost__collection_url href=(entry.collection_url())  { (entry.collection_url()) }
-                            (PreEscaped(" &middot; "))
-                            (format_date(entry.published()))
+                            (format_date(entry.published))
                         }
-                        @if let Ok(excerpt_html) = entry.excerpt_html() {
+                        @if let Some(excerpt_html) = entry.excerpt_html {
                             p { (PreEscaped(excerpt_html)) }
-                            a href=(entry.url()) { "Continue reading..." }
+                            a href=(url) { "Continue reading..." }
                         }
                     }
                 }

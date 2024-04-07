@@ -45,7 +45,7 @@ pub struct Page {
     pub content_html: String,
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Clone)]
 pub struct Blogpost {
     pub slug: String,
     pub title: String,
