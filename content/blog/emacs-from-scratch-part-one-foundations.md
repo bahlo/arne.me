@@ -12,6 +12,8 @@ a useful Emacs setup from nothing[^1].
 In this part, we'll install Emacs, set up sane defaults, packaging and do some
 basic UI tweaks to build a solid foundation.
 
+<!-- more -->
+
 ## Table of Contents
 
 - [Install Emacs](#install-emacs)

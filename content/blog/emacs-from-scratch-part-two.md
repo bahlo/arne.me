@@ -14,6 +14,8 @@ In [Part 1](/blog/emacs-from-scratch-part-one-foundations), we've set up
 the UI and evil mode.
 Today we'll set up a way to manage projects, quickly find files, set up custom keybindings, interact with Git and open a terminal inside Emacs.
 
+<!-- more -->
+
 ## Table of Contents
 
 - [Project manager](#project-manager)
