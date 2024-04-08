@@ -1,3 +1,20 @@
+html {
+  font-size: 110%;
+}
+
+body {
+  // font-family: "Rebond Grotesque", sans-serif;
+  // font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
+  // font-display: swap;
+  // -webkit-font-smoothing: antialiased;
+  color: #444;
+  background: #fefefe;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #222;
+}
+
 .skip-link {
   position: absolute;
   top: 0;
@@ -53,6 +70,10 @@ main {
 }
 
 @media (max-width: 960px) {
+  body {
+    font-size: calc(1.125rem);
+  }
+
   .top-part {
     flex-direction: column;
   }

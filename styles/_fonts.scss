@@ -1,0 +1,46 @@
+@font-face {
+  font-family: "Rebond Grotesque";
+  font-weight: normal;
+  src: url("/fonts/rebond-grotesque/ESRebondGrotesque-Regular.woff2") format("woff2"),
+    url("/fonts/rebond-grotesque/ESRebondGrotesque-Regular.woff") format("woff"),
+    url("/fonts/rebond-groteque/ESRebondGrotesque-Regular.eot") format("eot");
+}
+
+@font-face {
+  font-family: "Rebond Grotesque";
+  font-weight: normal;
+  font-style: italic;
+  src: url("/fonts/rebond-grotesque/ESRebondGrotesque-Italic.woff2") format("woff2"),
+    url("/fonts/rebond-grotesque/ESRebondGrotesque-Italic.woff") format("woff"),
+    url("/fonts/rebond-groteque/ESRebondGrotesque-Italic.eot") format("eot");
+}
+
+@font-face {
+  font-family: "Rebond Grotesque";
+  font-weight: bold;
+  src: url("/fonts/rebond-grotesque/ESRebondGrotesque-Bold.woff2") format("woff2"),
+    url("/fonts/rebond-grotesque/ESRebondGrotesque-Bold.woff") format("woff"),
+    url("/fonts/rebond-groteque/ESRebondGrotesque-Bold.eot") format("eot");
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  font-weight: normal;
+  src: url("/fonts/berkeley-mono/BerkeleyMonoVariable-Regular.woff2"),
+    url("/fonts/berkeley-mono/BerkeleyMonoVariable-Regular.woff");
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  font-weight: normal;
+  font-syle: italic;
+  src: url("/fonts/berkeley-mono/BerkeleyMonoVariable-Italic.woff2"),
+    url("/fonts/berkeley-mono/BerkeleyMonoVariable-Italic.woff");
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  font-weight: bold;
+  src: url("/fonts/berkeley-mono/BerkeleyMonoVariable-Bold.woff2"),
+    url("/fonts/berkeley-mono/BerkeleyMonoVariable-Bold.woff");
+}

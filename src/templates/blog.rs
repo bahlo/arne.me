@@ -19,7 +19,7 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
             og_type: OgType::Website,
         },
         html! {
-            section.index {
+            section.blog {
                 @for post in blog_posts {
                     div {
                         @let url = format!("/blog/{}", post.slug);
