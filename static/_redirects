@@ -4,6 +4,8 @@
 /articles /
 /articles/* /blog/:splat
 /blog /
+/all / # Old pagination
+/blog/1 / # Redirect first page to /
 
 # Pages
 /work /projects

@@ -10,6 +10,55 @@ use crate::{
     },
 };
 
+pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Result<Context> {
+    Ok(Context::new_with_options(
+        Head {
+            title: "Arne Bahlo".to_string(),
+            description: "Arne Bahlo's personal website".to_string(),
+            url: Url::parse("https://arne.me")?,
+            og_type: OgType::Website,
+        },
+        html! {
+            section.index {
+                @for post in blog_posts {
+                    div {
+                        @let url = format!("/blog/{}", post.slug);
+                        h3.blogpost__heading { a href=(url) { (post.title) } }
+                        span.blogpost__byline {
+                            (format_date(post.published))
+                        }
+                        @if let Some(excerpt_html) = &post.excerpt_html {
+                            p { (PreEscaped(excerpt_html)) }
+                            a href=(url) { "Continue reading..." }
+                        }
+                    }
+                }
+
+                br.hidden;
+
+                nav.pagination role="navigation" aria-label="Pagination Navigation" {
+                    @for i in 1..=num_pages {
+                        @if i == page {
+                            span aria-current="true" { (i) }
+                        } @else if i == 1 {
+                            a href="/" aria-label=(format!("Go to page {}", i)) { (i) }
+                        } @else {
+                            a href=(format!("/blog/{}", i)) aria-label=(format!("Go to page {}", i)) { (i) }
+                        }
+                        @if i < num_pages {
+                            (PreEscaped(" &nbsp; "))
+                        }
+                    }
+                }
+            }
+        },
+        layout::Options {
+            is_index: true,
+            ..Default::default()
+        },
+    ))
+}
+
 pub fn render(blogpost: &Blogpost) -> Result<Context> {
     Ok(Context::new_with_options(
         Head {

@@ -106,27 +106,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     // Create layout
     let layout = Layout::new(css_hash, websocket_port);
 
-    // Generate index
-    fs::write(
-        "dist/index.html",
-        layout
-            .render(templates::index::render(
-                &content,
-                templates::index::Limit::Latest(8),
-            )?)
-            .into_string(),
-    )?;
-    fs::create_dir_all("dist/all")?;
-    fs::write(
-        "dist/all/index.html",
-        layout
-            .render(templates::index::render(
-                &content,
-                templates::index::Limit::All,
-            )?)
-            .into_string(),
-    )?;
-
     // Generate blog
     fs::create_dir_all("dist/blog")?;
     for blogpost in &content.blog {
@@ -138,6 +117,24 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
                 .render(templates::blog::render(blogpost)?)
                 .into_string(),
         )?;
+    }
+    // Generate pagination
+    let num_pages = content.blog.len() / 8 + 1;
+    for (i, blog_posts) in content.blog.chunks(8).enumerate() {
+        let page = i + 1;
+        fs::create_dir_all(format!("dist/blog/{}", page))?;
+        let path = format!("dist/blog/{}/index.html", page);
+        fs::write(
+            &path,
+            layout
+                .render(templates::blog::render_page(page, num_pages, blog_posts)?)
+                .into_string(),
+        )?;
+
+        // The first page should be the index
+        if i == 0 {
+            fs::rename("dist/blog/1/index.html", "dist/index.html")?;
+        }
     }
 
     // Generate weekly
