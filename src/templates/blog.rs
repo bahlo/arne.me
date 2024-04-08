@@ -23,7 +23,7 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
                 @for post in blog_posts {
                     div {
                         @let url = format!("/blog/{}", post.slug);
-                        h3.blogpost__heading { a href=(url) { (post.title) } }
+                        h1.blogpost__heading { a href=(url) { (post.title) } }
                         span.blogpost__byline {
                             (format_date(post.published))
                         }
