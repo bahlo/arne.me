@@ -3,7 +3,7 @@ use maud::{html, PreEscaped};
 use url::Url;
 
 use crate::{
-    content::{Blogpost, Content, StreamItem},
+    content::Content,
     templates::{
         format_date,
         layout::{self, Head, OgType},

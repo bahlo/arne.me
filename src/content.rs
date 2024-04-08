@@ -159,107 +159,6 @@ pub struct Project {
     pub content_html: String,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum StreamItem<'a> {
-    Blog(&'a Blogpost),
-    BookReview(&'a BookReview),
-    WeeklyIssue(&'a WeeklyIssue),
-    HomeScreen(&'a HomeScreen),
-}
-
-impl<'a> StreamItem<'a> {
-    pub fn url(&self) -> String {
-        match self {
-            StreamItem::Blog(blogpost) => format!("/blog/{}", blogpost.slug),
-            StreamItem::BookReview(book_review) => format!("/book-reviews/{}", book_review.slug),
-            StreamItem::WeeklyIssue(weekly_issue) => format!("/weekly/{}", weekly_issue.num),
-            StreamItem::HomeScreen(home_screen) => format!("/home-screens/{}", home_screen.slug),
-        }
-    }
-
-    pub fn title(&self) -> String {
-        match self {
-            StreamItem::Blog(blogpost) => blogpost.title.clone(),
-            StreamItem::BookReview(book_review) => {
-                format!("{} by {}", book_review.title, book_review.author)
-            }
-            StreamItem::WeeklyIssue(weekly_issue) => weekly_issue.title.clone(),
-            StreamItem::HomeScreen(home_screen) => home_screen.title.clone(),
-        }
-    }
-
-    pub fn published(&self) -> NaiveDate {
-        match self {
-            StreamItem::Blog(blogpost) => blogpost.published,
-            StreamItem::BookReview(book_review) => book_review.read,
-            StreamItem::WeeklyIssue(weekly_issue) => weekly_issue.published,
-            StreamItem::HomeScreen(home_screen) => home_screen.published,
-        }
-    }
-
-    pub fn collection_url(&self) -> String {
-        match self {
-            StreamItem::Blog(_) => "/blog".to_string(),
-            StreamItem::BookReview(_) => "/book-reviews".to_string(),
-            StreamItem::WeeklyIssue(_) => "/weekly".to_string(),
-            StreamItem::HomeScreen(_) => "/home-screens".to_string(),
-        }
-    }
-
-    pub fn excerpt_html(&self) -> Result<String> {
-        match self {
-            StreamItem::Blog(blogpost) => blogpost
-                .excerpt_html
-                .clone()
-                .ok_or(anyhow!("No excerpt for blog post {}", blogpost.slug)),
-            StreamItem::BookReview(book_review) => Ok(book_review.excerpt_html.clone()),
-            StreamItem::WeeklyIssue(weekly_issue) => Ok(weekly_issue.content_html.clone()),
-            StreamItem::HomeScreen(home_screen) => Ok(home_screen
-                .excerpt_html
-                .clone()
-                .ok_or(anyhow!("No excerpt for home screen {}", home_screen.slug))?),
-        }
-    }
-}
-
-impl<'a> PartialOrd for StreamItem<'a> {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.cmp(other))
-    }
-}
-
-impl<'a> Ord for StreamItem<'a> {
-    fn cmp(&self, other: &Self) -> Ordering {
-        match (self, other) {
-            (StreamItem::Blog(a), StreamItem::Blog(b)) => b.published.cmp(&a.published),
-            (StreamItem::Blog(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
-            (StreamItem::Blog(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.published),
-            (StreamItem::Blog(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.published),
-
-            (StreamItem::BookReview(a), StreamItem::BookReview(b)) => b.read.cmp(&a.read),
-            (StreamItem::BookReview(a), StreamItem::Blog(b)) => b.published.cmp(&a.read),
-            (StreamItem::BookReview(a), StreamItem::WeeklyIssue(b)) => b.published.cmp(&a.read),
-            (StreamItem::BookReview(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.read),
-
-            (StreamItem::WeeklyIssue(a), StreamItem::WeeklyIssue(b)) => {
-                b.published.cmp(&a.published)
-            }
-            (StreamItem::WeeklyIssue(a), StreamItem::Blog(b)) => b.published.cmp(&a.published),
-            (StreamItem::WeeklyIssue(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
-            (StreamItem::WeeklyIssue(a), StreamItem::HomeScreen(b)) => {
-                b.published.cmp(&a.published)
-            }
-
-            (StreamItem::HomeScreen(a), StreamItem::HomeScreen(b)) => b.published.cmp(&a.published),
-            (StreamItem::HomeScreen(a), StreamItem::Blog(b)) => b.published.cmp(&a.published),
-            (StreamItem::HomeScreen(a), StreamItem::BookReview(b)) => b.read.cmp(&a.published),
-            (StreamItem::HomeScreen(a), StreamItem::WeeklyIssue(b)) => {
-                b.published.cmp(&a.published)
-            }
-        }
-    }
-}
-
 struct MarkdownContext<'a> {
     plugins: comrak::Plugins<'a>,
     options: comrak::Options,
@@ -833,26 +732,6 @@ impl Content {
         });
 
         Ok(projects)
-    }
-
-    pub fn stream(&self) -> Vec<StreamItem> {
-        let blogposts = self
-            .blog
-            .iter()
-            .filter(move |blogpost| !blogpost.hidden)
-            .map(StreamItem::Blog);
-        let book_reviews = self.book_reviews.iter().map(StreamItem::BookReview);
-        let weekly = self.weekly.iter().map(StreamItem::WeeklyIssue);
-        let home_screens = self.home_screens.iter().map(StreamItem::HomeScreen);
-
-        let mut stream: Vec<StreamItem> = blogposts
-            .chain(book_reviews)
-            .chain(weekly)
-            .chain(home_screens)
-            .collect();
-        stream.sort();
-
-        stream
     }
 }
 
