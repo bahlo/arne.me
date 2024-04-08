@@ -37,6 +37,7 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
                 br.hidden;
 
                 nav.pagination role="navigation" aria-label="Pagination Navigation" {
+                    "Page: "
                     @for i in 1..=num_pages {
                         @if i == page {
                             span aria-current="true" { (i) }
@@ -46,7 +47,7 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
                             a href=(format!("/page/{}", i)) aria-label=(format!("Go to page {}", i)) { (i) }
                         }
                         @if i < num_pages {
-                            (PreEscaped(" &nbsp; "))
+                            " "
                         }
                     }
                 }
