@@ -18,15 +18,7 @@ pub enum Limit {
 }
 
 pub fn render(content: &Content, limit: Limit) -> Result<Context> {
-    // let all_entries = content.stream();
-    // let all_entries_len = all_entries.len();
-    // let entries = match limit {
-    //     Limit::All => all_entries,
-    //     Limit::Latest(n) => all_entries.iter().take(n).cloned().collect(),
-    // };
-
-    let all_entries_len = content.blog.len();
-    let entries = match limit {
+    let blog_posts = match limit {
         Limit::All => content.blog.clone(),
         Limit::Latest(n) => content.blog.clone().into_iter().take(n).collect(),
     };
@@ -40,14 +32,14 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
         },
         html! {
             section.index {
-                @for entry in entries {
+                @for post in blog_posts {
                     div {
-                        @let url = format!("/blog/{}", entry.slug);
-                        h3.blogpost__heading { a href=(url) { (entry.title) } }
+                        @let url = format!("/blog/{}", post.slug);
+                        h3.blogpost__heading { a href=(url) { (post.title) } }
                         span.blogpost__byline {
-                            (format_date(entry.published))
+                            (format_date(post.published))
                         }
-                        @if let Some(excerpt_html) = entry.excerpt_html {
+                        @if let Some(excerpt_html) = post.excerpt_html {
                             p { (PreEscaped(excerpt_html)) }
                             a href=(url) { "Continue reading..." }
                         }
@@ -56,7 +48,7 @@ pub fn render(content: &Content, limit: Limit) -> Result<Context> {
 
                 br.hidden;
                 @if let Limit::Latest(limit) = limit {
-                    a.index__more href="/all" { (format!("Show {} more ↓", all_entries_len - limit)) }
+                    a.index__more href="/all" { (format!("Show {} more ↓", content.blog.len() - limit)) }
                 } @else {
                     a.index__more href="/" { "Show less ↑" }
                 }
