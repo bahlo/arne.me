@@ -129,12 +129,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
 
     // Generate blog
     fs::create_dir_all("dist/blog")?;
-    fs::write(
-        "dist/blog/index.html",
-        layout
-            .render(templates::blog::render_index(&content)?)
-            .into_string(),
-    )?;
     for blogpost in &content.blog {
         fs::create_dir_all(format!("dist/blog/{}", blogpost.slug))?;
         let path = format!("dist/blog/{}/index.html", blogpost.slug);

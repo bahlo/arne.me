@@ -1,8 +1,9 @@
 # Articles
 /writing /articles
 /writing/* /articles/:splat
-/articles /blog
+/articles /
 /articles/* /blog/:splat
+/blog /
 
 # Pages
 /work /projects

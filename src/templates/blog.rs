@@ -3,7 +3,7 @@ use maud::{html, PreEscaped};
 use url::Url;
 
 use crate::{
-    content::{Blogpost, Content},
+    content::Blogpost,
     templates::{
         format_date,
         layout::{self, Context, Head, OgType},
@@ -52,32 +52,6 @@ pub fn render(blogpost: &Blogpost) -> Result<Context> {
         layout::Options {
             back_link: Some("/blog".to_string()),
             ..Default::default()
-        },
-    ))
-}
-
-pub fn render_index(content: &Content) -> Result<Context> {
-    Ok(Context::new(
-        Head {
-            title: "Blog".to_string(),
-            description: "Arne's Blog.".to_string(),
-            url: Url::parse("https://arne.me/blog")?,
-            og_type: OgType::Website,
-        },
-        html! {
-            section.page {
-                h1 { "Blog" }
-                @for blogpost in content.blog.iter().filter(|a| !a.hidden) {
-                    div {
-                        h3.blogpost__heading { a href=(format!("/blog/{}", blogpost.slug)) { (blogpost.title) } }
-                        em.blogpost__byline {
-                            time datetime=(blogpost.published.format("%Y-%m-%d")) {(format_date(blogpost.published))}
-                            (PreEscaped(" &middot; "))
-                            (blogpost.location)
-                        }
-                    }
-                }
-            }
         },
     ))
 }
