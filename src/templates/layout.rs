@@ -145,7 +145,7 @@ impl Layout {
                             main #main {
                                 (context.content)
                             }
-                            br; // Looks better in HTML-only
+                            br.hidden; // Looks better in HTML-only
                             aside {
                                 (PreEscaped(include_str!("../../static/arne.svg")))
                                 h1.hero__heading { (smart_quotes("Hej, I'm Arne—")) }
@@ -185,7 +185,7 @@ impl Layout {
                                 }
                             }
                         }
-                        br; // Looks better in HTML-only
+                        br.hidden; // Looks better in HTML-only
                         footer.footer {
                             span.footer_copyright {
                                 (PreEscaped("&copy; 2013 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"

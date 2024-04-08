@@ -62,11 +62,13 @@ img {
 
 .top-part {
   display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 main {
-  width: 768px;
-  padding-right: 2rem;
+  width: 500px;
+  flex-grow: 1;
 }
 
 @media (max-width: 960px) {
@@ -76,11 +78,14 @@ main {
 
   main {
     width: 100%;
-    padding-right: 0;
   }
 }
 
 footer {
   display: flex;
   justify-content: space-between;
+}
+
+.hidden {
+  display: none;
 }
