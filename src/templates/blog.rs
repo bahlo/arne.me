@@ -43,7 +43,7 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
                         } @else if i == 1 {
                             a href="/" aria-label=(format!("Go to page {}", i)) { (i) }
                         } @else {
-                            a href=(format!("/blog/{}", i)) aria-label=(format!("Go to page {}", i)) { (i) }
+                            a href=(format!("/page/{}", i)) aria-label=(format!("Go to page {}", i)) { (i) }
                         }
                         @if i < num_pages {
                             (PreEscaped(" &nbsp; "))

@@ -122,8 +122,8 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     let num_pages = content.blog.len() / 8 + 1;
     for (i, blog_posts) in content.blog.chunks(8).enumerate() {
         let page = i + 1;
-        fs::create_dir_all(format!("dist/blog/{}", page))?;
-        let path = format!("dist/blog/{}/index.html", page);
+        fs::create_dir_all(format!("dist/page/{}", page))?;
+        let path = format!("dist/page/{}/index.html", page);
         fs::write(
             &path,
             layout
@@ -133,7 +133,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
 
         // The first page should be the index
         if i == 0 {
-            fs::rename("dist/blog/1/index.html", "dist/index.html")?;
+            fs::rename("dist/page/1/index.html", "dist/index.html")?;
         }
     }
 
