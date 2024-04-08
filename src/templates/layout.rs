@@ -153,7 +153,7 @@ impl Layout {
                                     (smart_quotes("a developer, podcaster & dad based near Frankfurt, Germany."))
                                 }
 
-                                nav {
+                                nav.main-navigation {
                                     ul {
                                         li {
                                             a href="/" { "Home" }
