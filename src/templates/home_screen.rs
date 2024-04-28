@@ -28,7 +28,7 @@ pub fn render(home_screen: &HomeScreen) -> Result<Context> {
                     a.u-url hidden href=(format!("/home-screens/{}", home_screen.slug)) {}
                     span.p-summary hidden { (home_screen.description) }
                     span.p-author hidden { "Arne Bahlo" }
-                    i.blogpost__byline {
+                    i.byline {
                         time.dt-published datetime=(home_screen.published.format("%Y-%m-%d")) { (format_date(home_screen.published)) }
                         (PreEscaped(" &middot; "))
                         span.p-location { (home_screen.location) }
@@ -60,7 +60,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 @for home_screen in content.home_screens.iter() {
                     div {
                         h3.blogpost__heading { a href=(format!("/home-screens/{}", home_screen.slug)) { (home_screen.title) } }
-                        i.blogpost__byline {
+                        i.byline {
                             time datetime=(home_screen.published.format("%Y-%m-%d")) {(format_date(home_screen.published))}
                             (PreEscaped(" &middot; "))
                             (home_screen.location)

@@ -3,16 +3,54 @@ html {
 }
 
 body {
-  // font-family: "Rebond Grotesque", sans-serif;
-  // font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
-  // font-display: swap;
-  // -webkit-font-smoothing: antialiased;
-  color: #444;
-  background: #fefefe;
+  font-family: "Rebond Grotesque", sans-serif;
+  font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
+  font-display: swap;
+  -webkit-font-smoothing: antialiased;
+  color: #333;
+  padding: 1rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: #222;
+}
+
+h1 {
+  font-size: $font-size-h1;
+}
+
+h2 {
+  font-size: $font-size-h2;
+}
+
+h3 {
+  font-size: $font-size-h3;
+}
+
+a {
+  color: $color-primary;
+  text-underline-offset: .1em;
+  text-decoration-color: $color-secondary;
+}
+
+blockquote {
+  border-left: 4px solid $color-primary;
+  padding: .25rem 0 .25rem 1rem;
+}
+
+dl {
+  dt {
+    float: left;
+    margin-right: 4px;
+
+    &::after {
+      content: ":";
+    }
+  }
+}
+
+section, article, .e-content {
+  @include stack;
 }
 
 .skip-link {
@@ -81,11 +119,17 @@ main {
   }
 }
 
-footer {
+.footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-size: $font-size-small;
 }
 
 .hidden {
   display: none;
+}
+
+.byline {
+  font-size: $font-size-small;
 }

@@ -21,10 +21,10 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
         html! {
             section.blog {
                 @for post in blog_posts {
-                    div {
+                    article {
                         @let url = format!("/blog/{}", post.slug);
                         h1.blogpost__heading { a href=(url) { (post.title) } }
-                        i.blogpost__byline {
+                        i.byline {
                             (format_date(post.published))
                         }
                         @if let Some(excerpt_html) = &post.excerpt_html {
@@ -75,7 +75,7 @@ pub fn render(blogpost: &Blogpost) -> Result<Context> {
                     a.u-url hidden href=(format!("/blog/{}", blogpost.slug)) {}
                     span.p-summary hidden { (blogpost.description) }
                     span.p-author hidden { "Arne Bahlo" }
-                    i.blogpost__byline {
+                    i.byline {
                         time.dt-published datetime=(blogpost.published.format("%Y-%m-%d")) { (format_date(blogpost.published)) }
                         (PreEscaped(" &middot; "))
                         span.p-location { (blogpost.location) }

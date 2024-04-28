@@ -203,17 +203,12 @@ impl Layout {
                             }
 
                             br;
-                            ul {
-                                li {
-                                    a href="/colophon" { "Colophon" }
-                                }
-                                li {
-                                    a href="/accessibility" { "Accessibility" }
-                                }
-                                li {
-                                    a href="/imprint" { "Imprint" }
-                                }
-
+                            .footer__links {
+                                a href="/colophon" { "Colophon" }
+                                (PreEscaped(" / "))
+                                a href="/accessibility" { "Accessibility" }
+                                (PreEscaped(" / "))
+                                a href="/imprint" { "Imprint" }
                             }
                         }
                         .h-card hidden {

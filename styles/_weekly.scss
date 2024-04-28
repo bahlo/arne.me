@@ -1,0 +1,29 @@
+.weekly {
+  &__header {
+    @include stack(.5rem);
+  }
+
+  &__overview {
+    @include stack(.5rem);
+  }
+
+  &__issue {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+
+    h3 {
+      margin-bottom: 0;
+    }
+
+    .divider {
+      border-bottom: 1px dashed #444;
+      flex-grow: 1;
+      height: 1em;
+    }
+
+    .byline {
+      white-space: nowrap;
+    }
+  }
+}

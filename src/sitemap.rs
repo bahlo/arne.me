@@ -195,7 +195,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_sitemap() {
+    fn test_sitemap() -> Result<()> {
         let content = Content {
             blog: vec![Blogpost {
                 slug: "test".to_string(),
@@ -217,6 +217,7 @@ mod tests {
             home_screens: vec![],
             projects: vec![],
         };
-        assert_eq!("<xml version=\"1.0\" encoding=\"UTF-8\"/><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>https://arne.me/</loc></url></urlset>", render(&content));
+        assert_eq!("<xml version=\"1.0\" encoding=\"UTF-8\"/><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>https://arne.me/</loc></url></urlset>", render(&content)?);
+        Ok(())
     }
 }

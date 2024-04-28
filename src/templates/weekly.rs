@@ -47,13 +47,16 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 h2 { "Archive" }
                 .weekly__overview {
                     @for weekly_issue in &content.weekly {
-                        h3.weekly__heading {
-                            a href=(format!("/weekly/{}", weekly_issue.num)) {
-                                (weekly_issue.title)
+                        .weekly__issue {
+                            h3 {
+                                a href=(format!("/weekly/{}", weekly_issue.num)) {
+                                    (weekly_issue.title)
+                                }
                             }
-                        }
-                        span.blog__byline {
-                            time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
+                            .divider {};
+                            i.byline {
+                                time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
+                            }
                         }
                     }
                 }
@@ -152,7 +155,7 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
                     a.u-url hidden href=(format!("/weekly/{}", weekly_issue.num)) {}
                     span.p-summary hidden { (format!("Arne's Weekly #{}", weekly_issue.num)) }
                     span.p-author hidden { "Arne Bahlo" }
-                    em.weekly__byline {
+                    i.byline {
                         time.dt-published datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
                     }
                 }

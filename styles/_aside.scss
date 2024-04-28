@@ -1,4 +1,5 @@
 aside {
+  @include stack(.5rem);
   width: 256px;
   
   nav ul {
