@@ -1,5 +1,5 @@
 ---
-title: "Thoughts on Zig (After Three Nights)"
+title: "Thoughts on Zig"
 published: "2024-05-01"
 location: "Frankfurt, Germany"
 description: "I've started writing Zig. These are my thoughts."
