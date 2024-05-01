@@ -98,7 +98,7 @@ specific function[^3].
 
 Initially I found this irritating—why not introduce a string type that is
 `[]const u8` under the hood and overload the `==` operator?
-I think it would increase developer experience, but does it fit into Zig?
+I think it would improve developer experience, but does it fit into Zig?
 
 ## No magic
 
