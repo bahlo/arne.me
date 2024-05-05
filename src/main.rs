@@ -1,4 +1,5 @@
 use anyhow::{anyhow, bail, Result};
+use chrono::Utc;
 use clap::Parser;
 use lazy_static::lazy_static;
 use std::{
@@ -43,6 +44,12 @@ struct Cli {
 }
 
 #[derive(Debug, Parser)]
+enum NewCommand {
+    #[clap(name = "weekly")]
+    Weekly,
+}
+
+#[derive(Debug, Parser)]
 enum Commands {
     #[clap(name = "build")]
     Build {
@@ -66,6 +73,9 @@ enum Commands {
         #[clap(long, short, default_value = "false")]
         dry_run: bool,
     },
+    #[command(subcommand)]
+    #[clap(name = "new")]
+    New(NewCommand),
 }
 
 fn main() -> Result<()> {
@@ -79,6 +89,9 @@ fn main() -> Result<()> {
         Commands::DownloadFonts => download_fonts(),
         #[cfg(feature = "send-webmentions")]
         Commands::SendWebmentions { path, dry_run } => send_webmentions(path, dry_run),
+        Commands::New(new) => match new {
+            NewCommand::Weekly => new_weekly(),
+        },
     }
 }
 
@@ -369,5 +382,41 @@ fn download_fonts() -> Result<()> {
     }
 
     temp_dir.close()?;
+    Ok(())
+}
+
+pub fn new_weekly() -> Result<()> {
+    let content = Content::parse(fs::read_dir("content")?)?;
+    let num = content
+        .weekly
+        .first()
+        .map(|issue| issue.num)
+        .ok_or(anyhow!("No weekly issues found"))?
+        + 1;
+
+    let path = Path::new("content")
+        .join("weekly")
+        .join(format!("{}.md", num));
+    if path.exists() {
+        bail!("Weekly issue already exists at: {:?}", path);
+    }
+
+    let date = Utc::now().format("%Y-%m-%d").to_string();
+    let content = format!(
+        r#"---
+title: "{num} /"
+date: "{date}"
+# tootOfTheWeek:
+#   text:
+#   url:
+#   author:
+categories:
+  - title: "Cutting Room Floor"
+    stories: []
+---
+    "#
+    );
+
+    fs::write(path, content)?;
     Ok(())
 }
