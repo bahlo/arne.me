@@ -1,0 +1,21 @@
+pre[class*="language-"] {
+  .keyword, .modifier {
+    color: rgb(231, 100, 0);
+  }
+
+  .variable {
+    color: #4040ff;
+  }
+
+  .type, .entity {
+    color: rgb(168, 0, 168);
+  }
+
+  .string {
+    color: rgb(43, 164, 43);
+  }
+
+  .comment {
+    color: rgb(83, 83, 83);
+  }
+}

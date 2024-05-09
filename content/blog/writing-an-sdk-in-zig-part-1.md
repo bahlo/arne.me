@@ -11,7 +11,7 @@ here: [Thoughts on Zig](/blog/thoughts-on-zig).
 
 Writing a small application is a lot easier than writing a library, especially
 if you're hacking it together like I was.
-So let's do something harder.
+Let's do something harder.
 
 And because I work at [Axiom](https://axiom.co), we're going to write an SDK for
 the [public API](https://axiom.co/docs/restapi/endpoints).
@@ -90,12 +90,12 @@ Go), not only in the same file (like Rust), but _next to the code it's testing_.
 
 ## Add getDatasets
 
+Our first method will be `getDatasets`, which returns a list of Axiom datasets
+([see the api documentation](https://axiom.co/docs/restapi/endpoints/getDatasets)).
+
 ### Create a model
 
-Our first method will be `getDatasets`, which returns a list of Axiom datasets
-([see api documentation](https://axiom.co/docs/restapi/endpoints/getDatasets)).
-
-For that, we need a model:
+First we need a model:
 
 ```zig
 pub const Dataset = struct {
@@ -190,7 +190,7 @@ memory relied on the allocated `[]const u8` for string values.
 This means as soon as I deallocated the body, all string values in the returned
 JSON were invalid (use-after-free). Yikes.
 
-So let's call `json.parseFromSlice` with our body:
+Next, we call `json.parseFromSlice` with our body:
 
 ```zig
 const parsed_datasets = try json.parseFromSlice([]Dataset, self.allocator, body[0..content_length], .{});
@@ -212,7 +212,7 @@ and ensure `_traces` is the first one returned.
 Once I set up CI, I'll create an Axiom org just for testing so we can be sure
 which datasets are returned.
 
-```
+```zig
 test "getDatasets" {
     const allocator = std.testing.allocator;
 
@@ -230,7 +230,11 @@ test "getDatasets" {
 }
 ```
 
+If you want to see everything together, check it out on [GitHub](https://github.com/bahlo/axiom-zig/blob/8195a18dde78c4a4c6c8b1024b035dce9fd69744/src/root.zig).
+
 ## Next steps
 
 In the next part I'll add `createDataset`, `updateDataset` and `deleteDataset`,
 initial error handling and show how you can import the library in a Zig project.
+
+Any thoughts? [Let me know!](mailto:hey@arne.me)
