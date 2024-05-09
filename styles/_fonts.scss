@@ -24,23 +24,7 @@
 }
 
 @font-face {
-  font-family: "Berkeley Mono";
+  font-family: "PragmataPro Mono";
   font-weight: normal;
-  src: url("/fonts/berkeley-mono/BerkeleyMonoVariable-Regular.woff2"),
-    url("/fonts/berkeley-mono/BerkeleyMonoVariable-Regular.woff");
-}
-
-@font-face {
-  font-family: "Berkeley Mono";
-  font-weight: normal;
-  font-syle: italic;
-  src: url("/fonts/berkeley-mono/BerkeleyMonoVariable-Italic.woff2"),
-    url("/fonts/berkeley-mono/BerkeleyMonoVariable-Italic.woff");
-}
-
-@font-face {
-  font-family: "Berkeley Mono";
-  font-weight: bold;
-  src: url("/fonts/berkeley-mono/BerkeleyMonoVariable-Bold.woff2"),
-    url("/fonts/berkeley-mono/BerkeleyMonoVariable-Bold.woff");
+  src: url("/fonts/pragmatapro/PragmataPro_Mono_R_liga_0829.woff2") format("woff2");
 }

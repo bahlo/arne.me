@@ -147,3 +147,9 @@ main {
 pre {
   overflow-x: scroll;
 }
+
+pre, code {
+  font-family: 'PragmataPro Mono', monospace;
+  font-size: .9em; // make the cap-height match
+  font-feature-settings: normal;
+}
