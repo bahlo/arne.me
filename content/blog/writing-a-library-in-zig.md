@@ -1,8 +1,8 @@
 ---
-title: "Writing a Library in Zig"
-description: "Part 1 of writing an SDK for Axiom usnig the Zig programming language."
+title: "Writing an SDK in Zig, Part 1"
+description: "Part 1 of writing an SDK for Axiom using the Zig programming language."
 location: "Kiel, Germany"
-published: "2024-05-03"
+published: "2024-05-09"
 ---
 
 The first project I used Zig for was a rewrite of a custom static site generator
@@ -15,12 +15,18 @@ So let's do something harder.
 
 And because I work at [Axiom](https://axiom.co), we're going to write an SDK for
 the [public API](https://axiom.co/docs/restapi/endpoints).
+In this first part I'll set up the library and add a simpel `getDatasets` fn
+to fetch all datasets the token has access to.
 
 <!-- more -->
 
-We're using Zig 0.12, if you use something else it might not work.
+<em class="note">
 
-## Bootstrapping
+We're using Zig 0.12. It might not work with a different version.
+
+</em>
+
+## Bootstrap the SDK
 
 First, we create a directory called `axiom-zig` and run `zig init`:
 
@@ -39,7 +45,9 @@ We also want to create a `.gitignore` to ignore the following folders:
 /zig-out
 ```
 
-Perfect. Next step: Create a client struct in `root.zig`:
+Perfect. Next step: Create a client struct in `root.zig`.
+We'll need an Axiom API token to authenticate requests, a `std.http.Client` to
+make requests and an `std.mem.Allocator` to allocate and free resources:
 
 ```zig
 const std = @import("std");
@@ -51,36 +59,43 @@ const json = std.json;
 
 /// SDK provides methods to interact with the Axiom API.
 pub const SDK = struct {
+    allocator: Allocator,
     api_token: []const u8,
     http_client: http.Client,
 
     /// Create a new SDK.
-    fn init(allocator: Allocator, api_token: []const u8) SDK {
-        return SDK{ .api_token = api_token, .http_client = http.Client{ .allocator = allocator } };
+    fn new(allocator: Allocator, api_token: []const u8) SDK {
+        return SDK{ .allocator = allocator, .api_token = api_token, .http_client = http.Client{ .allocator = allocator } };
     }
 
     /// Deinitialize the SDK.
     fn deinit(self: *SDK) void {
         self.http_client.deinit();
     }
-};
+}
 
-test "Create SDK" {
+test "SDK.init/deinit" {
     var sdk = SDK.new(std.testing.allocator, "token");
     defer sdk.deinit();
     try std.testing.expectEqual(sdk.api_token, "token");
 }
 ```
 
-The struct takes an allocator and an API token and stores both for future use.
+Initially I had `deinit(self: SDK)` (without the pointer). Zig didn't like this
+at all and led me down a rabbit hole of storing the `http.Client` as a pointer
+too—once I found my way out and remembered I need a pointer everything worked.
 
-## Prepare our first method
+I like that Zig encourages writing tests not only next to the source code (like
+Go), not only in the same file (like Rust), but _next to the code it's testing_.
 
-Let's start with something simple: Getting the
-[list of datasets](https://axiom.co/docs/restapi/endpoints/getDatasets).
+## Add getDatasets
 
-We need a model. Don't worry about `created` being a datetime, we'll deal with
-that later.
+### Create a model
+
+Our first method will be `getDatasets`, which returns a list of Axiom datasets
+([see api documentation](https://axiom.co/docs/restapi/endpoints/getDatasets)).
+
+For that, we need a model:
 
 ```zig
 pub const Dataset = struct {
@@ -92,71 +107,130 @@ pub const Dataset = struct {
 };
 ```
 
-We also define the API URL at the top of the file:
+Don't worry about `created` being a datetime, we'll deal with that later.
 
-```zig
-const axiom_api_url = std.Uri.parse("https://axiom.co") catch unreachable;
-```
-
-## The first method
-
-Orhun Parmaksız has a great guide on making HTTP requests in
-[part 4 of their Zig Bits series](https://blog.orhun.dev/zig-bits-04/),
-highly recommend checking that out.
+### Add the `getDatasets` fn
 
 Let's add a function to get the datasets to our `SDK` struct:
 
 ```zig
 /// Get all datasets the token has access to.
-fn get_datasets(self: *SDK) ![]Dataset {
-    const url = comptime axiom_api_url.resolve_inplace("/api/v1/datasets") catch unreachable;
+/// Caller owns the memory.
+fn getDatasets(self: *SDK) ![]Dataset {
+    // TODO: Store base URL in global const or struct
+    const url = comptime std.Uri.parse("https://api.axiom.co/v2/datasets") catch unreachable;
 
     // TODO: Draw the rest of the owl
 }
 ```
 
 We're taking a pointer to `SDK` called `self` again, this means that this is a
-method you call on a created `SDK`. The `!` means it can return an error (we'll
-get to that later).
+method you call on a created `SDK`. The `!` means it can return an error.
+In a later post I want to go deeper into error handling, for now it can return
+_any_ error.
 
 Because there is no dynamic part of the URL, we can parse it at compile time
 using `comptime`.
+I like this explicit keyword, in Rust you need to rely on macros to achieve
+something similar, or use
+[lazy_static](https://github.com/rust-lang-nursery/lazy-static.rs).
 
-Axiom uses Bearer auth, so we need an `Authorization` header:
+### Make the HTTP request
+
+Let's open a connection to the server:
 
 ```zig
-var headers = http.Headers{ .allocator = self.allocator };
-defer headers.deinit();
+var server_header_buffer: [4096]u8 = undefined; // Is 4kb enough?
+var request = try self.http_client.open(.GET, url, .{
+    .server_header_buffer = &server_header_buffer,
+});
+defer request.deinit();
+```
 
+I wonder if 4kb is always enough for server headers. Especially in a library I
+don't want it to fail because the server is suddenly sending more headers.
+
+Axiom uses Bearer auth, so let's set the `Authorization` header:
+
+```zig
 var authorization_header_buf: [64]u8 = undefined;
-defer self.allocator.free(authorization_header_buf);
-const authorization_header = try fmt.bufPrint(&authorization_header_buf, "Bearer {s}", .{self.token});
-try headers.append("Authorization", authorization_header);
+// TODO: Store this on the SDK for better re-use.
+const authorization_header = try fmt.bufPrint(&authorization_header_buf, "Bearer {s}", .{self.api_token});
+request.headers.authorization = .{ .override = authorization_header };
 ```
 
 An Axiom API is 41 characters, plus `Bearer `'s 7 characters equals 48 characters.
 We're allocating 64 to be safe if it ever changes (it really shouldn't).
-Because we need the same token header for every request, it should really be
-allocated on `init` and stored on the client. We'll do that later.
 
-Also note that I'm calling `try headers.append`; this will return the error
-to the caller of our function (that's what the `!` is for).
+Also note that I'm calling `try fmt.BufPrint`; this will return the error
+to the caller of our function (that's what the `!` indicating).
 
-Finally, we can send the request to the server:
+Finally, we can send the headers to the server and wait for a response:
 
 ```zig
-var request = try self.client.request(.GET, url, headers, .{});
-defer request.deinit();
-
-try request.start();
+try request.send();
 try request.wait();
 ```
 
-Phew, that was work. Next, let's check the status code and parse the JSON:
+### Parse the JSON-response
+
+First, we need to read the body into a buffer:
+
+```zig
+var body: [1024 * 1024]u8 = undefined; // 1mb should be enough?
+const content_length = try request.reader().readAll(&body);
+```
+
+Same issue as with the server headers: What is a good size for a fixed buffer
+here?
+
+I've tried doing this dynamically with
+`request.reader().readAllAlloc(...)`, but parsing the JSON with this allocated
+memory relied on the allocated `[]const u8` for string values.
+This means as soon as I deallocated the body, all string values in the returned
+JSON were invalid (use-after-free). Yikes.
+
+So let's call `json.parseFromSlice` with our body:
+
+```zig
+const parsed_datasets = try json.parseFromSlice([]Dataset, self.allocator, body[0..content_length], .{});
+defer parsed_datasets.deinit();
+```
+
+Now we need to copy the memory out of the `parsed_datasets.value` to prevent it
+from being freed on the `parsed_datasets.deinit()` above and return it:
+
+```zig
+const datasets = try self.allocator.dupe(Dataset, parsed_datasets.value);
+return datasets;
+```
+
+### Write a test
+
+And finally we'll write a test where we initialize the SDK, get the datasets
+and ensure `_traces` is the first one returned.
+Once I set up CI, I'll create an Axiom org just for testing so we can be sure
+which datasets are returned.
 
 ```
-const body = try request.reader().readAllAlloc(self.allocator, 4096);
-defer self.allocator.free(body);
+test "getDatasets" {
+    const allocator = std.testing.allocator;
+
+    const api_token = try std.process.getEnvVarOwned(allocator, "AXIOM_TOKEN");
+    defer allocator.free(api_token);
+
+    var sdk = SDK.new(allocator, api_token);
+    defer sdk.deinit();
+
+    const datasets = try sdk.getDatasets();
+    defer allocator.free(datasets);
+
+    try std.testing.expect(datasets.len > 0);
+    try std.testing.expectEqualStrings("_traces", datasets[0].name);
+}
 ```
 
-If the returned body is over 4MB, this returns an error.
+## Next steps
+
+In the next part I'll add `createDataset`, `updateDataset` and `deleteDataset`,
+initial error handling and show how you can import the library in a Zig project.
