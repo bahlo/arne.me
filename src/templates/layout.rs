@@ -146,7 +146,7 @@ impl Layout {
                                 (context.content)
                             }
                             br.hidden; // Looks better in HTML-only
-                            aside {
+                            aside.aside {
                                 (PreEscaped(include_str!("../../static/arne.svg")))
                                 h1.hero__heading { (smart_quotes("Hej, I'm Arne—")) }
                                 p.hero__subheading {
@@ -168,6 +168,7 @@ impl Layout {
                                             a href="/home-screens" { "Home Screens" }
                                         }
                                     }
+
                                     ul {
                                         li {
                                             a href="/now" { "/now" }
@@ -182,40 +183,40 @@ impl Layout {
                                             a href="/contact" { "Contact" }
                                         }
                                     }
+
+
+                                    ul {
+                                        li {
+                                            a href="/colophon" { "Colophon" }
+                                        }
+                                        li {
+                                            a href="/accessibility" { "Accessibility" }
+                                        }
+                                        li {
+                                            a href="/imprint" { "Imprint" }
+                                        }
+                                    }
+
+                                    div.aside__fineprint {
+                                        (PreEscaped("&copy; 2013 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
+                                        br;
+                                        "Commit "
+                                        a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
+                                        br;
+                                        a.no-underline href="https://firechicken.club/arne/prev" { "←" }
+                                        (PreEscaped("&nbsp;"))
+                                        a href="https://firechicken.club" { "Fire Chicken Webring" }
+                                        (PreEscaped("&nbsp;"))
+                                        a.no-underline href="https://firechicken.club/arne/next" { "→" }
+                                        br;
+                                        "Made with ♥ by a human."
+                                    }
                                 }
                             }
                         }
                         br.hidden; // Looks better in HTML-only
                         footer.footer {
-                            span.footer_copyright {
-                                (PreEscaped("&copy; 2013 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
-                                br;
-                                "Commit "
-                                a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
-                                br;
-                                a.no-underline href="https://firechicken.club/arne/prev" { "←" }
-                                " "
-                                a href="https://firechicken.club" { "Fire Chicken Webring" }
-                                " "
-                                a.no-underline href="https://firechicken.club/arne/next" { "→" }
-                                br;
-                                "Made with ♥ by a human."
-                            }
-
-                            br;
-                            .footer__links {
-                                ul {
-                                    li {
-                                        a href="/colophon" { "Colophon" }
-                                    }
-                                    li {
-                                        a href="/accessibility" { "Accessibility" }
-                                    }
-                                    li {
-                                        a href="/imprint" { "Imprint" }
-                                    }
-                                }
-                            }
+                            a.footer__back_to_top href="#" { "↑ Back to top" }
                         }
                         .h-card hidden {
                             span.p-name { "Arne Bahlo" }

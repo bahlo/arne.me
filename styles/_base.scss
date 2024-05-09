@@ -96,7 +96,6 @@ img {
 .top-part {
   display: flex;
   gap: 2rem;
-  margin-bottom: 2rem;
 }
 
 main {
@@ -115,18 +114,7 @@ main {
 }
 
 .footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: top;
-  font-size: $font-size-small;
-
-  &__links {
-    display: flex;
-
-    ul {
-      list-style: none;
-    }
-  }
+  padding: 2rem 0
 }
 
 .hidden {

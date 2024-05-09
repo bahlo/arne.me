@@ -1,9 +1,17 @@
-aside {
+.aside {
   @include stack(.5rem);
   width: 256px;
   
-  nav ul {
-    list-style: none;
-    padding: 0;
+  nav {
+    @include stack;
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  }
+
+  &__fineprint {
+    font-size: $font-size-small;
   }
 }
