@@ -7,7 +7,7 @@ $font-size-small: 0.889rem;
 $color-primary: #4a4adf;
 $color-foreground: #333;
 $color-heading: darken($color-foreground, 10%);
-$color-background: #fcfcfc;
+$color-background: #fff;
 $color-secondary: lighten($color-primary, 25%);
 
 $color-code-background: darken($color-background, 3%);
@@ -16,4 +16,4 @@ $color-code-border: darken($color-code-background, 10%);
 $color-note-background: rgb(251, 251, 201);
 $color-note-border: darken($color-note-background, 40%);
 
-$color-aside-background: #fefefe;
+$color-aside-background: #fcfcfd;

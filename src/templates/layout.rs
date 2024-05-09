@@ -188,6 +188,8 @@ impl Layout {
                                     a href="/imprint" { "Imprint" }
                                 }
 
+                                br.hidden;
+
                                 .aside__fineprint {
                                     (PreEscaped("&copy; 2013 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
                                     br;
