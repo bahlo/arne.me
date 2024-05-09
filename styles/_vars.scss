@@ -10,10 +10,11 @@ $color-heading: darken($color-foreground, 10%);
 $color-background: #fff;
 $color-secondary: lighten($color-primary, 25%);
 
-$color-code-background: darken($color-background, 3%);
+$color-code-background: #fdfdfd;
 $color-code-border: darken($color-code-background, 10%);
 
 $color-note-background: rgb(251, 251, 201);
 $color-note-border: darken($color-note-background, 40%);
 
-$color-aside-background: #fcfcfd;
+$color-aside-background: #fcfcff;
+$color-aside-border: darken($color-aside-background, 10%);

@@ -144,8 +144,8 @@ pre, code {
   font-size: .93em; // make the cap-height match
   font-feature-settings: normal;
   background: $color-code-background;
-  border: 1px solid $color-code-border;
-  border-radius: 4px;
+  border: 1px dashed $color-code-border;
+  border-radius: 8px;
   padding: .5rem;
 }
 
