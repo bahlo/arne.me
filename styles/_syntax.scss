@@ -1,14 +1,14 @@
 pre[class*="language-"] {
   .keyword, .modifier {
-    color: rgb(231, 100, 0);
+    color: rgb(231, 29, 0);
   }
 
   .variable {
-    color: #4040ff;
+    color: $color-primary;
   }
 
   .type, .entity {
-    color: rgb(168, 0, 168);
+    color: rgb(6, 28, 113);
   }
 
   .string {

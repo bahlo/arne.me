@@ -117,8 +117,16 @@ main {
 .footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: top;
   font-size: $font-size-small;
+
+  &__links {
+    display: flex;
+
+    ul {
+      list-style: none;
+    }
+  }
 }
 
 .hidden {
