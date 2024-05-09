@@ -1,17 +1,21 @@
 .aside {
   @include stack(.5rem);
   width: 256px;
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
   
   nav {
     @include stack;
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
   }
 
-  &__fineprint {
+  &__divider {
+    color: $color-secondary;
+  }
+
+  &__fineprint, &__more {
     font-size: $font-size-small;
   }
 }

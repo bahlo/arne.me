@@ -168,49 +168,39 @@ impl Layout {
                                             a href="/home-screens" { "Home Screens" }
                                         }
                                     }
+                                }
 
-                                    ul {
-                                        li {
-                                            a href="/now" { "/now" }
-                                        }
-                                        li {
-                                            a href="/blogroll" { "Blogroll" }
-                                        }
-                                        li {
-                                            a href="/projects" { "Projects" }
-                                        }
-                                        li {
-                                            a href="/contact" { "Contact" }
-                                        }
-                                    }
+                                p.aside__divider { "—" }
 
+                                .aside__more {
+                                    a href="/now" { "/now" }
+                                    " "
+                                    a href="/blogroll" { "Blogroll" }
+                                    " "
+                                    a href="/projects" { "Projects" }
+                                    " "
+                                    a href="/contact" { "Contact" }
+                                    " "
+                                    a href="/colophon" { "Colophon" }
+                                    " "
+                                    a href="/accessibility" { "Accessibility" }
+                                    " "
+                                    a href="/imprint" { "Imprint" }
+                                }
 
-                                    ul {
-                                        li {
-                                            a href="/colophon" { "Colophon" }
-                                        }
-                                        li {
-                                            a href="/accessibility" { "Accessibility" }
-                                        }
-                                        li {
-                                            a href="/imprint" { "Imprint" }
-                                        }
-                                    }
-
-                                    div.aside__fineprint {
-                                        (PreEscaped("&copy; 2013 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
-                                        br;
-                                        "Commit "
-                                        a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
-                                        br;
-                                        a.no-underline href="https://firechicken.club/arne/prev" { "←" }
-                                        (PreEscaped("&nbsp;"))
-                                        a href="https://firechicken.club" { "Fire Chicken Webring" }
-                                        (PreEscaped("&nbsp;"))
-                                        a.no-underline href="https://firechicken.club/arne/next" { "→" }
-                                        br;
-                                        "Made with ♥ by a human."
-                                    }
+                                .aside__fineprint {
+                                    (PreEscaped("&copy; 2013 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
+                                    br;
+                                    "Commit "
+                                    a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
+                                    br;
+                                    a.no-underline href="https://firechicken.club/arne/prev" { "←" }
+                                    (PreEscaped("&nbsp;"))
+                                    a href="https://firechicken.club" { "Fire Chicken Webring" }
+                                    (PreEscaped("&nbsp;"))
+                                    a.no-underline href="https://firechicken.club/arne/next" { "→" }
+                                    br;
+                                    "Made with ♥ by a human."
                                 }
                             }
                         }
