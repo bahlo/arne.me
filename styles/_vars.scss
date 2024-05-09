@@ -4,6 +4,14 @@ $font-size-h2: 1.266rem;
 $font-size-h3: 1.125rem;
 $font-size-small: 0.889rem;
 
-$color-background: #fefeff;
-$color-primary: #4040ff;
-$color-secondary: #c1c1de;
+$color-foreground: #333;
+$color-heading: #222;
+$color-background: #fefefe;
+$color-primary: #4a4adf;
+$color-secondary: lighten($color-primary, 25%);
+
+$color-code-background: #f5f5f5;
+$color-code-border: darken($color-code-background, 10%);
+
+$color-note-background: rgb(251, 251, 201);
+$color-note-border: darken($color-note-background, 40%);

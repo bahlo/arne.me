@@ -7,13 +7,13 @@ body {
   font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
   font-display: swap;
   -webkit-font-smoothing: antialiased;
-  color: #333;
+  color: $color-foreground;
   padding: 1rem;
   background: $color-background;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #222;
+  color: $color-heading;
 }
 
 h1 {
@@ -88,12 +88,6 @@ img {
   max-width: 100%;
 }
 
-.blogpost__heading,
-.weekly__heading,
-.book_review__heading {
-  margin-bottom: .25rem;
-}
-
 .sitewrapper {
   margin: 0 auto;
   max-width: 960px;
@@ -137,11 +131,11 @@ main {
 
 .note {
   font-style: italic;
-  background: rgb(251, 251, 201);
+  background: $color-note-background;
   display: inline-block;
   padding: .25em .5em;
   border-radius: 4px;
-  border: 1px solid rgb(201, 201, 0);
+  border: 1px solid $color-note-border;
 }
 
 pre {
@@ -152,4 +146,13 @@ pre, code {
   font-family: 'PragmataPro Mono', monospace;
   font-size: .93em; // make the cap-height match
   font-feature-settings: normal;
+  background: $color-code-background;
+  border: 1px solid $color-code-border;
+  border-radius: 4px;
+  padding: .5rem;
+}
+
+code {
+  display: inline-block;
+  padding: 0 .2em;
 }
