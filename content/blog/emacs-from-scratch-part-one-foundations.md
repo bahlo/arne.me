@@ -1,5 +1,5 @@
 ---
-title: "Emacs From Scratch, Part 1: Foundations"
+title: "Emacs Config From Scratch, Part 1: Foundations"
 description: "The first post of my Emacs from Scratch series is all about the initial setup and defaults."
 location: "Frankfurt, Germany"
 published: "2023-12-22"
