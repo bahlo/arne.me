@@ -1,5 +1,5 @@
 ---
-title: "Writing an SDK in Zig, Part 1"
+title: "Writing an SDK in Zig"
 description: "Part 1 of writing an SDK for Axiom using the Zig programming language."
 location: "Kiel, Germany"
 published: "2024-05-09"
