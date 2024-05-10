@@ -215,7 +215,7 @@ What I ended up doing is creating a `Value(T)` struct, which embeds both the
 value and an areana allocator which I pass to `json.parseFromSliceLeaky`.
 This means the value you get back from `getDatasets` will have a `deinit()`
 method and you need to do `.value` to get the actual value.
-You can read the updated source code [on GitHub](https://github.com/bahlo/axiom-zig/blob/3deabd583c57d557ffb64f3b42c3383eefa44f91/src/root.zig).
+You can read the updated source code [on GitHub](https://github.com/bahlo/axiom-zig/blob/e550ce96c1e0f5c429432c195dc275b59807dd9d/src/root.zig).
 
 ### Write a test
 
