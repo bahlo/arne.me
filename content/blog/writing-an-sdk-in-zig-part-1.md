@@ -205,6 +205,18 @@ const datasets = try self.allocator.dupe(Dataset, parsed_datasets.value);
 return datasets;
 ```
 
+**Edit:** Matthew [let me know on Mastodon](https://fosstodon.org/@mlugg/112412986075452820)
+that this implementation is still illegal, and it's only working because the
+stack memory is not getting clobbered.
+You can set `.{ .allocate = .alloc_always }` in `json.parseFromSlice`,
+which will dupe the strings, but not actually solve the problem (where do the
+strings live?).
+What I ended up doing is creating a `Value(T)` struct, which embeds both the
+value and an areana allocator which I pass to `json.parseFromSliceLeaky`.
+This means the value you get back from `getDatasets` will have a `deinit()`
+method and you need to do `.value` to get the actual value.
+You can read the updated source code [on GitHub](https://github.com/bahlo/axiom-zig/blob/3deabd583c57d557ffb64f3b42c3383eefa44f91/src/root.zig).
+
 ### Write a test
 
 And finally we'll write a test where we initialize the SDK, get the datasets
