@@ -36,6 +36,10 @@ pub fn render(home_screen: &HomeScreen) -> Result<Context> {
                 }
                 .e-content {
                     (PreEscaped(home_screen.content_html.clone()))
+                    picture {
+                        source srcset=(home_screen.source.avif) type="image/avif";
+                        img.blog__homescreen_image src=(home_screen.source.png) alt=(home_screen.source.alt);
+                    }
                 }
             }
         },

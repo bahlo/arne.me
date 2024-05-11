@@ -62,6 +62,13 @@ pub struct Blogpost {
 }
 
 #[derive(Debug, PartialEq, Eq, PartialOrd)]
+pub struct HomeScreenSource {
+    pub png: String,
+    pub avif: String,
+    pub alt: String,
+}
+
+#[derive(Debug, PartialEq, Eq, PartialOrd)]
 pub struct HomeScreen {
     pub slug: String,
     pub title: String,
@@ -70,6 +77,7 @@ pub struct HomeScreen {
     pub published: NaiveDate,
     pub excerpt_html: Option<String>,
     pub content_html: String,
+    pub source: HomeScreenSource,
 }
 
 #[derive(Debug, PartialEq, Eq, PartialOrd)]
@@ -384,11 +392,19 @@ impl Content {
             file.read_to_string(&mut contents)?;
 
             #[derive(Debug, Deserialize)]
+            struct FrontmatterSource {
+                png: String,
+                avif: String,
+                alt: String,
+            }
+
+            #[derive(Debug, Deserialize)]
             struct Frontmatter {
                 pub title: String,
                 pub description: String,
                 pub location: String,
                 pub published: NaiveDate,
+                pub source: FrontmatterSource,
             }
 
             let markdown = matter.parse(&contents);
@@ -431,6 +447,11 @@ impl Content {
                 published: frontmatter.published,
                 excerpt_html,
                 content_html,
+                source: HomeScreenSource {
+                    png: frontmatter.source.png,
+                    avif: frontmatter.source.avif,
+                    alt: frontmatter.source.alt,
+                },
             });
         }
 
