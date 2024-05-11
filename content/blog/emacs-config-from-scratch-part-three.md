@@ -192,7 +192,7 @@ Opening a Zig project now looks like this[^3]; see also the final
 ![A screenshot of Emacs with a dark theme showing Zig code and a context menu for code actions](/blog/emacs-config-from-scratch-part-three/zig-lsp.png)
 
 
-I'm going to switch Emacs as my primary editor and tune it further in the coming
+I'm going to switch to Emacs as my primary editor and tune it further in the coming
 weeks. 
 In the next part, I want to add support for Org-mode, show a dashboard on startup,
 enable font ligatures and fix all the small things that I'll find.
