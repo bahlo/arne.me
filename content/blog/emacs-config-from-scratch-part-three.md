@@ -1,7 +1,7 @@
 ---
 title: "Emacs Config From Scratch, Part 3: LSP & Tree-sitter"
 description: "In this third part of my Emacs Config From Scratch series, I configure LSP and Tree-sitter."
-published: "2024-05-10"
+published: "2024-05-11"
 location: "Frankfurt, Germany"
 ---
 
