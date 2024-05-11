@@ -1,5 +1,5 @@
 ---
-title: "Emacs Config From Scratch Part Two: Projects and Keybindings"
+title: "Emacs Config From Scratch, Part Two: Projects and Keybindings"
 published: "2023-12-28"
 location: "Frankfurt, Germany"
 description: |
