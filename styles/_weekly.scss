@@ -26,4 +26,32 @@
       white-space: nowrap;
     }
   }
+
+  &__subscribe_form {
+    label {
+      font-size: $font-size-small;
+    }
+
+    input {
+      &[type="email"] {
+        padding: 4px 8px;
+        border: 1px solid $color-secondary;
+        border-right: 0;
+        border-radius: 8px 0 0 8px;
+      }
+
+      &[type="submit"] {
+        background: $color-primary;
+        border: 1px solid darken($color-primary, 10%);
+        border-radius: 0 8px 8px 0;
+        color: #fff;
+        padding: 4px 8px;
+        cursor: pointer;
+
+        &:active {
+          background: darken($color-primary, 10%);
+        }
+      }
+    }
+  }
 }
