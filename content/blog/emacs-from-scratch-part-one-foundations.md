@@ -289,7 +289,7 @@ parts, and [let me know](mailto:hey@arne.me) if I missed anything foundational!
 
 [^1]:
     If you don't want to have to configure everything and just want an editor that,
-    works, ~use VS Code~ check out [Doom Emacs](https://https://github.com/doomemacs/doomemacs).
+    works, ~use VS Code~ check out [Doom Emacs](https://github.com/doomemacs/doomemacs).
 
 [^2]:
     `early-init.el` is loaded during startup, see [The Early Init File](https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html).
