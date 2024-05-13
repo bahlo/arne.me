@@ -164,9 +164,6 @@ impl Layout {
                                         li {
                                             a href="/book-reviews" { "Library" }
                                         }
-                                        li {
-                                            a href="/home-screens" { "Home Screens" }
-                                        }
                                     }
                                 }
 
