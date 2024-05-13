@@ -91,11 +91,13 @@ img {
 .sitewrapper {
   margin: 0 auto;
   max-width: 960px;
+
 }
 
 .top-part {
   display: flex;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 main {
@@ -105,17 +107,13 @@ main {
 
 @media (max-width: 960px) {
   .top-part {
+    margin-top: 0;
     flex-direction: column;
   }
 
   main {
     width: 100%;
   }
-}
-
-.footer {
-  padding: 2rem 0;
-  font-size: $font-size-small;
 }
 
 .hidden {
