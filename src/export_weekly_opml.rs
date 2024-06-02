@@ -20,7 +20,7 @@ lazy_static! {
         Selector::parse(r#"link[rel="alternate"]"#).expect("Failed to parse selector");
 }
 
-pub fn export_weekly_opml(num: Option<u16>) -> Result<()> {
+pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
     let mut failures = vec![];
     let feeds = Content::parse(fs::read_dir("content")?)?
         .weekly

@@ -14,7 +14,7 @@ use templates::layout::Layout;
 use zip::ZipArchive;
 
 mod content;
-#[cfg(feature = "export-weekly-opml")]
+#[cfg(feature = "export-weekly-feeds")]
 mod export_weekly_opml;
 mod rss;
 mod sitemap;
@@ -25,8 +25,8 @@ mod watch;
 mod webmentions;
 
 use content::Content;
-#[cfg(feature = "export-weekly-opml")]
-use export_weekly_opml::export_weekly_opml;
+#[cfg(feature = "export-weekly-feeds")]
+use export_weekly_opml::export_weekly_feeds;
 #[cfg(feature = "send-webmentions")]
 use webmentions::send_webmentions;
 
@@ -59,9 +59,9 @@ enum NewCommand {
 enum ExportCommand {
     #[clap(name = "weekly")]
     Weekly { num: Option<u16> },
-    #[cfg(feature = "export-weekly-opml")]
-    #[clap(name = "weekly-opml")]
-    WeeklyOpml { num: Option<u16> },
+    #[cfg(feature = "export-weekly-feeds")]
+    #[clap(name = "weekly-feeds")]
+    WeeklyFeeds { num: Option<u16> },
 }
 
 #[derive(Debug, Parser)]
@@ -107,8 +107,8 @@ fn main() -> Result<()> {
         },
         Commands::Export(export) => match export {
             ExportCommand::Weekly { num } => export_weekly(num),
-            #[cfg(feature = "export-weekly-opml")]
-            ExportCommand::WeeklyOpml { num } => export_weekly_opml(num),
+            #[cfg(feature = "export-weekly-feeds")]
+            ExportCommand::WeeklyFeeds { num } => export_weekly_feeds(num),
         },
     }
 }

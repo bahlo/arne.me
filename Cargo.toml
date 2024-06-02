@@ -7,7 +7,7 @@ publish = false
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = ["watch", "send-webmentions", "export-weekly-opml"]
+default = ["watch", "send-webmentions", "export-weekly-feeds"]
 watch = [
   "notify-debouncer-mini",
   "tungstenite",
@@ -15,7 +15,7 @@ watch = [
   "file-serve",
 ]
 send-webmentions = ["scraper"]
-export-weekly-opml = ["scraper"]
+export-weekly-feeds = ["scraper"]
 
 [dependencies]
 anyhow = "1"
