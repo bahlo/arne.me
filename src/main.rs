@@ -54,6 +54,14 @@ enum NewCommand {
 }
 
 #[derive(Debug, Parser)]
+enum ExportCommand {
+    #[clap(name = "weekly")]
+    Weekly { num: Option<u16> },
+    #[clap(name = "weekly-opml")]
+    WeeklyOpml,
+}
+
+#[derive(Debug, Parser)]
 enum Commands {
     #[clap(name = "build")]
     Build {
@@ -63,11 +71,6 @@ enum Commands {
     #[cfg(feature = "watch")]
     #[clap(name = "watch")]
     Watch,
-    #[clap(name = "export-weekly")]
-    ExportWeekly {
-        /// Weekly issue # (defaults to latest)
-        num: Option<u16>,
-    },
     #[clap(name = "download-fonts")]
     DownloadFonts,
     #[cfg(feature = "send-webmentions")]
@@ -80,8 +83,9 @@ enum Commands {
     #[command(subcommand)]
     #[clap(name = "new")]
     New(NewCommand),
-    #[clap(name = "export-weekly-opml")]
-    ExportWeeklyOpml,
+    #[command(subcommand)]
+    #[clap(name = "export")]
+    Export(ExportCommand),
 }
 
 fn main() -> Result<()> {
@@ -91,7 +95,6 @@ fn main() -> Result<()> {
         Commands::Build { websocket_port } => build(websocket_port),
         #[cfg(feature = "watch")]
         Commands::Watch => watch::watch(),
-        Commands::ExportWeekly { num } => export_weekly(num),
         Commands::DownloadFonts => download_fonts(),
         #[cfg(feature = "send-webmentions")]
         Commands::SendWebmentions { path, dry_run } => send_webmentions(path, dry_run),
@@ -99,7 +102,10 @@ fn main() -> Result<()> {
             NewCommand::Weekly => new_weekly(),
             NewCommand::HomeScreen => new_home_screen(),
         },
-        Commands::ExportWeeklyOpml => export_weekly_opml(),
+        Commands::Export(export) => match export {
+            ExportCommand::Weekly { num } => export_weekly(num),
+            ExportCommand::WeeklyOpml => export_weekly_opml(),
+        },
     }
 }
 
