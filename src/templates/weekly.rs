@@ -43,6 +43,11 @@ pub fn render_index(content: &Content) -> Result<Context> {
                         a href="/weekly/feed.xml" { "RSS Feed" }
                         " available, but you should really subscribe:" }
                     (subscribe_form())
+                    p {
+                        "There's also a large "
+                        a href="/weekly/feeds.opml" { "OPML file" }
+                        " with feeds from all sites I've linked to, which you can import in your favourite RSS reader."
+                    }
                 }
                 h2 { "Archive" }
                 .weekly__overview {
