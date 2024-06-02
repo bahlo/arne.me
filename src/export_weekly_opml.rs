@@ -161,15 +161,15 @@ fn fetch_feeds(site_url: Url) -> Result<Vec<Feed>> {
     document
         .select(&SELECTOR)
         .filter(|element| {
-            if let Some(ty) = element.value().attr("type") {
-                if ty.contains("rss") || ty.contains("atom") {
-                    return true;
-                }
-            }
-
             if let Some(title) = element.value().attr("title") {
                 if title.ends_with("Comments Feed") {
                     return false;
+                }
+            }
+
+            if let Some(ty) = element.value().attr("type") {
+                if ty.contains("rss") || ty.contains("atom") {
+                    return true;
                 }
             }
 
