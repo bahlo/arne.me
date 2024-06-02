@@ -73,10 +73,10 @@ pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
         xml.push_str(XML_DECLARATION);
         xml.push_str(&quick_xml::se::to_string(&opml)?);
 
-        let mut file = File::create("static/weekly.opml")?;
+        let mut file = File::create("static/weekly/feeds.opml")?;
         file.write_all(xml.as_bytes())?;
     } else {
-        let file = File::open("static/weekly.opml")?;
+        let file = File::open("static/weekly/feeds.opml")?;
         let reader = BufReader::new(file);
         let mut opml: Opml = quick_xml::de::from_reader(reader)?;
         let xml_url_set = opml
@@ -113,9 +113,9 @@ pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
         let mut xml = String::new();
         xml.push_str(XML_DECLARATION);
         xml.push_str(&quick_xml::se::to_string(&opml)?);
-        let mut file = File::create("static/weekly.opml.tmp")?;
+        let mut file = File::create("static/weekly/feeds.opml.tmp")?;
         file.write_all(xml.as_bytes())?;
-        fs::rename("static/weekly.opml.tmp", "static/weekly.opml")?;
+        fs::rename("static/weekly/feeds.opml.tmp", "static/weekly/feeds.opml")?;
     }
 
     Ok(())
