@@ -14,6 +14,7 @@ use templates::layout::Layout;
 use zip::ZipArchive;
 
 mod content;
+#[cfg(feature = "export-weekly-opml")]
 mod export_weekly_opml;
 mod rss;
 mod sitemap;
@@ -23,7 +24,8 @@ mod watch;
 #[cfg(feature = "send-webmentions")]
 mod webmentions;
 
-use crate::content::Content;
+use content::Content;
+#[cfg(feature = "export-weekly-opml")]
 use export_weekly_opml::export_weekly_opml;
 #[cfg(feature = "send-webmentions")]
 use webmentions::send_webmentions;
@@ -57,6 +59,7 @@ enum NewCommand {
 enum ExportCommand {
     #[clap(name = "weekly")]
     Weekly { num: Option<u16> },
+    #[cfg(feature = "export-weekly-opml")]
     #[clap(name = "weekly-opml")]
     WeeklyOpml,
 }
@@ -104,6 +107,7 @@ fn main() -> Result<()> {
         },
         Commands::Export(export) => match export {
             ExportCommand::Weekly { num } => export_weekly(num),
+            #[cfg(feature = "export-weekly-opml")]
             ExportCommand::WeeklyOpml => export_weekly_opml(),
         },
     }
