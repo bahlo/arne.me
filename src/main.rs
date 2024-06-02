@@ -61,7 +61,7 @@ enum ExportCommand {
     Weekly { num: Option<u16> },
     #[cfg(feature = "export-weekly-opml")]
     #[clap(name = "weekly-opml")]
-    WeeklyOpml,
+    WeeklyOpml { num: Option<u16> },
 }
 
 #[derive(Debug, Parser)]
@@ -108,7 +108,7 @@ fn main() -> Result<()> {
         Commands::Export(export) => match export {
             ExportCommand::Weekly { num } => export_weekly(num),
             #[cfg(feature = "export-weekly-opml")]
-            ExportCommand::WeeklyOpml => export_weekly_opml(),
+            ExportCommand::WeeklyOpml { num } => export_weekly_opml(num),
         },
     }
 }

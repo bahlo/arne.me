@@ -2,11 +2,12 @@ use anyhow::{Context, Result};
 use chrono::{DateTime, Utc};
 use lazy_static::lazy_static;
 use scraper::{Html, Selector};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::{
     collections::HashSet,
-    fs,
+    fs::{self, File},
     hash::{Hash, Hasher},
+    io::{stdin, stdout, BufReader, Write},
 };
 use url::Url;
 
@@ -19,11 +20,12 @@ lazy_static! {
         Selector::parse(r#"link[rel="alternate"]"#).expect("Failed to parse selector");
 }
 
-pub fn export_weekly_opml() -> Result<()> {
+pub fn export_weekly_opml(num: Option<u16>) -> Result<()> {
     let mut failures = vec![];
     let feeds = Content::parse(fs::read_dir("content")?)?
         .weekly
         .iter()
+        .filter(|issue| num.map_or(true, |n| issue.num == n))
         .flat_map(|issue| {
             issue
                 .categories
@@ -54,22 +56,67 @@ pub fn export_weekly_opml() -> Result<()> {
         eprintln!("{}: {}", url, e);
     });
 
-    let opml = Opml {
-        version: "1.0".to_string(),
-        head: Head {
-            title: "RSS feeds from stories in all Arne's Weekly issues".to_string(),
-            date_created: Utc::now(),
-        },
-        body: Body {
-            outline: feeds.iter().map(|feed| feed.into()).collect(),
-        },
-    };
+    if num.is_none() {
+        // No issue #, output OPML
+        let opml = Opml {
+            version: "1.0".to_string(),
+            head: Head {
+                title: "RSS feeds from stories in all Arne's Weekly issues".to_string(),
+                date_created: Utc::now(),
+            },
+            body: Body {
+                outline: feeds.iter().map(|feed| feed.into()).collect(),
+            },
+        };
 
-    let mut xml = String::new();
-    xml.push_str(XML_DECLARATION);
-    xml.push_str(&quick_xml::se::to_string(&opml)?);
+        let mut xml = String::new();
+        xml.push_str(XML_DECLARATION);
+        xml.push_str(&quick_xml::se::to_string(&opml)?);
 
-    println!("{}", xml);
+        println!("{}", xml);
+    } else {
+        let file = File::open("static/weekly.opml")?;
+        let reader = BufReader::new(file);
+        let mut opml: Opml = quick_xml::de::from_reader(reader)?;
+        let xml_url_set = opml
+            .body
+            .outline
+            .iter()
+            .map(|outline| outline.into())
+            .collect::<HashSet<Feed>>();
+        let feeds_to_add = feeds
+            .iter()
+            .filter(|feed| !xml_url_set.contains(feed))
+            .flat_map(|feed| {
+                eprint!(
+                    r#"Add {}{}? [y/N] "#,
+                    feed.feed_url,
+                    feed.title
+                        .as_deref()
+                        .map(|s| format!(" ({})", s))
+                        .unwrap_or_default()
+                );
+                let _ = stdout().flush();
+                let mut s = String::new();
+                stdin().read_line(&mut s).expect("Failed to read input");
+                if let Some('y') = s.to_lowercase().chars().next() {
+                    vec![feed.into()]
+                } else {
+                    vec![]
+                }
+            });
+
+        opml.head.date_created = Utc::now();
+        opml.body.outline.extend(feeds_to_add);
+
+        let mut xml = String::new();
+        xml.push_str(XML_DECLARATION);
+        xml.push_str(&quick_xml::se::to_string(&opml)?);
+        let mut file = File::create_new("static/weekly.opml.tmp")?;
+        file.write_all(xml.as_bytes())?;
+        fs::rename("static/weekly.opml.tmp", "static/weekly.opml")?;
+    }
+
     Ok(())
 }
 
@@ -91,6 +138,15 @@ impl From<&Feed> for Outline {
             text: value.title.clone().unwrap_or_default(),
             typ: "rss".to_string(),
             xml_url: value.feed_url.clone(),
+        }
+    }
+}
+
+impl From<&Outline> for Feed {
+    fn from(value: &Outline) -> Self {
+        Feed {
+            title: Some(value.text.clone()),
+            feed_url: value.xml_url.clone(),
         }
     }
 }
@@ -137,7 +193,7 @@ fn fetch_feeds(site_url: Url) -> Result<Vec<Feed>> {
         .collect()
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 #[serde(rename = "opml")]
 struct Opml {
     #[serde(rename = "@version")]
@@ -146,7 +202,7 @@ struct Opml {
     body: Body,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 #[serde(rename = "head")]
 struct Head {
     title: String,
@@ -154,13 +210,13 @@ struct Head {
     date_created: DateTime<Utc>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 #[serde(rename = "body")]
 struct Body {
     outline: Vec<Outline>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 #[serde(rename = "outline")]
 struct Outline {
     #[serde(rename = "@text")]
@@ -173,7 +229,7 @@ struct Outline {
 
 mod rfc_822 {
     use chrono::{DateTime, Utc};
-    use serde::{self, Serializer};
+    use serde::{self, Deserialize, Serializer};
 
     const FORMAT: &str = "%a, %d %b %Y %H:%M:%S %z";
 
@@ -183,5 +239,15 @@ mod rfc_822 {
     {
         let s = format!("{}", date.format(FORMAT));
         serializer.serialize_str(&s)
+    }
+
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<DateTime<Utc>, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        DateTime::parse_from_str(&s, FORMAT)
+            .map_err(serde::de::Error::custom)
+            .map(DateTime::from)
     }
 }
