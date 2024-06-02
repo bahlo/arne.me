@@ -47,13 +47,13 @@ pub fn export_weekly_opml(num: Option<u16>) -> Result<()> {
             set.insert(feed);
             set
         });
-    eprintln!(
+    println!(
         "\nFetched {} feeds and got {} errors:",
         feeds.len(),
         failures.len()
     );
     failures.iter().for_each(|(url, e)| {
-        eprintln!("{}: {}", url, e);
+        println!("{}: {}", url, e);
     });
 
     if num.is_none() {
