@@ -23,7 +23,6 @@ pub fn export_weekly_opml() -> Result<()> {
     let feeds = Content::parse(fs::read_dir("content")?)?
         .weekly
         .iter()
-        .take(2)
         .flat_map(|issue| {
             issue
                 .categories
