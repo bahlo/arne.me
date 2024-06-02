@@ -15,7 +15,7 @@ use zip::ZipArchive;
 
 mod content;
 #[cfg(feature = "export-weekly-feeds")]
-mod export_weekly_opml;
+mod export_weekly_feeds;
 mod rss;
 mod sitemap;
 mod templates;
@@ -26,7 +26,7 @@ mod webmentions;
 
 use content::Content;
 #[cfg(feature = "export-weekly-feeds")]
-use export_weekly_opml::export_weekly_feeds;
+use export_weekly_feeds::export_weekly_feeds;
 #[cfg(feature = "send-webmentions")]
 use webmentions::send_webmentions;
 
