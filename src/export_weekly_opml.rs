@@ -110,10 +110,12 @@ fn fetch_feeds(site_url: Url) -> Result<Vec<Feed>> {
                 .value()
                 .attr("href")
                 .context("Missing href attribute")?;
-            let feed_url = if url_attr.starts_with("/") {
+            let feed_url = if url_attr.starts_with("http") {
+                Url::parse(url_attr)
+            } else if url_attr.starts_with("/") {
                 site_url.join(url_attr)
             } else {
-                Url::parse(url_attr)
+                site_url.join(&format!("/{}", url_attr))
             }?;
 
             let title = element.value().attr("title").map(|s| s.to_string());
