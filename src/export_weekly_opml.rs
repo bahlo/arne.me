@@ -20,6 +20,7 @@ lazy_static! {
 }
 
 pub fn export_weekly_opml() -> Result<()> {
+    let mut failures = vec![];
     let feeds = Content::parse(fs::read_dir("content")?)?
         .weekly
         .iter()
@@ -35,7 +36,8 @@ pub fn export_weekly_opml() -> Result<()> {
                 feed_urls
             }
             Err(e) => {
-                eprintln!("\nFailed to fetch feeds for {}: {}", url, e);
+                failures.push((url, e));
+                eprint!("X");
                 return vec![];
             }
         })
@@ -43,7 +45,14 @@ pub fn export_weekly_opml() -> Result<()> {
             set.insert(feed);
             set
         });
-    eprintln!("\n");
+    eprintln!(
+        "\nFetched {} feeds and got {} errors:",
+        feeds.len(),
+        failures.len()
+    );
+    failures.iter().for_each(|(url, e)| {
+        eprintln!("{}: {}", url, e);
+    });
 
     let opml = Opml {
         version: "1.0".to_string(),
@@ -68,7 +77,6 @@ pub fn export_weekly_opml() -> Result<()> {
 struct Feed {
     title: Option<String>,
     feed_url: Url,
-    html_url: Url,
 }
 
 impl Hash for Feed {
@@ -90,10 +98,8 @@ impl From<&Feed> for Outline {
 fn fetch_feeds(site_url: Url) -> Result<Vec<Feed>> {
     let html = ureq::get(site_url.as_ref())
         .set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15")
-        .call()
-        .context("Failed to get HTML")?
-        .into_string()
-        .context("Failed to get String from response")?;
+        .call()?
+        .into_string()?;
     let document = Html::parse_document(&html);
     document
         .select(&SELECTOR)
@@ -101,6 +107,12 @@ fn fetch_feeds(site_url: Url) -> Result<Vec<Feed>> {
             if let Some(ty) = element.value().attr("type") {
                 if ty.contains("rss") || ty.contains("atom") {
                     return true;
+                }
+            }
+
+            if let Some(title) = element.value().attr("title") {
+                if title.ends_with("Comments Feed") {
+                    return false;
                 }
             }
 
@@ -120,11 +132,7 @@ fn fetch_feeds(site_url: Url) -> Result<Vec<Feed>> {
             }?;
 
             let title = element.value().attr("title").map(|s| s.to_string());
-            Ok(Feed {
-                title,
-                feed_url,
-                html_url: site_url.clone(),
-            })
+            Ok(Feed { title, feed_url })
         })
         .collect()
 }
