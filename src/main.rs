@@ -14,6 +14,7 @@ use templates::layout::Layout;
 use zip::ZipArchive;
 
 mod content;
+mod export_weekly_opml;
 mod rss;
 mod sitemap;
 mod templates;
@@ -23,6 +24,7 @@ mod watch;
 mod webmentions;
 
 use crate::content::Content;
+use export_weekly_opml::export_weekly_opml;
 #[cfg(feature = "send-webmentions")]
 use webmentions::send_webmentions;
 
@@ -78,6 +80,8 @@ enum Commands {
     #[command(subcommand)]
     #[clap(name = "new")]
     New(NewCommand),
+    #[clap(name = "export-weekly-opml")]
+    ExportWeeklyOpml,
 }
 
 fn main() -> Result<()> {
@@ -95,6 +99,7 @@ fn main() -> Result<()> {
             NewCommand::Weekly => new_weekly(),
             NewCommand::HomeScreen => new_home_screen(),
         },
+        Commands::ExportWeeklyOpml => export_weekly_opml(),
     }
 }
 
