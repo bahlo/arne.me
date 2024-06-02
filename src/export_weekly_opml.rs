@@ -9,11 +9,13 @@ use std::{
     hash::{Hash, Hasher},
     io::{stdin, stdout, BufReader, Write},
 };
+use tempdir::TempDir;
 use url::Url;
 
 use crate::content::Content;
 
 const XML_DECLARATION: &'static str = r#"<?xml version="1.0" encoding="UTF-8"?>"#;
+const FEEDS_OPML_PATH: &'static str = "static/weekly/feeds.opml";
 
 lazy_static! {
     pub static ref SELECTOR: Selector =
@@ -73,10 +75,10 @@ pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
         xml.push_str(XML_DECLARATION);
         xml.push_str(&quick_xml::se::to_string(&opml)?);
 
-        let mut file = File::create("static/weekly/feeds.opml")?;
+        let mut file = File::create(FEEDS_OPML_PATH)?;
         file.write_all(xml.as_bytes())?;
     } else {
-        let file = File::open("static/weekly/feeds.opml")?;
+        let file = File::open(FEEDS_OPML_PATH)?;
         let reader = BufReader::new(file);
         let mut opml: Opml = quick_xml::de::from_reader(reader)?;
         let xml_url_set = opml
@@ -113,9 +115,12 @@ pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
         let mut xml = String::new();
         xml.push_str(XML_DECLARATION);
         xml.push_str(&quick_xml::se::to_string(&opml)?);
-        let mut file = File::create("static/weekly/feeds.opml.tmp")?;
+
+        let tmp_dir = TempDir::new("weekly-feeds")?;
+        let tmp_file_path = tmp_dir.path().join("feeds.opml");
+        let mut file = File::create(&tmp_file_path)?;
         file.write_all(xml.as_bytes())?;
-        fs::rename("static/weekly/feeds.opml.tmp", "static/weekly/feeds.opml")?;
+        fs::rename(tmp_file_path, FEEDS_OPML_PATH)?;
     }
 
     Ok(())
