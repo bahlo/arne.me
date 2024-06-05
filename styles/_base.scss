@@ -14,6 +14,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   color: $color-heading;
+  line-height: 1.2;
 }
 
 h1 {
@@ -150,4 +151,8 @@ pre, code {
 code {
   display: inline-block;
   padding: 0 .2em;
+}
+
+footer {
+  padding-top: 1rem;
 }
