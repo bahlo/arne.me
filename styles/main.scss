@@ -1,10 +1,134 @@
 @import "_reset";
-@import "_vars";
-@import "_mixins";
-@import "_fonts";
-@import "_base";
-@import "_syntax";
-@import "_blog";
-@import "_weekly";
-@import "_aside";
-@import "_library";
+
+@mixin stack($gap: 1rem) {
+  & > * {
+    margin-top: 0;
+  }
+
+  & > * + * {
+      margin-top: $gap;
+  }
+}
+
+body {
+  @include stack;
+
+  line-height: 1.5;
+  padding-bottom: 1rem;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  transform: translateY(-100%);
+
+  &:focus {
+    transform: translateY(0);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+header, main, footer {
+  padding: 0 1rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+dl {
+  dt {
+    float: left;
+    margin-right: 4px;
+
+    &::after {
+      content: ":";
+    }
+  }
+}
+
+blockquote {
+  border-left: 2px solid black;
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+pre {
+  overflow-x: scroll;
+}
+
+header {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+
+  .hero {
+    &__arne {
+      height: 64px;
+      width: auto;
+    }
+
+    &__arne--alt-1 {
+      .mouth-1 {
+        visibility: hidden;
+      }
+      .mouth-2 {
+        visibility: visible;
+      }
+    }
+
+    &__arne--alt-2 {
+      .eyes-1, .mouth-2 {
+          visibility: hidden !important;
+      }
+      .eyes-2, .tounge {
+          visibility: visible;
+      }
+    }
+  }
+}
+
+main {
+  img {
+    max-width: 100%;
+  }
+
+  article, section, .e-content {
+    @include stack;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+  }
+}
+
+.blog, .page {
+  @include stack;
+}
+
+.weekly {
+  @include stack;
+
+  &__header {
+    @include stack(.5rem);
+  }
+
+  &__subscribe_form {
+    @include stack(.5rem);
+
+    small {
+      display: block;
+      line-height: 1.2;
+    }
+  }
+}
+
+.book_review {
+  &__cover {
+    float: right;
+    margin-left: 1rem;
+    width: 33%;
+  }
+}

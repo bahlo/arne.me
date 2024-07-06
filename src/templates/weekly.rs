@@ -37,7 +37,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
         },
         html! {
             section.weekly.h-entry {
-                header.weekly__header {
+                .weekly__header {
                     h1 { "Arne’s Weekly" }
                     p { "A weekly newsletter with the best stories of the internet. There’s an "
                         a href="/weekly/feed.xml" { "RSS Feed" }
@@ -155,7 +155,7 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
         },
         html! {
             article.weekly.h-entry {
-                header {
+                div {
                     h1.p-name.weekly__heading { (weekly_issue.title) }
                     a.u-url hidden href=(format!("/weekly/{}", weekly_issue.num)) {}
                     span.p-summary hidden { (format!("Arne's Weekly #{}", weekly_issue.num)) }

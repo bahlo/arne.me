@@ -28,7 +28,7 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
         },
         html! {
             article.book_review.h-entry {
-                header {
+                div {
                     h1.p-name.book_review__heading { (book_review.title) " by " (book_review.author) }
                     a.u-url hidden { (format!("/book-reviews/{}", book_review.slug)) }
                     span.p-summary hidden { (format!("I read {} by {}", book_review.title, book_review.author)) }

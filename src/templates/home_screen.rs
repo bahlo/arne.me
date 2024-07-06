@@ -23,7 +23,7 @@ pub fn render(home_screen: &HomeScreen) -> Result<Context> {
         },
         html! {
             article.blogpost.h-entry {
-                header.blogpost__header {
+                .blogpost__header {
                     h1.p-name.blogpost__heading { (home_screen.title) }
                     a.u-url hidden href=(format!("/home-screens/{}", home_screen.slug)) {}
                     span.p-summary hidden { (home_screen.description) }

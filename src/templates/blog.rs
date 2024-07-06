@@ -70,7 +70,7 @@ pub fn render(blogpost: &Blogpost) -> Result<Context> {
         },
         html! {
             article.blogpost.h-entry {
-                header.blogpost__header {
+                .blogpost__header {
                     h1.p-name.blogpost__heading { (blogpost.title) }
                     a.u-url hidden href=(format!("/blog/{}", blogpost.slug)) {}
                     span.p-summary hidden { (blogpost.description) }

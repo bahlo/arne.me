@@ -140,81 +140,62 @@ impl Layout {
                 }
                 body {
                     a.skip-link href="#main" { "Skip to content" }
-                    .sitewrapper {
-                        .top-part {
-                            main #main {
-                                (context.content)
-                            }
-                            br.hidden; // Looks better in HTML-only
-                            aside.aside {
-                                (PreEscaped(include_str!("../../static/arne.svg")))
-                                h1.hero__heading { (smart_quotes("Hej, I'm Arne—")) }
-                                p.hero__subheading {
-                                    (smart_quotes("a developer, podcaster & dad based near Frankfurt, Germany."))
-                                }
-
-                                nav.main-navigation {
-                                    ul {
-                                        li {
-                                            a href="/" { "Home" }
-                                        }
-                                        li {
-                                            a href="/weekly" { "Newsletter" }
-                                        }
-                                        li {
-                                            a href="/book-reviews" { "Library" }
-                                        }
-                                    }
-                                }
-
-                                p.aside__divider { "—" }
-
-                                .aside__more {
-                                    a href="/now" { "/now" }
-                                    " "
-                                    a href="/blogroll" { "Blogroll" }
-                                    " "
-                                    a href="/projects" { "Projects" }
-                                    " "
-                                    a href="/contact" { "Contact" }
-                                    " "
-                                    a href="/colophon" { "Colophon" }
-                                    " "
-                                    a href="/accessibility" { "Accessibility" }
-                                    " "
-                                    a href="/imprint" { "Imprint" }
-                                }
-
-                                br.hidden;
-
-                                .aside__fineprint {
-                                    (PreEscaped("&copy; 2013 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
-                                    br;
-                                    "Commit "
-                                    a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
-                                    br;
-                                    a.no-underline href="https://firechicken.club/arne/prev" { "←" }
-                                    (PreEscaped("&nbsp;"))
-                                    a href="https://firechicken.club" { "Fire Chicken Webring" }
-                                    (PreEscaped("&nbsp;"))
-                                    a.no-underline href="https://firechicken.club/arne/next" { "→" }
-                                    br;
-                                    "Made with ♥ by a human."
-                                }
-                            }
+                    header {
+                        (PreEscaped(include_str!("../../static/arne.svg")))
+                        br;
+                        nav {
+                            "Arne Bahlo "
+                            a href="/" { "Blog" }
+                            " "
+                            a href="/weekly" { "Newsletter" }
+                            " "
+                            a href="/book-reviews" { "Library" }
                         }
-                        br.hidden; // Looks better in HTML-only
-                        footer.footer {
-                            a.footer__back_to_top href="#" { "↑ Back to top" }
+                    }
+                    main #main {
+                        (context.content)
+                    }
+                    footer {
+                        nav {
+                            a href="/now" { "/now" }
+                            " "
+                            a href="/blogroll" { "Blogroll" }
+                            " "
+                            a href="/projects" { "Projects" }
+                            " "
+                            a href="/contact" { "Contact" }
+                            " "
+                            a href="/colophon" { "Colophon" }
+                            " "
+                            a href="/accessibility" { "Accessibility" }
+                            " "
+                            a href="/imprint" { "Imprint" }
                         }
-                        .h-card hidden {
-                            span.p-name { "Arne Bahlo" }
-                            img.u-photo src="/arne.svg" {}
-                            a.u-url href="https://arne.me" {}
-                            a.u-email href="mailto:hey@arne.me" {}
-                            p.p-note {
-                                "A developer, podcaster & dad based near Frankfurt, Germany."
-                            }
+
+                        br;
+
+                        div {
+                            (PreEscaped("&copy; 2013 &ndash; ")) (Utc::now().format("%Y")) " Arne Bahlo"
+                            br;
+                            "Commit "
+                            a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
+                            br;
+                            a.no-underline href="https://firechicken.club/arne/prev" { "←" }
+                            (PreEscaped("&nbsp;"))
+                            a href="https://firechicken.club" { "Fire Chicken Webring" }
+                            (PreEscaped("&nbsp;"))
+                            a.no-underline href="https://firechicken.club/arne/next" { "→" }
+                            br;
+                            "Made with ♥ by a human."
+                        }
+                    }
+                    .h-card hidden {
+                        span.p-name { "Arne Bahlo" }
+                        img.u-photo src="/arne.svg" {}
+                        a.u-url href="https://arne.me" {}
+                        a.u-email href="mailto:hey@arne.me" {}
+                        p.p-note {
+                            "A developer, podcaster & dad based near Frankfurt, Germany."
                         }
                     }
                 }

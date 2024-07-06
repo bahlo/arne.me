@@ -46,7 +46,7 @@ pub fn render(project: &[Project]) -> Result<Context> {
         },
         html! {
             section.page {
-                header {
+                div {
                     h1 { "Projects" }
                 }
                 p { "Here are the projects I'm currently working on:" }

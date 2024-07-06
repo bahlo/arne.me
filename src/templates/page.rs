@@ -17,7 +17,7 @@ pub fn render(page: &Page) -> Result<Context> {
         },
         html! {
             section.page.h-entry {
-                header {
+                div {
                     h1.p-name { (page.title) }
                     a.u-url hidden href=(format!("/{}", page.slug)) {}
                     span.p-summary hidden { (page.description) }
