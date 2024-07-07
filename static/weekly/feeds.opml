@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><opml version="1.0">
   <head>
     <title>RSS feeds from stories in all Arne&apos;s Weekly issues</title>
-    <date_created>Sun, 07 Jul 2024 06:59:15 +0000</date_created>
+    <date_created>Sun, 07 Jul 2024 07:08:56 +0000</date_created>
   </head>
   <body>
     <outline text="Aeon | a world of ideas" type="rss" xmlUrl="https://aeon.co/feed.atom"/>
@@ -799,5 +799,8 @@
     <outline text="RSS" type="rss" xmlUrl="https://ia.net/feed/"/>
     <outline text="RSS Feed" type="rss" xmlUrl="https://www.jorgegalindo.me/rss.xml"/>
     <outline text="" type="rss" xmlUrl="https://mmapped.blog/feed.xml"/>
+    <outline text="PostHog&apos;s RSS Feed" type="rss" xmlUrl="https://posthog.com/rss.xml"/>
+    <outline text="LMNT" type="rss" xmlUrl="https://lmnt.me/feed.xml"/>
+    <outline text="The Seeds of Science" type="rss" xmlUrl="https://www.theseedsofscience.pub/feed?sectionId=28266"/>
   </body>
 </opml>
