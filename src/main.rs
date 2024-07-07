@@ -51,8 +51,6 @@ struct Cli {
 enum NewCommand {
     #[clap(name = "weekly")]
     Weekly,
-    #[clap(name = "home-screen")]
-    HomeScreen,
 }
 
 #[derive(Debug, Parser)]
@@ -103,7 +101,6 @@ fn main() -> Result<()> {
         Commands::SendWebmentions { path, dry_run } => send_webmentions(path, dry_run),
         Commands::New(new) => match new {
             NewCommand::Weekly => new_weekly(),
-            NewCommand::HomeScreen => new_home_screen(),
         },
         Commands::Export(export) => match export {
             ExportCommand::Weekly { num } => export_weekly(num),
@@ -435,41 +432,7 @@ categories:
     "#
     );
 
-    fs::write(path, content)?;
-    Ok(())
-}
-
-pub fn new_home_screen() -> Result<()> {
-    let now = Utc::now();
-    let filename = now.format("%Y-%m");
-    let path = Path::new("content")
-        .join("home-screens")
-        .join(format!("{}.md", filename));
-    if path.exists() {
-        bail!("Home screen already exists at: {:?}", path);
-    }
-
-    let title = format!("My Home Screen in {}", now.format("%B '%y"));
-    let description = format!("This is my home screen in {}.", now.format("%B %Y"));
-    let date = Utc::now().format("%Y-%m-%d").to_string();
-    let assets_path = format!(
-        "/home-screens/{}",
-        now.format("%B-%Y").to_string().to_lowercase()
-    );
-    let content = format!(
-        r#"---
-title: "{title}"
-description: "{description}"
-location: "TODO"
-published: "{date}"
-source:
-  png: {assets_path}/home-screen.png
-  avif: {assets_path}/home-screen.avif
-  alt: |
-    TODO
----"#
-    );
-
-    fs::write(path, content)?;
+    fs::write(&path, content)?;
+    println!("Created new weekly issue at: {:?}", path);
     Ok(())
 }
