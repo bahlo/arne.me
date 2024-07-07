@@ -1,6 +1,7 @@
 use anyhow::{Context, Result};
 use chrono::{DateTime, Utc};
 use lazy_static::lazy_static;
+use quick_xml::se::Serializer;
 use scraper::{Html, Selector};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -73,7 +74,10 @@ pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
 
         let mut xml = String::new();
         xml.push_str(XML_DECLARATION);
-        xml.push_str(&quick_xml::se::to_string(&opml)?);
+
+        let mut ser = Serializer::new(&mut xml);
+        ser.indent(' ', 2);
+        opml.serialize(ser)?;
 
         let mut file = File::create(FEEDS_OPML_PATH)?;
         file.write_all(xml.as_bytes())?;
@@ -114,7 +118,10 @@ pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
 
         let mut xml = String::new();
         xml.push_str(XML_DECLARATION);
-        xml.push_str(&quick_xml::se::to_string(&opml)?);
+
+        let mut ser = Serializer::new(&mut xml);
+        ser.indent(' ', 2);
+        opml.serialize(ser)?;
 
         let tmp_dir = TempDir::new("weekly-feeds")?;
         let tmp_file_path = tmp_dir.path().join("feeds.opml");
