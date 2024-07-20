@@ -25,9 +25,11 @@ pub fn render(content: &Content) -> Result<Context> {
             og_type: OgType::Website,
         },
         html! {
-          section {
-            h1 { "Hej, I'm Arne—" }
-            big { "a developer from Frankfurt, Germany" }
+          section.index {
+            .index__hero {
+              h1 { "Hej, I'm Arne—" }
+              big { "a developer from Frankfurt, Germany" }
+            }
             p {
               "You can find me in the Fediverse as "
               a href="https://spezi.social/@arne" { "@arne@spezi.social" }

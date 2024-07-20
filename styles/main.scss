@@ -178,6 +178,14 @@ footer {
   }
 }
 
+.index {
+  &__hero {
+    h1 {
+      font-size: $font-size-large;
+    }
+  }
+}
+
 .no-underline {
   text-decoration: none;
 }
