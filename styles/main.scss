@@ -155,12 +155,18 @@ footer {
   border: 1px solid #cce;
   padding: 1rem 1rem;
   border-radius: 5px;
-  width: calc(640px - 2rem);
+  max-width: calc(640px - 2rem);
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
 
   nav {
     max-width: 50%;
+  }
+
+  @media (max-width: calc(640px - 2rem)) {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
   }
 }
