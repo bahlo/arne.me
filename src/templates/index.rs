@@ -21,7 +21,7 @@ pub fn render(content: &Content) -> Result<Context> {
         Head {
             title: "Arne Bahlo".into(),
             description: "This is my personal website.".into(),
-            url: Url::parse("https://arne.me/")?,
+            url: Url::parse("https://arne.me")?,
             og_type: OgType::Website,
         },
         html! {
@@ -48,6 +48,8 @@ pub fn render(content: &Content) -> Result<Context> {
             }
           }
         },
-        layout::Options::default(),
+        layout::Options {
+            navigation_item: layout::NavigationItem::Home,
+        },
     ))
 }

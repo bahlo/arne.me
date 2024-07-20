@@ -56,10 +56,19 @@ impl Context {
     }
 }
 
+#[derive(Debug, Default, PartialEq, Eq)]
+pub enum NavigationItem {
+    Home,
+    Blog,
+    Newsletter,
+    BookReviews,
+    #[default]
+    None,
+}
+
 #[derive(Debug, Default)]
 pub struct Options {
-    pub is_index: bool,
-    pub back_link: Option<String>,
+    pub navigation_item: NavigationItem,
 }
 
 pub struct Layout {
@@ -146,13 +155,13 @@ impl Layout {
                             (PreEscaped(include_str!("../../static/arne.svg")))
                             br;
                             nav {
-                                a href="/" { "Home" }
+                                a.active[options.navigation_item == NavigationItem::Home] href="/" { "Home" }
                                 " "
-                                a href="/blog" { "Blog" }
+                                a.active[options.navigation_item == NavigationItem::Blog] href="/blog" { "Blog" }
                                 " "
-                                a href="/weekly" { "Newsletter" }
+                                a.active[options.navigation_item == NavigationItem::Newsletter] href="/weekly" { "Newsletter" }
                                 " "
-                                a href="/book-reviews" { "Library" }
+                                a.active[options.navigation_item == NavigationItem::BookReviews] href="/book-reviews" { "Book Reviews" }
                             }
                         }
                         main #main {

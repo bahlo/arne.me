@@ -6,12 +6,12 @@ use crate::{
     content::{Content, HomeScreen},
     templates::{
         format_date,
-        layout::{self, Context, Head, OgType},
+        layout::{Context, Head, OgType},
     },
 };
 
 pub fn render(home_screen: &HomeScreen) -> Result<Context> {
-    Ok(Context::new_with_options(
+    Ok(Context::new(
         Head {
             title: home_screen.title.clone(),
             description: home_screen.description.clone(),
@@ -42,10 +42,6 @@ pub fn render(home_screen: &HomeScreen) -> Result<Context> {
                     }
                 }
             }
-        },
-        layout::Options {
-            back_link: Some("/home-screens".to_string()),
-            ..Default::default()
         },
     ))
 }

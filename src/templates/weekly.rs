@@ -28,7 +28,7 @@ fn subscribe_form() -> Markup {
 }
 
 pub fn render_index(content: &Content) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: "Arne’s Weekly".to_string(),
             description: "A weekly newsletter with the best stories of the internet.".to_string(),
@@ -66,6 +66,9 @@ pub fn render_index(content: &Content) -> Result<Context> {
                     }
                 }
             }
+        },
+        layout::Options {
+            navigation_item: layout::NavigationItem::Newsletter,
         },
     ))
 }
@@ -173,8 +176,7 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
             }
         },
         layout::Options {
-            back_link: Some("/weekly".to_string()),
-            ..Default::default()
+            navigation_item: layout::NavigationItem::Newsletter,
         },
     ))
 }

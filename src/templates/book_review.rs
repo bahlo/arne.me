@@ -52,14 +52,13 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
             }
         },
         layout::Options {
-            back_link: Some("/book-reviews".to_string()),
-            ..Default::default()
+            navigation_item: layout::NavigationItem::BookReviews,
         },
     ))
 }
 
 pub fn render_index(content: &Content) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: "Book Reviews".to_string(),
             description: "Every book I read gets a review and ends up here.".to_string(),
@@ -87,6 +86,9 @@ pub fn render_index(content: &Content) -> Result<Context> {
                     }
                 }
             }
+        },
+        layout::Options {
+            navigation_item: layout::NavigationItem::BookReviews,
         },
     ))
 }

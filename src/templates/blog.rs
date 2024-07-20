@@ -54,8 +54,7 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
             }
         },
         layout::Options {
-            is_index: true,
-            ..Default::default()
+            navigation_item: layout::NavigationItem::Blog,
         },
     ))
 }
@@ -100,8 +99,7 @@ pub fn render(blogpost: &Blogpost) -> Result<Context> {
             }
         },
         layout::Options {
-            back_link: Some("/blog".to_string()),
-            ..Default::default()
+            navigation_item: layout::NavigationItem::Blog,
         },
     ))
 }
