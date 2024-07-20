@@ -141,21 +141,23 @@ impl Layout {
                 }
                 body {
                     a.skip-link href="#main" { "Skip to content" }
-                    header {
-                        (PreEscaped(include_str!("../../static/arne.svg")))
-                        br;
-                        nav {
-                            a href="/" { "Home" }
-                            " "
-                            a href="/blog" { "Blog" }
-                            " "
-                            a href="/weekly" { "Newsletter" }
-                            " "
-                            a href="/book-reviews" { "Library" }
+                    .sitewrapper {
+                        header {
+                            (PreEscaped(include_str!("../../static/arne.svg")))
+                            br;
+                            nav {
+                                a href="/" { "Home" }
+                                " "
+                                a href="/blog" { "Blog" }
+                                " "
+                                a href="/weekly" { "Newsletter" }
+                                " "
+                                a href="/book-reviews" { "Library" }
+                            }
                         }
-                    }
-                    main #main {
-                        (context.content)
+                        main #main {
+                            (context.content)
+                        }
                     }
                     footer {
                         br;
@@ -165,15 +167,15 @@ impl Layout {
                             a href="/now" { "/now" }
                             (PreEscaped(" &middot; "))
                             a href="/blogroll" { "Blogroll" }
-                            (PreEscaped(" &middot; "))
+                            br;
                             a href="/projects" { "Projects" }
                             (PreEscaped(" &middot; "))
                             a href="/contact" { "Contact" }
-                            (PreEscaped(" &middot; "))
+                            br;
                             a href="/colophon" { "Colophon" }
                             (PreEscaped(" &middot; "))
                             a href="/accessibility" { "Accessibility" }
-                            (PreEscaped(" &middot; "))
+                            br;
                             a href="/imprint" { "Imprint" }
                         }
 

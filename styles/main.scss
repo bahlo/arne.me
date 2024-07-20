@@ -8,8 +8,7 @@ html {
 }
 
 body {
-  @include stack;
-
+  background: $color-footer-bg; // The page background is set on .sitewrapper
   line-height: 1.5;
   padding-bottom: 1rem;
   font-family: "Rebond Grotesque", sans-serif;
@@ -73,6 +72,14 @@ blockquote {
 
 pre {
   overflow-x: scroll;
+}
+
+.sitewrapper {
+  @include stack;
+  border-bottom: 1px solid $color-footer-border;
+  background: $color-bg;
+  padding: 1rem 0;
+  border-top: 2px solid $color-primary;
 }
 
 header {
@@ -150,23 +157,24 @@ main {
 }
 
 footer {
+  padding: 1rem;
   font-size: $font-size-small;
-  background: #eee;
-  border: 1px solid #ccc;
-  padding: .5rem 1rem;
-  max-width: calc(640px - 2rem);
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
+  color: $color-footer-fg;
 
-  nav {
-    max-width: 50%;
+  a {
+    color: $color-footer-fg;
   }
 
-  @media (max-width: calc(640px - 2rem)) {
-    border-radius: 0;
-    border-left: 0;
-    border-right: 0;
+  > br {
+    // Don't confuse flexbox
+    display: none;
+  }
+
+  nav {
+    text-align: right;
   }
 }
 
