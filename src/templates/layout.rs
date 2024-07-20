@@ -161,7 +161,7 @@ impl Layout {
                         br;
 
                         nav {
-                            "More pages: "
+                            span.hidden { "More pages: " }
                             a href="/now" { "/now" }
                             " "
                             a href="/blogroll" { "Blogroll" }
