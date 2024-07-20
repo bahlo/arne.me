@@ -122,20 +122,21 @@ impl Layout {
                         }
                     }
 
-                    @if options.is_index {
-                        script {
-                            (PreEscaped(r#"
-                                document.addEventListener("DOMContentLoaded", () => {
-                                    const version = Math.floor(Math.random() * 3);
+                    script {
+                        (PreEscaped(r#"
+                            document.addEventListener("DOMContentLoaded", () => {
+                                const arne = document.querySelector(".hero__arne");
+                                arne.addEventListener("mouseenter", function(e) {
+                                    const version = Math.floor(Math.random() * 2) + 1;
+                                    arne.classList.add("hero__arne--alt-" + version);
+                                })
 
-                                    console.log(version);
-                                    const arne = document.querySelector(".hero__arne");
-                                    if (version > 0) {
-                                        arne.classList.add("hero__arne--alt-" + version);
-                                    }
-                                });
-                            "#))
-                        }
+                                arne.addEventListener("mouseleave", function(e) {
+                                    arne.classList.remove('hero__arne--alt-1')
+                                    arne.classList.remove('hero__arne--alt-2')
+                                })
+                            });
+                        "#))
                     }
                 }
                 body {
