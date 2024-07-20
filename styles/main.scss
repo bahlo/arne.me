@@ -87,6 +87,20 @@ header {
   gap: .5rem;
   align-items: center;
 
+  nav {
+    a {
+      text-decoration: none;
+      color: #111;
+
+      &.active, &:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        text-decoration-thickness: 2px;
+        text-decoration-color: $color-primary;
+      }
+    }
+  }
+
   .hero {
     &__arne {
       height: 64px;
