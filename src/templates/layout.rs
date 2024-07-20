@@ -144,8 +144,9 @@ impl Layout {
                         (PreEscaped(include_str!("../../static/arne.svg")))
                         br;
                         nav {
-                            "Arne Bahlo "
-                            a href="/" { "Blog" }
+                            a href="/" { "Arne Bahlo" }
+                            " "
+                            a href="/blog" { "Blog" }
                             " "
                             a href="/weekly" { "Newsletter" }
                             " "
@@ -156,7 +157,10 @@ impl Layout {
                         (context.content)
                     }
                     footer {
+                        br;
+
                         nav {
+                            "More pages: "
                             a href="/now" { "/now" }
                             " "
                             a href="/blogroll" { "Blogroll" }
@@ -180,11 +184,11 @@ impl Layout {
                             "Commit "
                             a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
                             br;
-                            a.no-underline href="https://firechicken.club/arne/prev" { "←" }
+                            a href="https://firechicken.club/arne/prev" { "←" }
                             (PreEscaped("&nbsp;"))
                             a href="https://firechicken.club" { "Fire Chicken Webring" }
                             (PreEscaped("&nbsp;"))
-                            a.no-underline href="https://firechicken.club/arne/next" { "→" }
+                            a href="https://firechicken.club/arne/next" { "→" }
                             br;
                             "Made with ♥ by a human."
                         }

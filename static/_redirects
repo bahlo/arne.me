@@ -42,3 +42,6 @@
 /articles/home-screen-december-2023 /home-screens/2023-12
 /articles/home-screen-january-2024 /home-screens/2024-01
 /articles/home-screen-february-2024 /home-screens/2024-02
+
+# Pagination
+/page/:splat /blog/page/:splat
