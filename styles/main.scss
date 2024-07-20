@@ -151,10 +151,9 @@ main {
 
 footer {
   font-size: $font-size-small;
-  background: #f5f5fa;
-  border: 1px solid #cce;
-  padding: 1rem 1rem;
-  border-radius: 5px;
+  background: #eee;
+  border: 1px solid #ccc;
+  padding: .5rem 1rem;
   max-width: calc(640px - 2rem);
   display: flex;
   flex-direction: row-reverse;
@@ -169,4 +168,8 @@ footer {
     border-left: 0;
     border-right: 0;
   }
+}
+
+.no-underline {
+  text-decoration: none;
 }

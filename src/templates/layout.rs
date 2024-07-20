@@ -145,7 +145,7 @@ impl Layout {
                         (PreEscaped(include_str!("../../static/arne.svg")))
                         br;
                         nav {
-                            a href="/" { "Arne Bahlo" }
+                            a href="/" { "Home" }
                             " "
                             a href="/blog" { "Blog" }
                             " "
@@ -163,17 +163,17 @@ impl Layout {
                         nav {
                             span.hidden { "More pages: " }
                             a href="/now" { "/now" }
-                            " "
+                            (PreEscaped(" &middot; "))
                             a href="/blogroll" { "Blogroll" }
-                            " "
+                            (PreEscaped(" &middot; "))
                             a href="/projects" { "Projects" }
-                            " "
+                            (PreEscaped(" &middot; "))
                             a href="/contact" { "Contact" }
-                            " "
+                            (PreEscaped(" &middot; "))
                             a href="/colophon" { "Colophon" }
-                            " "
+                            (PreEscaped(" &middot; "))
                             a href="/accessibility" { "Accessibility" }
-                            " "
+                            (PreEscaped(" &middot; "))
                             a href="/imprint" { "Imprint" }
                         }
 
@@ -185,11 +185,11 @@ impl Layout {
                             "Commit "
                             a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
                             br;
-                            a href="https://firechicken.club/arne/prev" { "←" }
+                            a.no-underline href="https://firechicken.club/arne/prev" { "←" }
                             (PreEscaped("&nbsp;"))
                             a href="https://firechicken.club" { "Fire Chicken Webring" }
                             (PreEscaped("&nbsp;"))
-                            a href="https://firechicken.club/arne/next" { "→" }
+                            a.no-underline href="https://firechicken.club/arne/next" { "→" }
                             br;
                             "Made with ♥ by a human."
                         }
