@@ -1,11 +1,13 @@
 @import "_reset";
 @import "_mixins";
+@import "_fonts";
 
 body {
   @include stack;
 
   line-height: 1.5;
   padding-bottom: 1rem;
+  font-family: "Rebond Grotesque", sans-serif;
 }
 
 .skip-link {
