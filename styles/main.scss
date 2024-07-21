@@ -87,11 +87,14 @@ header {
   align-items: center;
 
   nav {
+    display: flex;
+    gap: .5rem;
+
     a {
       text-decoration: none;
       color: #111;
       font-weight: 500;
-
+      
       &.active, &:hover {
         text-decoration: underline;
         text-underline-offset: 4px;
