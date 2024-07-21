@@ -17,6 +17,14 @@
 
 @font-face {
   font-family: "Rebond Grotesque";
+  font-weight: 500;
+  src: url("/fonts/rebond-grotesque/ESRebondGrotesque-Medium.woff2") format("woff2"),
+    url("/fonts/rebond-grotesque/ESRebondGrotesque-Medium.woff") format("woff"),
+    url("/fonts/rebond-groteque/ESRebondGrotesque-Medium.eot") format("eot");
+}
+
+@font-face {
+  font-family: "Rebond Grotesque";
   font-weight: bold;
   src: url("/fonts/rebond-grotesque/ESRebondGrotesque-Bold.woff2") format("woff2"),
     url("/fonts/rebond-grotesque/ESRebondGrotesque-Bold.woff") format("woff"),
