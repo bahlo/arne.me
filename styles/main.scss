@@ -12,7 +12,11 @@ body {
   line-height: 1.5;
   padding-bottom: 1rem;
   font-family: "Rebond Grotesque", sans-serif;
-  color: #222;
+  color: $color-fg;
+  @media (prefers-color-scheme: dark) {
+    color: $color-fg-dark;
+    background: $color-footer-bg-dark;
+  }
 }
 
 .skip-link {
@@ -30,7 +34,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #000;
+  color: $color-heading;
+  @media (prefers-color-scheme: dark) {
+    color: $color-heading-dark;
+  }
 }
 
 h1 { font-size: $font-size-h1; }
@@ -44,6 +51,10 @@ big { font-size: $font-size-h4; }
 
 a {
   color: $color-primary;
+
+  @media (prefers-color-scheme: dark) {
+    color: $color-primary-dark;
+  }
 }
 
 header, main, footer {
@@ -68,6 +79,10 @@ blockquote {
   border-left: 2px solid $color-primary;
   padding-left: 1rem;
   font-style: italic;
+
+  @media (prefers-color-scheme: dark) {
+    border-left-color: $color-primary-dark;
+  }
 }
 
 pre {
@@ -77,8 +92,13 @@ pre {
 input {
   padding: .25rem .5rem;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid $color-input-border;
+  background: $color-input-bg;
   font: inherit;
+  @media (prefers-color-scheme: dark) {
+    background: $color-input-bg-dark;
+    border: 1px solid $color-input-border-dark;
+  }
 }
 
 input[type="button"], input[type="submit"] {
@@ -86,9 +106,18 @@ input[type="button"], input[type="submit"] {
   color: #fff;
   border: 1px solid darken($color-primary, 10%);
 
+  @media (prefers-color-scheme: dark) {
+    background: $color-primary-dark;
+    border-color: darken($color-primary-dark, 10%);
+  }
+
   &:hover {
     background: darken($color-primary, 10%);
     cursor: pointer;
+
+    @media (prefers-color-scheme: dark) {
+      background: darken($color-primary-dark, 10%);
+    }
   }
 }
 
@@ -97,6 +126,10 @@ input[type="button"], input[type="submit"] {
   border-bottom: 1px solid $color-footer-border;
   background: $color-bg;
   padding: 1.5rem 0;
+  @media (prefers-color-scheme: dark) {
+    border-bottom-color: $color-footer-border-dark;
+    background: $color-bg-dark;
+  }
 }
 
 header {
@@ -110,7 +143,7 @@ header {
 
     a {
       text-decoration: none;
-      color: #111;
+      color: $color-fg;
       font-weight: 500;
       
       &.active, &:hover {
@@ -118,6 +151,14 @@ header {
         text-underline-offset: 4px;
         text-decoration-thickness: 2px;
         text-decoration-color: $color-primary;
+
+        @media (prefers-color-scheme: dark) {
+          text-decoration-color: $color-primary-dark;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        color: $color-fg-dark;
       }
     }
   }
@@ -201,6 +242,14 @@ footer {
 
   a {
     color: $color-footer-fg;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: $color-footer-fg-dark;
+
+    a {
+      color: $color-footer-fg-dark;
+    }
   }
 
   > br {
