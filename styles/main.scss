@@ -74,6 +74,24 @@ pre {
   overflow-x: scroll;
 }
 
+input {
+  padding: .25rem .5rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font: inherit;
+}
+
+input[type="button"], input[type="submit"] {
+  background: $color-primary;
+  color: #fff;
+  border: 1px solid darken($color-primary, 10%);
+
+  &:hover {
+    background: darken($color-primary, 10%);
+    cursor: pointer;
+  }
+}
+
 .sitewrapper {
   @include stack(1.5rem);
   border-bottom: 1px solid $color-footer-border;
@@ -205,4 +223,19 @@ footer {
 
 .no-underline {
   text-decoration: none;
+}
+
+.weekly {
+  &__subscribe_form {
+    input[type="email"] {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: 0;
+    }
+
+    input[type="submit"] {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
 }
