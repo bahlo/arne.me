@@ -75,10 +75,10 @@ pre {
 }
 
 .sitewrapper {
-  @include stack;
+  @include stack(1.5rem);
   border-bottom: 1px solid $color-footer-border;
   background: $color-bg;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
 }
 
 header {
@@ -174,7 +174,7 @@ main {
 }
 
 footer {
-  padding: 1rem;
+  padding: 1.5rem 1rem 1rem;
   font-size: $font-size-small;
   display: flex;
   flex-direction: row-reverse;
