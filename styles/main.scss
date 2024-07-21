@@ -224,11 +224,25 @@ main {
   }
 }
 
-.book_review {
+.book_reviews {
   &__cover {
     float: right;
     margin-left: 1rem;
     width: 33%;
+  }
+
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    a {
+      width: calc(25% - .75rem);
+
+      &:hover {
+        opacity: .8;
+      }
+    }
   }
 }
 
