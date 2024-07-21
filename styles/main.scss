@@ -239,6 +239,10 @@ main {
     a {
       width: calc(25% - .75rem);
 
+      img {
+        width: auto;
+      }
+
       &:hover {
         opacity: .8;
       }

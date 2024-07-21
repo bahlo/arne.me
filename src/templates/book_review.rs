@@ -76,7 +76,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
                         a href=(format!("/book-reviews/{}", book_review.slug)) {
                             picture {
                                 source srcset=(format!("/book-reviews/{}/cover.avif", book_review.slug)) type="image/avif";
-                                img src=(format!("/book-reviews/{}/cover.jpg", book_review.slug)) alt=(format!("The cover of {} by {}", book_review.title, book_review.author));
+                                img width="100" src=(format!("/book-reviews/{}/cover.jpg", book_review.slug)) alt=(format!("The cover of {} by {}", book_review.title, book_review.author));
                             }
                         }
                     }
