@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><opml version="1.0">
   <head>
     <title>RSS feeds from stories in all Arne&apos;s Weekly issues</title>
-    <date_created>Sun, 07 Jul 2024 07:08:56 +0000</date_created>
+    <date_created>Sun, 21 Jul 2024 07:13:40 +0000</date_created>
   </head>
   <body>
     <outline text="Aeon | a world of ideas" type="rss" xmlUrl="https://aeon.co/feed.atom"/>
@@ -802,5 +802,10 @@
     <outline text="PostHog&apos;s RSS Feed" type="rss" xmlUrl="https://posthog.com/rss.xml"/>
     <outline text="LMNT" type="rss" xmlUrl="https://lmnt.me/feed.xml"/>
     <outline text="The Seeds of Science" type="rss" xmlUrl="https://www.theseedsofscience.pub/feed?sectionId=28266"/>
+    <outline text="A Working Library RSS" type="rss" xmlUrl="https://aworkinglibrary.com/feed/index.xml"/>
+    <outline text="Ed Zitron&apos;s Where&apos;s Your Ed At" type="rss" xmlUrl="https://www.wheresyoured.at/rss/"/>
+    <outline text="How Things Work" type="rss" xmlUrl="https://www.hamiltonnolan.com/feed"/>
+    <outline text="Charles Féval" type="rss" xmlUrl="https://fev.al/feed.xml"/>
+    <outline text="" type="rss" xmlUrl="https://binaryigor.com/feed.xml"/>
   </body>
 </opml>
