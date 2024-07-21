@@ -103,12 +103,13 @@ input {
 
 input[type="button"], input[type="submit"] {
   background: $color-primary;
-  color: #fff;
+  color: $color-fg-dark;
   border: 1px solid darken($color-primary, 10%);
 
   @media (prefers-color-scheme: dark) {
     background: $color-primary-dark;
     border-color: darken($color-primary-dark, 10%);
+    color: $color-fg;
   }
 
   &:hover {
@@ -324,7 +325,6 @@ footer {
 
       .byline {
         white-space: nowrap;
-        color: $color-grey;
       }
     }
   }
