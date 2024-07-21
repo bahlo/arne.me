@@ -19,34 +19,34 @@ export-weekly-feeds = ["scraper"]
 
 [dependencies]
 anyhow = "1"
-blake3 = "1.5.0"
-chrono = { version = "0.4.31", default-features = false, features = [
+blake3 = "1.5.3"
+chrono = { version = "0.4.38", default-features = false, features = [
   "std",
   "clock",
   "serde",
 ] }
 clap = { version = "4", features = ["derive"] }
-comrak = { version = "0.19.0", default-features = false, features = [
+comrak = { version = "0.26.0", default-features = false, features = [
   "emojis",
   "syntect",
 ] }
-crossbeam-channel = { version = "0.5.8", optional = true }
+crossbeam-channel = { version = "0.5.13", optional = true }
 crowbook-text-processing = "1"
 file-serve = { version = "0.3", optional = true }
 grass = { version = "0.13", default-features = false }
 gray_matter = "0.2"
 lazy_static = "1"
-maud = { version = "0.25" }
+maud = { version = "0.26" }
 notify-debouncer-mini = { version = "0.4.1", optional = true }
-quick-xml = { version = "0.31", features = ["serialize"] }
+quick-xml = { version = "0.36", features = ["serialize"] }
 regex = "1"
 rss = "2"
 serde = { version = "1", features = ["derive"] }
-syntect = "5.1.0"
+syntect = "5.2.0"
 tempdir = "0.3.7"
-tungstenite = { version = "0.20", optional = true }
-ureq = "2.8.0"
-url = { version = "2.4", features = ["serde"] }
-zip = "0.6.6"
-scraper = { version = "0.18", optional = true }
+tungstenite = { version = "0.23", optional = true }
+ureq = "2.10.0"
+url = { version = "2.5", features = ["serde"] }
+zip = "2.1.5"
+scraper = { version = "0.19", optional = true }
 bat = "0.24"

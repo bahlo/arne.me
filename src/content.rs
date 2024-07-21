@@ -169,7 +169,7 @@ pub struct Project {
 
 struct MarkdownContext<'a> {
     plugins: comrak::Plugins<'a>,
-    options: comrak::Options,
+    options: comrak::Options<'a>,
 }
 
 impl<'a> MarkdownContext<'a> {
