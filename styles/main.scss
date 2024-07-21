@@ -222,6 +222,43 @@ main {
       display: block;
       line-height: 1.2;
     }
+
+    input[type="email"] {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: 0;
+    }
+
+    input[type="submit"] {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  &__overview {
+    &_issue {
+      display: flex;
+
+      a {
+        font-weight: 500;
+      }
+
+      .divider {
+        flex-grow: 1;
+        border-bottom: 1px dashed $color-light-grey;
+        position: relative;
+        top: -.75rem;
+        margin: 0 .5rem;
+
+        @media (prefers-color-scheme: dark) {
+          border-color: $color-light-grey-dark; 
+        }
+      }
+
+      .byline {
+        white-space: nowrap;
+      }
+    }
   }
 }
 
@@ -291,41 +328,4 @@ footer {
 
 .no-underline {
   text-decoration: none;
-}
-
-.weekly {
-  &__subscribe_form {
-    input[type="email"] {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-right: 0;
-    }
-
-    input[type="submit"] {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
-
-  &__overview {
-    &_issue {
-      display: flex;
-
-      .divider {
-        flex-grow: 1;
-        border-bottom: 1px dashed $color-light-grey;
-        position: relative;
-        top: -.75rem;
-        margin: 0 .5rem;
-
-        @media (prefers-color-scheme: dark) {
-          border-color: $color-light-grey-dark; 
-        }
-      }
-
-      .byline {
-        white-space: nowrap;
-      }
-    }
-  }
 }
