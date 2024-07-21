@@ -52,11 +52,9 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 h2 { "Archive" }
                 .weekly__overview {
                     @for weekly_issue in &content.weekly {
-                        .weekly__issue {
-                            h3 {
-                                a href=(format!("/weekly/{}", weekly_issue.num)) {
-                                    (weekly_issue.title)
-                                }
+                        li.weekly__overview_issue {
+                            a href=(format!("/weekly/{}", weekly_issue.num)) {
+                                (weekly_issue.title)
                             }
                             .divider {};
                             i.byline {

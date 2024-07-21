@@ -307,6 +307,25 @@ footer {
   }
 
   &__overview {
-    @include stack;
+    &_issue {
+      display: flex;
+
+      .divider {
+        flex-grow: 1;
+        border-bottom: 1px dashed $color-light-grey;
+        position: relative;
+        top: -.75rem;
+        margin: 0 .5rem;
+
+        @media (prefers-color-scheme: dark) {
+          border-color: $color-light-grey-dark; 
+        }
+      }
+
+      .byline {
+        white-space: nowrap;
+        color: $color-grey;
+      }
+    }
   }
 }
