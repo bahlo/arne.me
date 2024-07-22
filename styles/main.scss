@@ -51,6 +51,7 @@ big { font-size: $font-size-h4; }
 
 a {
   color: $color-primary;
+  text-underline-offset: 2px;
 
   @media (prefers-color-scheme: dark) {
     color: $color-primary-dark;
