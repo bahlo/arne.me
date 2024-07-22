@@ -125,11 +125,9 @@ input[type="button"], input[type="submit"] {
 
 .sitewrapper {
   @include stack(1.5rem);
-  border-bottom: 1px solid $color-footer-border;
   background: $color-bg;
   padding: 1.5rem 0;
   @media (prefers-color-scheme: dark) {
-    border-bottom-color: $color-footer-border-dark;
     background: $color-bg-dark;
   }
 }
@@ -149,12 +147,14 @@ header {
       font-weight: 500;
       
       &.active, &:hover {
+        color: $color-heading;
         text-decoration: underline;
         text-underline-offset: 4px;
         text-decoration-thickness: 2px;
         text-decoration-color: $color-primary;
 
         @media (prefers-color-scheme: dark) {
+          color: $color-heading-dark;
           text-decoration-color: $color-primary-dark;
         }
       }
