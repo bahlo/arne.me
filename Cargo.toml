@@ -43,7 +43,6 @@ regex = "1"
 rss = "2"
 serde = { version = "1", features = ["derive"] }
 syntect = "5.2.0"
-tempdir = "0.3.7"
 tungstenite = { version = "0.23", optional = true }
 ureq = "2.10.0"
 url = { version = "2.5", features = ["serde"] }

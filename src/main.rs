@@ -9,7 +9,6 @@ use std::{
     path::Path,
     process::Command,
 };
-use tempdir::TempDir;
 use templates::layout::Layout;
 use zip::ZipArchive;
 
@@ -376,8 +375,9 @@ fn download_fonts() -> Result<()> {
     let response = ureq::get(&zip_url).call()?;
     let mut reader = response.into_reader();
 
-    let temp_dir = TempDir::new("arne-me-fonts")?;
-    let zip_path = temp_dir.path().join("fonts.zip");
+    let temp_dir = Path::join(&env::temp_dir(), "arne-me-fonts");
+    fs::create_dir_all(&temp_dir)?;
+    let zip_path = temp_dir.join("fonts.zip");
     let mut temp_file = File::create(&zip_path)?;
     io::copy(&mut reader, &mut temp_file)?;
 
@@ -405,7 +405,7 @@ fn download_fonts() -> Result<()> {
         }
     }
 
-    temp_dir.close()?;
+    fs::remove_dir(temp_dir)?;
     Ok(())
 }
 

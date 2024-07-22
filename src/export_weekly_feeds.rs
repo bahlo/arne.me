@@ -6,11 +6,12 @@ use scraper::{Html, Selector};
 use serde::{Deserialize, Serialize};
 use std::{
     collections::HashSet,
+    env,
     fs::{self, File},
     hash::{Hash, Hasher},
     io::{stdin, stdout, BufReader, Write},
+    path::Path,
 };
-use tempdir::TempDir;
 use url::Url;
 
 use crate::content::Content;
@@ -123,8 +124,7 @@ pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
         ser.indent(' ', 2);
         opml.serialize(ser)?;
 
-        let tmp_dir = TempDir::new("weekly-feeds")?;
-        let tmp_file_path = tmp_dir.path().join("feeds.opml");
+        let tmp_file_path = Path::join(&env::temp_dir(), "arne-me-weekly-feeds.opml");
         let mut file = File::create(&tmp_file_path)?;
         file.write_all(xml.as_bytes())?;
         fs::rename(tmp_file_path, FEEDS_OPML_PATH)?;
