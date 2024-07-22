@@ -31,9 +31,11 @@ pub fn render(content: &Content) -> Result<Context> {
               big { "a developer from Frankfurt, Germany." }
             }
             p {
-              "You can find me in the Fediverse as "
+              "Outside of software I like to read books, ride my bike 
+              and spend time with my family.
+              You can find me in the Fediverse as "
               a href="https://spezi.social/@arne" { "@arne@spezi.social" }
-              " or send me an email at "
+              " or drop me an email at "
               a href="mailto:hey@arne.me" { "hey@arne.me" }
               "."
             }
