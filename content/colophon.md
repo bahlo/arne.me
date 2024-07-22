@@ -19,7 +19,7 @@ Edge, Chrome, Firefox, and Safari.
 Any issue you encounter on this website can be submitted as
 [GitHub issues](https://github.com/bahlo/arne.me/issues/new).
 
-A [sitemap](/sitemap-index.xml) is available and there are RSS feeds for
+A [sitemap](/sitemap.xml) is available and there are RSS feeds for
 the [blog](/blog/atom.xml), the [weekly](/weekly/atom.xml),
 and [book reviews](/book-reviews/feed.xml).
 
