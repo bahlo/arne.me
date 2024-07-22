@@ -34,7 +34,7 @@ crossbeam-channel = { version = "0.5.13", optional = true }
 crowbook-text-processing = "1"
 file-serve = { version = "0.3", optional = true }
 grass = { version = "0.13", default-features = false }
-gray_matter = "0.2"
+gray_matter = { version = "0.2", default-features = false, features = ["yaml"] }
 lazy_static = "1"
 maud = { version = "0.26" }
 notify-debouncer-mini = { version = "0.4.1", optional = true }
@@ -46,6 +46,8 @@ syntect = "5.2.0"
 tungstenite = { version = "0.23", optional = true }
 ureq = "2.10.0"
 url = { version = "2.5", features = ["serde"] }
-zip = "2.1.5"
-scraper = { version = "0.19", optional = true }
-bat = "0.24"
+zip = { version = "2.1.5", features = ["deflate"] }
+scraper = { version = "0.19", optional = true, default-features = false, features = [
+  "errors",
+] }
+bat = { version = "0.24", default-features = false }
