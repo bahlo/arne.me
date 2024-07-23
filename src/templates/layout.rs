@@ -143,11 +143,20 @@ impl Layout {
                                 arne.addEventListener("mouseenter", function(e) {
                                     hoverFace = hoverFace == 1 ? 2 : 1; // Alternate between 1 and 2
                                     arne.classList.add("hero__arne--alt-" + hoverFace);
-                                })
+                                });
                                 arne.addEventListener("mouseleave", function(e) {
                                     arne.classList.remove('hero__arne--alt-1')
                                     arne.classList.remove('hero__arne--alt-2')
-                                })
+                                });
+                                // Touch devices can have fun too!
+                                arne.addEventListener("touchend", function(e) {
+                                    arne.classList.remove('hero__arne--alt-1')
+                                    arne.classList.remove('hero__arne--alt-2')
+                                    hoverFace = (hoverFace + 1) % 3; // Alternate between 0, 1 and 2
+                                    if (hoverFace > 0) {
+                                        arne.classList.add("hero__arne--alt-" + hoverFace);
+                                    }
+                                });
                             });
                         "#))
                     }
