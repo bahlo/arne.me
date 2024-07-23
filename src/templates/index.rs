@@ -28,16 +28,22 @@ pub fn render(content: &Content) -> Result<Context> {
           section.index {
             .index__hero {
               h1 { "Hej, I'm Arne—" }
-              big { "a developer from Frankfurt, Germany." }
+              big { "a developer based near Frankfurt, Germany." }
             }
             p {
-              "Outside of software I like to read books, ride my bike 
-              and spend time with my family.
-              You can find me in the Fediverse as "
+              "This is my home on the web.
+              Currently I work as a full stack engineer at "
+              a href="https://axiom.co" { "Axiom" }
+              ", leading a team focussed on observability."
+            }
+            p {
+              "Outside of software I like to read, ride my bike and spend
+              time with my family. You can find me in the Fediverse as "
               a href="https://spezi.social/@arne" { "@arne@spezi.social" }
               " or drop me an email at "
               a href="mailto:hey@arne.me" { "hey@arne.me" }
-              "."
+              ".
+              "
             }
             p {
               "The latest blog post is titled "
