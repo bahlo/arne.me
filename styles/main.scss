@@ -4,332 +4,363 @@
 @import "_vars";
 
 html {
-  font-size: 110%;
+    font-size: 110%;
 }
 
 body {
-  background: $color-footer-bg; // The page background is set on .sitewrapper
-  line-height: 1.5;
-  padding-bottom: 1rem;
-  font-family: "Rebond Grotesque", sans-serif;
-  color: $color-fg;
-  @media (prefers-color-scheme: dark) {
-    color: $color-fg-dark;
-    background: $color-footer-bg-dark;
-  }
+    background: $color-footer-bg; // The page background is set on .sitewrapper
+    line-height: 1.5;
+    padding-bottom: 1rem;
+    font-family: "Rebond Grotesque", sans-serif;
+    color: $color-fg;
+    @media (prefers-color-scheme: dark) {
+        color: $color-fg-dark;
+        background: $color-footer-bg-dark;
+    }
 }
 
 .skip-link {
-  position: absolute;
-  top: 0;
-  transform: translateY(-100%);
+    position: absolute;
+    top: 0;
+    transform: translateY(-100%);
 
-  &:focus {
-    transform: translateY(0);
-  }
+    &:focus {
+        transform: translateY(0);
+    }
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: $color-heading;
-  @media (prefers-color-scheme: dark) {
-    color: $color-heading-dark;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $color-heading;
+    @media (prefers-color-scheme: dark) {
+        color: $color-heading-dark;
+    }
 }
 
-h1 { font-size: $font-size-h1; }
-h2 { font-size: $font-size-h2; }
-h3 { font-size: $font-size-h3; }
-h4 { font-size: $font-size-h4; }
-h5 { font-size: $font-size-h5; }
-h6 { font-size: $font-size-h6; }
+h1 {
+    font-size: $font-size-h1;
+}
+h2 {
+    font-size: $font-size-h2;
+}
+h3 {
+    font-size: $font-size-h3;
+}
+h4 {
+    font-size: $font-size-h4;
+}
+h5 {
+    font-size: $font-size-h5;
+}
+h6 {
+    font-size: $font-size-h6;
+}
 
 big {
-  font-size: $font-size-h4;
-  line-height: 1.2;
+    font-size: $font-size-h4;
+    line-height: 1.2;
 }
 
 a {
-  color: $color-primary;
-  text-underline-offset: 2px;
+    color: $color-primary;
+    text-underline-offset: 2px;
 
-  @media (prefers-color-scheme: dark) {
-    color: $color-primary-dark;
-  }
+    @media (prefers-color-scheme: dark) {
+        color: $color-primary-dark;
+    }
 }
 
-header, main, footer {
-  padding: 0 1rem;
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
+header,
+main,
+footer {
+    padding: 0 1rem;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 dl {
-  dt {
-    float: left;
-    margin-right: 4px;
+    dt {
+        float: left;
+        margin-right: 4px;
 
-    &::after {
-      content: ":";
+        &::after {
+            content: ":";
+        }
     }
-  }
 }
 
 blockquote {
-  border-left: 2px solid $color-primary;
-  padding-left: 1rem;
-  font-style: italic;
+    border-left: 2px solid $color-primary;
+    padding-left: 1rem;
+    font-style: italic;
 
-  @media (prefers-color-scheme: dark) {
-    border-left-color: $color-primary-dark;
-  }
+    @media (prefers-color-scheme: dark) {
+        border-left-color: $color-primary-dark;
+    }
 }
 
 pre {
-  overflow-x: scroll;
+    overflow-x: scroll;
 }
 
 input {
-  padding: .25rem .5rem;
-  border-radius: 10px;
-  border: 1px solid $color-input-border;
-  background: $color-input-bg;
-  font: inherit;
-  @media (prefers-color-scheme: dark) {
-    background: $color-input-bg-dark;
-    border: 1px solid $color-input-border-dark;
-  }
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    border: 1px solid $color-input-border;
+    background: $color-input-bg;
+    font: inherit;
+    @media (prefers-color-scheme: dark) {
+        background: $color-input-bg-dark;
+        border: 1px solid $color-input-border-dark;
+    }
 }
 
-input[type="button"], input[type="submit"] {
-  background: $color-primary;
-  color: $color-fg-dark;
-  border: 1px solid darken($color-primary, 10%);
-
-  @media (prefers-color-scheme: dark) {
-    background: $color-primary-dark;
-    border-color: darken($color-primary-dark, 10%);
-    color: $color-fg;
-  }
-
-  &:hover {
-    background: darken($color-primary, 10%);
-    cursor: pointer;
+input[type="button"],
+input[type="submit"] {
+    background: $color-primary;
+    color: $color-fg-dark;
+    border: 1px solid darken($color-primary, 10%);
 
     @media (prefers-color-scheme: dark) {
-      background: darken($color-primary-dark, 10%);
+        background: $color-primary-dark;
+        border-color: darken($color-primary-dark, 10%);
+        color: $color-fg;
     }
-  }
+
+    &:hover {
+        background: darken($color-primary, 10%);
+        cursor: pointer;
+
+        @media (prefers-color-scheme: dark) {
+            background: darken($color-primary-dark, 10%);
+        }
+    }
 }
 
 .sitewrapper {
-  @include stack(1.5rem);
-  background: $color-bg;
-  padding: 1.5rem 0;
-  @media (prefers-color-scheme: dark) {
-    background: $color-bg-dark;
-  }
+    @include stack(1.5rem);
+    background: $color-bg;
+    padding: 1.5rem 0;
+    @media (prefers-color-scheme: dark) {
+        background: $color-bg-dark;
+    }
 }
 
 header {
-  display: flex;
-  gap: .5rem;
-  align-items: center;
-
-  nav {
     display: flex;
-    gap: .8rem;
+    gap: 0.5rem;
+    align-items: center;
 
-    a {
-      text-decoration: none;
-      color: $color-fg;
-      font-weight: 500;
-      
-      &.active, &:hover {
-        color: $color-heading;
-        text-decoration: underline;
-        text-underline-offset: 4px;
-        text-decoration-thickness: 2px;
-        text-decoration-color: $color-primary;
+    nav {
+        display: flex;
+        gap: 0.8rem;
 
-        @media (prefers-color-scheme: dark) {
-          color: $color-heading-dark;
-          text-decoration-color: $color-primary-dark;
+        a {
+            text-decoration: none;
+            color: $color-fg;
+            font-weight: 500;
+
+            &.active,
+            &:hover {
+                color: $color-heading;
+                text-decoration: underline;
+                text-underline-offset: 4px;
+                text-decoration-thickness: 2px;
+                text-decoration-color: $color-primary;
+
+                @media (prefers-color-scheme: dark) {
+                    color: $color-heading-dark;
+                    text-decoration-color: $color-primary-dark;
+                }
+            }
+
+            @media (prefers-color-scheme: dark) {
+                color: $color-fg-dark;
+            }
         }
-      }
-
-      @media (prefers-color-scheme: dark) {
-        color: $color-fg-dark;
-      }
-    }
-  }
-
-  .hero {
-    &__arne {
-      height: 64px;
-      width: auto;
     }
 
-    &__arne--alt-1 {
-      .mouth-1 {
-        visibility: hidden;
-      }
-      .mouth-2 {
-        visibility: visible;
-      }
-    }
+    .hero {
+        &__arne {
+            height: 64px;
+            width: auto;
+        }
 
-    &__arne--alt-2 {
-      .eyes-1, .mouth-2 {
-          visibility: hidden !important;
-      }
-      .eyes-2, .tounge {
-          visibility: visible;
-      }
+        &__arne--alt-1 {
+            .mouth-1 {
+                visibility: hidden;
+            }
+            .mouth-2 {
+                visibility: visible;
+            }
+        }
+
+        &__arne--alt-2 {
+            .eyes-1,
+            .mouth-2 {
+                visibility: hidden !important;
+            }
+            .eyes-2,
+            .tounge {
+                visibility: visible;
+            }
+        }
     }
-  }
 }
 
 main {
-  img {
-    max-width: 100%;
-  }
+    img {
+        max-width: 100%;
+    }
 
-  article, section, .e-content {
-    @include stack;
-  }
+    article,
+    section,
+    .e-content {
+        @include stack;
+    }
 
-  h1, h2, h3, h4, h5, h6 {
-    line-height: 1.2;
-  }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: 1.2;
+    }
 }
 
-.blog, .page {
-  @include stack;
+.blog,
+.page {
+    @include stack;
 }
 
 .weekly {
-  @include stack;
+    @include stack;
 
-  &__header {
-    @include stack(.5rem);
-  }
-
-  &__subscribe_form {
-    @include stack(.5rem);
-
-    small {
-      display: block;
-      line-height: 1.2;
+    &__header {
+        @include stack(0.5rem);
     }
 
-    input[type="email"] {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-right: 0;
-    }
+    &__subscribe_form {
+        @include stack(0.5rem);
 
-    input[type="submit"] {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
-
-  &__overview {
-    &_issue {
-      display: flex;
-
-      a {
-        font-weight: 500;
-      }
-
-      .divider {
-        flex-grow: 1;
-        border-bottom: 1px dashed $color-light-grey;
-        position: relative;
-        top: -.75rem;
-        margin: 0 .5rem;
-
-        @media (prefers-color-scheme: dark) {
-          border-color: $color-light-grey-dark; 
+        small {
+            display: block;
+            line-height: 1.2;
         }
-      }
 
-      .byline {
-        white-space: nowrap;
-      }
+        input[type="email"] {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: 0;
+        }
+
+        input[type="submit"] {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
     }
-  }
+
+    &__overview {
+        &_issue {
+            display: flex;
+
+            a {
+                font-weight: 500;
+            }
+
+            .divider {
+                flex-grow: 1;
+                border-bottom: 1px dashed $color-light-grey;
+                position: relative;
+                top: -0.75rem;
+                margin: 0 0.5rem;
+
+                @media (prefers-color-scheme: dark) {
+                    border-color: $color-light-grey-dark;
+                }
+            }
+
+            .byline {
+                white-space: nowrap;
+            }
+        }
+    }
 }
 
 .book_reviews {
-  &__cover {
-    float: right;
-    margin-left: 1rem;
-    width: 33%;
-  }
-
-  &__grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-
-    a {
-      width: calc(25% - .75rem);
-
-      img {
-        width: auto;
-      }
-
-      &:hover {
-        opacity: .8;
-      }
+    &__cover {
+        float: right;
+        margin-left: 1rem;
+        width: 33%;
     }
-  }
+
+    &__grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        a {
+            width: calc(25% - 0.75rem);
+
+            img {
+                width: auto;
+            }
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
 }
 
 footer {
-  padding: 1.5rem 1rem 1rem;
-  font-size: $font-size-small;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  color: $color-footer-fg;
-
-  a {
+    padding: 1.5rem 1rem 1rem;
+    font-size: $font-size-small;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
     color: $color-footer-fg;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    color: $color-footer-fg-dark;
 
     a {
-      color: $color-footer-fg-dark;
+        color: $color-footer-fg;
     }
-  }
 
-  > br {
-    // Don't confuse flexbox
-    display: none;
-  }
+    @media (prefers-color-scheme: dark) {
+        color: $color-footer-fg-dark;
 
-  nav {
-    text-align: right;
-  }
+        a {
+            color: $color-footer-fg-dark;
+        }
+    }
+
+    > br {
+        // Don't confuse flexbox
+        display: none;
+    }
+
+    nav {
+        text-align: right;
+    }
 }
 
 .index {
-  &__hero {
-    h1 {
-      font-size: $font-size-large;
+    &__hero {
+        h1 {
+            font-size: $font-size-large;
+        }
     }
-  }
 }
 
 .no-underline {
-  text-decoration: none;
+    text-decoration: none;
 }
