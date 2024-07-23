@@ -375,9 +375,7 @@ fn download_fonts() -> Result<()> {
     let response = ureq::get(&zip_url).call()?;
     let mut reader = response.into_reader();
 
-    let temp_dir = Path::join(&env::temp_dir(), "arne-me-fonts");
-    fs::create_dir_all(&temp_dir)?;
-    let zip_path = temp_dir.join("fonts.zip");
+    let zip_path = Path::join(&env::temp_dir(), "arne-me-fonts.zip");
     let mut temp_file = File::create(&zip_path)?;
     io::copy(&mut reader, &mut temp_file)?;
 
@@ -405,7 +403,7 @@ fn download_fonts() -> Result<()> {
         }
     }
 
-    fs::remove_dir(temp_dir)?;
+    fs::remove_file(zip_path)?;
     Ok(())
 }
 
