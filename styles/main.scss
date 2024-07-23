@@ -204,7 +204,8 @@ header {
             }
         }
 
-        &__arne--alt-2 {
+        &__arne--alt-2,
+        &__arne.noscript:hover {
             .eyes-1,
             .mouth-2 {
                 visibility: hidden !important;

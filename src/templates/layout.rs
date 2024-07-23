@@ -137,10 +137,12 @@ impl Layout {
                         (PreEscaped(r#"
                             document.addEventListener("DOMContentLoaded", () => {
                                 // Make a funny face on hover
-                                const arne = document.querySelector(".hero__arne");
+                                var arne = document.querySelector(".hero__arne");
+                                arne.classList.remove("noscript"); // Deactivate CSS hover
+                                var hoverFace = 1;
                                 arne.addEventListener("mouseenter", function(e) {
-                                    const version = Math.floor(Math.random() * 2) + 1;
-                                    arne.classList.add("hero__arne--alt-" + version);
+                                    hoverFace = hoverFace == 1 ? 2 : 1; // Alternate between 1 and 2
+                                    arne.classList.add("hero__arne--alt-" + hoverFace);
                                 })
                                 arne.addEventListener("mouseleave", function(e) {
                                     arne.classList.remove('hero__arne--alt-1')
