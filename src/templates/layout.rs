@@ -96,7 +96,7 @@ impl Layout {
                     meta name="title" content=(smart_quotes(head.title.clone()));
                     meta name="description" content=(smart_quotes(head.description.clone()));
                     meta name="author" content="Arne Bahlo";
-                    meta name="theme-color" content="#4040ff";
+                    meta name="theme-color" content="#4040ff" media="(prefers-color-scheme: light)";
                     meta name="theme-color" content="#bfbf00" media="(prefers-color-scheme: dark)";
                     meta name="viewport" content="width=device-width,initial-scale=1";
                     meta property="og:type" content=(head.og_type);
@@ -136,12 +136,12 @@ impl Layout {
                     script {
                         (PreEscaped(r#"
                             document.addEventListener("DOMContentLoaded", () => {
+                                // Make a funny face on hover
                                 const arne = document.querySelector(".hero__arne");
                                 arne.addEventListener("mouseenter", function(e) {
                                     const version = Math.floor(Math.random() * 2) + 1;
                                     arne.classList.add("hero__arne--alt-" + version);
                                 })
-
                                 arne.addEventListener("mouseleave", function(e) {
                                     arne.classList.remove('hero__arne--alt-1')
                                     arne.classList.remove('hero__arne--alt-2')
