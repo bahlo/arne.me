@@ -20,16 +20,20 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
         },
         html! {
             section.blog {
-                @for post in blog_posts {
-                    article {
-                        @let url = format!("/blog/{}", post.slug);
-                        h1.blogpost__heading { a href=(url) { (post.title) } }
-                        i.byline {
-                            (format_date(post.published))
-                        }
-                        @if let Some(excerpt_html) = &post.excerpt_html {
-                            p { (PreEscaped(excerpt_html)) }
-                            a href=(url) { "Continue reading..." }
+                h1 { "Blog" }
+
+                .blog__article_list {
+                    @for post in blog_posts {
+                        article {
+                            @let url = format!("/blog/{}", post.slug);
+                            h2.blogpost__heading { a href=(url) { (post.title) } }
+                            i.byline {
+                                (format_date(post.published))
+                            }
+                            @if let Some(excerpt_html) = &post.excerpt_html {
+                                p { (PreEscaped(excerpt_html)) }
+                                a href=(url) { "Continue reading..." }
+                            }
                         }
                     }
                 }

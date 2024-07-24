@@ -365,3 +365,9 @@ footer {
 .no-underline {
     text-decoration: none;
 }
+
+.blog {
+    &__article_list {
+        @include stack(2rem);
+    }
+}
