@@ -10,7 +10,7 @@ and hosted on [Netlify](https://netlify.com).
 The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 
 The fonts used are [Rebond Grotesque](https://extraset.ch/typefaces/rebond-grotesque/)
-and [Berkeley Mono](https://berkeleygraphics.com/typefaces/berkeley-mono/).
+and [Pragmata Pro](https://fsd.it/shop/fonts/pragmatapro/).
 
 The logo was made by [Ekaterina Kapranova](https://www.instagram.com/ekkapranova/).
 
