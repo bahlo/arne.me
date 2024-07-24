@@ -34,7 +34,7 @@ pub fn render(content: &Content) -> Result<Context> {
               "This is my home on the web.
               Currently I work as a full stack engineer at "
               a href="https://axiom.co" { "Axiom" }
-              ", leading a team focussed on observability."
+              ", leading a team focused on observability."
             }
             p {
               "Outside of software I like to read, ride my bike and spend
