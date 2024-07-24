@@ -14,8 +14,8 @@ body {
     font-family: "Rebond Grotesque", sans-serif;
     color: $color-fg;
     @media (prefers-color-scheme: dark) {
-        color: $color-fg-dark;
-        background: $color-footer-bg-dark;
+        color: invert($color-fg);
+        background: invert($color-footer-bg);
     }
 }
 
@@ -41,7 +41,7 @@ h5,
 h6 {
     color: $color-heading;
     @media (prefers-color-scheme: dark) {
-        color: $color-heading-dark;
+        color: invert($color-heading);
     }
 }
 
@@ -74,7 +74,7 @@ a {
     text-underline-offset: 2px;
 
     @media (prefers-color-scheme: dark) {
-        color: $color-primary-dark;
+        color: invert($color-primary);
     }
 }
 
@@ -104,7 +104,7 @@ blockquote {
     font-style: italic;
 
     @media (prefers-color-scheme: dark) {
-        border-left-color: $color-primary-dark;
+        border-left-color: invert($color-primary);
     }
 }
 
@@ -119,20 +119,20 @@ input {
     background: $color-input-bg;
     font: inherit;
     @media (prefers-color-scheme: dark) {
-        background: $color-input-bg-dark;
-        border: 1px solid $color-input-border-dark;
+        background: invert($color-input-bg);
+        border: 1px solid invert($color-input-border);
     }
 }
 
 input[type="button"],
 input[type="submit"] {
     background: $color-primary;
-    color: $color-fg-dark;
+    color: invert($color-heading);
     border: 1px solid darken($color-primary, 10%);
 
     @media (prefers-color-scheme: dark) {
-        background: $color-primary-dark;
-        border-color: darken($color-primary-dark, 10%);
+        background: invert($color-primary);
+        border-color: darken(invert($color-primary), 10%);
         color: $color-fg;
     }
 
@@ -141,7 +141,7 @@ input[type="submit"] {
         cursor: pointer;
 
         @media (prefers-color-scheme: dark) {
-            background: darken($color-primary-dark, 10%);
+            background: darken(invert($color-primary), 10%);
         }
     }
 }
@@ -151,7 +151,7 @@ input[type="submit"] {
     background: $color-bg;
     padding: 1.5rem 0;
     @media (prefers-color-scheme: dark) {
-        background: $color-bg-dark;
+        background: invert($color-bg);
     }
 }
 
@@ -178,13 +178,13 @@ header {
                 text-decoration-color: $color-primary;
 
                 @media (prefers-color-scheme: dark) {
-                    color: $color-heading-dark;
-                    text-decoration-color: $color-primary-dark;
+                    color: invert($color-heading);
+                    text-decoration-color: invert($color-primary);
                 }
             }
 
             @media (prefers-color-scheme: dark) {
-                color: $color-fg-dark;
+                color: invert($color-fg);
             }
         }
     }
@@ -287,7 +287,7 @@ main {
                 margin: 0 0.5rem;
 
                 @media (prefers-color-scheme: dark) {
-                    border-color: $color-light-grey-dark;
+                    border-color: invert($color-light-grey);
                 }
             }
 
@@ -337,10 +337,10 @@ footer {
     }
 
     @media (prefers-color-scheme: dark) {
-        color: $color-footer-fg-dark;
+        color: invert($color-footer-fg);
 
         a {
-            color: $color-footer-fg-dark;
+            color: invert($color-footer-fg);
         }
     }
 
