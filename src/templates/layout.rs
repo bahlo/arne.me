@@ -139,7 +139,7 @@ impl Layout {
                                 // Make a funny face on hover
                                 var arne = document.querySelector(".hero__arne");
                                 arne.classList.remove("noscript"); // Deactivate CSS hover
-                                var hoverFace = 1;
+                                var hoverFace = 2;
                                 arne.addEventListener("mouseenter", function(e) {
                                     hoverFace = hoverFace == 1 ? 2 : 1; // Alternate between 1 and 2
                                     arne.classList.add("hero__arne--alt-" + hoverFace);
