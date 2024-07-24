@@ -371,3 +371,8 @@ footer {
         @include stack(2rem);
     }
 }
+
+pre, code {
+    font-family: "Pragmata Pro", monospace;
+    font-size: .9em; // Works better with the default text
+}
