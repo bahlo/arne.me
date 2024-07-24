@@ -372,7 +372,29 @@ footer {
     }
 }
 
-pre, code {
+pre,
+code {
     font-family: "Pragmata Pro", monospace;
-    font-size: .9em; // Works better with the default text
+    font-size: 0.9em; // Works better with the default text
+
+    .name,
+    .entity,
+    .reserved {
+        color: $color-primary;
+
+        @media (prefers-color-scheme: dark) {
+            color: invert($color-primary);
+        }
+    }
+
+    .variable,
+    .quoted,
+    .comment,
+    .punctuation {
+        color: $color-grey;
+
+        @media (prefers-color-scheme: dark) {
+            color: invert($color-grey);
+        }
+    }
 }
