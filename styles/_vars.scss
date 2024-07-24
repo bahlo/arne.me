@@ -10,7 +10,7 @@ $font-size-p: 1rem;
 $font-size-small: 0.937rem;
 $font-size-tiny: 0.878rem;
 
-$color-primary: #4040ff;
+$color-primar: #0049ff;
 $color-fg: #222;
 $color-heading: #000;
 $color-bg: #fff;
@@ -27,5 +27,5 @@ $color-bg-dark: #111;
 $color-footer-fg-dark: #aaa;
 $color-input-bg-dark: #222;
 $color-input-border-dark: #333;
-$color-primary-dark: #ffb600;
+$color-primary-dark: invert($color-primary);
 $color-light-grey-dark: #666;
