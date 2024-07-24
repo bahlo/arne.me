@@ -22,6 +22,10 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
             section.blog {
                 h1 { "Blog" }
 
+                p {
+                    "Ocasionally I write blog posts."
+                }
+
                 .blog__article_list {
                     @for post in blog_posts {
                         article {

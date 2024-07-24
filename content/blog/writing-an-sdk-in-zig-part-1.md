@@ -15,7 +15,7 @@ Let's do something harder.
 
 And because I work at [Axiom](https://axiom.co), we're going to write an SDK for
 the [public API](https://axiom.co/docs/restapi/endpoints).
-In this first part I'll set up the library and add a simpel `getDatasets` fn
+In this first part I'll set up the library and add a single `getDatasets` fn
 to fetch all datasets the token has access to.
 
 <!-- more -->
