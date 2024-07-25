@@ -1,16 +1,32 @@
+use std::collections::HashMap;
+
 use anyhow::Result;
+use chrono::{Datelike, Utc};
 use maud::{html, PreEscaped};
 use url::Url;
 
 use crate::{
-    content::Blogpost,
+    content::{Blogpost, Content},
     templates::{
         format_date,
         layout::{self, Context, Head, OgType},
     },
 };
 
-pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Result<Context> {
+pub fn render_page(content: &Content) -> Result<Context> {
+    let mut blog_posts_by_year = content
+        .blog
+        .iter()
+        .fold(HashMap::new(), |mut acc, blogpost| {
+            let posts = acc.entry(blogpost.published.year()).or_insert(vec![]);
+            posts.push(blogpost);
+            acc
+        })
+        .into_iter()
+        .map(|(year, blog_posts)| (year, blog_posts))
+        .collect::<Vec<_>>();
+    blog_posts_by_year.sort_by(|(a, _), (b, _)| b.cmp(a));
+
     Ok(Context::new_with_options(
         Head {
             title: "Arne Bahlo".to_string(),
@@ -22,40 +38,17 @@ pub fn render_page(page: usize, num_pages: usize, blog_posts: &[Blogpost]) -> Re
             section.blog {
                 h1 { "Blog" }
 
-                p {
-                    "Ocasionally I write blog posts."
-                }
-
-                .blog__article_list {
-                    @for post in blog_posts {
-                        article {
-                            @let url = format!("/blog/{}", post.slug);
-                            h2.blogpost__heading { a href=(url) { (post.title) } }
-                            i.byline {
-                                (format_date(post.published))
-                            }
-                            @if let Some(excerpt_html) = &post.excerpt_html {
-                                p { (PreEscaped(excerpt_html)) }
-                                a href=(url) { "Continue reading..." }
-                            }
-                        }
+                @for (year, blog_posts) in blog_posts_by_year {
+                    @if year != Utc::now().year() {
+                        h2 { (year) }
                     }
-                }
-
-                br.hidden;
-
-                nav.pagination role="navigation" aria-label="Pagination Navigation" {
-                    "Page: "
-                    @for i in 1..=num_pages {
-                        @if i == page {
-                            span aria-current="true" { (i) }
-                        } @else if i == 1 {
-                            a href="/" aria-label=(format!("Go to page {}", i)) { (i) }
-                        } @else {
-                            a href=(format!("/blog/page/{}", i)) aria-label=(format!("Go to page {}", i)) { (i) }
-                        }
-                        @if i < num_pages {
-                            " "
+                    @for post in blog_posts {
+                        div {
+                            @let url = format!("/blog/{}", post.slug);
+                            a.medium href=(url) { (post.title) }
+                            "—"
+                            span { (post.description) }
+                            br;
                         }
                     }
                 }

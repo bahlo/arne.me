@@ -367,6 +367,8 @@ footer {
 }
 
 .blog {
+    @include stack;
+
     &__article_list {
         @include stack(2rem);
     }
@@ -397,4 +399,8 @@ code {
             color: invert($color-grey);
         }
     }
+}
+
+.medium {
+    font-weight: 500;
 }

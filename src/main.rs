@@ -154,24 +154,12 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
                 .into_string(),
         )?;
     }
-    // Generate pagination
-    let num_pages = content.blog.len() / 8 + 1;
-    for (i, blog_posts) in content.blog.chunks(8).enumerate() {
-        let page = i + 1;
-        fs::create_dir_all(format!("dist/blog/page/{}", page))?;
-        let path = format!("dist/blog/page/{}/index.html", page);
-        fs::write(
-            &path,
-            layout
-                .render(templates::blog::render_page(page, num_pages, blog_posts)?)
-                .into_string(),
-        )?;
-
-        // The first page should be the index
-        if i == 0 {
-            fs::rename("dist/blog/page/1/index.html", "dist/blog/index.html")?;
-        }
-    }
+    fs::write(
+        "dist/blog/index.html",
+        layout
+            .render(templates::blog::render_page(&content)?)
+            .into_string(),
+    )?;
 
     // Generate weekly
     fs::create_dir_all("dist/weekly")?;
