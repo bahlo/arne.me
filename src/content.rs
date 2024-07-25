@@ -4,10 +4,10 @@ use chrono::NaiveDate;
 use comrak::markdown_to_html_with_plugins;
 use crowbook_text_processing::clean;
 use gray_matter::{engine::YAML, Matter};
-use lazy_static::lazy_static;
 use regex::Regex;
 use serde::Deserialize;
 use std::{
+    cell::LazyCell,
     cmp::Ordering,
     collections::HashMap,
     fs::{self, DirEntry, File},
@@ -20,10 +20,8 @@ pub fn smart_quotes(text: impl Into<String>) -> String {
     clean::quotes(text.into()).to_string()
 }
 
-lazy_static! {
-    static ref FOOTNOTE_REGEX: Regex =
-        Regex::new(r"\[\^(\d+)\]").expect("Failed to compile footnote regex");
-}
+const FOOTNOTE_REGEX: LazyCell<Regex> =
+    LazyCell::new(|| Regex::new(r"\[\^(\d+)\]").expect("Failed to compile footnote regex"));
 
 #[derive(Debug, Default)]
 pub struct Content {

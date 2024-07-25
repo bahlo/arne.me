@@ -9,10 +9,10 @@ publish = false
 [features]
 default = ["watch", "send-webmentions", "export-weekly-feeds"]
 watch = [
-  "notify-debouncer-mini",
-  "tungstenite",
-  "crossbeam-channel",
-  "file-serve",
+    "notify-debouncer-mini",
+    "tungstenite",
+    "crossbeam-channel",
+    "file-serve",
 ]
 send-webmentions = ["scraper"]
 export-weekly-feeds = ["scraper"]
@@ -21,21 +21,20 @@ export-weekly-feeds = ["scraper"]
 anyhow = "1"
 blake3 = "1.5.3"
 chrono = { version = "0.4.38", default-features = false, features = [
-  "std",
-  "clock",
-  "serde",
+    "std",
+    "clock",
+    "serde",
 ] }
 clap = { version = "4", features = ["derive"] }
 comrak = { version = "0.26.0", default-features = false, features = [
-  "emojis",
-  "syntect",
+    "emojis",
+    "syntect",
 ] }
 crossbeam-channel = { version = "0.5.13", optional = true }
 crowbook-text-processing = "1"
 file-serve = { version = "0.3", optional = true }
 grass = { version = "0.13", default-features = false }
 gray_matter = { version = "0.2", default-features = false, features = ["yaml"] }
-lazy_static = "1"
 maud = { version = "0.26" }
 notify-debouncer-mini = { version = "0.4.1", optional = true }
 quick-xml = { version = "0.36", features = ["serialize"] }
@@ -48,6 +47,6 @@ ureq = "2.10.0"
 url = { version = "2.5", features = ["serde"] }
 zip = { version = "2.1.5", features = ["deflate"] }
 scraper = { version = "0.19", optional = true, default-features = false, features = [
-  "errors",
+    "errors",
 ] }
 bat = { version = "0.24", default-features = false }

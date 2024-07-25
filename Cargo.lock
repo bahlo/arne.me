@@ -150,7 +150,6 @@ dependencies = [
  "file-serve",
  "grass",
  "gray_matter",
- "lazy_static",
  "maud",
  "notify-debouncer-mini",
  "quick-xml 0.36.0",

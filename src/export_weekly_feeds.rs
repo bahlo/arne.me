@@ -1,10 +1,10 @@
 use anyhow::{Context, Result};
 use chrono::{DateTime, Utc};
-use lazy_static::lazy_static;
 use quick_xml::se::Serializer;
 use scraper::{Html, Selector};
 use serde::{Deserialize, Serialize};
 use std::{
+    cell::LazyCell,
     collections::HashSet,
     env,
     fs::{self, File},
@@ -19,10 +19,9 @@ use crate::content::Content;
 const XML_DECLARATION: &'static str = r#"<?xml version="1.0" encoding="UTF-8"?>"#;
 const FEEDS_OPML_PATH: &'static str = "static/weekly/feeds.opml";
 
-lazy_static! {
-    pub static ref SELECTOR: Selector =
-        Selector::parse(r#"link[rel="alternate"]"#).expect("Failed to parse selector");
-}
+pub const SELECTOR: LazyCell<Selector> = LazyCell::new(|| {
+    Selector::parse(r#"link[rel="alternate"]"#).expect("Failed to parse selector")
+});
 
 pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
     let mut failures = vec![];

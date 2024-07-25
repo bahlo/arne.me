@@ -1,8 +1,8 @@
 use anyhow::{anyhow, bail, Result};
 use chrono::Utc;
 use clap::Parser;
-use lazy_static::lazy_static;
 use std::{
+    cell::LazyCell,
     env,
     fs::{self, File},
     io,
@@ -29,16 +29,14 @@ use export_weekly_feeds::export_weekly_feeds;
 #[cfg(feature = "send-webmentions")]
 use webmentions::send_webmentions;
 
-lazy_static! {
-    pub static ref GIT_SHA: String = {
-        let output = Command::new("git")
-            .args(&["rev-parse", "HEAD"])
-            .output()
-            .expect("Failed to eecute git command");
-        String::from_utf8(output.stdout).expect("Failed to parse git output")
-    };
-    pub static ref GIT_SHA_SHORT: String = GIT_SHA.chars().take(7).collect();
-}
+pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
+    let output = Command::new("git")
+        .args(&["rev-parse", "HEAD"])
+        .output()
+        .expect("Failed to eecute git command");
+    String::from_utf8(output.stdout).expect("Failed to parse git output")
+});
+pub const GIT_SHA_SHORT: LazyCell<String> = LazyCell::new(|| GIT_SHA.chars().take(7).collect());
 
 #[derive(Debug, Parser)]
 struct Cli {

@@ -1,16 +1,14 @@
 use crate::content::Content;
 use anyhow::{anyhow, Context, Result};
-use lazy_static::lazy_static;
 use regex::Regex;
 use scraper::{Html, Selector};
-use std::fs;
+use std::{cell::LazyCell, fs};
 
-lazy_static! {
-    pub static ref SELECTOR: Selector =
-        Selector::parse(r#"link[rel="webmention"]"#).expect("Failed to parse webmention selector");
-    pub static ref LINK_REGEX: Regex =
-        Regex::new(r#"(https?://[^"]+)"#).expect("Failed to parse link regex");
-}
+pub const SELECTOR: LazyCell<Selector> = LazyCell::new(|| {
+    Selector::parse(r#"link[rel="webmention"]"#).expect("Failed to parse webmention selector")
+});
+pub const LINK_REGEX: LazyCell<Regex> =
+    LazyCell::new(|| Regex::new(r#"(https?://[^"]+)"#).expect("Failed to parse link regex"));
 
 pub fn send_webmentions(path: impl AsRef<str>, dry_run: bool) -> Result<()> {
     let content = Content::parse(fs::read_dir("content")?)?;
