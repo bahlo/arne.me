@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><opml version="1.0">
   <head>
     <title>RSS feeds from stories in all Arne's Weekly issues</title>
-    <date_created>Thu, 25 Jul 2024 13:18:51 +0000</date_created>
+    <date_created>Sun, 04 Aug 2024 08:23:03 +0000</date_created>
   </head>
   <body>
     <outline text="Aeon | a world of ideas" type="rss" xmlUrl="https://aeon.co/feed.atom"/>
@@ -810,5 +810,12 @@
     <outline text="" type="rss" xmlUrl="https://www.newyorker.com/feed/rss"/>
     <outline text="A List Apart » Feed" type="rss" xmlUrl="https://alistapart.com/main/feed/"/>
     <outline text="" type="rss" xmlUrl="https://rachelbythebay.com/w/atom.xml"/>
+    <outline text="Rat-Feed" type="rss" xmlUrl="http://ratfactor.com/atom.xml"/>
+    <outline text="jimmyhmiller.github.io" type="rss" xmlUrl="https://jimmyhmiller.github.io/feed.xml"/>
+    <outline text="" type="rss" xmlUrl="https://futurism.com/feed"/>
+    <outline text="" type="rss" xmlUrl="https://futurism.com/categories/ai-artificial-intelligence/feed"/>
+    <outline text="First Round Review" type="rss" xmlUrl="https://review.firstround.com/"/>
+    <outline text="" type="rss" xmlUrl="https://futurism.com/authors/victor/feed"/>
+    <outline text="" type="rss" xmlUrl="https://dgerrells.com/feed/"/>
   </body>
 </opml>
