@@ -15,6 +15,7 @@ use zip::ZipArchive;
 mod content;
 #[cfg(feature = "export-weekly-feeds")]
 mod export_weekly_feeds;
+mod og;
 mod rss;
 mod sitemap;
 mod templates;
@@ -139,9 +140,18 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .render(templates::index::render(&content)?)
             .into_string(),
     )?;
+    og::generate("Arne Bahlo", "static/og-image.png")?;
 
     // Generate blog
     fs::create_dir_all("dist/blog")?;
+    fs::write(
+        "dist/blog/index.html",
+        layout
+            .render(templates::blog::render_page(&content)?)
+            .into_string(),
+    )?;
+    fs::create_dir_all("static/blog")?;
+    og::generate("Arne Bahlo's blog", "static/blog/og-image.png")?;
     for blogpost in &content.blog {
         fs::create_dir_all(format!("dist/blog/{}", blogpost.slug))?;
         let path = format!("dist/blog/{}/index.html", blogpost.slug);
@@ -151,13 +161,12 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
                 .render(templates::blog::render(blogpost)?)
                 .into_string(),
         )?;
+        fs::create_dir_all(format!("static/blog/{}", blogpost.slug))?;
+        og::generate(
+            &blogpost.title,
+            format!("static/blog/{}/og-image.png", blogpost.slug),
+        )?;
     }
-    fs::write(
-        "dist/blog/index.html",
-        layout
-            .render(templates::blog::render_page(&content)?)
-            .into_string(),
-    )?;
 
     // Generate weekly
     fs::create_dir_all("dist/weekly")?;
@@ -167,6 +176,8 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .render(templates::weekly::render_index(&content)?)
             .into_string(),
     )?;
+    fs::create_dir_all("static/weekly")?;
+    og::generate("Arne’s Weekly", "static/weekly/og-image.png")?;
     for weekly_issue in &content.weekly {
         fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
         let path = format!("dist/weekly/{}/index.html", weekly_issue.num);
@@ -175,6 +186,11 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             layout
                 .render(templates::weekly::render(weekly_issue)?)
                 .into_string(),
+        )?;
+        fs::create_dir_all(format!("static/weekly/{}", weekly_issue.num))?;
+        og::generate(
+            &weekly_issue.title,
+            format!("static/weekly/{}/og-image.png", weekly_issue.num),
         )?;
     }
 
@@ -186,6 +202,8 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .render(templates::book_review::render_index(&content)?)
             .into_string(),
     )?;
+    fs::create_dir_all("static/book-reviews")?;
+    og::generate("Book Reviews", "static/book-reviews/og-image.png")?;
     for book_review in &content.book_reviews {
         fs::create_dir_all(format!("dist/book-reviews/{}", book_review.slug))?;
         let path = format!("dist/book-reviews/{}/index.html", book_review.slug);
@@ -194,6 +212,11 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             layout
                 .render(templates::book_review::render(book_review)?)
                 .into_string(),
+        )?;
+        fs::create_dir_all(format!("static/book-reviews/{}", book_review.slug))?;
+        og::generate(
+            &book_review.title,
+            format!("static/book-reviews/{}/og-image.png", book_review.slug),
         )?;
     }
 
@@ -205,6 +228,8 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .render(templates::home_screen::render_index(&content)?)
             .into_string(),
     )?;
+    fs::create_dir_all("static/home-screens")?;
+    og::generate("Home Screens", "static/home-screens/og-image.png")?;
     for home_screen in &content.home_screens {
         fs::create_dir_all(format!("dist/home-screens/{}", home_screen.slug))?;
         let path = format!("dist/home-screens/{}/index.html", home_screen.slug);
@@ -213,6 +238,11 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             layout
                 .render(templates::home_screen::render(home_screen)?)
                 .into_string(),
+        )?;
+        fs::create_dir_all(format!("static/home-screens/{}", home_screen.slug))?;
+        og::generate(
+            &home_screen.title,
+            format!("static/home-screens/{}/og-image.png", home_screen.slug),
         )?;
     }
 
@@ -230,6 +260,8 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             &path,
             layout.render(templates::page::render(page)?).into_string(),
         )?;
+        fs::create_dir_all(format!("static/{}", page.slug))?;
+        og::generate(&page.title, format!("static/{}/og-image.png", page.slug))?;
     }
 
     // Generate projects page
@@ -240,6 +272,8 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .render(templates::project::render(&content.projects)?)
             .into_string(),
     )?;
+    fs::create_dir_all("static/projects")?;
+    og::generate("Projects", "static/projects/og-image.png")?;
 
     // Generate RSS feeds
     fs::write("dist/feed.xml", rss::render_blog(&content))?;

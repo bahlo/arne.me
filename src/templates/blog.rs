@@ -29,9 +29,9 @@ pub fn render_page(content: &Content) -> Result<Context> {
 
     Ok(Context::new_with_options(
         Head {
-            title: "Arne Bahlo".to_string(),
-            description: "Arne Bahlo's personal website".to_string(),
-            url: Url::parse("https://arne.me")?,
+            title: "Arne Bahlo's blog".to_string(),
+            description: "Arne Bahlo's personal blog".to_string(),
+            url: Url::parse("https://arne.me/blog")?,
             og_type: OgType::Website,
         },
         html! {
