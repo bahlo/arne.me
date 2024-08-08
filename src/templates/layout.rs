@@ -115,7 +115,7 @@ impl Layout {
                     meta property="og:url" content=(head.url);
                     meta property="og:title" content=(smart_quotes(head.title));
                     meta property="og:description" content=(smart_quotes(head.description));
-                    meta property="og:image" content=(head.url.join("/og-image.png")?);
+                    meta property="og:image" content=(format!("{}/og-image.png", head.url));
                     link rel="sitemap" href="/sitemap.xml";
                     link rel="stylesheet" href=(format!("/main.css?hash={}", self.css_hash));
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Regular.woff2" as="font" type="font/woff2";
