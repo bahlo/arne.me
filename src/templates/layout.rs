@@ -1,6 +1,7 @@
+use anyhow::Result;
 use chrono::Utc;
 use maud::{html, Markup, PreEscaped, DOCTYPE};
-use std::fmt::Display;
+use std::{fmt::Display, path::Path};
 use url::Url;
 
 use crate::{content::smart_quotes, GIT_SHA, GIT_SHA_SHORT};
@@ -84,10 +85,21 @@ impl Layout {
         }
     }
 
-    pub fn render(&self, context: Context) -> Markup {
+    pub fn render(&self, context: Context) -> Result<Markup> {
         let head = context.head;
         let options = context.options.unwrap_or_default();
-        html! {
+
+        // FIXME: Refactor this, this is horrid
+        let og_image_path = format!("static{}/og-image.png", head.url.path());
+        let og_image_path = Path::new(&og_image_path);
+        if !og_image_path.exists() {
+            eprintln!(
+                "WARNING: OG Image doesn't exist at {}",
+                og_image_path.to_string_lossy()
+            );
+        }
+
+        Ok(html! {
             (DOCTYPE)
             html lang="en" {
                 head {
@@ -103,7 +115,7 @@ impl Layout {
                     meta property="og:url" content=(head.url);
                     meta property="og:title" content=(smart_quotes(head.title));
                     meta property="og:description" content=(smart_quotes(head.description));
-                    meta property="og:image" content=(format!("{}/og-image.png", head.url));
+                    meta property="og:image" content=(head.url.join("/og-image.png")?);
                     link rel="sitemap" href="/sitemap.xml";
                     link rel="stylesheet" href=(format!("/main.css?hash={}", self.css_hash));
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Regular.woff2" as="font" type="font/woff2";
@@ -230,6 +242,6 @@ impl Layout {
                     }
                 }
             }
-        }
+        })
     }
 }

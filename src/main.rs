@@ -49,7 +49,7 @@ struct Cli {
 enum NewCommand {
     #[clap(name = "weekly")]
     Weekly,
-    #[clap(name = "generate-og")]
+    #[clap(name = "og-image")]
     OgImage { path: String },
 }
 
@@ -140,7 +140,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     fs::write(
         "dist/index.html",
         layout
-            .render(templates::index::render(&content)?)
+            .render(templates::index::render(&content)?)?
             .into_string(),
     )?;
 
@@ -149,7 +149,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     fs::write(
         "dist/blog/index.html",
         layout
-            .render(templates::blog::render_page(&content)?)
+            .render(templates::blog::render_page(&content)?)?
             .into_string(),
     )?;
     fs::create_dir_all("static/blog")?;
@@ -159,7 +159,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
         fs::write(
             &path,
             layout
-                .render(templates::blog::render(blogpost)?)
+                .render(templates::blog::render(blogpost)?)?
                 .into_string(),
         )?;
         fs::create_dir_all(format!("static/blog/{}", blogpost.slug))?;
@@ -170,7 +170,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     fs::write(
         "dist/weekly/index.html",
         layout
-            .render(templates::weekly::render_index(&content)?)
+            .render(templates::weekly::render_index(&content)?)?
             .into_string(),
     )?;
     fs::create_dir_all("static/weekly")?;
@@ -180,7 +180,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
         fs::write(
             &path,
             layout
-                .render(templates::weekly::render(weekly_issue)?)
+                .render(templates::weekly::render(weekly_issue)?)?
                 .into_string(),
         )?;
         fs::create_dir_all(format!("static/weekly/{}", weekly_issue.num))?;
@@ -191,7 +191,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     fs::write(
         "dist/book-reviews/index.html",
         layout
-            .render(templates::book_review::render_index(&content)?)
+            .render(templates::book_review::render_index(&content)?)?
             .into_string(),
     )?;
     fs::create_dir_all("static/book-reviews")?;
@@ -201,7 +201,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
         fs::write(
             &path,
             layout
-                .render(templates::book_review::render(book_review)?)
+                .render(templates::book_review::render(book_review)?)?
                 .into_string(),
         )?;
         fs::create_dir_all(format!("static/book-reviews/{}", book_review.slug))?;
@@ -212,7 +212,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     fs::write(
         "dist/home-screens/index.html",
         layout
-            .render(templates::home_screen::render_index(&content)?)
+            .render(templates::home_screen::render_index(&content)?)?
             .into_string(),
     )?;
     fs::create_dir_all("static/home-screens")?;
@@ -222,7 +222,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
         fs::write(
             &path,
             layout
-                .render(templates::home_screen::render(home_screen)?)
+                .render(templates::home_screen::render(home_screen)?)?
                 .into_string(),
         )?;
         fs::create_dir_all(format!("static/home-screens/{}", home_screen.slug))?;
@@ -240,7 +240,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
 
         fs::write(
             &path,
-            layout.render(templates::page::render(page)?).into_string(),
+            layout.render(templates::page::render(page)?)?.into_string(),
         )?;
         fs::create_dir_all(format!("static/{}", page.slug))?;
     }
@@ -250,7 +250,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     fs::write(
         "dist/projects/index.html",
         layout
-            .render(templates::project::render(&content.projects)?)
+            .render(templates::project::render(&content.projects)?)?
             .into_string(),
     )?;
     fs::create_dir_all("static/projects")?;
