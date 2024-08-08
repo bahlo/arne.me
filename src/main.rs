@@ -49,6 +49,8 @@ struct Cli {
 enum NewCommand {
     #[clap(name = "weekly")]
     Weekly,
+    #[clap(name = "generate-og")]
+    OgImage { path: String },
 }
 
 #[derive(Debug, Parser)]
@@ -99,6 +101,7 @@ fn main() -> Result<()> {
         Commands::SendWebmentions { path, dry_run } => send_webmentions(path, dry_run),
         Commands::New(new) => match new {
             NewCommand::Weekly => new_weekly(),
+            NewCommand::OgImage { path } => new_og_image(path),
         },
         Commands::Export(export) => match export {
             ExportCommand::Weekly { num } => export_weekly(num),
@@ -140,7 +143,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .render(templates::index::render(&content)?)
             .into_string(),
     )?;
-    og::generate("Arne Bahlo", "static/og-image.png")?;
 
     // Generate blog
     fs::create_dir_all("dist/blog")?;
@@ -151,7 +153,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .into_string(),
     )?;
     fs::create_dir_all("static/blog")?;
-    og::generate("Arne Bahlo's blog", "static/blog/og-image.png")?;
     for blogpost in &content.blog {
         fs::create_dir_all(format!("dist/blog/{}", blogpost.slug))?;
         let path = format!("dist/blog/{}/index.html", blogpost.slug);
@@ -162,10 +163,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
                 .into_string(),
         )?;
         fs::create_dir_all(format!("static/blog/{}", blogpost.slug))?;
-        og::generate(
-            &blogpost.title,
-            format!("static/blog/{}/og-image.png", blogpost.slug),
-        )?;
     }
 
     // Generate weekly
@@ -177,7 +174,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .into_string(),
     )?;
     fs::create_dir_all("static/weekly")?;
-    og::generate("Arne’s Weekly", "static/weekly/og-image.png")?;
     for weekly_issue in &content.weekly {
         fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
         let path = format!("dist/weekly/{}/index.html", weekly_issue.num);
@@ -188,10 +184,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
                 .into_string(),
         )?;
         fs::create_dir_all(format!("static/weekly/{}", weekly_issue.num))?;
-        og::generate(
-            &weekly_issue.title,
-            format!("static/weekly/{}/og-image.png", weekly_issue.num),
-        )?;
     }
 
     // Generate book reviews
@@ -203,7 +195,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .into_string(),
     )?;
     fs::create_dir_all("static/book-reviews")?;
-    og::generate("Book Reviews", "static/book-reviews/og-image.png")?;
     for book_review in &content.book_reviews {
         fs::create_dir_all(format!("dist/book-reviews/{}", book_review.slug))?;
         let path = format!("dist/book-reviews/{}/index.html", book_review.slug);
@@ -214,10 +205,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
                 .into_string(),
         )?;
         fs::create_dir_all(format!("static/book-reviews/{}", book_review.slug))?;
-        og::generate(
-            &book_review.title,
-            format!("static/book-reviews/{}/og-image.png", book_review.slug),
-        )?;
     }
 
     // Generate home screens
@@ -229,7 +216,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .into_string(),
     )?;
     fs::create_dir_all("static/home-screens")?;
-    og::generate("Home Screens", "static/home-screens/og-image.png")?;
     for home_screen in &content.home_screens {
         fs::create_dir_all(format!("dist/home-screens/{}", home_screen.slug))?;
         let path = format!("dist/home-screens/{}/index.html", home_screen.slug);
@@ -240,10 +226,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
                 .into_string(),
         )?;
         fs::create_dir_all(format!("static/home-screens/{}", home_screen.slug))?;
-        og::generate(
-            &home_screen.title,
-            format!("static/home-screens/{}/og-image.png", home_screen.slug),
-        )?;
     }
 
     // Generate pages
@@ -261,7 +243,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             layout.render(templates::page::render(page)?).into_string(),
         )?;
         fs::create_dir_all(format!("static/{}", page.slug))?;
-        og::generate(&page.title, format!("static/{}/og-image.png", page.slug))?;
     }
 
     // Generate projects page
@@ -273,7 +254,6 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
             .into_string(),
     )?;
     fs::create_dir_all("static/projects")?;
-    og::generate("Projects", "static/projects/og-image.png")?;
 
     // Generate RSS feeds
     fs::write("dist/feed.xml", rss::render_blog(&content))?;
@@ -461,5 +441,64 @@ categories:
 
     fs::write(&path, content)?;
     println!("Created new weekly issue at: {:?}", path);
+    Ok(())
+}
+
+fn new_og_image(path: impl AsRef<str>) -> Result<()> {
+    let content = Content::parse(fs::read_dir("content")?)?;
+
+    let (kind, slug) = path
+        .as_ref()
+        .split_once("/")
+        .unwrap_or_else(|| ("", path.as_ref()));
+
+    // TODO: Support `*` to generate everything including index pages
+    // (/, /blog, /weekly, /book-reviews)
+
+    match kind {
+        "weekly" => {
+            let weekly_issue = content
+                .weekly
+                .iter()
+                .find(|issue| issue.num.to_string() == slug)
+                .ok_or(anyhow!("Can't find weekly issue"))?;
+            og::generate(
+                &weekly_issue.title,
+                format!("static/weekly/{}/og-image.png", weekly_issue.num),
+            )?;
+        }
+        "blog" => {
+            let blogpost = content
+                .blog
+                .iter()
+                .find(|blogpost| blogpost.slug == slug)
+                .ok_or(anyhow!("Can't find blogpost"))?;
+            og::generate(
+                &blogpost.title,
+                format!("static/blog/{}/og-image.png", blogpost.slug),
+            )?;
+        }
+        "book-reviews" => {
+            let book_review = content
+                .book_reviews
+                .iter()
+                .find(|book_review| book_review.slug == slug)
+                .ok_or(anyhow!("Can't find book review"))?;
+            og::generate(
+                &book_review.title,
+                format!("static/book-reviews/{}/og-image.png", book_review.slug),
+            )?;
+        }
+        "" => {
+            let page = content
+                .pages
+                .iter()
+                .find(|page| page.slug == slug)
+                .ok_or(anyhow!("Can't find page"))?;
+            og::generate(&page.title, format!("static/{}/og-image.png", page.slug))?;
+        }
+        _ => bail!("No idea what to do here"),
+    }
+
     Ok(())
 }
