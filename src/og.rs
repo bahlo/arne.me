@@ -1,6 +1,10 @@
 use anyhow::{anyhow, Result};
 use core::str;
-use std::{fs, path::Path};
+use std::{
+    fs::{self, File},
+    io::Read,
+    path::Path,
+};
 use tiny_skia::Pixmap;
 
 const WIDTH: u32 = 1200;
@@ -41,11 +45,12 @@ pub fn generate(title: impl Into<String>, output_file: impl AsRef<Path>) -> Resu
     let svg = include_bytes!("../static/og-template.svg");
     let svg = str::from_utf8(svg)?.replace("{{ tspans }}", &tspans);
 
+    let mut font_data = vec![];
+    File::open("../static/fonts/rebond-grotesque/ESRebondGrotesque-Bold.ttf")?
+        .read_to_end(&mut font_data)?;
     let mut pixmap = Pixmap::new(WIDTH, HEIGHT).ok_or(anyhow!("Pixmap allocation error"))?;
     let mut options = usvg::Options::default();
-    options.fontdb_mut().load_font_data(
-        include_bytes!("../static/fonts/rebond-grotesque/ESRebondGrotesque-Bold.ttf").to_vec(),
-    );
+    options.fontdb_mut().load_font_data(font_data);
     let tree = usvg::Tree::from_str(&svg, &mut options)?;
     resvg::render(&tree, usvg::Transform::identity(), &mut pixmap.as_mut());
     let png_data = pixmap.encode_png()?;
