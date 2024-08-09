@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, Context, Result};
 use core::str;
 use std::{
     fs::{self, File},
@@ -46,7 +46,8 @@ pub fn generate(title: impl Into<String>, output_file: impl AsRef<Path>) -> Resu
     let svg = str::from_utf8(svg)?.replace("{{ tspans }}", &tspans);
 
     let mut font_data = vec![];
-    File::open("../static/fonts/rebond-grotesque/ESRebondGrotesque-Bold.ttf")?
+    File::open("static/fonts/rebond-grotesque/ESRebondGrotesque-Bold.ttf")
+        .context("Failed to open font")?
         .read_to_end(&mut font_data)?;
     let mut pixmap = Pixmap::new(WIDTH, HEIGHT).ok_or(anyhow!("Pixmap allocation error"))?;
     let mut options = usvg::Options::default();

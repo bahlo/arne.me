@@ -447,58 +447,84 @@ categories:
 fn new_og_image(path: impl AsRef<str>) -> Result<()> {
     let content = Content::parse(fs::read_dir("content")?)?;
 
-    let (kind, slug) = path
-        .as_ref()
-        .split_once("/")
-        .unwrap_or_else(|| ("", path.as_ref()));
+    if path.as_ref() == "*" {
+        // Regenerate all og images
+        content
+            .weekly
+            .iter()
+            .map(|weekly_issue| Ok(new_og_image(format!("weekly/{}", weekly_issue.num))?))
+            .collect::<Result<Vec<()>>>()?;
+        content
+            .blog
+            .iter()
+            .map(|blog_post| Ok(new_og_image(format!("blog/{}", blog_post.slug))?))
+            .collect::<Result<Vec<()>>>()?;
+        content
+            .book_reviews
+            .iter()
+            .map(|book_review| Ok(new_og_image(format!("book-reviews/{}", book_review.slug))?))
+            .collect::<Result<Vec<()>>>()?;
+        content
+            .pages
+            .iter()
+            .map(|page| Ok(new_og_image(&page.slug)?))
+            .collect::<Result<Vec<()>>>()?;
 
-    // TODO: Support `*` to generate everything including index pages
-    // (/, /blog, /weekly, /book-reviews)
+        // Also regen index pages
+        og::generate("Arne Bahlo", "static/og-image.png")?;
+        og::generate("Arne's Blog", "static/blog/og-image.png")?;
+        og::generate("Arne's Weekly", "static/weekly/og-image.png")?;
+        og::generate("Arne's Book Reviews", "static/book-reviews/og-image.png")?;
+    } else {
+        let (kind, slug) = path
+            .as_ref()
+            .split_once("/")
+            .unwrap_or_else(|| ("", path.as_ref()));
 
-    match kind {
-        "weekly" => {
-            let weekly_issue = content
-                .weekly
-                .iter()
-                .find(|issue| issue.num.to_string() == slug)
-                .ok_or(anyhow!("Can't find weekly issue"))?;
-            og::generate(
-                &weekly_issue.title,
-                format!("static/weekly/{}/og-image.png", weekly_issue.num),
-            )?;
+        match kind {
+            "weekly" => {
+                let weekly_issue = content
+                    .weekly
+                    .iter()
+                    .find(|issue| issue.num.to_string() == slug)
+                    .ok_or(anyhow!("Can't find weekly issue"))?;
+                og::generate(
+                    &weekly_issue.title,
+                    format!("static/weekly/{}/og-image.png", weekly_issue.num),
+                )?;
+            }
+            "blog" => {
+                let blogpost = content
+                    .blog
+                    .iter()
+                    .find(|blogpost| blogpost.slug == slug)
+                    .ok_or(anyhow!("Can't find blogpost"))?;
+                og::generate(
+                    &blogpost.title,
+                    format!("static/blog/{}/og-image.png", blogpost.slug),
+                )?;
+            }
+            "book-reviews" => {
+                let book_review = content
+                    .book_reviews
+                    .iter()
+                    .find(|book_review| book_review.slug == slug)
+                    .ok_or(anyhow!("Can't find book review"))?;
+                og::generate(
+                    &book_review.title,
+                    format!("static/book-reviews/{}/og-image.png", book_review.slug),
+                )?;
+            }
+            "" => {
+                let page = content
+                    .pages
+                    .iter()
+                    .find(|page| page.slug == slug)
+                    .ok_or(anyhow!("Can't find page"))?;
+                og::generate(&page.title, format!("static/{}/og-image.png", page.slug))?;
+            }
+            _ => bail!("No idea what to do here"),
         }
-        "blog" => {
-            let blogpost = content
-                .blog
-                .iter()
-                .find(|blogpost| blogpost.slug == slug)
-                .ok_or(anyhow!("Can't find blogpost"))?;
-            og::generate(
-                &blogpost.title,
-                format!("static/blog/{}/og-image.png", blogpost.slug),
-            )?;
-        }
-        "book-reviews" => {
-            let book_review = content
-                .book_reviews
-                .iter()
-                .find(|book_review| book_review.slug == slug)
-                .ok_or(anyhow!("Can't find book review"))?;
-            og::generate(
-                &book_review.title,
-                format!("static/book-reviews/{}/og-image.png", book_review.slug),
-            )?;
-        }
-        "" => {
-            let page = content
-                .pages
-                .iter()
-                .find(|page| page.slug == slug)
-                .ok_or(anyhow!("Can't find page"))?;
-            og::generate(&page.title, format!("static/{}/og-image.png", page.slug))?;
-        }
-        _ => bail!("No idea what to do here"),
     }
-
     Ok(())
 }

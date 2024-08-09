@@ -60,7 +60,7 @@ pub fn render(book_review: &BookReview) -> Result<Context> {
 pub fn render_index(content: &Content) -> Result<Context> {
     Ok(Context::new_with_options(
         Head {
-            title: "Book Reviews".to_string(),
+            title: "Arne's Book Reviews".to_string(),
             description: "Every book I read gets a review and ends up here.".to_string(),
             url: Url::parse("https://arne.me/book-reviews")?,
             og_type: OgType::Website,
