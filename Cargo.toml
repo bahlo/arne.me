@@ -53,4 +53,4 @@ bat = { version = "0.24", default-features = false }
 resvg = "0.42"
 tiny-skia = "0.11"
 usvg = "0.42"
-html-escape = "0.2.13"
+html-escape = "0.2"
