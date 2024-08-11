@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><opml version="1.0">
   <head>
     <title>RSS feeds from stories in all Arne's Weekly issues</title>
-    <date_created>Sun, 04 Aug 2024 08:23:03 +0000</date_created>
+    <date_created>Sun, 11 Aug 2024 06:45:12 +0000</date_created>
   </head>
   <body>
     <outline text="Aeon | a world of ideas" type="rss" xmlUrl="https://aeon.co/feed.atom"/>
@@ -817,5 +817,9 @@
     <outline text="First Round Review" type="rss" xmlUrl="https://review.firstround.com/"/>
     <outline text="" type="rss" xmlUrl="https://futurism.com/authors/victor/feed"/>
     <outline text="" type="rss" xmlUrl="https://dgerrells.com/feed/"/>
+    <outline text="rya.nc Atom Feed" type="rss" xmlUrl="https://rya.nc/feeds/all.atom"/>
+    <outline text="everything changes atom feed" type="rss" xmlUrl="https://everythingchanges.us/feed.xml"/>
+    <outline text="Cosmographia" type="rss" xmlUrl="https://cosmographia.substack.com/feed"/>
+    <outline text="" type="rss" xmlUrl="https://drakerossman.com/feed.xml"/>
   </body>
 </opml>
