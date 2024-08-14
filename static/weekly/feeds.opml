@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><opml version="1.0">
   <head>
     <title>RSS feeds from stories in all Arne's Weekly issues</title>
-    <date_created>Sun, 11 Aug 2024 06:45:12 +0000</date_created>
+    <date_created>Sun, 18 Aug 2024 09:02:26 +0000</date_created>
   </head>
   <body>
     <outline text="Aeon | a world of ideas" type="rss" xmlUrl="https://aeon.co/feed.atom"/>
@@ -821,5 +821,12 @@
     <outline text="everything changes atom feed" type="rss" xmlUrl="https://everythingchanges.us/feed.xml"/>
     <outline text="Cosmographia" type="rss" xmlUrl="https://cosmographia.substack.com/feed"/>
     <outline text="" type="rss" xmlUrl="https://drakerossman.com/feed.xml"/>
+    <outline text="Run Deep - Atom" type="rss" xmlUrl="https://jdstillwater.blogspot.com/feeds/posts/default"/>
+    <outline text="Infrequently Noted posts" type="rss" xmlUrl="https://infrequently.org/feed/"/>
+    <outline text="ScienceDaily: Latest Science News" type="rss" xmlUrl="https://www.sciencedaily.com/rss/"/>
+    <outline text="Kartik Agaram" type="rss" xmlUrl="https://feeds.akkartik.name/kartiks-scrapbook"/>
+    <outline text="RSS Feed" type="rss" xmlUrl="https://anhvn.com/feed.xml"/>
+    <outline text="" type="rss" xmlUrl="https://www.openmymind.net/atom.xml"/>
+    <outline text="Freewheeling Apps" type="rss" xmlUrl="https://akkartik.name/freewheeling-apps-feed"/>
   </body>
 </opml>
