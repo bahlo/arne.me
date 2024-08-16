@@ -132,47 +132,6 @@ impl Layout {
                     link rel="me" href="https://spezi.social/@arne";
                     link rel="me" href="mailto:hey@arne.me";
                     link rel="webmention" href="https://webmention.io/arne.me/webmention";
-
-                    @if let Some(port) = self.hot_reload_websocket_port {
-                        script {
-                            (format!("const port = {}", port))
-                            (PreEscaped(r#"
-                                const socket = new WebSocket("ws://localhost:"+port);
-                                socket.addEventListener("message", (event) => {
-                                    console.log(event);
-                                    window.location.reload();
-                                });
-                            "#));
-                        }
-                    }
-
-                    script {
-                        (PreEscaped(r#"
-                            document.addEventListener("DOMContentLoaded", () => {
-                                // Make a funny face on hover
-                                var arne = document.querySelector(".hero__arne");
-                                arne.classList.remove("noscript"); // Deactivate CSS hover
-                                var hoverFace = 2;
-                                arne.addEventListener("mouseenter", function(e) {
-                                    hoverFace = hoverFace == 1 ? 2 : 1; // Alternate between 1 and 2
-                                    arne.classList.add("hero__arne--alt-" + hoverFace);
-                                });
-                                arne.addEventListener("mouseleave", function(e) {
-                                    arne.classList.remove('hero__arne--alt-1')
-                                    arne.classList.remove('hero__arne--alt-2')
-                                });
-                                // Touch devices can have fun too!
-                                arne.addEventListener("touchend", function(e) {
-                                    arne.classList.remove('hero__arne--alt-1')
-                                    arne.classList.remove('hero__arne--alt-2')
-                                    hoverFace = (hoverFace + 1) % 3; // Alternate between 0, 1 and 2
-                                    if (hoverFace > 0) {
-                                        arne.classList.add("hero__arne--alt-" + hoverFace);
-                                    }
-                                });
-                            });
-                        "#))
-                    }
                 }
                 body {
                     a.skip-link href="#main" { "Skip to content" }
@@ -239,6 +198,45 @@ impl Layout {
                         p.p-note {
                             "A developer, podcaster & dad based near Frankfurt, Germany."
                         }
+                    }
+
+                    script {
+                        @if let Some(port) = self.hot_reload_websocket_port {
+                            (format!("const port = {}", port))
+                            (PreEscaped(r#"
+                                const socket = new WebSocket("ws://localhost:"+port);
+                                socket.addEventListener("message", (event) => {
+                                    console.log(event);
+                                    window.location.reload();
+                                });
+                            "#));
+                        }
+
+                        (PreEscaped(r#"
+                            document.addEventListener("DOMContentLoaded", () => {
+                                // Make a funny face on hover
+                                var arne = document.querySelector(".hero__arne");
+                                arne.classList.remove("noscript"); // Deactivate CSS hover
+                                var hoverFace = 2;
+                                arne.addEventListener("mouseenter", function(e) {
+                                    hoverFace = hoverFace == 1 ? 2 : 1; // Alternate between 1 and 2
+                                    arne.classList.add("hero__arne--alt-" + hoverFace);
+                                });
+                                arne.addEventListener("mouseleave", function(e) {
+                                    arne.classList.remove('hero__arne--alt-1')
+                                    arne.classList.remove('hero__arne--alt-2')
+                                });
+                                // Touch devices can have fun too!
+                                arne.addEventListener("touchend", function(e) {
+                                    arne.classList.remove('hero__arne--alt-1')
+                                    arne.classList.remove('hero__arne--alt-2')
+                                    hoverFace = (hoverFace + 1) % 3; // Alternate between 0, 1 and 2
+                                    if (hoverFace > 0) {
+                                        arne.classList.add("hero__arne--alt-" + hoverFace);
+                                    }
+                                });
+                            });
+                        "#))
                     }
                 }
             }
