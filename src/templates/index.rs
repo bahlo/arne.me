@@ -50,8 +50,10 @@ pub fn render(content: &Content) -> Result<Context> {
               a href=(format!("/blog/{}", latest_blogpost.slug)) { (latest_blogpost.title) }
               ", the latest newsletter issue is "
               a href=(format!("/weekly/{}", latest_weekly.num)) { (latest_weekly.title) }
-              " and the latest book I've read is called "
+              " and the latest book I've read is "
               a href=(format!("/library/{}", latest_book.slug)) { (latest_book.title) }
+              " by "
+              (latest_book.author)
               "."
             }
           }
