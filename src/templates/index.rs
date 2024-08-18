@@ -13,10 +13,10 @@ pub fn render(content: &Content) -> Result<Context> {
         .weekly
         .first()
         .ok_or(anyhow!("No weekly issues found"))?;
-    let latest_book_review = content
-        .book_reviews
+    let latest_book = content
+        .library
         .first()
-        .ok_or(anyhow!("No book reviews found"))?;
+        .ok_or(anyhow!("No books found"))?;
     Ok(Context::new_with_options(
         Head {
             title: "Arne Bahlo".into(),
@@ -51,7 +51,7 @@ pub fn render(content: &Content) -> Result<Context> {
               ", the latest newsletter issue is "
               a href=(format!("/weekly/{}", latest_weekly.num)) { (latest_weekly.title) }
               " and the latest book I've read is called "
-              a href=(format!("/book-reviews/{}", latest_book_review.slug)) { (latest_book_review.title) }
+              a href=(format!("/library/{}", latest_book.slug)) { (latest_book.title) }
               "."
             }
           }

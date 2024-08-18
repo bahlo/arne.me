@@ -128,7 +128,7 @@ impl Layout {
                     link rel="manifest" href="/site.webmanifest";
                     link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Blog")) href="/feed.xml";
                     link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Weekly")) href="/weekly/feed.xml";
-                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Book Reviews")) href="/book-reviews/feed.xml";
+                    link rel="alternate" type="application/rss+xml" title=(smart_quotes("Arne's Book Reviews")) href="/library/feed.xml";
                     link rel="me" href="https://spezi.social/@arne";
                     link rel="me" href="mailto:hey@arne.me";
                     link rel="webmention" href="https://webmention.io/arne.me/webmention";
@@ -146,7 +146,7 @@ impl Layout {
                                 " "
                                 a.active[options.navigation_item == NavigationItem::Newsletter] href="/weekly" { "Newsletter" }
                                 " "
-                                a.active[options.navigation_item == NavigationItem::BookReviews] href="/book-reviews" { "Book Reviews" }
+                                a.active[options.navigation_item == NavigationItem::BookReviews] href="/library" { "Library" }
                             }
                         }
                         main #main {

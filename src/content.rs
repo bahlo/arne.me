@@ -28,7 +28,7 @@ pub struct Content {
     // Stream
     pub blog: Vec<Blogpost>,
     pub weekly: Vec<WeeklyIssue>,
-    pub book_reviews: Vec<BookReview>,
+    pub library: Vec<Book>,
     pub home_screens: Vec<HomeScreen>,
 
     pub pages: Vec<Page>,
@@ -79,7 +79,7 @@ pub struct HomeScreen {
 }
 
 #[derive(Debug, PartialEq, Eq, PartialOrd)]
-pub struct BookReview {
+pub struct Book {
     pub slug: String,
     pub title: String,
     pub author: String,
@@ -238,10 +238,10 @@ impl Content {
                     let dir = fs::read_dir(entry.path())?;
                     content.weekly = Self::parse_weekly(&matter, &markdown_context, dir)?;
                 }
-                "book-reviews" => {
+                "library" => {
                     let dir = fs::read_dir(entry.path())?;
-                    content.book_reviews =
-                        Self::parse_book_reviews(&matter, &markdown_context, dir)?;
+                    content.library =
+                        Self::parse_library(&matter, &markdown_context, dir)?;
                 }
                 "projects" => {
                     let dir = fs::read_dir(entry.path())?;
@@ -458,12 +458,12 @@ impl Content {
         Ok(home_screens)
     }
 
-    fn parse_book_reviews(
+    fn parse_library(
         matter: &Matter<YAML>,
         markdown_context: &MarkdownContext,
         mut dir: fs::ReadDir,
-    ) -> Result<Vec<BookReview>> {
-        let mut book_reviews = Vec::new();
+    ) -> Result<Vec<Book>> {
+        let mut library = Vec::new();
         while let Some(entry) = dir.next().transpose()? {
             if entry.file_type()?.is_dir() {
                 continue;
@@ -530,7 +530,7 @@ impl Content {
                 &markdown_context.plugins,
             );
 
-            book_reviews.push(BookReview {
+            library.push(Book {
                 slug,
                 title: smart_quotes(frontmatter.title),
                 author: smart_quotes(frontmatter.author),
@@ -542,9 +542,9 @@ impl Content {
             });
         }
 
-        book_reviews.sort_by(|a, b| b.read.cmp(&a.read));
+        library.sort_by(|a, b| b.read.cmp(&a.read));
 
-        Ok(book_reviews)
+        Ok(library)
     }
 
     fn parse_weekly(

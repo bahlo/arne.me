@@ -187,24 +187,24 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     }
 
     // Generate book reviews
-    fs::create_dir_all("dist/book-reviews")?;
+    fs::create_dir_all("dist/library")?;
     fs::write(
-        "dist/book-reviews/index.html",
+        "dist/library/index.html",
         layout
-            .render(templates::book_review::render_index(&content)?)?
+            .render(templates::library::render_index(&content)?)?
             .into_string(),
     )?;
-    fs::create_dir_all("static/book-reviews")?;
-    for book_review in &content.book_reviews {
-        fs::create_dir_all(format!("dist/book-reviews/{}", book_review.slug))?;
-        let path = format!("dist/book-reviews/{}/index.html", book_review.slug);
+    fs::create_dir_all("static/library")?;
+    for book in &content.library {
+        fs::create_dir_all(format!("dist/library/{}", book.slug))?;
+        let path = format!("dist/library/{}/index.html", book.slug);
         fs::write(
             &path,
             layout
-                .render(templates::book_review::render(book_review)?)?
+                .render(templates::library::render(book)?)?
                 .into_string(),
         )?;
-        fs::create_dir_all(format!("static/book-reviews/{}", book_review.slug))?;
+        fs::create_dir_all(format!("static/library/{}", book.slug))?;
     }
 
     // Generate home screens
@@ -259,8 +259,8 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     fs::write("dist/feed.xml", rss::render_blog(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
     fs::write(
-        "dist/book-reviews/feed.xml",
-        rss::render_book_reviews(&content),
+        "dist/library/feed.xml",
+        rss::render_library(&content),
     )?;
 
     // Generate sitemap.xml
@@ -460,9 +460,9 @@ fn new_og_image(path: impl AsRef<str>) -> Result<()> {
             .map(|blog_post| Ok(new_og_image(format!("blog/{}", blog_post.slug))?))
             .collect::<Result<Vec<()>>>()?;
         content
-            .book_reviews
+            .library
             .iter()
-            .map(|book_review| Ok(new_og_image(format!("book-reviews/{}", book_review.slug))?))
+            .map(|book_review| Ok(new_og_image(format!("library/{}", book_review.slug))?))
             .collect::<Result<Vec<()>>>()?;
         content
             .pages
@@ -474,7 +474,7 @@ fn new_og_image(path: impl AsRef<str>) -> Result<()> {
         og::generate("Arne Bahlo", "static/og-image.png")?;
         og::generate("Arne's Blog", "static/blog/og-image.png")?;
         og::generate("Arne's Weekly", "static/weekly/og-image.png")?;
-        og::generate("Arne's Book Reviews", "static/book-reviews/og-image.png")?;
+        og::generate("Arne's Book Reviews", "static/library/og-image.png")?;
     } else {
         let (kind, slug) = path
             .as_ref()
@@ -504,15 +504,15 @@ fn new_og_image(path: impl AsRef<str>) -> Result<()> {
                     format!("static/blog/{}/og-image.png", blogpost.slug),
                 )?;
             }
-            "book-reviews" => {
+            "library" => {
                 let book_review = content
-                    .book_reviews
+                    .library
                     .iter()
                     .find(|book_review| book_review.slug == slug)
                     .ok_or(anyhow!("Can't find book review"))?;
                 og::generate(
                     &book_review.title,
-                    format!("static/book-reviews/{}/og-image.png", book_review.slug),
+                    format!("static/library/{}/og-image.png", book_review.slug),
                 )?;
             }
             "" => {

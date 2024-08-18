@@ -2,7 +2,7 @@ use chrono::{Datelike, NaiveDate};
 use maud::{html, Markup};
 
 pub mod blog;
-pub mod book_review;
+pub mod library;
 pub mod home_screen;
 pub mod index;
 pub mod layout;

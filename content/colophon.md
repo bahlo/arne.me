@@ -21,7 +21,7 @@ Any issue you encounter on this website can be submitted as
 
 A [sitemap](/sitemap.xml) is available and there are RSS feeds for
 the [blog](/blog/atom.xml), the [weekly](/weekly/atom.xml),
-and [book reviews](/book-reviews/feed.xml).
+and [library](/library/feed.xml).
 
 This site is using the [Axiom integration for Netlify](https://axiom.co) for
 request logs and server-side analytics.

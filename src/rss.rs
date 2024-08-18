@@ -75,25 +75,25 @@ pub fn render_weekly(content: &Content) -> Result<String> {
         .to_string())
 }
 
-pub fn render_book_reviews(content: &Content) -> String {
+pub fn render_library(content: &Content) -> String {
     let items: Vec<Item> = content
-        .book_reviews
+        .library
         .iter()
-        .map(|book_review| {
+        .map(|book| {
             ItemBuilder::default()
-                .title(format!("{} by {}", book_review.title, book_review.author))
-                .link(format!("https://arne.me/book-reviews/{}", book_review.slug))
+                .title(format!("{} by {}", book.title, book.author))
+                .link(format!("https://arne.me/library/{}", book.slug))
                 .description(format!(
                     "I read {} by {}",
-                    book_review.title, book_review.author
+                    book.title, book.author
                 ))
                 .author("Arne Bahlo".to_string())
                 .guid(rss::Guid {
-                    value: format!("https://arne.me/book-reviews/{}", book_review.slug),
+                    value: format!("https://arne.me/library/{}", book.slug),
                     permalink: true,
                 })
-                .pub_date(book_review.read.format(RFC_822_DATE).to_string())
-                .content(book_review.content_html.clone())
+                .pub_date(book.read.format(RFC_822_DATE).to_string())
+                .content(book.content_html.clone())
                 .build()
         })
         .collect();
@@ -105,7 +105,7 @@ pub fn render_book_reviews(content: &Content) -> String {
         .managing_editor(Some("hey@arne.me".to_string()))
         .webmaster(Some("hey@arne.me".to_string()))
         .last_build_date(Utc::now().format(RFC_822).to_string())
-        .link("https://arne.me/book-reviews")
+        .link("https://arne.me/library")
         .description("Every book I read gets a review and ends up here.")
         .items(items)
         .build()

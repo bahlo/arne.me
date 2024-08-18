@@ -81,12 +81,12 @@ impl TryFrom<&Content> for Sitemap {
                 priority: Some(0.9),
             },
             LocUrl {
-                loc: "https://arne.me/book-reviews".parse()?,
+                loc: "https://arne.me/library".parse()?,
                 lastmod: Some(
                     value
-                        .book_reviews
+                        .library
                         .first()
-                        .ok_or(anyhow!("No weekly issue found"))?
+                        .ok_or(anyhow!("No book found"))?
                         .read,
                 ),
                 changefreq: Some("monthly".to_string()),
@@ -131,15 +131,15 @@ impl TryFrom<&Content> for Sitemap {
             })
             .collect::<Result<Vec<LocUrl>>>()?;
         let book_review_urls = value
-            .book_reviews
+            .library
             .iter()
-            .map(|book_review| {
+            .map(|book| {
                 Ok(LocUrl {
                     loc: Url::parse(&format!(
-                        "https://arne.me/book-reviews/{}",
-                        book_review.slug
+                        "https://arne.me/library/{}",
+                        book.slug
                     ))?,
-                    lastmod: Some(book_review.read),
+                    lastmod: Some(book.read),
                     changefreq: None,
                     priority: None,
                 })
@@ -213,7 +213,7 @@ mod tests {
             }],
             weekly: vec![],
             pages: vec![],
-            book_reviews: vec![],
+            library: vec![],
             home_screens: vec![],
             projects: vec![],
         };
