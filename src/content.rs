@@ -240,8 +240,7 @@ impl Content {
                 }
                 "library" => {
                     let dir = fs::read_dir(entry.path())?;
-                    content.library =
-                        Self::parse_library(&matter, &markdown_context, dir)?;
+                    content.library = Self::parse_library(&matter, &markdown_context, dir)?;
                 }
                 "projects" => {
                     let dir = fs::read_dir(entry.path())?;

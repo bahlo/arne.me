@@ -15,15 +15,9 @@ use super::layout::Context;
 pub fn render(book: &Book) -> Result<Context> {
     Ok(Context::new_with_options(
         Head {
-            title: format!(
-                "I read {} by {}",
-                book.title, book.author
-            ),
+            title: format!("I read {} by {}", book.title, book.author),
             description: format!("I read {} by {}", book.title, book.author),
-            url: Url::parse(&format!(
-                "https://arne.me/library/{}",
-                book.slug
-            ))?,
+            url: Url::parse(&format!("https://arne.me/library/{}", book.slug))?,
             og_type: OgType::Article,
         },
         html! {

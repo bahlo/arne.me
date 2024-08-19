@@ -83,10 +83,7 @@ pub fn render_library(content: &Content) -> String {
             ItemBuilder::default()
                 .title(format!("{} by {}", book.title, book.author))
                 .link(format!("https://arne.me/library/{}", book.slug))
-                .description(format!(
-                    "I read {} by {}",
-                    book.title, book.author
-                ))
+                .description(format!("I read {} by {}", book.title, book.author))
                 .author("Arne Bahlo".to_string())
                 .guid(rss::Guid {
                     value: format!("https://arne.me/library/{}", book.slug),

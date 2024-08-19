@@ -82,13 +82,7 @@ impl TryFrom<&Content> for Sitemap {
             },
             LocUrl {
                 loc: "https://arne.me/library".parse()?,
-                lastmod: Some(
-                    value
-                        .library
-                        .first()
-                        .ok_or(anyhow!("No book found"))?
-                        .read,
-                ),
+                lastmod: Some(value.library.first().ok_or(anyhow!("No book found"))?.read),
                 changefreq: Some("monthly".to_string()),
                 priority: Some(0.8),
             },
@@ -135,10 +129,7 @@ impl TryFrom<&Content> for Sitemap {
             .iter()
             .map(|book| {
                 Ok(LocUrl {
-                    loc: Url::parse(&format!(
-                        "https://arne.me/library/{}",
-                        book.slug
-                    ))?,
+                    loc: Url::parse(&format!("https://arne.me/library/{}", book.slug))?,
                     lastmod: Some(book.read),
                     changefreq: None,
                     priority: None,

@@ -258,10 +258,7 @@ pub fn build(websocket_port: Option<u16>) -> Result<()> {
     // Generate RSS feeds
     fs::write("dist/feed.xml", rss::render_blog(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
-    fs::write(
-        "dist/library/feed.xml",
-        rss::render_library(&content),
-    )?;
+    fs::write("dist/library/feed.xml", rss::render_library(&content))?;
 
     // Generate sitemap.xml
     fs::write("dist/sitemap.xml", sitemap::render(&content)?)?;

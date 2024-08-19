@@ -13,10 +13,7 @@ pub fn render(content: &Content) -> Result<Context> {
         .weekly
         .first()
         .ok_or(anyhow!("No weekly issues found"))?;
-    let latest_book = content
-        .library
-        .first()
-        .ok_or(anyhow!("No books found"))?;
+    let latest_book = content.library.first().ok_or(anyhow!("No books found"))?;
     Ok(Context::new_with_options(
         Head {
             title: "Arne Bahlo".into(),

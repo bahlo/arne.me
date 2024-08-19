@@ -2,10 +2,10 @@ use chrono::{Datelike, NaiveDate};
 use maud::{html, Markup};
 
 pub mod blog;
-pub mod library;
 pub mod home_screen;
 pub mod index;
 pub mod layout;
+pub mod library;
 pub mod page;
 pub mod project;
 pub mod weekly;
