@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><opml version="1.0">
   <head>
     <title>RSS feeds from stories in all Arne's Weekly issues</title>
-    <date_created>Sun, 18 Aug 2024 09:02:26 +0000</date_created>
+    <date_created>Sun, 25 Aug 2024 09:13:06 +0000</date_created>
   </head>
   <body>
     <outline text="Aeon | a world of ideas" type="rss" xmlUrl="https://aeon.co/feed.atom"/>
@@ -828,5 +828,11 @@
     <outline text="RSS Feed" type="rss" xmlUrl="https://anhvn.com/feed.xml"/>
     <outline text="" type="rss" xmlUrl="https://www.openmymind.net/atom.xml"/>
     <outline text="Freewheeling Apps" type="rss" xmlUrl="https://akkartik.name/freewheeling-apps-feed"/>
+    <outline text="Computerworld » Feed" type="rss" xmlUrl="https://www.computerworld.com/feed/"/>
+    <outline text="justine.lol" type="rss" xmlUrl="https://justine.lol/rss.xml"/>
+    <outline text="Ben Visness" type="rss" xmlUrl="https://bvisness.me/index.xml"/>
+    <outline text="" type="rss" xmlUrl="https://johns.codes/feed.xml"/>
+    <outline text="Made of Bugs" type="rss" xmlUrl="https://blog.nelhage.com/atom.xml"/>
+    <outline text="" type="rss" xmlUrl="https://www.newyorker.com/feed/rss"/>
   </body>
 </opml>
