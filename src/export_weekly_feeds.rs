@@ -51,7 +51,7 @@ pub fn export_weekly_feeds(num: Option<u16>) -> Result<()> {
             set
         });
     println!(
-        "\nFetched {} feeds and got {} errors:",
+        "\nFetched {} feeds and got {} error(s):",
         feeds.len(),
         failures.len()
     );
