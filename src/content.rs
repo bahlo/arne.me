@@ -23,6 +23,14 @@ pub fn smart_quotes(text: impl Into<String>) -> String {
 const FOOTNOTE_REGEX: LazyCell<Regex> =
     LazyCell::new(|| Regex::new(r"\[\^(\d+)\]").expect("Failed to compile footnote regex"));
 
+#[derive(Debug)]
+pub enum Item<'a> {
+    Weekly(&'a WeeklyIssue),
+    Blog(&'a Blogpost),
+    Book(&'a Book),
+    Page(&'a Page),
+}
+
 #[derive(Debug, Default)]
 pub struct Content {
     // Stream
@@ -750,6 +758,34 @@ impl Content {
         });
 
         Ok(projects)
+    }
+
+    pub fn by_path(&self, path: impl AsRef<str>) -> Option<Item> {
+        let (kind, slug) = path.as_ref().split_once("/")?;
+
+        match kind {
+            "weekly" => self
+                .weekly
+                .iter()
+                .find(|issue| issue.num.to_string() == slug)
+                .map(|weekly| Item::Weekly(weekly)),
+            "blog" => self
+                .blog
+                .iter()
+                .find(|blogpost| blogpost.slug == slug)
+                .map(|blogpost| Item::Blog(blogpost)),
+            "library" => self
+                .library
+                .iter()
+                .find(|book| book.slug == slug)
+                .map(|book| Item::Book(book)),
+            "" => self
+                .pages
+                .iter()
+                .find(|page| page.slug == slug)
+                .map(|page| Item::Page(page)),
+            _ => None,
+        }
     }
 }
 
