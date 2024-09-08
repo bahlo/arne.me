@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><opml version="1.0">
   <head>
     <title>RSS feeds from stories in all Arne's Weekly issues</title>
-    <date_created>Sun, 01 Sep 2024 15:02:47 +0000</date_created>
+    <date_created>Sun, 08 Sep 2024 08:12:52 +0000</date_created>
   </head>
   <body>
     <outline text="Aeon | a world of ideas" type="rss" xmlUrl="https://aeon.co/feed.atom"/>
@@ -835,5 +835,9 @@
     <outline text="Made of Bugs" type="rss" xmlUrl="https://blog.nelhage.com/atom.xml"/>
     <outline text="" type="rss" xmlUrl="https://www.newyorker.com/feed/rss"/>
     <outline text="Lelouch.dev | Blog Posts (Text included)" type="rss" xmlUrl="https://lelouch.dev/blog/fullrss.xml"/>
+    <outline text="" type="rss" xmlUrl="https://www.newyorker.com/feed/rss"/>
+    <outline text="Terence Eden’s Blog » Feed" type="rss" xmlUrl="https://shkspr.mobi/blog/feed/"/>
+    <outline text="Writing" type="rss" xmlUrl="https://ofcr.se/rss.xml"/>
+    <outline text="Ian Cooper - Staccato Signals » Feed" type="rss" xmlUrl="https://ian-cooper.writeas.com/feed/"/>
   </body>
 </opml>
