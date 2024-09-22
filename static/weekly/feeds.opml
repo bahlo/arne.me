@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><opml version="1.0">
   <head>
     <title>RSS feeds from stories in all Arne's Weekly issues</title>
-    <date_created>Sun, 15 Sep 2024 06:30:18 +0000</date_created>
+    <date_created>Sun, 22 Sep 2024 10:19:27 +0000</date_created>
   </head>
   <body>
     <outline text="Aeon | a world of ideas" type="rss" xmlUrl="https://aeon.co/feed.atom"/>
@@ -844,5 +844,6 @@
     <outline text="Atom" type="rss" xmlUrl="https://irenezhang.net/blog/blog.xml"/>
     <outline text="Blog posts" type="rss" xmlUrl="https://purplesyringa.moe/blog/feed.rss"/>
     <outline text="" type="rss" xmlUrl="https://mitchellh.com/feed.xml"/>
+    <outline text="A Very Good Blog RSS Feed" type="rss" xmlUrl="https://gkeenan.co/avgb/feed.xml"/>
   </body>
 </opml>
