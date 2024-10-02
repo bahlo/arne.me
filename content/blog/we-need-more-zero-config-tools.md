@@ -5,6 +5,8 @@ location: "Frankfurt, Germany"
 description: |
   Recently, I've become fond of tools that just work, out of the box.
   This blogpost is an ode to them.
+hackernews: "https://news.ycombinator.com/item?id=41718313"
+lobsters: "https://lobste.rs/s/laqkqb/we_need_more_zero_config_tools"
 ---
 
 > It just works. &mdash; Steve Jobs
