@@ -122,7 +122,6 @@ pub struct WeeklyCategory {
 pub struct WeeklyStory {
     pub title: String,
     pub url: Url,
-    pub reading_time_minutes: i16,
     pub description: String,
     #[serde(default)]
     pub description_html: String,

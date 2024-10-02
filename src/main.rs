@@ -351,11 +351,7 @@ fn export_weekly(num: Option<u16>) -> Result<()> {
         println!("## {}", category.title);
         category.stories.iter().for_each(|story| {
             println!("### [{}]({})", story.title, story.url);
-            println!(
-                "{} min · {}",
-                story.reading_time_minutes,
-                story.url.host().unwrap()
-            );
+            println!("{}", story.url.host().unwrap());
             println!();
             println!("{}", story.description);
         });
