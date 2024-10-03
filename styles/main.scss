@@ -121,6 +121,7 @@ input {
     @media (prefers-color-scheme: dark) {
         background: invert($color-input-bg);
         border: 1px solid invert($color-input-border);
+        color: invert($color-fg);
     }
 }
 
