@@ -19,7 +19,7 @@ export-weekly-feeds = ["scraper"]
 
 [dependencies]
 anyhow = "1"
-blake3 = "1.5.3"
+blake3 = "1.5.4"
 chrono = { version = "0.4.38", default-features = false, features = [
     "std",
     "clock",
@@ -42,15 +42,15 @@ regex = "1"
 rss = "2"
 serde = { version = "1", features = ["derive"] }
 syntect = "5.2.0"
-tungstenite = { version = "0.23", optional = true }
+tungstenite = { version = "0.24", optional = true }
 ureq = "2.10.0"
 url = { version = "2.5", features = ["serde"] }
-zip = { version = "2.1.5", features = ["deflate"] }
-scraper = { version = "0.19", optional = true, default-features = false, features = [
+zip = { version = "2.2", features = ["deflate"] }
+scraper = { version = "0.20", optional = true, default-features = false, features = [
     "errors",
 ] }
 bat = { version = "0.24", default-features = false }
-resvg = "0.42"
+resvg = "0.44"
 tiny-skia = "0.11"
-usvg = "0.42"
+usvg = "0.44"
 html-escape = "0.2"
