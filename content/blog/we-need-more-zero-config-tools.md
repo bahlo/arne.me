@@ -94,8 +94,8 @@ Here are some tools you have sent me that are zero/minimal config:
 
 * Matthew shared [Broot](https://github.com/Canop/broot), a new way to see and
   navigate directory trees
-* Ilija shared [k8s](https://k9scli.io), a CLI to maange Kubernetes clusters
-* Alexander shared [Obiton](https://github.com/xyproto/orbiton), a text editor
+* Ilija shared [k9s](https://k9scli.io), a CLI to maange Kubernetes clusters
+* Alexander shared [Orbiton](https://github.com/xyproto/orbiton), a text editor
   they built
 
 Do you have a tool that requires no (or minimal) configuration? 
