@@ -142,7 +142,7 @@
     ;; Emacs
     "e" '(:ignore t :which-key "emacs")
     "e e" '((lambda () (interactive) (find-file user-init-file)) :which-key "open init file")
-    "e r" '(restart-emacs :whick-key "restart emacs")
+    "e r" '(restart-emacs :which-key "restart emacs")
     ;; Buffer
     "b" '(:ignore t :which-key "buffer")
     ;; Don't show an error because SPC b ESC is undefined, just abort

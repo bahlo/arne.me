@@ -86,7 +86,7 @@ We'll have `SPC` as our leader key, which allows us to press `SPC` and have all 
 
   (leader-keys
     "x" '(execute-extended-command :which-key "execute command")
-    "r" '(restart-emacs :whick-key "restart emacs")
+    "r" '(restart-emacs :which-key "restart emacs")
     "i" '((lambda () (interactive) (find-file user-init-file)) :which-key "open init file")
 
     ;; Buffer
