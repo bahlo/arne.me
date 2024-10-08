@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><opml version="1.0">
   <head>
     <title>RSS feeds from stories in all Arne's Weekly issues</title>
-    <date_created>Sun, 06 Oct 2024 09:59:30 +0000</date_created>
+    <date_created>Sun, 13 Oct 2024 09:42:51 +0000</date_created>
   </head>
   <body>
     <outline text="Aeon | a world of ideas" type="rss" xmlUrl="https://aeon.co/feed.atom"/>
@@ -853,5 +853,8 @@
     <outline text="Interconnected RSS feed" type="rss" xmlUrl="https://interconnected.org/home/feed"/>
     <outline text="New Statesman » Feed" type="rss" xmlUrl="https://www.newstatesman.com/feed"/>
     <outline text="Stephan Joppich » Feed" type="rss" xmlUrl="https://stephanjoppich.com/feed/"/>
+    <outline text="Syllabus » Feed" type="rss" xmlUrl="https://syllabusproject.org/feed/"/>
+    <outline text="On Test Automation Feed" type="rss" xmlUrl="https://www.ontestautomation.com/feed.xml"/>
+    <outline text="Amy Unger" type="rss" xmlUrl="https://amyunger.com/feed.xml"/>
   </body>
 </opml>
