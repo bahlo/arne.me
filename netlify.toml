@@ -1,3 +1,0 @@
-[build]
-command = "rustup update && rustup default stable && cargo run -p ssg"
-publish = "dist/"
