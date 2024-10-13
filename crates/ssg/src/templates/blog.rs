@@ -5,13 +5,11 @@ use chrono::{Datelike, Utc};
 use maud::{html, PreEscaped};
 use url::Url;
 
-use crate::{
-    content::{Blogpost, Content},
-    templates::{
-        format_date,
-        layout::{self, Context, Head, OgType},
-    },
+use crate::templates::{
+    format_date,
+    layout::{self, Context, Head, OgType},
 };
+use arneos::content::{Blogpost, Content};
 
 pub fn render_page(content: &Content) -> Result<Context> {
     let mut blog_posts_by_year = content

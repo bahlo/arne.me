@@ -1,0 +1,32 @@
+[package]
+name = "cli"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+anyhow = "1"
+arneos = { path = "../arneos" }
+chrono = { version = "0.4", default-features = false, features = [
+    "std",
+    "clock",
+    "serde",
+] }
+clap = { version = "4", features = ["derive"] }
+crossbeam-channel = "0.5"
+file-serve = { version = "0.3" }
+html-escape = "0.2"
+notify-debouncer-mini = "0.4"
+quick-xml = { version = "0.36", features = ["serialize"] }
+regex = "1"
+resvg = "0.44"
+scraper = { version = "0.20", default-features = false, features = [
+    "errors",
+] }
+serde = { version = "1", features = ["derive"] }
+tiny-skia = "0.11"
+tungstenite = "0.24"
+ureq = "2.10"
+usvg = "0.44"
+url = { version = "2.5", features = ["serde"] }
+zip = { version = "2.2", features = ["deflate"] }

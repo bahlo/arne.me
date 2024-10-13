@@ -2,13 +2,11 @@ use anyhow::Result;
 use maud::{html, PreEscaped};
 use url::Url;
 
-use crate::{
-    content::{Book, Content},
-    templates::{
-        format_date,
-        layout::{self, Head, OgType},
-    },
+use crate::templates::{
+    format_date,
+    layout::{self, Head, OgType},
 };
+use arneos::content::{Book, Content};
 
 use super::layout::Context;
 

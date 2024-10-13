@@ -1,5 +1,10 @@
 [workspace]
-members = [
+members = [ 
+  "crates/arneos", 
+  "crates/cli",
   "crates/ssg"
 ]
 resolver = "2"
+default-members = [
+  "crates/cli"
+]

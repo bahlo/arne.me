@@ -14,7 +14,7 @@ use std::{
 };
 use url::Url;
 
-use crate::content::Content;
+use arneos::content::Content;
 
 const XML_DECLARATION: &'static str = r#"<?xml version="1.0" encoding="UTF-8"?>"#;
 const FEEDS_OPML_PATH: &'static str = "static/weekly/feeds.opml";

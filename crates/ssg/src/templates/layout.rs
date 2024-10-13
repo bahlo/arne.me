@@ -4,7 +4,8 @@ use maud::{html, Markup, PreEscaped, DOCTYPE};
 use std::{fmt::Display, path::Path};
 use url::Url;
 
-use crate::{content::smart_quotes, GIT_SHA, GIT_SHA_SHORT};
+use crate::{GIT_SHA, GIT_SHA_SHORT};
+use arneos::content::smart_quotes;
 
 #[derive(Debug)]
 pub struct Head {

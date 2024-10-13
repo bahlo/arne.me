@@ -2,7 +2,8 @@ use anyhow::Result;
 use chrono::Utc;
 use rss::{ChannelBuilder, Item, ItemBuilder};
 
-use crate::{content::Content, templates};
+use crate::templates;
+use arneos::content::Content;
 
 const RFC_822: &str = "%a, %d %b %Y %T %z";
 const RFC_822_DATE: &str = "%a, %d %b %Y 00:00:00 +0000";

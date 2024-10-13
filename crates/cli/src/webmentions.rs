@@ -1,5 +1,5 @@
-use crate::content::{Blogpost, Content, Page, WeeklyIssue};
 use anyhow::{bail, Context, Result};
+use arneos::content::{Blogpost, Content, Page, WeeklyIssue};
 use regex::Regex;
 use scraper::{Html, Selector};
 use std::{cell::LazyCell, fs};
@@ -14,11 +14,11 @@ pub fn send_webmentions(path: impl AsRef<str>, dry_run: bool) -> Result<()> {
     let content = Content::parse(fs::read_dir("content")?)?;
 
     match content.by_path(path) {
-        Some(crate::content::Item::Weekly(weekly_issue)) => {
+        Some(arneos::content::Item::Weekly(weekly_issue)) => {
             send_webmentions_weekly(dry_run, weekly_issue)
         }
-        Some(crate::content::Item::Blog(blogpost)) => send_webmentions_blogpost(dry_run, blogpost),
-        Some(crate::content::Item::Page(page)) => send_webmentions_page(dry_run, page),
+        Some(arneos::content::Item::Blog(blogpost)) => send_webmentions_blogpost(dry_run, blogpost),
+        Some(arneos::content::Item::Page(page)) => send_webmentions_page(dry_run, page),
         _ => bail!("Path not supported or item not found"),
     }
 

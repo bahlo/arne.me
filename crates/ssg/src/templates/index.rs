@@ -2,10 +2,8 @@ use anyhow::{anyhow, Result};
 use maud::html;
 use url::Url;
 
-use crate::{
-    content::Content,
-    templates::layout::{self, Context, Head, OgType},
-};
+use crate::templates::layout::{self, Context, Head, OgType};
+use arneos::content::Content;
 
 pub fn render(content: &Content) -> Result<Context> {
     let latest_blogpost = content.blog.first().ok_or(anyhow!("No blogposts found"))?;

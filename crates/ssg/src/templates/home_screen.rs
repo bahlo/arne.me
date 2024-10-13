@@ -2,13 +2,11 @@ use anyhow::Result;
 use maud::{html, PreEscaped};
 use url::Url;
 
-use crate::{
-    content::{Content, HomeScreen},
-    templates::{
-        format_date,
-        layout::{Context, Head, OgType},
-    },
+use crate::templates::{
+    format_date,
+    layout::{Context, Head, OgType},
 };
+use arneos::content::{Content, HomeScreen};
 
 pub fn render(home_screen: &HomeScreen) -> Result<Context> {
     Ok(Context::new(

@@ -14,8 +14,17 @@ pub fn watch() -> Result<()> {
     let websocket_server = TcpListener::bind("127.0.0.1:0")?;
     let websocket_port = websocket_server.local_addr()?.port();
 
-    // Build on start
-    crate::build(Some(websocket_port))?;
+    // Run once at the start
+    Command::new("cargo")
+        .arg("run")
+        .arg("-p")
+        .arg("ssg")
+        .arg("--")
+        .args(&["--websocket-port", &websocket_port.to_string()])
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
+        .spawn()?
+        .wait()?;
 
     let (notify_tx, notify_rx) = crossbeam_channel::unbounded::<DebounceEventResult>();
     let mut debouncer = new_debouncer(Duration::from_millis(500), notify_tx)?;
@@ -28,7 +37,9 @@ pub fn watch() -> Result<()> {
                 Ok(_events) => {
                     let mut child = match Command::new("cargo")
                         .arg("run")
-                        .arg("build")
+                        .arg("-p")
+                        .arg("ssg")
+                        .arg("--")
                         .args(&["--websocket-port", &websocket_port.to_string()])
                         .stdout(Stdio::inherit())
                         .stderr(Stdio::inherit())

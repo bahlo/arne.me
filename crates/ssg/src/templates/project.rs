@@ -2,10 +2,8 @@ use anyhow::Result;
 use maud::{html, Markup, PreEscaped};
 use url::Url;
 
-use crate::{
-    content::Project,
-    templates::layout::{Context, Head, OgType},
-};
+use crate::templates::layout::{Context, Head, OgType};
+use arneos::content::Project;
 
 fn render_project(project: &Project) -> Markup {
     html! {

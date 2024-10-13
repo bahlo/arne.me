@@ -1,0 +1,24 @@
+[package]
+name = "arneos"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+anyhow = "1"
+bat = { version = "0.24", default-features = false }
+chrono = { version = "0.4.38", default-features = false, features = [
+    "std",
+    "clock",
+    "serde",
+] }
+comrak = { version = "0.26.0", default-features = false, features = [
+    "emojis",
+    "syntect",
+] }
+crowbook-text-processing = "1"
+gray_matter = { version = "0.2", default-features = false, features = ["yaml"] }
+regex = "1"
+serde = { version = "1", features = ["derive"] }
+syntect = "5.2.0"
+url = { version = "2.5", features = ["serde"] }

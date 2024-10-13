@@ -2,13 +2,11 @@ use anyhow::{anyhow, Result};
 use maud::{html, Markup, PreEscaped};
 use url::Url;
 
-use crate::{
-    content::{Content, WeeklyIssue},
-    templates::{
-        format_date,
-        layout::{self, Context, Head, OgType},
-    },
+use crate::templates::{
+    format_date,
+    layout::{self, Context, Head, OgType},
 };
+use arneos::content::{Content, WeeklyIssue};
 
 fn subscribe_form() -> Markup {
     html! {

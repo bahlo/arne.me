@@ -136,36 +136,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "arne-me"
+name = "arneos"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "bat",
- "blake3",
  "chrono",
- "clap",
  "comrak",
- "crossbeam-channel",
  "crowbook-text-processing",
- "file-serve",
- "grass",
  "gray_matter",
- "html-escape",
- "maud",
- "notify-debouncer-mini",
- "quick-xml 0.36.2",
  "regex",
- "resvg",
- "rss",
- "scraper",
  "serde",
  "syntect",
- "tiny-skia",
- "tungstenite",
- "ureq",
  "url",
- "usvg",
- "zip",
 ]
 
 [[package]]
@@ -465,6 +448,31 @@ name = "clap_lex"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1462739cb27611015575c0c11df5df7601141071f07518d56fcc1be504cbec97"
+
+[[package]]
+name = "cli"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "arneos",
+ "chrono",
+ "clap",
+ "crossbeam-channel",
+ "file-serve",
+ "html-escape",
+ "notify-debouncer-mini",
+ "quick-xml 0.36.2",
+ "regex",
+ "resvg",
+ "scraper",
+ "serde",
+ "tiny-skia",
+ "tungstenite",
+ "ureq",
+ "url",
+ "usvg",
+ "zip",
+]
 
 [[package]]
 name = "clircle"
@@ -1979,9 +1987,9 @@ dependencies = [
 
 [[package]]
 name = "rustls"
-version = "0.23.13"
+version = "0.23.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f2dabaac7466917e566adb06783a81ca48944c6898a1b08b9374106dd671f4c8"
+checksum = "415d9944693cb90382053259f89fbb077ea730ad7273047ec63b19bc9b160ba8"
 dependencies = [
  "log",
  "once_cell",
@@ -2216,6 +2224,22 @@ name = "spin"
 version = "0.9.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
+
+[[package]]
+name = "ssg"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "arneos",
+ "blake3",
+ "chrono",
+ "grass",
+ "maud",
+ "quick-xml 0.36.2",
+ "rss",
+ "serde",
+ "url",
+]
 
 [[package]]
 name = "stable_deref_trait"

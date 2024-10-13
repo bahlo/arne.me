@@ -3,7 +3,7 @@ use chrono::NaiveDate;
 use serde::Serialize;
 use url::Url;
 
-use crate::content::Content;
+use arneos::content::Content;
 
 #[derive(Debug, Serialize)]
 pub struct Sitemap {
@@ -181,7 +181,7 @@ pub fn render(content: &Content) -> Result<String> {
 
 #[cfg(test)]
 mod tests {
-    use crate::content::Blogpost;
+    use arneos::content::Blogpost;
 
     use super::*;
 
