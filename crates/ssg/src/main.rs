@@ -2,8 +2,7 @@ use anyhow::{bail, Result};
 use std::{
     cell::LazyCell,
     env,
-    fs::{self, File},
-    io,
+    fs::self,
     path::Path,
     process::Command,
 };
@@ -25,12 +24,6 @@ pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
 pub const GIT_SHA_SHORT: LazyCell<String> = LazyCell::new(|| GIT_SHA.chars().take(7).collect());
 
 pub fn main() -> Result<()> {
-    // Do we need to download fonts?
-    if !Path::new("./static/fonts/rebond-grotesque").try_exists()? {
-        println!("Downloading fonts...");
-        download_fonts()?;
-    }
-
     // Do we have a websocket port?
     let args: Vec<String> = env::args().collect();
     let websocket_port = match (args.get(1).map(|s| s.as_str()), args.get(2)) {
