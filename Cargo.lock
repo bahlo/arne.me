@@ -471,7 +471,6 @@ dependencies = [
  "ureq",
  "url",
  "usvg",
- "zip",
 ]
 
 [[package]]
@@ -2238,7 +2237,9 @@ dependencies = [
  "quick-xml 0.36.2",
  "rss",
  "serde",
+ "ureq",
  "url",
+ "zip",
 ]
 
 [[package]]

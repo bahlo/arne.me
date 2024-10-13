@@ -1,6 +1,14 @@
 use anyhow::{bail, Result};
-use std::{cell::LazyCell, env, fs, path::Path, process::Command};
+use std::{
+    cell::LazyCell,
+    env,
+    fs::{self, File},
+    io,
+    path::Path,
+    process::Command,
+};
 use templates::layout::Layout;
+use zip::ZipArchive;
 
 mod rss;
 mod sitemap;
@@ -18,6 +26,12 @@ pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
 pub const GIT_SHA_SHORT: LazyCell<String> = LazyCell::new(|| GIT_SHA.chars().take(7).collect());
 
 pub fn main() -> Result<()> {
+    // Do we need to download fonts?
+    if !Path::new("./static/fonts/rebond-grotesque").try_exists()? {
+        println!("Downloading fonts...");
+        download_fonts()?;
+    }
+
     // Do we have a websocket port?
     let args: Vec<String> = env::args().collect();
     let websocket_port = match (args.get(1).map(|s| s.as_str()), args.get(2)) {
@@ -29,13 +43,16 @@ pub fn main() -> Result<()> {
     let content = Content::parse(fs::read_dir("content")?)?;
 
     // Recreate dir
+    println!("Recreating dist/...");
     fs::remove_dir_all("dist").ok();
     fs::create_dir_all("dist")?;
 
     // Copy static files
+    println!("Copying static filefs...");
     copy_dir("static", "dist/")?;
 
     // Generate CSS
+    println!("Generating CSS...");
     let sass_options = grass::Options::default().load_path("styles/");
     let css = grass::from_path("styles/main.scss", &sass_options)?;
     let css_hash: String = blake3::hash(css.as_bytes())
@@ -44,6 +61,8 @@ pub fn main() -> Result<()> {
         .take(16)
         .collect();
     fs::write("dist/main.css", css)?;
+
+    println!("Generating HTML...");
 
     // Create layout
     let layout = Layout::new(css_hash, websocket_port);
@@ -169,11 +188,13 @@ pub fn main() -> Result<()> {
     fs::create_dir_all("static/projects")?;
 
     // Generate RSS feeds
+    println!("Generating RSS feeds...");
     fs::write("dist/feed.xml", rss::render_blog(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
     fs::write("dist/library/feed.xml", rss::render_library(&content))?;
 
     // Generate sitemap.xml
+    println!("Generating sitemap...");
     fs::write("dist/sitemap.xml", sitemap::render(&content)?)?;
 
     Ok(())
@@ -208,5 +229,44 @@ where
         }
     }
 
+    Ok(())
+}
+
+fn download_fonts() -> Result<()> {
+    let zip_url = env::var("FONT_ZIP_URL")?;
+    let destination = Path::new("./static/fonts");
+
+    let response = ureq::get(&zip_url).call()?;
+    let mut reader = response.into_reader();
+
+    let zip_path = Path::join(&env::temp_dir(), "arne-me-fonts.zip");
+    let mut temp_file = File::create(&zip_path)?;
+    io::copy(&mut reader, &mut temp_file)?;
+
+    let zip_file = File::open(&zip_path)?;
+    let mut archive = ZipArchive::new(zip_file)?;
+
+    for i in 0..archive.len() {
+        let mut file = archive.by_index(i)?;
+        let outpath = match file.enclosed_name() {
+            Some(path) => destination.join(path),
+            None => continue,
+        };
+
+        if file.name().ends_with('/') {
+            fs::create_dir_all(&outpath)?;
+        } else {
+            if let Some(p) = outpath.parent() {
+                if !p.exists() {
+                    fs::create_dir_all(&p)?;
+                }
+            }
+
+            let mut outfile = File::create(&outpath)?;
+            io::copy(&mut file, &mut outfile)?;
+        }
+    }
+
+    fs::remove_file(zip_path)?;
     Ok(())
 }

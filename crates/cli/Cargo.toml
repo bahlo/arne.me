@@ -29,4 +29,3 @@ tungstenite = "0.24"
 ureq = "2.10"
 usvg = "0.44"
 url = { version = "2.5", features = ["serde"] }
-zip = { version = "2.2", features = ["deflate"] }
