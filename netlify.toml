@@ -1,0 +1,2 @@
+[build]
+command = "curl -o fonts.zip $FONT_ZIP_URL && unzip fonts.zip -d static/fonts/ && rm fonts.zip"
