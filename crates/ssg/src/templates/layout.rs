@@ -117,6 +117,7 @@ impl Layout {
                     meta property="og:title" content=(smart_quotes(head.title));
                     meta property="og:description" content=(smart_quotes(head.description));
                     meta property="og:image" content=(format!("{}/og-image.png", head.url));
+                    meta name="fediverse:creator" content="@arne@spezi.social";
                     link rel="sitemap" href="/sitemap.xml";
                     link rel="stylesheet" href=(format!("/main.css?hash={}", self.css_hash));
                     link rel="preload" href="/fonts/rebond-grotesque/ESRebondGrotesque-Regular.woff2" as="font" type="font/woff2";
