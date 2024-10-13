@@ -1,0 +1,56 @@
+[package]
+name = "arne-me"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = ["watch", "send-webmentions", "export-weekly-feeds"]
+watch = [
+    "notify-debouncer-mini",
+    "tungstenite",
+    "crossbeam-channel",
+    "file-serve",
+]
+send-webmentions = ["scraper"]
+export-weekly-feeds = ["scraper"]
+
+[dependencies]
+anyhow = "1"
+blake3 = "1.5.4"
+chrono = { version = "0.4.38", default-features = false, features = [
+    "std",
+    "clock",
+    "serde",
+] }
+clap = { version = "4", features = ["derive"] }
+comrak = { version = "0.26.0", default-features = false, features = [
+    "emojis",
+    "syntect",
+] }
+crossbeam-channel = { version = "0.5.13", optional = true }
+crowbook-text-processing = "1"
+file-serve = { version = "0.3", optional = true }
+grass = { version = "0.13", default-features = false }
+gray_matter = { version = "0.2", default-features = false, features = ["yaml"] }
+maud = { version = "0.26" }
+notify-debouncer-mini = { version = "0.4.1", optional = true }
+quick-xml = { version = "0.36", features = ["serialize"] }
+regex = "1"
+rss = "2"
+serde = { version = "1", features = ["derive"] }
+syntect = "5.2.0"
+tungstenite = { version = "0.24", optional = true }
+ureq = "2.10.0"
+url = { version = "2.5", features = ["serde"] }
+zip = { version = "2.2", features = ["deflate"] }
+scraper = { version = "0.20", optional = true, default-features = false, features = [
+    "errors",
+] }
+bat = { version = "0.24", default-features = false }
+resvg = "0.44"
+tiny-skia = "0.11"
+usvg = "0.44"
+html-escape = "0.2"

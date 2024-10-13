@@ -42,7 +42,7 @@ pub fn generate(title: impl Into<String>, output_file: impl AsRef<Path>) -> Resu
         .collect::<Vec<_>>()
         .join("\n");
 
-    let svg = include_bytes!("../static/og-template.svg");
+    let svg = include_bytes!("../../../static/og-template.svg");
     let svg = str::from_utf8(svg)?.replace("{{ tspans }}", &tspans);
 
     let mut font_data = vec![];

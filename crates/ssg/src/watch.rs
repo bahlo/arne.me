@@ -104,7 +104,7 @@ pub fn watch() -> Result<()> {
         .watch(Path::new("./content"), RecursiveMode::Recursive)?;
     debouncer
         .watcher()
-        .watch(Path::new("./src"), RecursiveMode::Recursive)?;
+        .watch(Path::new("./crates/ssg/src"), RecursiveMode::Recursive)?;
     debouncer
         .watcher()
         .watch(Path::new("./static"), RecursiveMode::Recursive)?;
