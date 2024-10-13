@@ -233,7 +233,13 @@ where
 }
 
 fn download_fonts() -> Result<()> {
-    let zip_url = env::var("FONT_ZIP_URL")?;
+    let zip_url = match env::var("FONT_ZIP_URL") {
+        Ok(zip_url) if zip_url != "" => zip_url,
+        _ => {
+            println!("Skipping font download, FONT_ZIP_URL is not set");
+            return Ok(());
+        }
+    };
     let destination = Path::new("./static/fonts");
 
     let response = ureq::get(&zip_url).call()?;
