@@ -8,3 +8,6 @@ resolver = "2"
 default-members = [
   "crates/cli"
 ]
+
+[profile.dev.build-override]
+opt-level = 3
