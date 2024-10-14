@@ -24,6 +24,7 @@ jobs:
           folder: dist
           branch: dist
           commit-message: "Deploying to dist from ${{ github.sha }}"
+      - run: rm dist/netlify.toml
       - uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
