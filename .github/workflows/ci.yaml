@@ -24,3 +24,10 @@ jobs:
           folder: dist
           branch: dist
           commit-message: "Deploying to dist from ${{ github.sha }}"
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          ssh-key: ${{ secrets.DIST_REPO_PK }}
+          branch: main
+          repository-name: "bahlo/arne-me-dist"
+          commit-message: "Deploying to arne-me-dist from https://github.com/bahlo/arne.me/commit/${{ github.sha }}"
