@@ -1,6 +1,11 @@
 use anyhow::{bail, Result};
-use colored::*;
-use std::{cell::LazyCell, env, fs, path::Path, process::Command};
+use std::{
+    cell::LazyCell,
+    env,
+    fs::self,
+    path::Path,
+    process::Command,
+};
 use templates::layout::Layout;
 
 mod rss;
@@ -18,15 +23,7 @@ pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
 });
 pub const GIT_SHA_SHORT: LazyCell<String> = LazyCell::new(|| GIT_SHA.chars().take(7).collect());
 
-fn log(action: impl AsRef<str>, message: impl AsRef<str>) {
-    println!(
-        "{action:>12} {message}",
-        action = action.as_ref().blue().bold(),
-        message = message.as_ref()
-    )
-}
-
-fn main() -> Result<()> {
+pub fn main() -> Result<()> {
     // Do we have a websocket port?
     let args: Vec<String> = env::args().collect();
     let websocket_port = match (args.get(1).map(|s| s.as_str()), args.get(2)) {
@@ -38,16 +35,16 @@ fn main() -> Result<()> {
     let content = Content::parse(fs::read_dir("content")?)?;
 
     // Recreate dir
-    log("Recreating", "dist/");
+    println!("Recreating dist/...");
     fs::remove_dir_all("dist").ok();
     fs::create_dir_all("dist")?;
 
     // Copy static files
-    log("Copying", "static files");
+    println!("Copying static filefs...");
     copy_dir("static", "dist/")?;
 
     // Generate CSS
-    log("Generating", "CSS");
+    println!("Generating CSS...");
     let sass_options = grass::Options::default().load_path("styles/");
     let css = grass::from_path("styles/main.scss", &sass_options)?;
     let css_hash: String = blake3::hash(css.as_bytes())
@@ -57,7 +54,7 @@ fn main() -> Result<()> {
         .collect();
     fs::write("dist/main.css", css)?;
 
-    log("Generating", "HTML");
+    println!("Generating HTML...");
 
     // Create layout
     let layout = Layout::new(css_hash, websocket_port);
@@ -183,16 +180,14 @@ fn main() -> Result<()> {
     fs::create_dir_all("static/projects")?;
 
     // Generate RSS feeds
-    log("Generating", "RSS feeds");
+    println!("Generating RSS feeds...");
     fs::write("dist/feed.xml", rss::render_blog(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
     fs::write("dist/library/feed.xml", rss::render_library(&content))?;
 
     // Generate sitemap.xml
-    log("Generating", "sitemap");
+    println!("Generating sitemap...");
     fs::write("dist/sitemap.xml", sitemap::render(&content)?)?;
-
-    log("Done", "✨");
 
     Ok(())
 }
@@ -228,3 +223,4 @@ where
 
     Ok(())
 }
+

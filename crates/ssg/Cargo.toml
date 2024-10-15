@@ -13,7 +13,6 @@ chrono = { version = "0.4.38", default-features = false, features = [
     "clock",
     "serde",
 ] }
-colored = "2.1.0"
 grass = { version = "0.13", default-features = false }
 maud = { version = "0.26" }
 quick-xml = { version = "0.36", features = ["serialize"] }
