@@ -1,7 +1,7 @@
 use anyhow::{anyhow, bail, Result};
 use chrono::Utc;
 use clap::Parser;
-use std::{fs, path::Path};
+use std::{env, fs, path::Path, process::Command};
 
 mod og;
 mod watch;
@@ -167,6 +167,12 @@ categories:
 
     fs::write(&path, content)?;
     println!("Created new weekly issue at: {:?}", path);
+    match env::var("EDITOR") {
+        Ok(editor) if editor != "" => {
+            Command::new(editor).arg(&path).status()?;
+        }
+        _ => eprintln!("Could not open file: $EDITOR is not set"),
+    }
     Ok(())
 }
 
@@ -191,6 +197,12 @@ location: ""
 
     fs::write(&path, content)?;
     println!("Created new blogpost at: {:?}", path);
+    match env::var("EDITOR") {
+        Ok(editor) if editor != "" => {
+            Command::new(editor).arg(&path).status()?;
+        }
+        _ => eprintln!("Could not open file: $EDITOR is not set"),
+    }
     Ok(())
 }
 
@@ -216,6 +228,12 @@ location: ""
 
     fs::write(&path, content)?;
     println!("Created new blogpost at: {:?}", path);
+    match env::var("EDITOR") {
+        Ok(editor) if editor != "" => {
+            Command::new(editor).arg(&path).status()?;
+        }
+        _ => eprintln!("Could not open file: $EDITOR is not set"),
+    }
     Ok(())
 }
 
