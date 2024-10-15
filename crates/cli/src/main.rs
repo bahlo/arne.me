@@ -3,13 +3,11 @@ use chrono::Utc;
 use clap::Parser;
 use std::{fs, path::Path};
 
-mod export_weekly_feeds;
 mod og;
 mod watch;
 mod webmentions;
 
 use arneos::content::{Content, Item};
-use export_weekly_feeds::export_weekly_feeds;
 use webmentions::send_webmentions;
 
 #[derive(Debug, Parser)]
@@ -22,6 +20,10 @@ struct Cli {
 enum NewCommand {
     #[clap(name = "weekly")]
     Weekly,
+    #[clap(name = "blog")]
+    Blog { slug: String },
+    #[clap(name = "book")]
+    Book { slug: String },
     #[clap(name = "og-image")]
     OgImage { path: String },
 }
@@ -30,8 +32,6 @@ enum NewCommand {
 enum ExportCommand {
     #[clap(name = "weekly")]
     Weekly { num: Option<u16> },
-    #[clap(name = "weekly-feeds")]
-    WeeklyFeeds { num: Option<u16> },
 }
 
 #[derive(Debug, Parser)]
@@ -60,11 +60,12 @@ fn main() -> Result<()> {
         Commands::SendWebmentions { path, dry_run } => send_webmentions(path, dry_run),
         Commands::New(new) => match new {
             NewCommand::Weekly => new_weekly(),
+            NewCommand::Blog { slug } => new_blog(slug),
+            NewCommand::Book { slug } => new_book(slug),
             NewCommand::OgImage { path } => new_og_image(path),
         },
         Commands::Export(export) => match export {
             ExportCommand::Weekly { num } => export_weekly(num),
-            ExportCommand::WeeklyFeeds { num } => export_weekly_feeds(num),
         },
     }
 }
@@ -161,11 +162,60 @@ categories:
   - title: "Cutting Room Floor"
     stories: []
 ---
-    "#
+"#
     );
 
     fs::write(&path, content)?;
     println!("Created new weekly issue at: {:?}", path);
+    Ok(())
+}
+
+pub fn new_blog(slug: String) -> Result<()> {
+    let path = Path::new("content")
+        .join("blog")
+        .join(format!("{}.md", slug));
+    if path.exists() {
+        bail!("Blogpost already exists at: {:?}", path);
+    }
+
+    let date = Utc::now().format("%Y-%m-%d").to_string();
+    let content = format!(
+        r#"---
+title: ""
+description: ""
+published: "{date}"
+location: ""
+---
+"#
+    );
+
+    fs::write(&path, content)?;
+    println!("Created new blogpost at: {:?}", path);
+    Ok(())
+}
+
+pub fn new_book(slug: String) -> Result<()> {
+    let path = Path::new("content")
+        .join("library")
+        .join(format!("{}.md", slug));
+    if path.exists() {
+        bail!("Book already exists at: {:?}", path);
+    }
+
+    let date = Utc::now().format("%Y-%m-%d").to_string();
+    let content = format!(
+        r#"---
+title: ""
+author: ""
+read: "{date}"
+rating: 0
+location: ""
+---
+"#
+    );
+
+    fs::write(&path, content)?;
+    println!("Created new blogpost at: {:?}", path);
     Ok(())
 }
 
