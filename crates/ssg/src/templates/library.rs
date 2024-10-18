@@ -41,6 +41,7 @@ pub fn render(book: &Book) -> Result<Context> {
                 .e-content {
                     (PreEscaped(book.content_html.clone()))
                 }
+                .clear;
             }
         },
         layout::Options {
