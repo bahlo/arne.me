@@ -218,12 +218,15 @@ I often describe a revision and continue editing files, which then erroneously
 get added to the current revision.
 I’m not saying this is wrong, it makes sense in the <code>jj</code> world, but I keep
 tripping over that and have to run <code>jj split</code> to pull changes out again.</p>
-<p>One other thing is that you cannot check out a revision directly (or maybe I
+<p><del>One other thing is that you cannot check out a revision directly (or maybe I
 just don’t know how to), so when I’ve moved to a different revision and want
 to move back, I run <code>jj new &lt;revision&gt;</code>, which creates an empty revision on top
 of it.
 This means that if I’m not done with the revision, I have to keep running
-<code>jj squash</code> to move changes into it.</p>
+<code>jj squash</code> to move changes into it.</del>
+<br>
+@gecko on Lobste.rs <a href="https://lobste.rs/s/fbjowx/jujutsu_practice#c_ytil6w">pointed out</a>
+that you can check out a revision directly with <code>jj edit &lt;revision&gt;</code>. Thanks!</p>
 <h2><a href="#why-it-works-for-me" aria-hidden="true" class="anchor" id="why-it-works-for-me"></a>Why it works for me</h2>
 <p>A week ago, I removed <code>jj</code> from my website’s repository, to see if I’d miss it.
 I added it back the same day.
@@ -252,8 +255,8 @@ above).</p>
 </li>
 </ol>
 </section>
-</div></article></main></div><footer><br><nav><span class="hidden">More pages: </span><a href="/now">/now</a> &middot; <a href="/blogroll">Blogroll</a><br><a href="/projects">Projects</a> &middot; <a href="/contact">Contact</a><br><a href="/colophon">Colophon</a> &middot; <a href="/accessibility">Accessibility</a><br><a href="/imprint">Imprint</a></nav><br><div>&copy; 2013 &ndash; 2024 Arne Bahlo<br>Commit <a href="https://github.com/bahlo/arne.me/commit/3578663f02bb84e070cc9f07b377dc4344e241b9
-">3578663</a><br><a class="no-underline" href="https://firechicken.club/arne/prev">←</a>&nbsp;<a href="https://firechicken.club">Fire Chicken Webring</a>&nbsp;<a class="no-underline" href="https://firechicken.club/arne/next">→</a><br>Made with ♥ by a human.</div></footer><div class="h-card" hidden><span class="p-name">Arne Bahlo</span><img class="u-photo" src="/arne.svg"></img><a class="u-url" href="https://arne.me"></a><a class="u-email" href="mailto:hey@arne.me"></a><p class="p-note">A developer, podcaster &amp; dad based near Frankfurt, Germany.</p></div><script>
+</div></article></main></div><footer><br><nav><span class="hidden">More pages: </span><a href="/now">/now</a> &middot; <a href="/blogroll">Blogroll</a><br><a href="/projects">Projects</a> &middot; <a href="/contact">Contact</a><br><a href="/colophon">Colophon</a> &middot; <a href="/accessibility">Accessibility</a><br><a href="/imprint">Imprint</a></nav><br><div>&copy; 2013 &ndash; 2024 Arne Bahlo<br>Commit <a href="https://github.com/bahlo/arne.me/commit/eede045a34b724846018f07c0c595cbfd29c35bf
+">eede045</a><br><a class="no-underline" href="https://firechicken.club/arne/prev">←</a>&nbsp;<a href="https://firechicken.club">Fire Chicken Webring</a>&nbsp;<a class="no-underline" href="https://firechicken.club/arne/next">→</a><br>Made with ♥ by a human.</div></footer><div class="h-card" hidden><span class="p-name">Arne Bahlo</span><img class="u-photo" src="/arne.svg"></img><a class="u-url" href="https://arne.me"></a><a class="u-email" href="mailto:hey@arne.me"></a><p class="p-note">A developer, podcaster &amp; dad based near Frankfurt, Germany.</p></div><script>
                             document.addEventListener("DOMContentLoaded", () => {
                                 // Make a funny face on hover
                                 var arne = document.querySelector(".hero__arne");
