@@ -155,12 +155,15 @@ get added to the current revision.
 I'm not saying this is wrong, it makes sense in the `jj` world, but I keep
 tripping over that and have to run `jj split` to pull changes out again.
 
-One other thing is that you cannot check out a revision directly (or maybe I
+~One other thing is that you cannot check out a revision directly (or maybe I
 just don't know how to), so when I've moved to a different revision and want
 to move back, I run `jj new <revision>`, which creates an empty revision on top
 of it.
 This means that if I'm not done with the revision, I have to keep running
-`jj squash` to move changes into it.
+`jj squash` to move changes into it.~
+<br>
+@gecko on Lobste.rs [pointed out](https://lobste.rs/s/fbjowx/jujutsu_practice#c_ytil6w)
+that you can check out a revision directly with `jj edit <revision>`. Thanks!
 
 ## Why it works for me
 
