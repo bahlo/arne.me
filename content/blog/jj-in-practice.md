@@ -147,13 +147,17 @@ You can also run `jj op log` to display your last `jj` operations.
 
 ## Things I stumble upon
 
-I've been using `git` for a long, long time.
+~I've been using `git` for a long, long time.
 My brain assumes that after a `commit`/`revision`, I'm working on the next one.
 It also assumes that `jj describe` does the same as `git commit` (it's not).
 I often describe a revision and continue editing files, which then erroneously
 get added to the current revision.
 I'm not saying this is wrong, it makes sense in the `jj` world, but I keep
-tripping over that and have to run `jj split` to pull changes out again.
+tripping over that and have to run `jj split` to pull changes out again.~
+<br>
+alterae on Lobste.rs [pointed out](https://lobste.rs/s/fbjowx/jujutsu_practice#c_xyhzxa)
+that you can describe and immediatly create a new revision on top of it with
+`jj commit`. Thanks!
 
 ~One other thing is that you cannot check out a revision directly (or maybe I
 just don't know how to), so when I've moved to a different revision and want
@@ -162,7 +166,7 @@ of it.
 This means that if I'm not done with the revision, I have to keep running
 `jj squash` to move changes into it.~
 <br>
-@gecko on Lobste.rs [pointed out](https://lobste.rs/s/fbjowx/jujutsu_practice#c_ytil6w)
+gecko on Lobste.rs [pointed out](https://lobste.rs/s/fbjowx/jujutsu_practice#c_ytil6w)
 that you can check out a revision directly with `jj edit <revision>`. Thanks!
 
 ## Why it works for me
