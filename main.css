@@ -76,11 +76,11 @@ body {
   line-height: 1.5;
   padding-bottom: 1rem;
   font-family: "Rebond Grotesque", sans-serif;
-  color: #222;
+  color: #333;
 }
 @media (prefers-color-scheme: dark) {
   body {
-    color: #dddddd;
+    color: #cccccc;
     background: #0a0a0a;
   }
 }
@@ -203,7 +203,7 @@ input {
   input {
     background: #111111;
     border: 1px solid #222222;
-    color: #dddddd;
+    color: #cccccc;
   }
 }
 
@@ -218,7 +218,7 @@ input[type=submit] {
 input[type=submit] {
     background: #ffb600;
     border-color: #cc9200;
-    color: #222;
+    color: #333;
   }
 }
 input[type=button]:hover,
@@ -260,7 +260,7 @@ header nav {
 }
 header nav a {
   text-decoration: none;
-  color: #222;
+  color: #333;
   font-weight: 500;
 }
 header nav a.active, header nav a:hover {
@@ -278,7 +278,7 @@ header nav a.active, header nav a:hover {
 }
 @media (prefers-color-scheme: dark) {
   header nav a {
-    color: #dddddd;
+    color: #cccccc;
   }
 }
 header .hero__arne {
@@ -462,6 +462,7 @@ pre,
 code {
   font-family: "Pragmata Pro", monospace;
   font-size: 0.9em;
+  line-height: 1.2;
 }
 pre .name,
 pre .entity,

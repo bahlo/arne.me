@@ -1,4 +1,153 @@
-<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Arne Bahlo</title><link>https://arne.me</link><description>Arne Bahlo&apos;s personal website</description><language>en-us</language><copyright>2021 – 2024 Arne Bahlo</copyright><managingEditor>hey@arne.me</managingEditor><webMaster>hey@arne.me</webMaster><lastBuildDate>Sun, 20 Oct 2024 14:18:55 +0000</lastBuildDate><item><title>We need more zero config tools</title><link>https://arne.me/blog/we-need-more-zero-config-tools</link><description><![CDATA[Recently, I’ve become fond of tools that just work, out of the box.
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Arne Bahlo</title><link>https://arne.me</link><description>Arne Bahlo&apos;s personal website</description><language>en-us</language><copyright>2021 – 2024 Arne Bahlo</copyright><managingEditor>hey@arne.me</managingEditor><webMaster>hey@arne.me</webMaster><lastBuildDate>Mon, 21 Oct 2024 10:50:14 +0000</lastBuildDate><item><title>Jujutsu in practice</title><link>https://arne.me/blog/jj-in-practice</link><description><![CDATA[Jujutsu is a version control system, an alternative to Git. This blog post
+is not a tutorial, but practical examples of how I use it.
+]]></description><author>Arne Bahlo</author><guid>https://arne.me/blog/jj-in-practice</guid><pubDate>Mon, 21 Oct 2024 00:00:00 +0000</pubDate><content:encoded><![CDATA[<p>This post is not about the Japanese martial arts <em>Jiu-jitsu</em>, it’s about a new
+VCS, or version control system.
+There are some great tutorials and introductions for
+<a href="https://github.com/martinvonz/jj">Jujutsu</a>, short <code>jj</code>, so I want to give some
+insight in how I use it day to day for this website.</p>
+<h2><a href="#initialize-a-repository" aria-hidden="true" class="anchor" id="initialize-a-repository"></a>Initialize a repository</h2>
+<p>You can initialize <code>jj</code> in an existing <code>git</code> repository like this:</p>
+<pre class="language-sh"><span class="source shell bash"><span class="meta function-call shell"><span class="variable function shell">$</span></span><span class="meta function-call arguments shell"> jj git init<span class="variable parameter option shell"><span class="punctuation definition parameter shell"> --</span>git-repo</span> .</span>
+</span></code></pre>
+<p>This will create a <code>.jj</code> directory next to <code>.git</code>.
+You can now use both <code>git</code> and <code>jj</code>, although I wouldn’t recommend it.
+There’s a work-in-progress native storage backend, but since all my projects
+are <code>git</code> repositories anyway, this works great for me.</p>
+<p>Note that this is non-destructive; if you want to go back to <code>git</code>, all it takes
+is a <code>rm -r .jj</code>.</p>
+<h2><a href="#get-an-overview" aria-hidden="true" class="anchor" id="get-an-overview"></a>Get an overview</h2>
+<p>Running <code>jj log</code> in the repository for this very website gives this output:</p>
+<pre class="language-sh"><span class="source shell bash"><span class="meta function-call shell"><span class="variable function shell">$</span></span><span class="meta function-call arguments shell"> jj log</span>
+<span class="meta function-call shell"><span class="variable function shell">@</span></span><span class="meta function-call arguments shell">  qzsvtxpv hey@arne.me 2024-10-21 09:58:06 e18f7532</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell">  Add blog/jj-in-practice</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell"> ○  yoxxsupn hey@arne.me 2024-10-20 22:55:03 ae5d9109</span>
+<span class="meta function-call shell"><span class="variable function shell">├─╯</span></span><span class="meta function-call arguments shell">  Add library/calibans-war</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell"> ○  tvkvwslw hey@arne.me 2024-10-20 22:49:54 5e4dee1f</span>
+<span class="meta function-call shell"><span class="variable function shell">├─╯</span></span><span class="meta function-call arguments shell">  Add library/the-posthumous-memoirs-of-bras-cubas</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell"> ○  pywmtrys hey@arne.me 2024-10-20 21:20:11 7bda14b7</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell"> │  Add atoms/1</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell"> ○  xnlzypwn hey@arne.me 2024-10-20 21:20:10 8a004404</span>
+<span class="meta function-call shell"><span class="variable function shell">├─╯</span></span><span class="meta function-call arguments shell">  Add atoms functionality</span>
+<span class="meta function-call shell"><span class="variable function shell">◆</span></span><span class="meta function-call arguments shell">  wxxtrmqk hey@arne.me 2024-10-20 16:18:15 main HEAD@git 1eb46c81</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell">  Add weekly/166</span>
+<span class="meta function-call shell"><span class="variable function shell"><span class="meta group expansion tilde"><span class="variable language tilde shell">~</span></span></span></span>
+</span></code></pre>
+<p>This already shows one of the biggest differences, compared to <code>git</code>:
+There’s no branches, other than <code>main</code>.
+You <em>can</em> create branches, which are called <em>bookmarks</em> in <code>jj</code>, but you don’t
+<em>need</em> to.
+Instead, you work mostly with revisions<sup class="footnote-ref"><a href="#fn-1" id="fnref-1" data-footnote-ref>1</a></sup>.</p>
+<p>The terminal above shows the revision <code>w</code> (you can use the first letter to
+reference revisions, on your terminal it’ll be highlighted as well) as a parent
+to <code>x</code>, <code>t</code>, <code>y</code> and <code>q</code>.
+All these child-revisions don’t have a branch/bookmark, but they don’t need one.
+You can see what’s in-flight at this repository better than with any <code>git</code> repo,
+especially if branches haven’t been cleaned up in a while.</p>
+<h2><a href="#create-a-revision" aria-hidden="true" class="anchor" id="create-a-revision"></a>Create a revision</h2>
+<p>My usual flow with <code>git</code>, is to leave chages in the staging area until I’m
+ready to commit.
+Sometimes, if I have to switch branches or want to save my work, I’ll stash
+or create a WIP commit.</p>
+<p>In <code>jj</code>, there is no staging area—everything is a revision.
+Let’s create a new revision on top of my revisions where I add atoms
+functionality:</p>
+<pre class="language-sh"><span class="source shell bash"><span class="meta function-call shell"><span class="variable function shell">$</span></span><span class="meta function-call arguments shell"> jj new<span class="variable parameter option shell"><span class="punctuation definition parameter shell"> -</span>r</span> p</span>
+</span></code></pre>
+<p>Running <code>git log</code> again:</p>
+<pre class="language-sh"><span class="source shell bash"><span class="meta function-call shell"><span class="variable function shell">$</span></span><span class="meta function-call arguments shell"> jj log</span>
+<span class="meta function-call shell"><span class="variable function shell">@</span></span><span class="meta function-call arguments shell">  kxqvnxnw hey@arne.me 2024-10-21 10:03:20 22c020cf</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell">  (empty</span><span class="meta function-call shell"></span>) <span class="punctuation definition compound begin shell">(</span><span class="meta function-call shell"><span class="variable function shell">no</span></span><span class="meta function-call arguments shell"> description set</span><span class="punctuation definition compound end shell">)</span>
+<span class="meta function-call shell"><span class="variable function shell">○</span></span><span class="meta function-call arguments shell">  pywmtrys hey@arne.me 2024-10-20 21:20:11 HEAD@git 7bda14b7</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell">  Add atoms/1</span>
+<span class="meta function-call shell"><span class="variable function shell">○</span></span><span class="meta function-call arguments shell">  xnlzypwn hey@arne.me 2024-10-20 21:20:10 8a004404</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell">  Add atoms functionality</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell"> ○  qzsvtxpv hey@arne.me 2024-10-21 10:03:18 27229dca</span>
+<span class="meta function-call shell"><span class="variable function shell">├─╯</span></span><span class="meta function-call arguments shell">  Add blog/jj-in-practice</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell"> ○  yoxxsupn hey@arne.me 2024-10-20 22:55:03 ae5d9109</span>
+<span class="meta function-call shell"><span class="variable function shell">├─╯</span></span><span class="meta function-call arguments shell">  Add library/calibans-war</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell"> ○  tvkvwslw hey@arne.me 2024-10-20 22:49:54 5e4dee1f</span>
+<span class="meta function-call shell"><span class="variable function shell">├─╯</span></span><span class="meta function-call arguments shell">  Add library/the-posthumous-memoirs-of-bras-cubas</span>
+<span class="meta function-call shell"><span class="variable function shell">◆</span></span><span class="meta function-call arguments shell">  wxxtrmqk hey@arne.me 2024-10-20 16:18:15 main 1eb46c81</span>
+<span class="meta function-call shell"><span class="variable function shell">│</span></span><span class="meta function-call arguments shell">  Add weekly/166</span>
+<span class="meta function-call shell"><span class="variable function shell"><span class="meta group expansion tilde"><span class="variable language tilde shell">~</span></span></span></span>
+</span></code></pre>
+<p>You’ll notice that our active revisions are now left-aligned, and the one to
+add this very blog post has moved to the right.
+There’s no hirarchy, they’re all descendants of <code>Add weekly/166</code>.</p>
+<p>After doing some work, e.g. addings a new atom, I can <em>describe</em> that revision
+with <code>jj describe</code>.
+This is comparable to <code>git commit</code>, but it doesn’t actually create a commit or
+a revision, it only <em>describes</em> the current one.</p>
+<p>Sometimes I want to update a previous revision, in this case <code>Add atoms/1</code>.
+I can run <code>jj squash</code> to merge the current one with its parent.</p>
+<h2><a href="#push-and-pull" aria-hidden="true" class="anchor" id="push-and-pull"></a>Push and pull</h2>
+<p>To fetch new revisions, I run <code>jj git fetch</code>, to push branches/bookmarks, I run
+<code>jj git push</code>.
+This uses the same <code>git</code> server it was using before.</p>
+<p>Before pushing, I need to move my bookmark to the revision I want to push.
+I push the <code>main</code> branch to deploy my website, so if I wanted to publish my
+atoms functionality (should I?), I would run <code>jj bookmark set main -r p</code> before
+pushing.</p>
+<h2><a href="#rebase-and-split" aria-hidden="true" class="anchor" id="rebase-and-split"></a>Rebase and split</h2>
+<p>Sometimes I need to rebase. Fortunately that’s a lot simpler than it is in
+<code>git</code>:
+I can run <code>jj rebase -s &lt;source&gt; -d &lt;destination&gt;</code> to move revisions around.
+If I wanted support for atoms for this blog post, I would run
+<code>jj rebase -s q -d p</code> and it would move the revision for this blog post on top
+of “Add atoms/1”.</p>
+<p><code>jj</code> also does automatic rebasing, e.g. if you squash changes into a revision
+that has descendants.</p>
+<p>And if I have a revision that I’d like to be two, I run <code>jj split</code> and
+interactively select what belongs to which revision.</p>
+<h2><a href="#undo" aria-hidden="true" class="anchor" id="undo"></a>Undo</h2>
+<p>Undoing an (interactive) rebase in <code>git</code> is not fun.
+<code>jj undo</code> undoes the last <code>jj</code> operation, doesn’t matter if it’s abandoning
+(deleting) a revision or doing a rebase.
+This is a life saver!
+You can also run <code>jj op log</code> to display your last <code>jj</code> operations.</p>
+<h2><a href="#things-i-stumble-upon" aria-hidden="true" class="anchor" id="things-i-stumble-upon"></a>Things I stumble upon</h2>
+<p>I’ve been using <code>git</code> for a long, long time.
+My brain assumes that after a <code>commit</code>/<code>revision</code>, I’m working on the next one.
+It also assumes that <code>jj describe</code> does the same as <code>git commit</code> (it’s not).
+I often describe a revision and continue editing files, which then erroneously
+get added to the current revision.
+I’m not saying this is wrong, it makes sense in the <code>jj</code> world, but I keep
+tripping over that and have to run <code>jj split</code> to pull changes out again.</p>
+<p>One other thing is that you cannot check out a revision directly (or maybe I
+just don’t know how to), so when I’ve moved to a different revision and want
+to move back, I run <code>jj new &lt;revision&gt;</code>, which creates an empty revision on top
+of it.
+This means that if I’m not done with the revision, I have to keep running
+<code>jj squash</code> to move changes into it.</p>
+<h2><a href="#why-it-works-for-me" aria-hidden="true" class="anchor" id="why-it-works-for-me"></a>Why it works for me</h2>
+<p>A week ago, I removed <code>jj</code> from my website’s repository, to see if I’d miss it.
+I added it back the same day.
+Jujutsu feels <em>lighter</em> than <code>git</code>, while at the same time giving you a full
+overview of what’s in-flight right now<sup class="footnote-ref"><a href="#fn-2" id="fnref-2" data-footnote-ref>2</a></sup>.
+Having no staging area means I only need to worry about revisions (see caveat
+above).</p>
+<p>If trying new things sounds fun to you, give
+<a href="https://github.com/martinvonz/jj">Jujutsu</a> a spin!</p>
+<h2><a href="#further-reading" aria-hidden="true" class="anchor" id="further-reading"></a>Further reading</h2>
+<ul>
+<li><a href="https://martinvonz.github.io/jj/v0.13.0/tutorial/">Official Jujutsu Tutorial</a></li>
+<li><a href="https://martinvonz.github.io/jj/latest/git-comparison/">Comparison with Git</a></li>
+<li><a href="https://steveklabnik.github.io/jujutsu-tutorial/">Steve’s Jujutsu Tutorial</a></li>
+<li><a href="https://v5.chriskrycho.com/essays/jj-init/">Chris Krycho’s jj init essay</a></li>
+<li><a href="https://www.youtube.com/watch?v=2otjrTzRfVk">Chris Krycho’s video on jj</a></li>
+</ul>
+<section class="footnotes" data-footnotes>
+<ol>
+<li id="fn-1">
+<p>What’s cool about a <code>jj</code> revision, is that changing it doesn’t change it’s hash. <a href="#fnref-1" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="1" aria-label="Back to reference 1">↩</a></p>
+</li>
+<li id="fn-2">
+<p>If you work in large projects with many contributors, you can
+<a href="https://martinvonz.github.io/jj/latest/tutorial/#the-log-command-and-revsets">tune your <code>jj log</code> to only your revisions</a>. <a href="#fnref-2" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="2" aria-label="Back to reference 2">↩</a></p>
+</li>
+</ol>
+</section>
+]]></content:encoded></item><item><title>We need more zero config tools</title><link>https://arne.me/blog/we-need-more-zero-config-tools</link><description><![CDATA[Recently, I’ve become fond of tools that just work, out of the box.
 This blogpost is an ode to them.
 ]]></description><author>Arne Bahlo</author><guid>https://arne.me/blog/we-need-more-zero-config-tools</guid><pubDate>Tue, 01 Oct 2024 00:00:00 +0000</pubDate><content:encoded><![CDATA[<blockquote>
 <p>It just works. — Steve Jobs</p>
