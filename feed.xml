@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Arne Bahlo</title><link>https://arne.me</link><description>Arne Bahlo&apos;s personal website</description><language>en-us</language><copyright>2021 – 2024 Arne Bahlo</copyright><managingEditor>hey@arne.me</managingEditor><webMaster>hey@arne.me</webMaster><lastBuildDate>Mon, 21 Oct 2024 16:09:32 +0000</lastBuildDate><item><title>Jujutsu in practice</title><link>https://arne.me/blog/jj-in-practice</link><description><![CDATA[Jujutsu is a version control system, an alternative to Git. This blog post
+<?xml version="1.0" encoding="utf-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Arne Bahlo</title><link>https://arne.me</link><description>Arne Bahlo&apos;s personal website</description><language>en-us</language><copyright>2021 – 2024 Arne Bahlo</copyright><managingEditor>hey@arne.me</managingEditor><webMaster>hey@arne.me</webMaster><lastBuildDate>Tue, 22 Oct 2024 08:43:13 +0000</lastBuildDate><item><title>Jujutsu in practice</title><link>https://arne.me/blog/jj-in-practice</link><description><![CDATA[Jujutsu is a version control system, an alternative to Git. This blog post
 is not a tutorial, but practical examples of how I use it.
 ]]></description><author>Arne Bahlo</author><guid>https://arne.me/blog/jj-in-practice</guid><pubDate>Mon, 21 Oct 2024 00:00:00 +0000</pubDate><content:encoded><![CDATA[<p>This post is not about the Japanese martial arts <em>Jiu-jitsu</em>, it’s about a new
 VCS, or version control system.
@@ -36,9 +36,9 @@ is a <code>rm -r .jj</code>.</p>
 There’s no branches, other than <code>main</code>.
 You <em>can</em> create branches, which are called <em>bookmarks</em> in <code>jj</code>, but you don’t
 <em>need</em> to.
-Instead, you work mostly with revisions<sup class="footnote-ref"><a href="#fn-1" id="fnref-1" data-footnote-ref>1</a></sup>.</p>
-<p>The terminal above shows the revision <code>w</code> (you can use the first letter to
-reference revisions, on your terminal it’ll be highlighted as well) as a parent
+Instead, you work mostly with changes<sup class="footnote-ref"><a href="#fn-1" id="fnref-1" data-footnote-ref>1</a></sup>.</p>
+<p>The terminal above shows the change <code>w</code> (you can use the first letter to
+reference changes, on your terminal it’ll be highlighted as well) as a parent
 to <code>x</code>, <code>t</code>, <code>y</code> and <code>q</code>.
 All these child-revisions don’t have a branch/bookmark, but they don’t need one.
 You can see what’s in-flight at this repository better than with any <code>git</code> repo,
@@ -107,7 +107,7 @@ This is a life saver!
 You can also run <code>jj op log</code> to display your last <code>jj</code> operations.</p>
 <h2><a href="#things-i-stumble-upon" aria-hidden="true" class="anchor" id="things-i-stumble-upon"></a>Things I stumble upon</h2>
 <p><del>I’ve been using <code>git</code> for a long, long time.
-My brain assumes that after a <code>commit</code>/<code>revision</code>, I’m working on the next one.
+My brain assumes that after a <code>commit</code>, I’m working on the next one.
 It also assumes that <code>jj describe</code> does the same as <code>git commit</code> (it’s not).
 I often describe a revision and continue editing files, which then erroneously
 get added to the current revision.
@@ -146,7 +146,7 @@ above).</p>
 <section class="footnotes" data-footnotes>
 <ol>
 <li id="fn-1">
-<p>What’s cool about a <code>jj</code> revision, is that changing it doesn’t change it’s hash. <a href="#fnref-1" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="1" aria-label="Back to reference 1">↩</a></p>
+<p>What’s cool about a <code>jj</code> change, is that updating it doesn’t change it’s ID. <a href="#fnref-1" class="footnote-backref" data-footnote-backref data-footnote-backref-idx="1" aria-label="Back to reference 1">↩</a></p>
 </li>
 <li id="fn-2">
 <p>If you work in large projects with many contributors, you can

@@ -46,3 +46,6 @@
 
 # Pagination
 /page/:splat /blog/page/:splat
+
+# Very old link
+/blog/2013/09/28/deploy-octopress-via-git /blog/deploy-octopress-via-git
