@@ -194,7 +194,7 @@ impl Layout {
                     }
                     .h-card hidden {
                         span.p-name { "Arne Bahlo" }
-                        img.u-photo src="/arne.svg" {}
+                        img.u-photo src="/arne.svg" hidden loading="lazy" {}
                         a.u-url href="https://arne.me" {}
                         a.u-email href="mailto:hey@arne.me" {}
                         p.p-note {
