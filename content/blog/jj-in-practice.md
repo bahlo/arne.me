@@ -5,6 +5,7 @@ description: |
   is not a tutorial, but practical examples of how I use it.
 published: "2024-10-21"
 location: "Frankfurt, Germany"
+lobsters: "https://lobste.rs/s/fbjowx/jujutsu_practice"
 ---
 
 This post is not about the Japanese martial arts _Jiu-jitsu_, it's about a new
