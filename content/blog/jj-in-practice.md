@@ -54,10 +54,10 @@ This already shows one of the biggest differences, compared to `git`:
 There's no branches, other than `main`.
 You _can_ create branches, which are called _bookmarks_ in `jj`, but you don't
 _need_ to.
-Instead, you work mostly with revisions[^1].
+Instead, you work mostly with changes[^1].
 
-The terminal above shows the revision `w` (you can use the first letter to
-reference revisions, on your terminal it'll be highlighted as well) as a parent
+The terminal above shows the change `w` (you can use the first letter to
+reference changes, on your terminal it'll be highlighted as well) as a parent
 to `x`, `t`, `y` and `q`.
 All these child-revisions don't have a branch/bookmark, but they don't need one.
 You can see what's in-flight at this repository better than with any `git` repo,
@@ -148,7 +148,7 @@ You can also run `jj op log` to display your last `jj` operations.
 ## Things I stumble upon
 
 ~I've been using `git` for a long, long time.
-My brain assumes that after a `commit`/`revision`, I'm working on the next one.
+My brain assumes that after a `commit`, I'm working on the next one.
 It also assumes that `jj describe` does the same as `git commit` (it's not).
 I often describe a revision and continue editing files, which then erroneously
 get added to the current revision.
@@ -189,6 +189,6 @@ If trying new things sounds fun to you, give
 * [Chris Krycho's jj init essay](https://v5.chriskrycho.com/essays/jj-init/)
 * [Chris Krycho's video on jj](https://www.youtube.com/watch?v=2otjrTzRfVk)
 
-[^1]: What's cool about a `jj` revision, is that changing it doesn't change it's hash.
+[^1]: What's cool about a `jj` change, is that updating it doesn't change it's ID.
 [^2]: If you work in large projects with many contributors, you can 
       [tune your `jj log` to only your revisions](https://martinvonz.github.io/jj/latest/tutorial/#the-log-command-and-revsets).
