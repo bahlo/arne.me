@@ -29,12 +29,6 @@ enum NewCommand {
 }
 
 #[derive(Debug, Parser)]
-enum ExportCommand {
-    #[clap(name = "weekly")]
-    Weekly { num: Option<u16> },
-}
-
-#[derive(Debug, Parser)]
 enum Commands {
     #[clap(name = "watch")]
     Watch,
@@ -47,9 +41,6 @@ enum Commands {
     #[command(subcommand)]
     #[clap(name = "new")]
     New(NewCommand),
-    #[command(subcommand)]
-    #[clap(name = "export")]
-    Export(ExportCommand),
 }
 
 fn main() -> Result<()> {
@@ -64,73 +55,7 @@ fn main() -> Result<()> {
             NewCommand::Book { slug } => new_book(slug),
             NewCommand::OgImage { path } => new_og_image(path),
         },
-        Commands::Export(export) => match export {
-            ExportCommand::Weekly { num } => export_weekly(num),
-        },
     }
-}
-
-fn export_weekly(num: Option<u16>) -> Result<()> {
-    let content = Content::parse(fs::read_dir("content")?)?;
-
-    // Default to the latest weekly issue
-    let latest_issue = content
-        .weekly
-        .first()
-        .ok_or(anyhow!("No weekly issues found"))?
-        .num;
-    let num = num.unwrap_or(latest_issue);
-
-    let weekly_issue = content
-        .weekly
-        .iter()
-        .find(|issue| issue.num == num)
-        .ok_or_else(|| anyhow!("Weekly issue not found"))?;
-
-    println!("{}", weekly_issue.content);
-    println!();
-
-    if let Some(quote_of_the_week) = &weekly_issue.quote_of_the_week {
-        println!("## Quote of the Week");
-        println!();
-        quote_of_the_week.text.split("\n").for_each(|line| {
-            println!("> {}", line);
-        });
-        println!("> — {}", quote_of_the_week.author);
-    } else if let Some(toot_of_the_week) = &weekly_issue.toot_of_the_week {
-        println!("## Toot of the Week");
-        println!();
-        toot_of_the_week.text.split("\n").for_each(|line| {
-            println!("> {}", line);
-        });
-        println!(
-            "> — [{}]({})",
-            toot_of_the_week.author, toot_of_the_week.url
-        );
-    } else if let Some(tweet_of_the_week) = &weekly_issue.tweet_of_the_week {
-        println!("## Tweet of the Week");
-        println!();
-        tweet_of_the_week.text.split("\n").for_each(|line| {
-            println!("> {}", line);
-        });
-        println!(
-            "> — [{}]({})",
-            tweet_of_the_week.author, tweet_of_the_week.url
-        );
-    }
-    println!();
-    weekly_issue.categories.iter().for_each(|category| {
-        println!("## {}", category.title);
-        category.stories.iter().for_each(|story| {
-            println!("### [{}]({})", story.title, story.url);
-            println!("{}", story.url.host().unwrap());
-            println!();
-            println!("{}", story.description);
-        });
-        println!();
-    });
-
-    Ok(())
 }
 
 pub fn new_weekly() -> Result<()> {
