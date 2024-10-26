@@ -14,7 +14,6 @@ body {
     font-family: "Rebond Grotesque", sans-serif;
     font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
     font-display: swap;
-    -webkit-font-smoothing: antialiased;
     color: $color-fg;
     @media (prefers-color-scheme: dark) {
         color: invert($color-fg);
