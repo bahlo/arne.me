@@ -12,4 +12,5 @@ jobs:
     name: Syndicate
     runs-on: ubuntu-latest
     steps:
-      - run: echo "TODO: Run cargo run syndicate"
+      - run: |
+          echo "TODO: Run cargo run syndicate"
