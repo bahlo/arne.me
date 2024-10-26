@@ -1,6 +1,7 @@
 use anyhow::{anyhow, bail, Result};
 use chrono::Utc;
 use clap::Parser;
+use git2::{Delta, DiffDelta, Oid, Repository};
 use std::{env, fs, path::Path, process::Command};
 
 mod og;
@@ -41,9 +42,8 @@ enum Commands {
     #[command(subcommand)]
     #[clap(name = "new")]
     New(NewCommand),
-    #[command(subcommand)]
     #[clap(name = "syndicate")]
-    Syndicate,
+    Syndicate { before_commit_sha: String },
 }
 
 fn main() -> Result<()> {
@@ -58,7 +58,7 @@ fn main() -> Result<()> {
             NewCommand::Book { slug } => new_book(slug),
             NewCommand::OgImage { path } => new_og_image(path),
         },
-        Commands::Syndicate => syndicate(),
+        Commands::Syndicate { before_commit_sha } => syndicate(before_commit_sha),
     }
 }
 
@@ -222,6 +222,35 @@ fn new_og_image(path: impl AsRef<str>) -> Result<()> {
     Ok(())
 }
 
-fn syndicate() -> Result<()> {
-    todo!()
+fn diff_cb(diff_delta: DiffDelta<'_>, _i: f32) -> bool {
+    if diff_delta.status() == Delta::Added {
+        if let Some(filepath) = diff_delta.new_file().path() {
+            if !filepath.starts_with("content")
+                || filepath.extension().and_then(|s| s.to_str()) != Some("md")
+            {
+                // Not in content/**.md
+                return true;
+            }
+
+            println!("{:?}", filepath);
+        }
+    }
+    true
+}
+
+fn syndicate(before_commit_sha: String) -> Result<()> {
+    let repo = Repository::open(".")?;
+
+    let head = repo.head()?;
+    let head_tree = head.peel_to_tree()?;
+
+    let before_commit_oid = Oid::from_str(&before_commit_sha)?;
+    let before_commit = repo.find_commit(before_commit_oid)?;
+    let before_commit_tree = before_commit.tree()?;
+
+    let diff = repo.diff_tree_to_tree(Some(&before_commit_tree), Some(&head_tree), None)?;
+
+    diff.foreach(&mut diff_cb, None, None, None)?;
+
+    Ok(())
 }
