@@ -12,9 +12,6 @@ jobs:
     name: Syndicate
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      - uses: actions/checkout@v4
       - run: |
           git diff --stat ${{ github.event.before }}
