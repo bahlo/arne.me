@@ -41,6 +41,9 @@ enum Commands {
     #[command(subcommand)]
     #[clap(name = "new")]
     New(NewCommand),
+    #[command(subcommand)]
+    #[clap(name = "syndicate")]
+    Syndicate,
 }
 
 fn main() -> Result<()> {
@@ -55,6 +58,7 @@ fn main() -> Result<()> {
             NewCommand::Book { slug } => new_book(slug),
             NewCommand::OgImage { path } => new_og_image(path),
         },
+        Commands::Syndicate => syndicate(),
     }
 }
 
@@ -216,4 +220,8 @@ fn new_og_image(path: impl AsRef<str>) -> Result<()> {
         }
     }
     Ok(())
+}
+
+fn syndicate() -> Result<()> {
+    todo!()
 }
