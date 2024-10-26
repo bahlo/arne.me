@@ -1,0 +1,15 @@
+name: Syndicate
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'content/**.md'
+
+jobs:
+  syndicate:
+    name: Syndicate
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "TODO: Run cargo run syndicate"
