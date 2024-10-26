@@ -5,7 +5,7 @@ description: "What I'm up to"
 
 Here's what I'm up to:
 
-- Redesign my website (yes, again)
-- Read Starfish by Peter Watts for the book club at work
+* Try to automate syndication as much as possible
+* Read a lot of books
 
-This page was last updated in July 2024 and is inspired by [NowNowNow](https://nownownow.com).
+This page was last updated in October 2024 and is inspired by [NowNowNow](https://nownownow.com).
