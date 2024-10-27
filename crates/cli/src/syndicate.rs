@@ -94,7 +94,7 @@ pub fn syndicate_path(slug: impl Into<String>) -> Result<()> {
         Some(arneos::content::Item::Weekly(weekly_issue)) => {
             let num = weekly_issue.num;
             println!("Would toot this:");
-            println!("  📬 Arne's Weekly #{num} has been sent out, check your inbox or read it online at https://arne.me/weekly/{num}");
+            println!("  📬 Arne’s Weekly #{num} has been sent out, check your inbox or read it online at https://arne.me/weekly/{num}");
         }
         Some(arneos::content::Item::Blog(blogpost)) => {
             let title = &blogpost.title;
