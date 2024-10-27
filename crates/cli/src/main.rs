@@ -9,7 +9,7 @@ mod watch;
 mod webmentions;
 
 use arneos::content::{Content, Item};
-use syndicate::{syndicate_before_sha, syndicate_slug};
+use syndicate::{syndicate_before_sha, syndicate_path};
 use webmentions::send_webmentions;
 
 #[derive(Debug, Parser)]
@@ -48,7 +48,7 @@ enum Commands {
         #[clap(long, short, group = "subject")]
         before_sha: Option<String>,
         #[clap(long, short, group = "subject")]
-        slug: Option<String>,
+        path: Option<String>,
     },
 }
 
@@ -66,15 +66,15 @@ fn main() -> Result<()> {
         },
         Commands::Syndicate {
             before_sha: Some(before_sha),
-            slug: _,
+            path: _,
         } => syndicate_before_sha(before_sha),
         Commands::Syndicate {
             before_sha: _,
-            slug: Some(slug),
-        } => syndicate_slug(slug),
+            path: Some(path),
+        } => syndicate_path(path),
         Commands::Syndicate {
             before_sha: None,
-            slug: None,
+            path: None,
         } => bail!("--before-sha and --slug are exclusive"),
     }
 }

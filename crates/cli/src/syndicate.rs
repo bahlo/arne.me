@@ -1,7 +1,8 @@
-use std::{thread::sleep, time::Duration};
-
 use anyhow::{bail, Result};
 use git2::{Delta, DiffDelta, Oid, Repository};
+use std::{fs, thread::sleep, time::Duration};
+
+use arneos::content::Content;
 
 fn syndicate_diff_cb(diff_delta: DiffDelta<'_>, _i: f32) -> bool {
     if diff_delta.status() != Delta::Added {
@@ -35,7 +36,7 @@ fn syndicate_diff_cb(diff_delta: DiffDelta<'_>, _i: f32) -> bool {
         }
     };
 
-    if let Err(e) = syndicate_slug(slug.to_string_lossy()) {
+    if let Err(e) = syndicate_path(slug.to_string_lossy()) {
         eprintln!("Failed to syndicate {slug:?}: {e}");
     };
 
@@ -59,8 +60,8 @@ pub fn syndicate_before_sha(before_sha: String) -> Result<()> {
     Ok(())
 }
 
-pub fn wait_for_200(slug: String) -> Result<()> {
-    let url = format!("https://arne.me/{slug}");
+pub fn wait_for_200(slug: impl AsRef<str>) -> Result<()> {
+    let url = format!("https://arne.me/{}", slug.as_ref());
     println!("Waiting for {url} to return HTTP 200");
     for i in 0..300 {
         // 5 mins
@@ -82,10 +83,34 @@ pub fn wait_for_200(slug: String) -> Result<()> {
     bail!("Failed to reach {url} in 5 minutes")
 }
 
-pub fn syndicate_slug(slug: impl Into<String>) -> Result<()> {
-    let slug = slug.into();
-    println!("Syndicating {slug}...");
-    wait_for_200(slug)?;
-    // TODO
+pub fn syndicate_path(slug: impl Into<String>) -> Result<()> {
+    let path = slug.into();
+
+    println!("Syndicating {path}...");
+    wait_for_200(&path)?;
+
+    let content = Content::parse(fs::read_dir("content")?)?;
+    match content.by_path(path) {
+        Some(arneos::content::Item::Weekly(weekly_issue)) => {
+            let num = weekly_issue.num;
+            println!("Would toot this:");
+            println!("  📬 Arne's Weekly #{num} has been sent out, check your inbox or read it online at https://arne.me/weekly/{num}");
+        }
+        Some(arneos::content::Item::Blog(blogpost)) => {
+            let title = &blogpost.title;
+            let slug = &blogpost.slug;
+            println!("Would toot this:");
+            println!("  📝 {title} https://arne.me/blog/{slug}");
+        }
+        Some(arneos::content::Item::Book(book)) => {
+            let slug = &book.slug;
+            let title = &book.title;
+            let author = &book.author;
+            println!("Would toot this:");
+            println!("  📚 I read {title} by {author}: https://arne.me/library/{slug}");
+        }
+        _ => eprintln!("Syndicating weekly issues and blog posts only"),
+    }
+
     Ok(())
 }
