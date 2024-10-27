@@ -23,3 +23,6 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: cargo run syndicate --before-sha ${{ github.event.before }}
+        env:
+          AXIOM_URL: https://spezi.social
+          AXIOM_TOKEN: ${{ secrets.AXIOM_TOKEN}}
