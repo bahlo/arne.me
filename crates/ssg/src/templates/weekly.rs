@@ -130,7 +130,7 @@ pub fn render_content(
                                 (story.title)
                             }
                             span.weekly__url { (format!(" ({})", host.strip_prefix("www.").unwrap_or(host))) }
-                            p { (PreEscaped(story.description_html.clone())) }
+                            (PreEscaped(story.description_html.clone()))
                         }
                     }
                 }
