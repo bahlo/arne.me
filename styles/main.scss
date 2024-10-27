@@ -390,6 +390,7 @@ pre,
 code {
     font-family: "Pragmata Pro", monospace;
     font-size: 0.9em; // Works better with the default text
+    font-feature-settings: normal;
     line-height: 1.2;
 
     .name,
