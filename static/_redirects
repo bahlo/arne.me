@@ -12,10 +12,11 @@
 /projects/* /projects
 
 # RSS Feeds
-/atom.xml /feed.xml
+/feed.xml /blog/feed.xml
+/atom.xml /blog/feed.xml
+/articles/atom.xml /blog/feed.xml
+/blog/atom.xml /blog/feed.xml
 /reading/atom.xml /library/feed.xml
-/articles/atom.xml /feed.xml
-/blog/atom.xml /feed.xml
 /weekly/atom.xml /weekly/feed.xml
 
 # Subscribed/unsubscribed

@@ -1,11 +1,5 @@
 use anyhow::{bail, Result};
-use std::{
-    cell::LazyCell,
-    env,
-    fs::self,
-    path::Path,
-    process::Command,
-};
+use std::{cell::LazyCell, env, fs, path::Path, process::Command};
 use templates::layout::Layout;
 
 mod rss;
@@ -181,7 +175,7 @@ pub fn main() -> Result<()> {
 
     // Generate RSS feeds
     println!("Generating RSS feeds...");
-    fs::write("dist/feed.xml", rss::render_blog(&content))?;
+    fs::write("dist/blog/feed.xml", rss::render_blog(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
     fs::write("dist/library/feed.xml", rss::render_library(&content))?;
 
@@ -223,4 +217,3 @@ where
 
     Ok(())
 }
-
