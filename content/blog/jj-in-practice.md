@@ -58,7 +58,7 @@ _need_ to.
 Instead, you work mostly with changes[^1].
 
 The terminal above shows the change `w` (you can use the first letter to
-reference changes, on your terminal it'll be highlighted as well) as a parent
+reference changes; on your terminal it'll be highlighted as well) as a parent
 to `x`, `t`, `y` and `q`.
 All these child-revisions don't have a branch/bookmark, but they don't need one.
 You can see what's in-flight at this repository better than with any `git` repo,
@@ -66,7 +66,7 @@ especially if branches haven't been cleaned up in a while.
 
 ## Create a revision
 
-My usual flow with `git`, is to leave chages in the staging area until I'm
+My usual flow with `git` is to leave changes in the staging area until I'm
 ready to commit.
 Sometimes, if I have to switch branches or want to save my work, I'll stash
 or create a WIP commit. 
@@ -102,9 +102,9 @@ $ jj log
 
 You'll notice that our active revisions are now left-aligned, and the one to
 add this very blog post has moved to the right. 
-There's no hirarchy, they're all descendants of `Add weekly/166`.
+There's no hierarchy, they're all descendants of `Add weekly/166`.
 
-After doing some work, e.g. addings a new atom, I can _describe_ that revision
+After doing some work, e.g. adding a new atom, I can _describe_ that revision
 with `jj describe`.
 This is comparable to `git commit`, but it doesn't actually create a commit or
 a revision, it only _describes_ the current one.
@@ -114,7 +114,7 @@ I can run `jj squash` to merge the current one with its parent.
 
 ## Push and pull
 
-To fetch new revisions, I run `jj git fetch`, to push branches/bookmarks, I run
+To fetch new revisions, I run `jj git fetch`; to push branches/bookmarks, I run
 `jj git push`.
 This uses the same `git` server it was using before.
 
@@ -150,14 +150,14 @@ You can also run `jj op log` to display your last `jj` operations.
 
 ~I've been using `git` for a long, long time.
 My brain assumes that after a `commit`, I'm working on the next one.
-It also assumes that `jj describe` does the same as `git commit` (it's not).
+It also assumes that `jj describe` does the same as `git commit` (it does not).
 I often describe a revision and continue editing files, which then erroneously
 get added to the current revision.
 I'm not saying this is wrong, it makes sense in the `jj` world, but I keep
 tripping over that and have to run `jj split` to pull changes out again.~
 <br>
 alterae on Lobste.rs [pointed out](https://lobste.rs/s/fbjowx/jujutsu_practice#c_xyhzxa)
-that you can describe and immediatly create a new revision on top of it with
+that you can describe and immediately create a new revision on top of it with
 `jj commit`. Thanks!
 
 ~One other thing is that you cannot check out a revision directly (or maybe I
@@ -190,6 +190,6 @@ If trying new things sounds fun to you, give
 * [Chris Krycho's jj init essay](https://v5.chriskrycho.com/essays/jj-init/)
 * [Chris Krycho's video on jj](https://www.youtube.com/watch?v=2otjrTzRfVk)
 
-[^1]: What's cool about a `jj` change, is that updating it doesn't change it's ID.
+[^1]: What's cool about a `jj` change, is that updating it doesn't change its ID.
 [^2]: If you work in large projects with many contributors, you can 
       [tune your `jj log` to only your revisions](https://martinvonz.github.io/jj/latest/tutorial/#the-log-command-and-revsets).
