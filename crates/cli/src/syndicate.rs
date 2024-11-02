@@ -144,7 +144,9 @@ pub fn syndicate_path(slug: impl Into<String>) -> Result<()> {
             let slug = &book.slug;
             let title = &book.title;
             let author = &book.author;
-            let status = format!("📚 I read {title} by {author}: https://arne.me/library/{slug}");
+            let status = format!(
+                "📚 I read {title} by {author}: https://arne.me/library/{slug} #bookstodon"
+            );
             println!("Tooting `{status}`...");
             let toot_url = toot(&status, &path)?;
             println!("{toot_url}");
