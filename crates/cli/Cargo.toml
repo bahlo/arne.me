@@ -16,7 +16,7 @@ clap = { version = "4", features = ["derive"] }
 crossbeam-channel = "0.5"
 file-serve = { version = "0.3" }
 html-escape = "0.2"
-notify-debouncer-mini = "0.4"
+notify-debouncer-mini = "0.5"
 quick-xml = { version = "0.36", features = ["serialize"] }
 regex = "1"
 resvg = "0.44"
