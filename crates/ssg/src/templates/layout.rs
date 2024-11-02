@@ -183,11 +183,11 @@ impl Layout {
                             "Commit "
                             a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
                             br;
-                            a.no-underline href="https://firechicken.club/arne/prev" { "←" }
+                            a.arrow href="https://firechicken.club/arne/prev" { "←" }
                             (PreEscaped("&nbsp;"))
                             a href="https://firechicken.club" { "Fire Chicken Webring" }
                             (PreEscaped("&nbsp;"))
-                            a.no-underline href="https://firechicken.club/arne/next" { "→" }
+                            a.arrow href="https://firechicken.club/arne/next" { "→" }
                             br;
                             "Made with ♥ by a human."
                         }
