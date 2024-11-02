@@ -124,7 +124,7 @@ pub fn syndicate_path(slug: impl Into<String>) -> Result<()> {
     match content.by_path(&path) {
         Some(arneos::content::Item::Weekly(weekly_issue)) => {
             let num = weekly_issue.num;
-            let status = format!("📬 Arne’s Weekly #{num} has been sent out, check your inbox or read it online at https://arne.me/weekly/{num}");
+            let status = format!("📬 Arne’s Weekly #{num} has been sent out, check your inbox or read it online at https://arne.me/weekly/{num} #weeknotes");
             println!("Tooting `{status}`...");
             let toot_url = toot(&status, &path)?;
             println!("{toot_url}");
