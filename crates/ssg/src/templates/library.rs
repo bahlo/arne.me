@@ -32,6 +32,10 @@ pub fn render(book: &Book) -> Result<Context> {
                         (PreEscaped(" &middot; "))
                         (book.rating)
                         "/5"
+                        @if let Some(url) = &book.url {
+                            (PreEscaped(" &middot; "))
+                            a href=(url) { "Buy" }
+                        }
                     }
                 }
                 picture {

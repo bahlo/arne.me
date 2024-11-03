@@ -94,6 +94,7 @@ pub struct Book {
     pub read: NaiveDate,
     pub rating: u8,
     pub location: String,
+    pub url: Option<Url>,
     pub excerpt_html: String,
     pub content_html: String,
 }
@@ -502,6 +503,7 @@ impl Content {
                 pub read: NaiveDate,
                 pub rating: u8,
                 pub location: String,
+                pub url: Option<Url>,
             }
 
             let markdown = matter.parse(&contents);
@@ -543,6 +545,7 @@ impl Content {
                 read: frontmatter.read,
                 rating: frontmatter.rating,
                 location: smart_quotes(frontmatter.location),
+                url: frontmatter.url,
                 excerpt_html,
                 content_html,
             });
