@@ -13,7 +13,6 @@ chrono = { version = "0.4", default-features = false, features = [
     "serde",
 ] }
 clap = { version = "4", features = ["derive"] }
-crossbeam-channel = "0.5"
 file-serve = { version = "0.3" }
 html-escape = "0.2"
 notify-debouncer-mini = "0.5"

@@ -1,11 +1,11 @@
 use anyhow::Result;
-use notify_debouncer_mini::{new_debouncer, notify::RecursiveMode, DebounceEventResult};
+use notify_debouncer_mini::{new_debouncer, notify::RecursiveMode};
 use std::{
     io,
     net::{TcpListener, TcpStream},
     path::Path,
     process::{Command, Stdio},
-    sync::{Arc, Mutex},
+    sync::{mpsc, Arc, Mutex},
     thread,
     time::Duration,
 };
@@ -26,10 +26,11 @@ pub fn watch() -> Result<()> {
         .spawn()?
         .wait()?;
 
-    let (notify_tx, notify_rx) = crossbeam_channel::unbounded::<DebounceEventResult>();
+    let (notify_tx, notify_rx) = mpsc::channel();
+
     let mut debouncer = new_debouncer(Duration::from_millis(500), notify_tx)?;
 
-    let (build_tx, build_rx) = crossbeam_channel::unbounded::<()>();
+    let (build_tx, build_rx) = mpsc::channel();
 
     let build_thread = thread::spawn(move || {
         for rx in notify_rx {
