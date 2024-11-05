@@ -22,8 +22,8 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: cargo check
-  build:
-    name: Build
+  build-deploy:
+    name: Build & deploy
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -36,8 +36,11 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: cargo run -p ssg
-      - uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
-          branch: dist
-          commit-message: "Deploying to dist from ${{ github.sha }}"
+      - run: curl -o fonts.zip "${{ secrets.FONT_ZIP_URL }} && unzip fonts.zip -d fonts/ && rm fonts.zip
+      - run: npm install netlify-cli -g
+      - run: |
+          netlify deploy \
+            --dir dist \
+            --auth ""${{ secrets.NETLIFY_TOKEN }}" \
+            --site "${{ secrets.NETLIFY_SITE_ID }}" \
+            --prod
