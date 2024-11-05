@@ -5,8 +5,9 @@ description: "The Colophon of arne.me"
 
 This website was first published on June 19th 2021 near
 [Frankfurt, Germany](https://frankfurt.de).
-It's developed on a 2021 MacBook Pro with a custom Rust static site generator
-and hosted on [Netlify](https://netlify.com).
+It's developed on a 2021 MacBook Pro with a custom Rust static site generator,
+built with [GitHub Actions](https://github.com/bahlo/arne.me/actions/workflows/ci.yaml)
+and deployed to [Netlify](https://netlify.com).
 The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 
 The fonts used are [Rebond Grotesque](https://extraset.ch/typefaces/rebond-grotesque/)
