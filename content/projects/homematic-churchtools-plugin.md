@@ -1,6 +1,7 @@
 ---
 title: "HomeMatic ChurchTools Plugin"
 from: 2023
+to: 2024
 ---
 
 This project connects the smart home system 
