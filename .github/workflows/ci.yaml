@@ -20,7 +20,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: cargo-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
+          key: cargo-check-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
           restore-keys: cargo-
       - run: cargo check
   build-deploy:
@@ -35,7 +35,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: cargo-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
+          key: cargo-build-ssg-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
           restore-keys: cargo-
       - run: cargo run -p ssg
         env:

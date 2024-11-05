@@ -21,7 +21,8 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: cargo-build-cli-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
+          restore-keys: cargo-
       - run: cargo run syndicate --before-sha ${{ github.event.before }}
         env:
           MASTODON_URL: https://spezi.social
