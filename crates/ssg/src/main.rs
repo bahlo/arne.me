@@ -51,7 +51,7 @@ pub fn main() -> Result<()> {
     fs::create_dir_all("dist")?;
 
     // Copy static files
-    println!("Copying static filefs...");
+    println!("Copying static files...");
     copy_dir("static", "dist/")?;
 
     // Generate CSS
