@@ -45,3 +45,10 @@ jobs:
             --auth "${{ secrets.NETLIFY_TOKEN }}" \
             --site "${{ secrets.NETLIFY_SITE_ID }}" \
             --prod
+      - uses: axiomhq/annotation-action@v0.1.0
+        with:
+          axiomToken: ${{ secrets.AXIOM_TOKEN}}
+          datasets: netlify
+          type: deployment
+          title: Production deployment
+          description: ${{ github.event.head_commit.message }}
