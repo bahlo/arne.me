@@ -1,6 +1,15 @@
 use anyhow::{bail, Result};
-use std::{cell::LazyCell, env, fs, path::Path, process::Command};
+use std::{
+    cell::LazyCell,
+    env,
+    fs::{self, File},
+    io,
+    path::Path,
+    process::Command,
+};
+use tempdir::TempDir;
 use templates::layout::Layout;
+use zip::ZipArchive;
 
 mod rss;
 mod sitemap;
@@ -18,6 +27,14 @@ pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
 pub const GIT_SHA_SHORT: LazyCell<String> = LazyCell::new(|| GIT_SHA.chars().take(7).collect());
 
 pub fn main() -> Result<()> {
+    // Download fonts if we have to
+    // TODO: Instead of checking if a specific font exists, check that _any_
+    //       dir exists.
+    if !Path::new("static/fonts/rebond-grotesque").exists() {
+        println!("Downloading fonts...");
+        download_fonts()?;
+    }
+
     // Do we have a websocket port?
     let args: Vec<String> = env::args().collect();
     let websocket_port = match (args.get(1).map(|s| s.as_str()), args.get(2)) {
@@ -215,5 +232,45 @@ where
         }
     }
 
+    Ok(())
+}
+
+fn download_fonts() -> Result<()> {
+    let zip_url = env::var("FONT_ZIP_URL")?;
+    let destination = Path::new("./static/fonts");
+
+    let response = ureq::get(&zip_url).call()?;
+    let mut reader = response.into_reader();
+
+    let temp_dir = TempDir::new("arne-me-fonts")?;
+    let zip_path = temp_dir.path().join("fonts.zip");
+    let mut temp_file = File::create(&zip_path)?;
+    io::copy(&mut reader, &mut temp_file)?;
+
+    let zip_file = File::open(&zip_path)?;
+    let mut archive = ZipArchive::new(zip_file)?;
+
+    for i in 0..archive.len() {
+        let mut file = archive.by_index(i)?;
+        let outpath = match file.enclosed_name() {
+            Some(path) => destination.join(path),
+            None => continue,
+        };
+
+        if file.name().ends_with('/') {
+            fs::create_dir_all(&outpath)?;
+        } else {
+            if let Some(p) = outpath.parent() {
+                if !p.exists() {
+                    fs::create_dir_all(&p)?;
+                }
+            }
+
+            let mut outfile = File::create(&outpath)?;
+            io::copy(&mut file, &mut outfile)?;
+        }
+    }
+
+    temp_dir.close()?;
     Ok(())
 }

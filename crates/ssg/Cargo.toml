@@ -18,4 +18,7 @@ maud = { version = "0.26" }
 quick-xml = { version = "0.37", features = ["serialize"] }
 rss = "2"
 serde = { version = "1", features = ["derive"] }
+tempdir = "0.3"
+ureq = "2.10"
 url = { version = "2.5", features = ["serde"] }
+zip = "2.2"
