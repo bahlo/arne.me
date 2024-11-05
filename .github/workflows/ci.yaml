@@ -21,6 +21,7 @@ jobs:
             ~/.cargo/git
             target
           key: cargo-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
+          restore-keys: cargo-
       - run: cargo check
   build-deploy:
     name: Build & deploy
@@ -35,6 +36,7 @@ jobs:
             ~/.cargo/git
             target
           key: cargo-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
+          restore-keys: cargo-
       - run: cargo run -p ssg
         env:
           FONT_ZIP_URL: "${{ secrets.FONT_ZIP_URL }}"
