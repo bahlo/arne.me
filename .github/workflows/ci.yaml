@@ -36,6 +36,8 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: cargo run -p ssg
+        env:
+          FONT_ZIP_URL: "${{ secrets.FONT_ZIP_URL }}"
       - run: npm install netlify-cli -g
       - run: |
           netlify deploy \
