@@ -13,7 +13,7 @@ The code is [hosted on GitHub](https://github.com/bahlo/arne.me).
 The fonts used are [Rebond Grotesque](https://extraset.ch/typefaces/rebond-grotesque/)
 and [Pragmata Pro](https://fsd.it/shop/fonts/pragmatapro/).
 
-The logo was made by [Ekaterina Kapranova](https://www.instagram.com/ekkapranova/).
+The avatar was made by [Ekaterina Kapranova](https://www.instagram.com/ekkapranova/).
 
 Testing was conducted in the latest versions of
 Edge, Chrome, Firefox, and Safari.
