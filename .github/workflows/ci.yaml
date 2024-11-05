@@ -38,13 +38,14 @@ jobs:
       - run: cargo run -p ssg
         env:
           FONT_ZIP_URL: "${{ secrets.FONT_ZIP_URL }}"
-      - run: npm install netlify-cli -g
-      - run: |
-          netlify deploy \
-            --dir dist \
-            --auth "${{ secrets.NETLIFY_TOKEN }}" \
-            --site "${{ secrets.NETLIFY_SITE_ID }}" \
-            --prod
+      - uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './dist'
+          production-deploy: true
+          github-deployment-environment: Production
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       - uses: axiomhq/annotation-action@v0.1.0
         with:
           axiomToken: ${{ secrets.AXIOM_TOKEN}}
