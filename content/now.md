@@ -5,7 +5,9 @@ description: "What I'm up to"
 
 Here's what I'm up to:
 
-* Try to automate syndication as much as possible
-* Read a lot of books
+* Read The Posthumous Memoirs of Bras Cubas by Joaquim Maria Machado de Assis
+* Read Jonathan Strange & Mr Norrell by Susanna Clarke
+* Write my [weekly newsletter](/weekly)
+* Get a boating license
 
 This page was last updated in October 2024 and is inspired by [NowNowNow](https://nownownow.com).
