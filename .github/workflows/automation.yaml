@@ -1,4 +1,4 @@
-name: Syndicate
+name: Automation
 
 on:
   push:

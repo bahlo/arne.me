@@ -1,4 +1,4 @@
-# arne.me [![CI](https://github.com/bahlo/arne.me/actions/workflows/ci.yaml/badge.svg)](https://github.com/bahlo/arne.me/actions/workflows/ci.yaml) [![Syndicate](https://github.com/bahlo/arne.me/actions/workflows/syndicate.yaml/badge.svg)](https://github.com/bahlo/arne.me/actions/workflows/syndicate.yaml)
+# arne.me [![CI](https://github.com/bahlo/arne.me/actions/workflows/ci.yaml/badge.svg)](https://github.com/bahlo/arne.me/actions/workflows/ci.yaml) [![Automation](https://github.com/bahlo/arne.me/actions/workflows/automation.yaml/badge.svg)](https://github.com/bahlo/arne.me/actions/workflows/automation.yaml)
 My personal website.
 
 ## Development
