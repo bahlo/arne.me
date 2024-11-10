@@ -131,7 +131,8 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             println!("Sending webmentions...");
             send_webmentions(&path, false)?;
             println!("Creating email draft...");
-            create_email_draft(weekly_issue)?;
+            let draft_url = create_email_draft(weekly_issue)?;
+            println!("{draft_url}");
             println!("Done");
         }
         Some(arneos::content::Item::Blog(blogpost)) => {
@@ -160,13 +161,20 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
 }
 
 #[derive(Serialize, Debug)]
-struct ButtondownEmailInput {
+struct ButtondownEmailRequest {
     subject: String,
     body: String,
     status: String, // draft or about_to_send or others, idk make an enum someday
+                    // ... and more but we don't care
 }
 
-fn create_email_draft(weekly_issue: &WeeklyIssue) -> Result<()> {
+#[derive(Deserialize, Debug)]
+struct ButtondownEmailResponse {
+    absolute_url: String,
+    // ... and more but we don't care
+}
+
+fn create_email_draft(weekly_issue: &WeeklyIssue) -> Result<String> {
     let buttondown_api_key = match env::var("BUTTONDOWN_API_KEY") {
         Ok(api_key) if api_key != "" => api_key,
         Err(e) => bail!("Failed to look up BUTTONDOWN_API_KEY: {}", e),
@@ -175,14 +183,15 @@ fn create_email_draft(weekly_issue: &WeeklyIssue) -> Result<()> {
 
     let body = weekly_to_buttondown_markdown(weekly_issue)?;
 
-    ureq::post("https://api.buttondown.email/v1/emails")
+    let res = ureq::post("https://api.buttondown.email/v1/emails")
         .set("Authorization", &format!("Token {buttondown_api_key}"))
-        .send_json(ButtondownEmailInput {
+        .send_json(ButtondownEmailRequest {
             subject: weekly_issue.title.clone(),
             body,
             status: "draft".to_string(),
-        })?;
-    Ok(())
+        })?
+        .into_json::<ButtondownEmailResponse>()?;
+    Ok(res.absolute_url)
 }
 
 fn weekly_to_buttondown_markdown(weekly_issue: &WeeklyIssue) -> Result<String> {
