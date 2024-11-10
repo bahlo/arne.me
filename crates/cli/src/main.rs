@@ -43,8 +43,8 @@ enum Commands {
     #[command(subcommand)]
     #[clap(name = "new")]
     New(NewCommand),
-    #[clap(name = "syndicate")]
-    Syndicate {
+    #[clap(name = "automate")]
+    Automate {
         #[clap(long, short, group = "subject")]
         before_sha: Option<String>,
         #[clap(long, short, group = "subject")]
@@ -64,15 +64,15 @@ fn main() -> Result<()> {
             NewCommand::Book { slug } => new_book(slug),
             NewCommand::OgImage { path } => new_og_image(path),
         },
-        Commands::Syndicate {
+        Commands::Automate {
             before_sha: Some(before_sha),
             path: _,
         } => automate_before_sha(before_sha),
-        Commands::Syndicate {
+        Commands::Automate {
             before_sha: _,
             path: Some(path),
         } => automate_path(path),
-        Commands::Syndicate {
+        Commands::Automate {
             before_sha: None,
             path: None,
         } => bail!("--before-sha and --slug are exclusive"),
