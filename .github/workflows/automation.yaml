@@ -8,8 +8,8 @@ on:
       - 'content/**.md'
 
 jobs:
-  syndicate:
-    name: Syndicate
+  automate:
+    name: Automate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
             target
           key: cargo-build-cli-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
           restore-keys: cargo-build-cli
-      - run: cargo run syndicate --before-sha ${{ github.event.before }}
+      - run: cargo run automate --before-sha ${{ github.event.before }}
         env:
           MASTODON_URL: https://spezi.social
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}

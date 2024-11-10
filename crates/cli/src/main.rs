@@ -3,13 +3,13 @@ use chrono::Utc;
 use clap::Parser;
 use std::{env, fs, path::Path, process::Command};
 
+mod automate;
 mod og;
-mod syndicate;
 mod watch;
 mod webmentions;
 
 use arneos::content::{Content, Item};
-use syndicate::{syndicate_before_sha, syndicate_path};
+use automate::{automate_before_sha, automate_path};
 use webmentions::send_webmentions;
 
 #[derive(Debug, Parser)]
@@ -67,11 +67,11 @@ fn main() -> Result<()> {
         Commands::Syndicate {
             before_sha: Some(before_sha),
             path: _,
-        } => syndicate_before_sha(before_sha),
+        } => automate_before_sha(before_sha),
         Commands::Syndicate {
             before_sha: _,
             path: Some(path),
-        } => syndicate_path(path),
+        } => automate_path(path),
         Commands::Syndicate {
             before_sha: None,
             path: None,

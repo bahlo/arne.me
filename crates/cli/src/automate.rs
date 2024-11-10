@@ -40,14 +40,14 @@ fn syndicate_diff_cb(diff_delta: DiffDelta<'_>, _i: f32) -> bool {
         }
     };
 
-    if let Err(e) = syndicate_path(slug.to_string_lossy()) {
+    if let Err(e) = automate_path(slug.to_string_lossy()) {
         eprintln!("Failed to syndicate {slug:?}: {e}");
     };
 
     true // continue
 }
 
-pub fn syndicate_before_sha(before_sha: String) -> Result<()> {
+pub fn automate_before_sha(before_sha: String) -> Result<()> {
     let repo = Repository::open(".")?;
 
     let head = repo.head()?;
@@ -114,7 +114,7 @@ fn toot(status: impl AsRef<str>, idempotency_key: impl AsRef<str>) -> Result<Url
     Ok(status.url)
 }
 
-pub fn syndicate_path(slug: impl Into<String>) -> Result<()> {
+pub fn automate_path(slug: impl Into<String>) -> Result<()> {
     let path = slug.into();
 
     println!("Syndicating {path}...");
