@@ -20,9 +20,23 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: cargo-check-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
-          restore-keys: cargo-check-
+          key: cargo-all-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
+          restore-keys: cargo-all-
       - run: cargo check
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-all-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
+          restore-keys: cargo-all-
+      - run: cargo test
   build-deploy:
     name: Build & deploy
     runs-on: ubuntu-latest
@@ -35,8 +49,8 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: cargo-build-ssg-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
-          restore-keys: cargo-build-ssg
+          key: cargo-ssg-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
+          restore-keys: cargo-ssg-
       - run: cargo run -p ssg
         env:
           FONT_ZIP_URL: "${{ secrets.FONT_ZIP_URL }}"
