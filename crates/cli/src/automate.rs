@@ -67,8 +67,8 @@ pub fn automate_before_sha(before_sha: String) -> Result<()> {
 pub fn wait_for_200(slug: impl AsRef<str>) -> Result<()> {
     let url = format!("https://arne.me/{}", slug.as_ref());
     println!("Waiting for {url} to return HTTP 200");
-    for i in 0..300 {
-        // 5 mins
+    // Wait up to 10 minutes
+    for i in 0..600 {
         match ureq::get(&url).call() {
             Ok(res) => {
                 if res.status() == 200 {
