@@ -18,7 +18,11 @@ comrak = { version = "0.29.0", default-features = false, features = [
 ] }
 crowbook-text-processing = "1"
 gray_matter = { version = "0.2", default-features = false, features = ["yaml"] }
+html-escape = "0.2"
 regex = "1"
+resvg = "0.44"
 serde = { version = "1", features = ["derive"] }
 syntect = "5.2.0"
+tiny-skia = "0.11"
 url = { version = "2.5", features = ["serde"] }
+usvg = "0.44"

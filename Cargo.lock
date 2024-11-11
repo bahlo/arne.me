@@ -145,10 +145,14 @@ dependencies = [
  "comrak",
  "crowbook-text-processing",
  "gray_matter",
+ "html-escape",
  "regex",
+ "resvg",
  "serde",
  "syntect",
+ "tiny-skia",
  "url",
+ "usvg",
 ]
 
 [[package]]

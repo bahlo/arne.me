@@ -4,11 +4,13 @@ use clap::Parser;
 use std::{env, fs, path::Path, process::Command};
 
 mod automate;
-mod og;
 mod watch;
 mod webmentions;
 
-use arneos::content::{Content, Item};
+use arneos::{
+    content::{Content, Item},
+    og,
+};
 use automate::{automate_before_sha, automate_path};
 use webmentions::send_webmentions;
 
