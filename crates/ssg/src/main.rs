@@ -1,4 +1,5 @@
 use anyhow::{bail, Result};
+use clap::Parser;
 use std::{
     cell::LazyCell,
     env,
@@ -26,7 +27,15 @@ pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
 });
 pub const GIT_SHA_SHORT: LazyCell<String> = LazyCell::new(|| GIT_SHA.chars().take(7).collect());
 
+#[derive(Debug, Parser)]
+struct Ssg {
+    #[clap(long)]
+    websocket_port: Option<u16>,
+}
+
 pub fn main() -> Result<()> {
+    let ssg = Ssg::parse();
+
     // Download fonts if we have to
     // TODO: Instead of checking if a specific font exists, check that _any_
     //       dir exists.
@@ -34,13 +43,6 @@ pub fn main() -> Result<()> {
         println!("Downloading fonts...");
         download_fonts()?;
     }
-
-    // Do we have a websocket port?
-    let args: Vec<String> = env::args().collect();
-    let websocket_port = match (args.get(1).map(|s| s.as_str()), args.get(2)) {
-        (Some("--websocket-port"), Some(port)) => Some(port.parse::<u16>()?),
-        _ => None,
-    };
 
     // Parse content
     let content = Content::parse(fs::read_dir("content")?)?;
@@ -68,7 +70,7 @@ pub fn main() -> Result<()> {
     println!("Generating HTML...");
 
     // Create layout
-    let layout = Layout::new(css_hash, websocket_port);
+    let layout = Layout::new(css_hash, ssg.websocket_port);
 
     // Generate index
     fs::create_dir_all("dist")?;
