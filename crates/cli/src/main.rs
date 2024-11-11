@@ -7,10 +7,7 @@ mod automate;
 mod watch;
 mod webmentions;
 
-use arneos::{
-    content::{Content, Item},
-    og,
-};
+use arneos::content::Content;
 use automate::{automate_before_sha, automate_path};
 use webmentions::send_webmentions;
 
@@ -28,8 +25,6 @@ enum NewCommand {
     Blog { slug: String },
     #[clap(name = "book")]
     Book { slug: String },
-    #[clap(name = "og-image")]
-    OgImage { path: String },
 }
 
 #[derive(Debug, Parser)]
@@ -64,7 +59,6 @@ fn main() -> Result<()> {
             NewCommand::Weekly => new_weekly(),
             NewCommand::Blog { slug } => new_blog(slug),
             NewCommand::Book { slug } => new_book(slug),
-            NewCommand::OgImage { path } => new_og_image(path),
         },
         Commands::Automate {
             before_sha: Some(before_sha),
@@ -181,62 +175,6 @@ location: ""
             Command::new(editor).arg(&path).status()?;
         }
         _ => eprintln!("Could not open file: $EDITOR is not set"),
-    }
-    Ok(())
-}
-
-fn new_og_image(path: impl AsRef<str>) -> Result<()> {
-    let content = Content::parse(fs::read_dir("content")?)?;
-
-    if path.as_ref() == "*" {
-        // Regenerate all og images
-        content
-            .weekly
-            .iter()
-            .map(|weekly_issue| Ok(new_og_image(format!("weekly/{}", weekly_issue.num))?))
-            .collect::<Result<Vec<()>>>()?;
-        content
-            .blog
-            .iter()
-            .map(|blog_post| Ok(new_og_image(format!("blog/{}", blog_post.slug))?))
-            .collect::<Result<Vec<()>>>()?;
-        content
-            .library
-            .iter()
-            .map(|book_review| Ok(new_og_image(format!("library/{}", book_review.slug))?))
-            .collect::<Result<Vec<()>>>()?;
-        content
-            .pages
-            .iter()
-            .map(|page| Ok(new_og_image(&page.slug)?))
-            .collect::<Result<Vec<()>>>()?;
-
-        // Also regen index pages
-        og::generate("Arne Bahlo", "static/og-image.png")?;
-        og::generate("Arne's Blog", "static/blog/og-image.png")?;
-        og::generate("Arne's Weekly", "static/weekly/og-image.png")?;
-        og::generate("Arne's Book Reviews", "static/library/og-image.png")?;
-    } else {
-        match content
-            .by_path(path)
-            .ok_or(anyhow!("Failed to find item"))?
-        {
-            Item::Weekly(weekly_issue) => og::generate(
-                &weekly_issue.title,
-                format!("static/weekly/{}/og-image.png", weekly_issue.num),
-            )?,
-            Item::Blog(blogpost) => og::generate(
-                &blogpost.title,
-                format!("static/blog/{}/og-image.png", blogpost.slug),
-            )?,
-            Item::Book(book) => og::generate(
-                &book.title,
-                format!("static/library/{}/og-image.png", book.slug),
-            )?,
-            Item::Page(page) => {
-                og::generate(&page.title, format!("static/{}/og-image.png", page.slug))?
-            }
-        }
     }
     Ok(())
 }
