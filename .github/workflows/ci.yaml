@@ -41,6 +41,9 @@ jobs:
     name: Build & deploy
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    permissions:
+      # Necessary to commit new OG images
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
