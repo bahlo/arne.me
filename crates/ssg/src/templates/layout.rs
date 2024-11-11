@@ -5,7 +5,7 @@ use std::{fmt::Display, path::Path};
 use url::Url;
 
 use crate::{GIT_SHA, GIT_SHA_SHORT};
-use arneos::content::smart_quotes;
+use arneos::{content::smart_quotes, og};
 
 #[derive(Debug)]
 pub struct Head {
@@ -76,13 +76,19 @@ pub struct Options {
 pub struct Layout {
     pub css_hash: String,
     pub hot_reload_websocket_port: Option<u16>,
+    pub generate_missing_og_images: bool,
 }
 
 impl Layout {
-    pub fn new(css_hash: impl Into<String>, hot_reload_websocket_port: Option<u16>) -> Self {
+    pub fn new(
+        css_hash: impl Into<String>,
+        hot_reload_websocket_port: Option<u16>,
+        generate_missing_og_images: bool,
+    ) -> Self {
         Self {
             css_hash: css_hash.into(),
             hot_reload_websocket_port,
+            generate_missing_og_images,
         }
     }
 
@@ -90,14 +96,18 @@ impl Layout {
         let head = context.head;
         let options = context.options.unwrap_or_default();
 
-        // FIXME: Refactor this, this is horrid
+        // Check if we have an OG image and if we haven't warn or generate it
         let og_image_path = format!("static{}/og-image.png", head.url.path());
         let og_image_path = Path::new(&og_image_path);
         if !og_image_path.exists() {
-            eprintln!(
-                "WARNING: OG Image doesn't exist at {}",
-                og_image_path.to_string_lossy()
-            );
+            if self.generate_missing_og_images {
+                og::generate(head.title.clone(), og_image_path)?;
+            } else {
+                eprintln!(
+                    "WARNING: OG Image doesn't exist at {}",
+                    og_image_path.to_string_lossy()
+                );
+            }
         }
 
         Ok(html! {

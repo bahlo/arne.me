@@ -31,6 +31,8 @@ pub const GIT_SHA_SHORT: LazyCell<String> = LazyCell::new(|| GIT_SHA.chars().tak
 struct Ssg {
     #[clap(long)]
     websocket_port: Option<u16>,
+    #[clap(long, default_value = "false")]
+    generate_missing_og_images: bool,
 }
 
 pub fn main() -> Result<()> {
@@ -70,7 +72,7 @@ pub fn main() -> Result<()> {
     println!("Generating HTML...");
 
     // Create layout
-    let layout = Layout::new(css_hash, ssg.websocket_port);
+    let layout = Layout::new(css_hash, ssg.websocket_port, ssg.generate_missing_og_images);
 
     // Generate index
     fs::create_dir_all("dist")?;
