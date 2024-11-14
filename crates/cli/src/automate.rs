@@ -151,8 +151,8 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
                 "📚 I read {title} by {author}: https://arne.me/library/{slug} #bookstodon"
             );
             println!("Tooting `{status}`...");
-            let toot_url = toot(&status, &path)?;
-            println!("{toot_url}");
+            let email_id = toot(&status, &path)?;
+            println!("https://buttondown.com/emails/{email_id}");
         }
         _ => eprintln!("Syndicating weekly issues, blog posts and books  only"),
     }
@@ -170,7 +170,7 @@ struct ButtondownEmailRequest {
 
 #[derive(Deserialize, Debug)]
 struct ButtondownEmailResponse {
-    absolute_url: String,
+    id: String,
     // ... and more but we don't care
 }
 
@@ -191,7 +191,7 @@ fn create_email_draft(weekly_issue: &WeeklyIssue) -> Result<String> {
             status: "draft".to_string(),
         })?
         .into_json::<ButtondownEmailResponse>()?;
-    Ok(res.absolute_url)
+    Ok(res.id)
 }
 
 fn weekly_to_buttondown_markdown(weekly_issue: &WeeklyIssue) -> Result<String> {
