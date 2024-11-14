@@ -195,7 +195,9 @@ fn create_email_draft(weekly_issue: &WeeklyIssue) -> Result<String> {
 }
 
 fn weekly_to_buttondown_markdown(weekly_issue: &WeeklyIssue) -> Result<String> {
-    let mut builder = weekly_issue.content.clone();
+    let mut builder = "<!-- buttondown-editor-mode: plaintext -->\n".to_string();
+
+    builder.push_str(&weekly_issue.content);
     builder.push_str("\n");
 
     if let Some(quote_of_the_week) = &weekly_issue.quote_of_the_week {
