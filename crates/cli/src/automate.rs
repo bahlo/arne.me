@@ -260,7 +260,8 @@ mod tests {
             .unwrap();
         assert_eq!(
             weekly_to_buttondown_markdown(weekly_issue).unwrap(),
-            r#"Hi everyone, hope you enjoy today's selection!
+            r#"<!-- buttondown-editor-mode: plaintext -->
+Hi everyone, hope you enjoy today's selection!
 
 ## Software
 - [On Good Software Engineers](https://candost.blog/on-good-software-engineers/) (candost.blog)
