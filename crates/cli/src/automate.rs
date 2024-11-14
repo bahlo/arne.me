@@ -1,5 +1,5 @@
-use anyhow::{anyhow, bail, Context, Result};
-use chrono::{Timelike, Utc};
+use anyhow::{anyhow, bail, Result};
+use chrono::Utc;
 use git2::{Delta, DiffDelta, Oid, Repository};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -11,7 +11,7 @@ use std::{
 };
 use url::Url;
 
-use arneos::content::{Content, WeeklyCategory, WeeklyIssue};
+use arneos::content::{Content, WeeklyIssue};
 
 use crate::webmentions::send_webmentions;
 
