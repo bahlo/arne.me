@@ -27,3 +27,5 @@ jobs:
         env:
           MASTODON_URL: https://spezi.social
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          BLUESKY_IDENTIFIER: arne.me
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD}}
