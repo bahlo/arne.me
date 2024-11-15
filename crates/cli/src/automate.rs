@@ -1,10 +1,17 @@
-use anyhow::{anyhow, bail, Result};
+use anyhow::{anyhow, bail, Context, Result};
+use chrono::{Timelike, Utc};
 use git2::{Delta, DiffDelta, Oid, Repository};
 use serde::{Deserialize, Serialize};
-use std::{env, fs, thread::sleep, time::Duration};
+use std::{
+    env,
+    fs::{self, File},
+    io::Read,
+    thread::sleep,
+    time::Duration,
+};
 use url::Url;
 
-use arneos::content::{Content, WeeklyIssue};
+use arneos::content::{Content, WeeklyCategory, WeeklyIssue};
 
 use crate::webmentions::send_webmentions;
 
@@ -94,7 +101,7 @@ struct MastodonStatus {
     // https://docs.joinmastodon.org/entities/Status/
 }
 
-fn toot(status: impl AsRef<str>, idempotency_key: impl AsRef<str>) -> Result<Url> {
+fn post_to_mastodon(status: impl AsRef<str>, idempotency_key: impl AsRef<str>) -> Result<Url> {
     let base_url = match env::var("MASTODON_URL") {
         Ok(host) if host != "" => host,
         Err(e) => bail!("Failed to look up MASTODON_URL: {}", e),
@@ -114,6 +121,140 @@ fn toot(status: impl AsRef<str>, idempotency_key: impl AsRef<str>) -> Result<Url
     Ok(status.url)
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+struct BlueskyRef {
+    #[serde(rename = "$link")]
+    link: String,
+}
+
+#[derive(Serialize, Debug)]
+struct BlueskyEmbedExternal<'a> {
+    uri: &'a str,
+    title: &'a str,
+    description: &'a str,
+    thumb: BlueskyBlob,
+}
+
+#[derive(Serialize, Debug)]
+struct BlueskyEmbed<'a> {
+    #[serde(rename = "$type")]
+    typ: &'a str,
+    external: BlueskyEmbedExternal<'a>,
+}
+
+#[derive(Serialize, Debug)]
+struct BlueskyPostRequestRecord<'a> {
+    #[serde(rename = "$type")]
+    typ: &'a str,
+    text: &'a str,
+    #[serde(rename = "createdAt")]
+    created_at: &'a str,
+    langs: Vec<&'a str>,
+    embed: BlueskyEmbed<'a>,
+}
+
+#[derive(Serialize, Debug)]
+struct BlueskyPostRequest<'a> {
+    repo: &'a str,
+    collection: &'a str,
+    record: BlueskyPostRequestRecord<'a>,
+}
+
+#[derive(Serialize, Debug)]
+struct BlueskySessionRequest<'a> {
+    identifier: &'a str,
+    password: &'a str,
+}
+
+#[derive(Deserialize, Debug)]
+struct BlueskySessionResponse {
+    #[serde(rename = "accessJwt")]
+    access_jwt: String,
+}
+
+#[derive(Debug)]
+struct BlueskyMeta<'a> {
+    uri: &'a str,
+    title: &'a str,
+    description: &'a str,
+    og_image_path: &'a str,
+}
+
+#[derive(Deserialize, Debug)]
+struct BlueskyUploadResponse {
+    blob: BlueskyBlob,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct BlueskyBlob {
+    #[serde(rename = "$type")]
+    typ: String,
+    #[serde(rename = "ref")]
+    r#ref: BlueskyRef,
+    #[serde(rename = "mimeType")]
+    mime_type: String,
+    size: usize,
+}
+
+// https://docs.bsky.app/docs/advanced-guides/posts
+fn post_to_bluesky(status: impl AsRef<str>, meta: BlueskyMeta) -> Result<()> {
+    let identifier = match env::var("BLUESKY_IDENTIFIER") {
+        Ok(identifier) if identifier != "" => identifier,
+        Err(e) => bail!("Failed to look up BLUESKY_IDENTIFIER: {}", e),
+        _ => bail!("Missing or empty BLUESKY_IDENTIFIER"),
+    };
+    let app_password = match env::var("BLUESKY_APP_PASSWORD") {
+        Ok(app_password) if app_password != "" => app_password,
+        Err(e) => bail!("Failed to look up BLUESKY_APP_PASSWORD: {}", e),
+        _ => bail!("Missing or empty BLUESKY_APP_PASSWORD"),
+    };
+
+    // 1. Create session
+    let session: BlueskySessionResponse =
+        ureq::post("https://bsky.social/xrpc/com.atproto.server.createSession")
+            .send_json(BlueskySessionRequest {
+                identifier: &identifier,
+                password: &app_password,
+            })?
+            .into_json()?;
+
+    // 2. Upload OG image
+    let mut og_image = File::open(meta.og_image_path)?;
+    let mut og_image_bytes: Vec<u8> = vec![];
+    og_image.read_to_end(&mut og_image_bytes)?;
+    let thumb: BlueskyUploadResponse =
+        ureq::post("https://bsky.social/xrpc/com.atproto.repo.uploadBlob")
+            .set("authorization", &format!("Bearer {}", session.access_jwt))
+            .set("content-type", "image/png")
+            .send_bytes(&og_image_bytes)?
+            .into_json()?;
+
+    // // 3. Create post
+    let iso_datetime = Utc::now().format("%+").to_string().replace("+00:00", "Z");
+    ureq::post("https://bsky.social/xrpc/com.atproto.repo.createRecord")
+        .set("authorization", &format!("Bearer {}", session.access_jwt))
+        .send_json(BlueskyPostRequest {
+            repo: &identifier,
+            collection: "app.bsky.feed.post",
+            record: BlueskyPostRequestRecord {
+                typ: "app.bsky.feed.post",
+                text: status.as_ref(),
+                created_at: &iso_datetime,
+                langs: vec!["en-US"],
+                embed: BlueskyEmbed {
+                    typ: "app.bsky.embed.external",
+                    external: BlueskyEmbedExternal {
+                        uri: meta.uri,
+                        title: meta.title,
+                        description: meta.description,
+                        thumb: thumb.blob,
+                    },
+                },
+            },
+        })?;
+    Ok(())
+}
+
 pub fn automate_path(slug: impl Into<String>) -> Result<()> {
     let path = slug.into();
 
@@ -124,35 +265,70 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
     match content.by_path(&path) {
         Some(arneos::content::Item::Weekly(weekly_issue)) => {
             let num = weekly_issue.num;
-            let status = format!("📬 Arne’s Weekly #{num} has been sent out, check your inbox or read it online at https://arne.me/weekly/{num} #weeknotes");
-            println!("Tooting `{status}`...");
-            let toot_url = toot(&status, &path)?;
+            println!("Posting on Mastodon...");
+            let toot_url = post_to_mastodon(format!("📬 Arne’s Weekly #{num} has been sent out, check your inbox or read it online at https://arne.me/weekly/{num} #weeknotes"), &path)?;
             println!("{toot_url}");
+            println!("Posting on Bluesky...");
+            post_to_bluesky(
+                &format!(
+                    "📬 Arne’s Weekly #{num} has been sent out, check your inbox or read it online"
+                ),
+                BlueskyMeta {
+                    uri: &format!("https://arne.me/weekly/{num}"),
+                    title: &weekly_issue.title,
+                    description: &format!("Arne's Weekly #{num}"),
+                    og_image_path: &format!("static/weekly/{num}/og-image.png"),
+                },
+            )?;
             println!("Sending webmentions...");
             send_webmentions(&path, false)?;
             println!("Creating email draft...");
-            let draft_url = create_email_draft(weekly_issue)?;
-            println!("{draft_url}");
+            let email_id = create_email_draft(weekly_issue)?;
+            println!("https://buttondown.com/emails/{email_id}");
             println!("Done");
         }
         Some(arneos::content::Item::Blog(blogpost)) => {
             let title = &blogpost.title;
             let slug = &blogpost.slug;
-            let status = format!("📝 {title} https://arne.me/blog/{slug}");
-            println!("Tooting `{status}`...");
-            let toot_url = toot(&status, &path)?;
+            println!("Posting on Mastodon...");
+            let toot_url =
+                post_to_mastodon(&format!("📝 {title} https://arne.me/blog/{slug}"), &path)?;
             println!("{toot_url}");
+            println!("Posting on Bluesky...");
+            post_to_bluesky(
+                &format!("📝 {title}"),
+                BlueskyMeta {
+                    uri: &format!("https://arne.me/blog/{slug}"),
+                    title,
+                    description: &blogpost.description,
+                    og_image_path: &format!("static/blog/{slug}/og-image.png"),
+                },
+            )?;
+            println!("Done");
         }
         Some(arneos::content::Item::Book(book)) => {
             let slug = &book.slug;
             let title = &book.title;
             let author = &book.author;
-            let status = format!(
-                "📚 I read {title} by {author}: https://arne.me/library/{slug} #bookstodon"
-            );
-            println!("Tooting `{status}`...");
-            let email_id = toot(&status, &path)?;
-            println!("https://buttondown.com/emails/{email_id}");
+            println!("Posting on Mastodon...");
+            let toot_url = post_to_mastodon(
+                &format!(
+                    "📚 I read {title} by {author}: https://arne.me/library/{slug} #bookstodon"
+                ),
+                &path,
+            )?;
+            println!("{toot_url}");
+            println!("Posting on Bluesky...");
+            post_to_bluesky(
+                &format!("📚 I read {title} by {author}"),
+                BlueskyMeta {
+                    uri: &format!("https://arne.me/library/{slug}"),
+                    title,
+                    description: &format!("I read {title} by {author}"),
+                    og_image_path: &format!("static/library/{slug}/og-image.png"),
+                },
+            )?;
+            println!("Done");
         }
         _ => eprintln!("Syndicating weekly issues, blog posts and books  only"),
     }
