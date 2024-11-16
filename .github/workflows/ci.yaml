@@ -57,11 +57,13 @@ jobs:
       - run: cargo run -p ssg -- --generate-missing-og-images
         env:
           FONT_ZIP_URL: "${{ secrets.FONT_ZIP_URL }}"
+      - run: git diff
       - uses: stefanzweifel/git-auto-commit-action@v5
         id: commit-og-images
         with:
           commit_message: "Add missing OG images"
           file_pattern: "**/og-image.png"
+          disable_globbing: true
       - uses: nwtgck/actions-netlify@v3.0
         # If we committed new OG images, this will trigger a new deploy, which
         # will be more complete, so skip this.
