@@ -57,7 +57,6 @@ jobs:
       - run: cargo run -p ssg -- --generate-missing-og-images
         env:
           FONT_ZIP_URL: "${{ secrets.FONT_ZIP_URL }}"
-      - run: git diff
       - uses: stefanzweifel/git-auto-commit-action@v5
         id: commit-og-images
         with:
@@ -65,9 +64,6 @@ jobs:
           file_pattern: "**/og-image.png"
           disable_globbing: true
       - uses: nwtgck/actions-netlify@v3.0
-        # If we committed new OG images, this will trigger a new deploy, which
-        # will be more complete, so skip this.
-        if: steps.commit-og-images.outputs.changes_detected == 'false'
         with:
           publish-dir: './dist'
           production-deploy: true
@@ -76,8 +72,6 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       - uses: axiomhq/annotation-action@v0.1.0
-        # Only if the deployment happened
-        if: steps.commit-og-images.outputs.changes_detected == 'false'
         with:
           axiomToken: ${{ secrets.AXIOM_TOKEN}}
           datasets: netlify
