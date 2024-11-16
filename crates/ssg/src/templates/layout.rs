@@ -1,7 +1,7 @@
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use chrono::Utc;
 use maud::{html, Markup, PreEscaped, DOCTYPE};
-use std::{fmt::Display, path::Path};
+use std::{fmt::Display, fs, path::Path};
 use url::Url;
 
 use crate::{GIT_SHA, GIT_SHA_SHORT};
@@ -101,6 +101,10 @@ impl Layout {
         let og_image_path = Path::new(&og_image_path);
         if !og_image_path.exists() {
             if self.generate_missing_og_images {
+                let parent_dir = og_image_path
+                    .parent()
+                    .ok_or(anyhow!("og image path has no parent: {:?}", og_image_path))?;
+                fs::create_dir_all(parent_dir)?;
                 og::generate(head.title.clone(), og_image_path)?;
             } else {
                 eprintln!(
