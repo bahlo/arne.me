@@ -6,12 +6,16 @@ use std::{
     env,
     fs::{self, File},
     io::Read,
+    path::Path,
     thread::sleep,
     time::Duration,
 };
 use url::Url;
 
-use arneos::content::{Content, WeeklyIssue};
+use arneos::{
+    content::{Content, WeeklyIssue},
+    og,
+};
 
 use crate::webmentions::send_webmentions;
 
@@ -268,6 +272,14 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             println!("Posting on Mastodon...");
             let toot_url = post_to_mastodon(format!("📬 Arne’s Weekly #{num} has been sent out, check your inbox or read it online at https://arne.me/weekly/{num} #weeknotes"), &path)?;
             println!("{toot_url}");
+            // Since these are mostly generated on CI, this automate job runs
+            // without them. It's fine, we're not in a hurry, generate it.
+            let og_image = format!("static/weekly/{num}/og-image.png");
+            let og_image = Path::new(&og_image);
+            if !og_image.exists() {
+                println!("Generating OG image...");
+                og::generate(&weekly_issue.title, og_image)?;
+            }
             println!("Posting on Bluesky...");
             post_to_bluesky(
                 &format!(
@@ -294,6 +306,14 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             let toot_url =
                 post_to_mastodon(&format!("📝 {title} https://arne.me/blog/{slug}"), &path)?;
             println!("{toot_url}");
+            // Since these are mostly generated on CI, this automate job runs
+            // without them. It's fine, we're not in a hurry, generate it.
+            let og_image = format!("static/blog/{slug}/og-image.png");
+            let og_image = Path::new(&og_image);
+            if !og_image.exists() {
+                println!("Generating OG image...");
+                og::generate(&blogpost.title, og_image)?;
+            }
             println!("Posting on Bluesky...");
             post_to_bluesky(
                 &format!("📝 {title}"),
@@ -318,6 +338,17 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
                 &path,
             )?;
             println!("{toot_url}");
+            // Since these are mostly generated on CI, this automate job runs
+            // without them. It's fine, we're not in a hurry, generate it.
+            let og_image = format!("static/library/{slug}/og-image.png");
+            let og_image = Path::new(&og_image);
+            if !og_image.exists() {
+                println!("Generating OG image...");
+                og::generate(
+                    &format!("I read {} by {}", book.title, book.author),
+                    og_image,
+                )?;
+            }
             println!("Posting on Bluesky...");
             post_to_bluesky(
                 &format!("📚 I read {title} by {author}"),
