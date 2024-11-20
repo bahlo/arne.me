@@ -2230,7 +2230,7 @@ dependencies = [
  "atom_syndication",
  "derive_builder",
  "never",
- "quick-xml 0.37.0",
+ "quick-xml 0.37.1",
 ]
 
 [[package]]
