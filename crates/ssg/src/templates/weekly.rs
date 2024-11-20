@@ -118,6 +118,16 @@ pub fn render_content(
                 (quote_of_the_week.author)
             }
         }
+        @if let Some(skeet_of_the_week) = &weekly.skeet_of_the_week {
+            h2 { "Skeet of the Week" }
+            blockquote {
+                (skeet_of_the_week.text)
+                (PreEscaped("&mdash;&nbsp;"))
+                a href=(skeet_of_the_week.url) {
+                    (skeet_of_the_week.author)
+                }
+            }
+        }
         @if !opts.skip_stories {
             @for category in weekly.categories.iter() {
                 h2 { (category.title) }

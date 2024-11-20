@@ -422,6 +422,15 @@ fn weekly_to_buttondown_markdown(weekly_issue: &WeeklyIssue) -> Result<String> {
             "> — [{}]({})\n",
             toot_of_the_week.author, toot_of_the_week.url
         ));
+    } else if let Some(skeet_of_the_week) = &weekly_issue.skeet_of_the_week {
+        builder.push_str("## Skeet of the Week\n");
+        skeet_of_the_week.text.split("\n").for_each(|line| {
+            builder.push_str(&format!("> {}\n", line));
+        });
+        builder.push_str(&format!(
+            "> — [{}]({})\n",
+            skeet_of_the_week.author, skeet_of_the_week.url
+        ));
     } else if let Some(tweet_of_the_week) = &weekly_issue.tweet_of_the_week {
         builder.push_str("## Tweet of the Week\n");
         tweet_of_the_week.text.split("\n").for_each(|line| {

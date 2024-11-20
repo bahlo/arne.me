@@ -107,6 +107,7 @@ pub struct WeeklyIssue {
     pub toot_of_the_week: Option<WeeklyTootOfTheWeek>,
     pub tweet_of_the_week: Option<WeeklyTweetOfTheWeek>,
     pub quote_of_the_week: Option<WeeklyQuoteOfTheWeek>,
+    pub skeet_of_the_week: Option<WeeklySkeetOfTheWeek>,
     pub categories: Vec<WeeklyCategory>,
     pub content: String,
     pub content_html: String,
@@ -130,6 +131,13 @@ pub struct WeeklyStory {
 
 #[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
 pub struct WeeklyTootOfTheWeek {
+    pub text: String,
+    pub author: String,
+    pub url: Url,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
+pub struct WeeklySkeetOfTheWeek {
     pub text: String,
     pub author: String,
     pub url: Url,
@@ -595,6 +603,7 @@ impl Content {
                 pub toot_of_the_week: Option<WeeklyTootOfTheWeek>,
                 pub tweet_of_the_week: Option<WeeklyTweetOfTheWeek>,
                 pub quote_of_the_week: Option<WeeklyQuoteOfTheWeek>,
+                pub skeet_of_the_week: Option<WeeklySkeetOfTheWeek>,
                 #[serde(default)]
                 pub categories: Vec<WeeklyCategory>,
             }
@@ -637,6 +646,7 @@ impl Content {
                 toot_of_the_week: frontmatter.toot_of_the_week,
                 tweet_of_the_week: frontmatter.tweet_of_the_week,
                 quote_of_the_week: frontmatter.quote_of_the_week,
+                skeet_of_the_week: frontmatter.skeet_of_the_week,
                 categories: frontmatter.categories,
                 content: markdown.content,
                 content_html,
