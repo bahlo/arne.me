@@ -23,6 +23,9 @@ regex = "1"
 resvg = "0.44"
 serde = { version = "1", features = ["derive"] }
 syntect = "5.2.0"
+tempdir = "0.3"
 tiny-skia = "0.11"
 url = { version = "2.5", features = ["serde"] }
 usvg = "0.44"
+ureq = "2.10"
+zip = "2.2"

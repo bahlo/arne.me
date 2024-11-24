@@ -59,6 +59,13 @@ fn syndicate_diff_cb(diff_delta: DiffDelta<'_>, _i: f32) -> bool {
 }
 
 pub fn automate_before_sha(before_sha: String) -> Result<()> {
+    // TODO: Instead of checking if a specific font exists, check that _any_
+    //       dir exists.
+    if !Path::new("static/fonts/rebond-grotesque").exists() {
+        println!("Downloading fonts...");
+        arneos::fonts::download_fonts()?;
+    }
+
     let repo = Repository::open(".")?;
 
     let head = repo.head()?;

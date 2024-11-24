@@ -150,9 +150,12 @@ dependencies = [
  "resvg",
  "serde",
  "syntect",
+ "tempdir",
  "tiny-skia",
+ "ureq",
  "url",
  "usvg",
+ "zip",
 ]
 
 [[package]]
@@ -2500,10 +2503,7 @@ dependencies = [
  "quick-xml 0.37.1",
  "rss",
  "serde",
- "tempdir",
- "ureq",
  "url",
- "zip",
 ]
 
 [[package]]
