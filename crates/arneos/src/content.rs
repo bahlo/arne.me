@@ -183,51 +183,41 @@ pub struct Project {
 
 struct MarkdownContext<'a> {
     plugins: comrak::Plugins<'a>,
-    options: comrak::Options<'a>,
+    options: comrak::Options,
 }
 
 impl<'a> MarkdownContext<'a> {
-    fn new(syntect_adapter: &'a SyntectAdapter) -> Result<Self> {
-        let render = comrak::RenderOptionsBuilder::default()
-            .unsafe_(true)
-            .build()
-            .context("Failed to build render options")?;
-        let extension = comrak::ExtensionOptionsBuilder::default()
-            .strikethrough(true)
-            .tagfilter(true)
-            .table(true)
-            .superscript(true)
-            .header_ids(Some("".to_string()))
-            .footnotes(true)
-            .description_lists(true)
-            .build()
-            .context("Failed to build extension options")?;
-        let parse = comrak::ParseOptionsBuilder::default()
-            .smart(true)
-            .build()
-            .context("Failed to build parse options")?;
+    fn new(syntect_adapter: &'a SyntectAdapter) -> Self {
+        let mut render = comrak::RenderOptions::default();
+        render.unsafe_ = true;
+        let mut extension = comrak::ExtensionOptions::default();
+        extension.strikethrough = true;
+        extension.tagfilter = true;
+        extension.table = true;
+        extension.superscript = true;
+        extension.header_ids = Some("".to_string());
+        extension.footnotes = true;
+        extension.description_lists = true;
+        let mut parse = comrak::ParseOptions::default();
+        parse.smart = true;
         let options = comrak::Options {
             render,
             extension,
             parse,
         };
-        let render_plugins = comrak::RenderPluginsBuilder::default()
-            .codefence_syntax_highlighter(Some(syntect_adapter))
-            .build()
-            .context("Failed to build render plugins")?;
-        let plugins = comrak::PluginsBuilder::default()
-            .render(render_plugins)
-            .build()
-            .context("Failed to build plugins")?;
+        let mut render_plugins = comrak::RenderPlugins::default();
+        render_plugins.codefence_syntax_highlighter = Some(syntect_adapter);
+        let mut plugins = comrak::Plugins::default();
+        plugins.render = render_plugins;
 
-        Ok(Self { plugins, options })
+        Self { plugins, options }
     }
 }
 
 impl Content {
     pub fn parse(mut dir: fs::ReadDir) -> Result<Self> {
         let syntect_adapter = SyntectAdapter::new()?;
-        let markdown_context = MarkdownContext::new(&syntect_adapter)?;
+        let markdown_context = MarkdownContext::new(&syntect_adapter);
         let matter = Matter::<YAML>::new();
 
         let mut content = Content::default();
