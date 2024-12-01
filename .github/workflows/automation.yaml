@@ -29,3 +29,4 @@ jobs:
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
           BLUESKY_IDENTIFIER: arne.me
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD}}
+          FONT_ZIP_URL: "${{ secrets.FONT_ZIP_URL }}"
