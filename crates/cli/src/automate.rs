@@ -281,11 +281,15 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             println!("{toot_url}");
             // Since these are mostly generated on CI, this automate job runs
             // without them. It's fine, we're not in a hurry, generate it.
-            let og_image = format!("static/weekly/{num}/og-image.png");
-            let og_image = Path::new(&og_image);
-            if !og_image.exists() {
+            let og_image_path = format!("static/weekly/{num}/og-image.png");
+            let og_image_path = Path::new(&og_image_path);
+            if !og_image_path.exists() {
                 println!("Generating OG image...");
-                og::generate(&weekly_issue.title, og_image)?;
+                let parent_dir = og_image_path
+                    .parent()
+                    .ok_or(anyhow!("og image path has no parent: {:?}", og_image_path))?;
+                fs::create_dir_all(parent_dir)?;
+                og::generate(&weekly_issue.title, og_image_path)?;
             }
             println!("Posting on Bluesky...");
             post_to_bluesky(
@@ -315,11 +319,15 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             println!("{toot_url}");
             // Since these are mostly generated on CI, this automate job runs
             // without them. It's fine, we're not in a hurry, generate it.
-            let og_image = format!("static/blog/{slug}/og-image.png");
-            let og_image = Path::new(&og_image);
-            if !og_image.exists() {
+            let og_image_path = format!("static/blog/{slug}/og-image.png");
+            let og_image_path = Path::new(&og_image_path);
+            if !og_image_path.exists() {
                 println!("Generating OG image...");
-                og::generate(&blogpost.title, og_image)?;
+                let parent_dir = og_image_path
+                    .parent()
+                    .ok_or(anyhow!("og image path has no parent: {:?}", og_image_path))?;
+                fs::create_dir_all(parent_dir)?;
+                og::generate(&blogpost.title, og_image_path)?;
             }
             println!("Posting on Bluesky...");
             post_to_bluesky(
@@ -347,13 +355,17 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             println!("{toot_url}");
             // Since these are mostly generated on CI, this automate job runs
             // without them. It's fine, we're not in a hurry, generate it.
-            let og_image = format!("static/library/{slug}/og-image.png");
-            let og_image = Path::new(&og_image);
-            if !og_image.exists() {
+            let og_image_path = format!("static/library/{slug}/og-image.png");
+            let og_image_path = Path::new(&og_image_path);
+            if !og_image_path.exists() {
                 println!("Generating OG image...");
+                let parent_dir = og_image_path
+                    .parent()
+                    .ok_or(anyhow!("og image path has no parent: {:?}", og_image_path))?;
+                fs::create_dir_all(parent_dir)?;
                 og::generate(
                     &format!("I read {} by {}", book.title, book.author),
-                    og_image,
+                    og_image_path,
                 )?;
             }
             println!("Posting on Bluesky...");
