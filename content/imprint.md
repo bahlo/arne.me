@@ -5,12 +5,12 @@ description: "The imprint for arne.me"
 
 Angaben gemäß § 5 TMG:
 
-Arne Bahlo  
-c/o Adressgeber #1510
-An der Alten Ziegelei 38
+Arne Bahlo<br>
+c/o Adressgeber #1510<br>
+An der Alten Ziegelei 38<br> 
 48157 Münster
 
-E-Mail: <hey@arne.me>  
+E-Mail: <hey@arne.me><br>
 Quelle: e-recht24.de
 
 ## Haftungsausschluss
