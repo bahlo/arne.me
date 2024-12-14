@@ -6,8 +6,9 @@ description: "The imprint for arne.me"
 Angaben gemäß § 5 TMG:
 
 Arne Bahlo  
-Postfach 51 06  
-61125 Nidderau
+c/o Adressgeber #1510
+An der Alten Ziegelei 38
+48157 Münster
 
 E-Mail: <hey@arne.me>  
 Quelle: e-recht24.de
