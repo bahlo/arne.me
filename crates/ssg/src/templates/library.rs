@@ -50,6 +50,7 @@ pub fn render(book: &Book) -> Result<Context> {
         },
         layout::Options {
             navigation_item: layout::NavigationItem::BookReviews,
+            source_path: Some(format!("content/library/{}.md", book.slug)),
         },
     ))
 }
@@ -82,6 +83,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
         },
         layout::Options {
             navigation_item: layout::NavigationItem::BookReviews,
+            ..Default::default()
         },
     ))
 }

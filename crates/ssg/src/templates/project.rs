@@ -2,7 +2,7 @@ use anyhow::Result;
 use maud::{html, Markup, PreEscaped};
 use url::Url;
 
-use crate::templates::layout::{Context, Head, OgType};
+use crate::templates::layout::{self, Context, Head, OgType};
 use arneos::content::Project;
 
 fn render_project(project: &Project) -> Markup {
@@ -35,7 +35,7 @@ fn render_project(project: &Project) -> Markup {
 }
 
 pub fn render(project: &[Project]) -> Result<Context> {
-    Ok(Context::new(
+    Ok(Context::new_with_options(
         Head {
             title: "Projects".to_string(),
             description: "Some projects I've worked on".to_string(),
@@ -57,6 +57,10 @@ pub fn render(project: &[Project]) -> Result<Context> {
                     (render_project(project))
                 }
             }
+        },
+        layout::Options {
+            source_path: Some("content/projects".to_string()),
+            ..Default::default()
         },
     ))
 }

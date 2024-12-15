@@ -60,6 +60,7 @@ pub fn render_index(content: &Content) -> Result<Context> {
         },
         layout::Options {
             navigation_item: layout::NavigationItem::Newsletter,
+            ..Default::default()
         },
     ))
 }
@@ -178,6 +179,7 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
         },
         layout::Options {
             navigation_item: layout::NavigationItem::Newsletter,
+            source_path: Some(format!("content/weekly/{}.md", weekly_issue.num)),
         },
     ))
 }

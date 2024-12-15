@@ -71,6 +71,7 @@ pub enum NavigationItem {
 #[derive(Debug, Default)]
 pub struct Options {
     pub navigation_item: NavigationItem,
+    pub source_path: Option<String>,
 }
 
 pub struct Layout {
@@ -196,6 +197,10 @@ impl Layout {
                             br;
                             "Commit "
                             a href=(format!("https://github.com/bahlo/arne.me/commit/{}", *GIT_SHA)) { (*GIT_SHA_SHORT) };
+                            @if let Some(source_path) = options.source_path {
+                                (PreEscaped(" &middot; "))
+                                a href=(format!("https://github.com/bahlo/arne.me/edit/main/{source_path}")) { "Edit"}
+                            }
                             br;
                             a.arrow href="https://firechicken.club/arne/prev" { "←" }
                             (PreEscaped("&nbsp;"))

@@ -54,6 +54,7 @@ pub fn render_page(content: &Content) -> Result<Context> {
         },
         layout::Options {
             navigation_item: layout::NavigationItem::Blog,
+            ..Default::default()
         },
     ))
 }
@@ -99,6 +100,7 @@ pub fn render(blogpost: &Blogpost) -> Result<Context> {
         },
         layout::Options {
             navigation_item: layout::NavigationItem::Blog,
+            source_path: Some(format!("content/blog/{}.md", blogpost.slug)),
         },
     ))
 }

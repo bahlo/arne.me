@@ -55,6 +55,7 @@ pub fn render(content: &Content) -> Result<Context> {
         },
         layout::Options {
             navigation_item: layout::NavigationItem::Home,
+            source_path: Some(format!("crates/ssg/src/templates/index.rs")),
         },
     ))
 }
