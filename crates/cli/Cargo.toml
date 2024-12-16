@@ -19,7 +19,7 @@ notify-debouncer-mini = "0.5"
 quick-xml = { version = "0.37", features = ["serialize"] }
 regex = "1"
 resvg = "0.44"
-scraper = { version = "0.21", default-features = false, features = [
+scraper = { version = "0.22", default-features = false, features = [
     "errors",
 ] }
 serde = { version = "1", features = ["derive"] }
