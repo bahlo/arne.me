@@ -6,9 +6,9 @@ description: "The imprint for arne.me"
 Angaben gemäß § 5 TMG:
 
 Arne Bahlo<br>
-c/o Adressgeber #1510<br>
-An der Alten Ziegelei 38<br> 
-48157 Münster
+c/o Block Services<br>
+Stuttgarter Str. 106<br>
+70736 Fellbach
 
 E-Mail: <hey@arne.me><br>
 Quelle: e-recht24.de
