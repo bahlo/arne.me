@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 anyhow = "1"
-bat = { version = "0.24", default-features = false }
+bat = { version = "0.25", default-features = false }
 chrono = { version = "0.4.39", default-features = false, features = [
     "std",
     "clock",
