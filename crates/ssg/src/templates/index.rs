@@ -23,7 +23,7 @@ pub fn render(content: &Content) -> Result<Context> {
           section.index {
             .index__hero {
               h1 { "Hej, I'm Arne—" }
-              big { "a developer based near Frankfurt, Germany." }
+              big { "a developer based in Kiel, Germany." }
             }
             p {
               "This is my home on the web.
