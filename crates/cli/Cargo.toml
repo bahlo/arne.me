@@ -15,7 +15,7 @@ chrono = { version = "0.4", default-features = false, features = [
 clap = { version = "4", features = ["derive"] }
 file-serve = { version = "0.3" }
 html-escape = "0.2"
-notify-debouncer-mini = "0.5"
+notify-debouncer-mini = "0.6"
 quick-xml = { version = "0.37", features = ["serialize"] }
 regex = "1"
 resvg = "0.44"
