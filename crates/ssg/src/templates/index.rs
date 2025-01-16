@@ -6,12 +6,12 @@ use crate::templates::layout::{self, Context, Head, OgType};
 use arneos::content::Content;
 
 pub fn render(content: &Content) -> Result<Context> {
-    let latest_blogpost = content.blog.first().ok_or(anyhow!("No blogposts found"))?;
-    let latest_weekly = content
+    let last_blogpost = content.blog.first().ok_or(anyhow!("No blogposts found"))?;
+    let last_weekly = content
         .weekly
         .first()
         .ok_or(anyhow!("No weekly issues found"))?;
-    let latest_book = content.library.first().ok_or(anyhow!("No books found"))?;
+    let last_book = content.library.first().ok_or(anyhow!("No books found"))?;
     Ok(Context::new_with_options(
         Head {
             title: "Arne Bahlo".into(),
@@ -27,13 +27,11 @@ pub fn render(content: &Content) -> Result<Context> {
             }
             p {
               "This is my home on the web.
-              Currently I work as a full stack engineer at "
+              I write code at "
               a href="https://axiom.co" { "Axiom" }
-              ", leading a team focused on observability."
-            }
-            p {
-              "Outside of software I like to read, ride my bike and spend
-              time with my family. You can find me in the Fediverse as "
+              " for a living.
+              Outside of software I like to read, ride my bike, run or swim
+              and spend time with my family. You can find me in the Fediverse as "
               a href="https://spezi.social/@arne" { "@arne@spezi.social" }
               " or drop me an email at "
               a href="mailto:hey@arne.me" { "hey@arne.me" }
@@ -41,14 +39,16 @@ pub fn render(content: &Content) -> Result<Context> {
               "
             }
             p {
-              "The latest blog post is titled "
-              a href=(format!("/blog/{}", latest_blogpost.slug)) { (latest_blogpost.title) }
-              ", the latest newsletter issue is "
-              a href=(format!("/weekly/{}", latest_weekly.num)) { (latest_weekly.title) }
-              " and the latest book I've read is "
-              a href=(format!("/library/{}", latest_book.slug)) { (latest_book.title) }
-              " by "
-              (latest_book.author)
+              "The last blog post is titled "
+              a href=(format!("/blog/{}", last_blogpost.slug)) { (last_blogpost.title) }
+              ", the last newsletter issue is "
+              a href=(format!("/weekly/{}", last_weekly.num)) { (last_weekly.title) }
+              " and the last book I've read is "
+              a href=(format!("/library/{}", last_book.slug)) {
+                  (last_book.title)
+                  " by "
+                  (last_book.author)
+              }
               "."
             }
           }
