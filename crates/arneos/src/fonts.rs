@@ -13,7 +13,7 @@ pub fn download_fonts() -> Result<()> {
     let destination = Path::new("./static/fonts");
 
     let response = ureq::get(&zip_url).call()?;
-    let mut reader = response.into_reader();
+    let mut reader = response.into_body().into_reader();
 
     let temp_dir = TempDir::new("arne-me-fonts")?;
     let zip_path = temp_dir.path().join("fonts.zip");

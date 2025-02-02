@@ -66,7 +66,8 @@ fn send_webmention(dry_run: bool, source: impl AsRef<str>, target: impl AsRef<st
     let html = ureq::get(target.as_ref())
         .call()
         .context("Failed to get HTML")?
-        .into_string()
+        .into_body()
+        .read_to_string()
         .context("Failed to get String from response")?;
     let document = Html::parse_document(&html);
     let endpoint = document
@@ -85,8 +86,8 @@ fn send_webmention(dry_run: bool, source: impl AsRef<str>, target: impl AsRef<st
             target.as_ref()
         );
     } else {
-        ureq::post(endpoint.as_ref())
-            .send_form(&[("source", source.as_ref()), ("target", target.as_ref())])?;
+        ureq::post(endpoint)
+            .send_form([("source", source.as_ref()), ("target", target.as_ref())])?;
         println!(
             "Sent webmention to {}, source: {}, target: {}",
             endpoint,

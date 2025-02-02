@@ -125,10 +125,11 @@ fn post_to_mastodon(status: impl AsRef<str>, idempotency_key: impl AsRef<str>) -
     };
 
     let status: MastodonStatus = ureq::post(&format!("{base_url}/api/v1/statuses"))
-        .set("Authorization", &format!("Bearer {token}"))
-        .set("Idempotency-Key", idempotency_key.as_ref())
-        .send_form(&[("status", status.as_ref())])?
-        .into_json()?;
+        .header("Authorization", &format!("Bearer {token}"))
+        .header("Idempotency-Key", idempotency_key.as_ref())
+        .send_form([("status", status.as_ref())])?
+        .into_body()
+        .read_json()?;
     Ok(status.url)
 }
 
@@ -227,7 +228,8 @@ fn post_to_bluesky(status: impl AsRef<str>, meta: BlueskyMeta) -> Result<()> {
                 identifier: &identifier,
                 password: &app_password,
             })?
-            .into_json()?;
+            .into_body()
+            .read_json()?;
 
     // 2. Upload OG image
     let mut og_image = File::open(meta.og_image_path)?;
@@ -235,15 +237,16 @@ fn post_to_bluesky(status: impl AsRef<str>, meta: BlueskyMeta) -> Result<()> {
     og_image.read_to_end(&mut og_image_bytes)?;
     let thumb: BlueskyUploadResponse =
         ureq::post("https://bsky.social/xrpc/com.atproto.repo.uploadBlob")
-            .set("authorization", &format!("Bearer {}", session.access_jwt))
-            .set("content-type", "image/png")
-            .send_bytes(&og_image_bytes)?
-            .into_json()?;
+            .header("authorization", &format!("Bearer {}", session.access_jwt))
+            .header("content-type", "image/png")
+            .send(&og_image_bytes)?
+            .into_body()
+            .read_json()?;
 
     // // 3. Create post
     let iso_datetime = Utc::now().format("%+").to_string().replace("+00:00", "Z");
     ureq::post("https://bsky.social/xrpc/com.atproto.repo.createRecord")
-        .set("authorization", &format!("Bearer {}", session.access_jwt))
+        .header("authorization", &format!("Bearer {}", session.access_jwt))
         .send_json(BlueskyPostRequest {
             repo: &identifier,
             collection: "app.bsky.feed.post",
@@ -410,13 +413,14 @@ fn create_email_draft(weekly_issue: &WeeklyIssue) -> Result<String> {
     let body = weekly_to_buttondown_markdown(weekly_issue)?;
 
     let res = ureq::post("https://api.buttondown.email/v1/emails")
-        .set("Authorization", &format!("Token {buttondown_api_key}"))
+        .header("Authorization", &format!("Token {buttondown_api_key}"))
         .send_json(ButtondownEmailRequest {
             subject: weekly_issue.title.clone(),
             body,
             status: "draft".to_string(),
         })?
-        .into_json::<ButtondownEmailResponse>()?;
+        .into_body()
+        .read_json::<ButtondownEmailResponse>()?;
     Ok(res.id)
 }
 
