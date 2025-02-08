@@ -15,7 +15,7 @@ chrono = { version = "0.4.39", default-features = false, features = [
 ] }
 clap = { version = "4", features = ["derive"] }
 grass = { version = "0.13", default-features = false }
-maud = { version = "0.26" }
+maud = { version = "0.27" }
 quick-xml = { version = "0.37", features = ["serialize"] }
 rss = "2"
 serde = { version = "1", features = ["derive"] }
