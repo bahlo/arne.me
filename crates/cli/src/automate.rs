@@ -413,12 +413,15 @@ fn create_email_draft(weekly_issue: &WeeklyIssue) -> Result<String> {
     let body = weekly_to_buttondown_markdown(weekly_issue)?;
 
     let res = ureq::post("https://api.buttondown.email/v1/emails")
-        .header("Authorization", &format!("Token {buttondown_api_key}"))
-        .send_json(ButtondownEmailRequest {
+        .header("authorization", &format!("Token {buttondown_api_key}"))
+        .header("content-type", "application/json; charset=utf-8")
+        // NOTE: Doing send_json uses `transfer-encoding: chunked`, which
+        //       results in a 422.
+        .send(serde_json::to_string(&ButtondownEmailRequest {
             subject: weekly_issue.title.clone(),
             body,
             status: "draft".to_string(),
-        })?
+        })?)?
         .into_body()
         .read_json::<ButtondownEmailResponse>()?;
     Ok(res.id)

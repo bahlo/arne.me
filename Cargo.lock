@@ -481,6 +481,7 @@ dependencies = [
  "resvg",
  "scraper",
  "serde",
+ "serde_json",
  "tiny-skia",
  "tungstenite",
  "ureq",
@@ -2430,9 +2431,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.128"
+version = "1.0.139"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6ff5456707a1de34e7e37f2a6fd3d3f808c318259cbd01ab6377795054b483d8"
+checksum = "44f86c3acccc9c65b153fe1b85a3be07fe5515274ec9f0653b4a0875731c72a6"
 dependencies = [
  "itoa",
  "memchr",
