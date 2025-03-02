@@ -5,7 +5,7 @@ use comrak::markdown_to_html_with_plugins;
 use crowbook_text_processing::clean;
 use gray_matter::{engine::YAML, Matter};
 use regex::Regex;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::{
     cell::LazyCell,
     cmp::Ordering,
@@ -99,27 +99,31 @@ pub struct Book {
     pub content_html: String,
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Serialize)]
 pub struct WeeklyIssue {
     pub num: u16,
     pub title: String,
     pub published: NaiveDate,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub toot_of_the_week: Option<WeeklyTootOfTheWeek>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub tweet_of_the_week: Option<WeeklyTweetOfTheWeek>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub quote_of_the_week: Option<WeeklyQuoteOfTheWeek>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub skeet_of_the_week: Option<WeeklySkeetOfTheWeek>,
     pub categories: Vec<WeeklyCategory>,
     pub content: String,
     pub content_html: String,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
 pub struct WeeklyCategory {
     pub title: String,
     pub stories: Vec<WeeklyStory>,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct WeeklyStory {
     pub title: String,
@@ -129,21 +133,21 @@ pub struct WeeklyStory {
     pub description_html: String,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
 pub struct WeeklyTootOfTheWeek {
     pub text: String,
     pub author: String,
     pub url: Url,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
 pub struct WeeklySkeetOfTheWeek {
     pub text: String,
     pub author: String,
     pub url: Url,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
 pub struct WeeklyTweetOfTheWeek {
     pub text: String,
     pub author: String,
@@ -151,7 +155,7 @@ pub struct WeeklyTweetOfTheWeek {
     pub media: Option<WeeklyTweetOfTheWeekMedia>,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct WeeklyTweetOfTheWeekMedia {
     pub alt: String,
@@ -159,14 +163,14 @@ pub struct WeeklyTweetOfTheWeekMedia {
     pub src_set: Vec<SrcSet>,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
 pub struct SrcSet {
     pub src: String,
     #[serde(rename = "type")]
     pub typ: String,
 }
 
-#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd)]
 pub struct WeeklyQuoteOfTheWeek {
     pub text: String,
     pub author: String,

@@ -106,13 +106,15 @@ pub fn main() -> Result<()> {
     fs::create_dir_all("static/weekly")?;
     for weekly_issue in &content.weekly {
         fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
-        let path = format!("dist/weekly/{}/index.html", weekly_issue.num);
+        let html_path = format!("dist/weekly/{}/index.html", weekly_issue.num);
         fs::write(
-            &path,
+            &html_path,
             layout
                 .render(templates::weekly::render(weekly_issue)?)?
                 .into_string(),
         )?;
+        let json_path = format!("dist/weekly/{}.json", weekly_issue.num);
+        fs::write(&json_path, serde_json::to_string(&weekly_issue)?)?;
         fs::create_dir_all(format!("static/weekly/{}", weekly_issue.num))?;
     }
 

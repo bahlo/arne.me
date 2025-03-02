@@ -2584,6 +2584,7 @@ dependencies = [
  "quick-xml 0.37.2",
  "rss",
  "serde",
+ "serde_json",
  "url",
 ]
 
