@@ -949,9 +949,9 @@ dependencies = [
 
 [[package]]
 name = "file-serve"
-version = "0.3.5"
+version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "08abba95dfa9d6b85aa21d53b99b1247a3c73bf6de88b96b8e7fbb3a67b44978"
+checksum = "e8a031d4e156aa1d76165989ec38283443017dab0443d6c3cb17d43c71ea8c69"
 dependencies = [
  "log",
  "mime",
