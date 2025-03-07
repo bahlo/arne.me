@@ -18,7 +18,7 @@ html-escape = "0.2"
 notify-debouncer-mini = "0.6"
 quick-xml = { version = "0.37", features = ["serialize"] }
 regex = "1"
-resvg = "0.44"
+resvg = "0.45"
 scraper = { version = "0.23", default-features = false, features = [
     "errors",
 ] }
@@ -26,7 +26,7 @@ serde = { version = "1", features = ["derive"] }
 tiny-skia = "0.11"
 tungstenite = "0.24"
 ureq = { version = "3.0", features = ["json"] }
-usvg = "0.44"
+usvg = "0.45"
 url = { version = "2.5", features = ["serde"] }
 git2 = { version = "0.20.0", default-features = false }
 serde_json = "1"
