@@ -1,5 +1,6 @@
 use anyhow::{bail, Result};
 use clap::Parser;
+use rayon::prelude::*;
 use std::{cell::LazyCell, fs, path::Path, process::Command};
 use templates::layout::Layout;
 use timer::Timer;
@@ -91,17 +92,22 @@ pub fn main() -> Result<()> {
             .into_string(),
     )?;
     fs::create_dir_all("static/blog")?;
-    for blogpost in &content.blog {
-        fs::create_dir_all(format!("dist/blog/{}", blogpost.slug))?;
-        let path = format!("dist/blog/{}/index.html", blogpost.slug);
-        fs::write(
-            &path,
-            layout
-                .render(templates::blog::render(blogpost)?)?
-                .into_string(),
-        )?;
-        fs::create_dir_all(format!("static/blog/{}", blogpost.slug))?;
-    }
+    content
+        .blog
+        .par_iter()
+        .map(|blogpost| {
+            fs::create_dir_all(format!("dist/blog/{}", blogpost.slug))?;
+            let path = format!("dist/blog/{}/index.html", blogpost.slug);
+            fs::write(
+                &path,
+                layout
+                    .render(templates::blog::render(blogpost)?)?
+                    .into_string(),
+            )?;
+            fs::create_dir_all(format!("static/blog/{}", blogpost.slug))?;
+            Ok(())
+        })
+        .collect::<Result<()>>()?;
 
     // Generate weekly
     fs::create_dir_all("dist/weekly")?;
@@ -112,19 +118,24 @@ pub fn main() -> Result<()> {
             .into_string(),
     )?;
     fs::create_dir_all("static/weekly")?;
-    for weekly_issue in &content.weekly {
-        fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
-        let html_path = format!("dist/weekly/{}/index.html", weekly_issue.num);
-        fs::write(
-            &html_path,
-            layout
-                .render(templates::weekly::render(weekly_issue)?)?
-                .into_string(),
-        )?;
-        let json_path = format!("dist/weekly/{}.json", weekly_issue.num);
-        fs::write(&json_path, serde_json::to_string(&weekly_issue)?)?;
-        fs::create_dir_all(format!("static/weekly/{}", weekly_issue.num))?;
-    }
+    content
+        .weekly
+        .par_iter()
+        .map(|weekly_issue| {
+            fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
+            let html_path = format!("dist/weekly/{}/index.html", weekly_issue.num);
+            fs::write(
+                &html_path,
+                layout
+                    .render(templates::weekly::render(weekly_issue)?)?
+                    .into_string(),
+            )?;
+            let json_path = format!("dist/weekly/{}.json", weekly_issue.num);
+            fs::write(&json_path, serde_json::to_string(&weekly_issue)?)?;
+            fs::create_dir_all(format!("static/weekly/{}", weekly_issue.num))?;
+            Ok(())
+        })
+        .collect::<Result<()>>()?;
 
     // Generate book reviews
     fs::create_dir_all("dist/library")?;
@@ -135,17 +146,22 @@ pub fn main() -> Result<()> {
             .into_string(),
     )?;
     fs::create_dir_all("static/library")?;
-    for book in &content.library {
-        fs::create_dir_all(format!("dist/library/{}", book.slug))?;
-        let path = format!("dist/library/{}/index.html", book.slug);
-        fs::write(
-            &path,
-            layout
-                .render(templates::library::render(book)?)?
-                .into_string(),
-        )?;
-        fs::create_dir_all(format!("static/library/{}", book.slug))?;
-    }
+    content
+        .library
+        .par_iter()
+        .map(|book| {
+            fs::create_dir_all(format!("dist/library/{}", book.slug))?;
+            let path = format!("dist/library/{}/index.html", book.slug);
+            fs::write(
+                &path,
+                layout
+                    .render(templates::library::render(book)?)?
+                    .into_string(),
+            )?;
+            fs::create_dir_all(format!("static/library/{}", book.slug))?;
+            Ok(())
+        })
+        .collect::<Result<()>>()?;
 
     // Generate home screens
     fs::create_dir_all("dist/home-screens")?;
@@ -156,34 +172,44 @@ pub fn main() -> Result<()> {
             .into_string(),
     )?;
     fs::create_dir_all("static/home-screens")?;
-    for home_screen in &content.home_screens {
-        fs::create_dir_all(format!("dist/home-screens/{}", home_screen.slug))?;
-        let path = format!("dist/home-screens/{}/index.html", home_screen.slug);
-        fs::write(
-            &path,
-            layout
-                .render(templates::home_screen::render(home_screen)?)?
-                .into_string(),
-        )?;
-        fs::create_dir_all(format!("static/home-screens/{}", home_screen.slug))?;
-    }
+    content
+        .home_screens
+        .par_iter()
+        .map(|home_screen| {
+            fs::create_dir_all(format!("dist/home-screens/{}", home_screen.slug))?;
+            let path = format!("dist/home-screens/{}/index.html", home_screen.slug);
+            fs::write(
+                &path,
+                layout
+                    .render(templates::home_screen::render(home_screen)?)?
+                    .into_string(),
+            )?;
+            fs::create_dir_all(format!("static/home-screens/{}", home_screen.slug))?;
+            Ok(())
+        })
+        .collect::<Result<()>>()?;
 
     // Generate pages
-    for page in &content.pages {
-        let path = match page.slug.as_str() {
-            "404" => "dist/404.html".to_string(),
-            _ => {
-                fs::create_dir_all(format!("dist/{}", page.slug))?;
-                format!("dist/{}/index.html", page.slug)
-            }
-        };
+    content
+        .pages
+        .par_iter()
+        .map(|page| {
+            let path = match page.slug.as_str() {
+                "404" => "dist/404.html".to_string(),
+                _ => {
+                    fs::create_dir_all(format!("dist/{}", page.slug))?;
+                    format!("dist/{}/index.html", page.slug)
+                }
+            };
 
-        fs::write(
-            &path,
-            layout.render(templates::page::render(page)?)?.into_string(),
-        )?;
-        fs::create_dir_all(format!("static/{}", page.slug))?;
-    }
+            fs::write(
+                &path,
+                layout.render(templates::page::render(page)?)?.into_string(),
+            )?;
+            fs::create_dir_all(format!("static/{}", page.slug))?;
+            Ok(())
+        })
+        .collect::<Result<()>>()?;
 
     // Generate projects page
     fs::create_dir_all("dist/projects")?;

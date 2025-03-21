@@ -29,3 +29,4 @@ url = { version = "2.5", features = ["serde"] }
 usvg = "0.45"
 ureq = "3.0"
 zip = "2.4"
+rayon = "1.10.0"
