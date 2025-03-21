@@ -2,10 +2,12 @@ use anyhow::{bail, Result};
 use clap::Parser;
 use std::{cell::LazyCell, fs, path::Path, process::Command};
 use templates::layout::Layout;
+use timer::Timer;
 
 mod rss;
 mod sitemap;
 mod templates;
+mod timer;
 
 use arneos::content::Content;
 
@@ -33,24 +35,29 @@ pub fn main() -> Result<()> {
     // TODO: Instead of checking if a specific font exists, check that _any_
     //       dir exists.
     if !Path::new("static/fonts/rebond-grotesque").exists() {
-        println!("Downloading fonts...");
+        let mut timer = Timer::new("Downloading fonts");
         arneos::fonts::download_fonts()?;
+        timer.end();
     }
 
     // Parse content
+    let mut timer = Timer::new("Parsing content");
     let content = Content::parse(fs::read_dir("content")?)?;
+    timer.end();
 
     // Recreate dir
-    println!("Recreating dist/...");
+    let mut timer = Timer::new("Recreating dist/");
     fs::remove_dir_all("dist").ok();
     fs::create_dir_all("dist")?;
+    timer.end();
 
     // Copy static files
-    println!("Copying static files...");
+    let mut timer = Timer::new("Copying static files");
     copy_dir("static", "dist/")?;
+    timer.end();
 
     // Generate CSS
-    println!("Generating CSS...");
+    let mut timer = Timer::new("Generating CSS");
     let sass_options = grass::Options::default().load_path("styles/");
     let css = grass::from_path("styles/main.scss", &sass_options)?;
     let css_hash: String = blake3::hash(css.as_bytes())
@@ -59,8 +66,9 @@ pub fn main() -> Result<()> {
         .take(16)
         .collect();
     fs::write("dist/main.css", css)?;
+    timer.end();
 
-    println!("Generating HTML...");
+    let mut timer = Timer::new("Generating HTML");
 
     // Create layout
     let layout = Layout::new(css_hash, ssg.websocket_port, ssg.generate_missing_og_images);
@@ -187,15 +195,19 @@ pub fn main() -> Result<()> {
     )?;
     fs::create_dir_all("static/projects")?;
 
+    timer.end();
+
     // Generate RSS feeds
-    println!("Generating RSS feeds...");
+    let mut timer = Timer::new("Generating RSS feeds");
     fs::write("dist/blog/feed.xml", rss::render_blog(&content))?;
     fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
     fs::write("dist/library/feed.xml", rss::render_library(&content))?;
+    timer.end();
 
     // Generate sitemap.xml
-    println!("Generating sitemap...");
+    let mut timer = Timer::new("Generating sitemap...");
     fs::write("dist/sitemap.xml", sitemap::render(&content)?)?;
+    timer.end();
 
     Ok(())
 }
