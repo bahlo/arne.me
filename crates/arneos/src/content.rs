@@ -4,6 +4,7 @@ use chrono::NaiveDate;
 use comrak::markdown_to_html_with_plugins;
 use crowbook_text_processing::clean;
 use gray_matter::{engine::YAML, Matter};
+use rayon::prelude::*;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -271,96 +272,100 @@ impl Content {
     fn parse_blog(
         matter: &Matter<YAML>,
         markdown_context: &MarkdownContext,
-        mut dir: fs::ReadDir,
+        dir: fs::ReadDir,
     ) -> Result<Vec<Blogpost>> {
-        let mut blog = Vec::new();
-        while let Some(entry) = dir.next().transpose()? {
-            if entry.file_type()?.is_dir() {
-                continue;
-            }
+        let mut blog = dir
+            .par_bridge()
+            .filter_map(|entry| entry.ok())
+            .map(|entry| {
+                if entry.file_type()?.is_dir() {
+                    return Ok(None);
+                }
 
-            if entry.file_name().to_string_lossy().starts_with('.')
-                || entry.path().extension().ok_or(anyhow!(
-                    "Failed to get file extension for {:?}",
-                    entry.path()
-                ))? != "md"
-            {
-                continue;
-            }
+                if entry.file_name().to_string_lossy().starts_with('.')
+                    || entry.path().extension().ok_or(anyhow!(
+                        "Failed to get file extension for {:?}",
+                        entry.path()
+                    ))? != "md"
+                {
+                    return Ok(None);
+                }
 
-            let slug = entry
-                .path()
-                .file_stem()
-                .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
-                .to_string_lossy()
-                .to_string();
+                let slug = entry
+                    .path()
+                    .file_stem()
+                    .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
+                    .to_string_lossy()
+                    .to_string();
 
-            let mut file = File::open(entry.path())?;
-            let mut contents = String::new();
-            file.read_to_string(&mut contents)?;
+                let mut file = File::open(entry.path())?;
+                let mut contents = String::new();
+                file.read_to_string(&mut contents)?;
 
-            #[derive(Debug, Deserialize)]
-            struct Frontmatter {
-                pub title: String,
-                pub description: String,
-                pub location: String,
-                pub published: NaiveDate,
-                pub updated: Option<NaiveDate>,
-                #[serde(default)]
-                pub hidden: bool,
-                #[serde(default)]
-                pub collections: Vec<String>,
-                pub hackernews: Option<Url>,
-                pub lobsters: Option<Url>,
-            }
+                #[derive(Debug, Deserialize)]
+                struct Frontmatter {
+                    pub title: String,
+                    pub description: String,
+                    pub location: String,
+                    pub published: NaiveDate,
+                    pub updated: Option<NaiveDate>,
+                    #[serde(default)]
+                    pub hidden: bool,
+                    #[serde(default)]
+                    pub collections: Vec<String>,
+                    pub hackernews: Option<Url>,
+                    pub lobsters: Option<Url>,
+                }
 
-            let markdown = matter.parse(&contents);
-            let frontmatter: Frontmatter = markdown
-                .data
-                .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
-                .deserialize()
-                .context(format!(
-                    "Couldn't deserialize frontmatter for {:?}",
-                    entry.path()
-                ))?;
+                let markdown = matter.parse(&contents);
+                let frontmatter: Frontmatter = markdown
+                    .data
+                    .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
+                    .deserialize()
+                    .context(format!(
+                        "Couldn't deserialize frontmatter for {:?}",
+                        entry.path()
+                    ))?;
 
-            let excerpt_html: Option<String> = markdown
-                .content
-                .splitn(2, "<!-- more -->")
-                .collect::<Vec<_>>()
-                .first()
-                .map(|excerpt_markdown| -> Result<String> {
-                    let excerpt_html = markdown_to_html_with_plugins(
-                        &excerpt_markdown,
-                        &markdown_context.options,
-                        &markdown_context.plugins,
-                    );
-                    Ok(excerpt_html)
-                })
-                .transpose()?
-                .map(|excerpt_html| FOOTNOTE_REGEX.replace_all(&excerpt_html, "").to_string());
+                let excerpt_html: Option<String> = markdown
+                    .content
+                    .splitn(2, "<!-- more -->")
+                    .collect::<Vec<_>>()
+                    .first()
+                    .map(|excerpt_markdown| -> Result<String> {
+                        let excerpt_html = markdown_to_html_with_plugins(
+                            &excerpt_markdown,
+                            &markdown_context.options,
+                            &markdown_context.plugins,
+                        );
+                        Ok(excerpt_html)
+                    })
+                    .transpose()?
+                    .map(|excerpt_html| FOOTNOTE_REGEX.replace_all(&excerpt_html, "").to_string());
 
-            let content_html = markdown_to_html_with_plugins(
-                &markdown.content,
-                &markdown_context.options,
-                &markdown_context.plugins,
-            );
+                let content_html = markdown_to_html_with_plugins(
+                    &markdown.content,
+                    &markdown_context.options,
+                    &markdown_context.plugins,
+                );
 
-            blog.push(Blogpost {
-                slug,
-                title: smart_quotes(frontmatter.title),
-                description: smart_quotes(frontmatter.description),
-                location: smart_quotes(frontmatter.location),
-                published: frontmatter.published,
-                updated: frontmatter.updated,
-                hidden: frontmatter.hidden,
-                collections: frontmatter.collections,
-                excerpt_html,
-                content_html,
-                hackernews: frontmatter.hackernews,
-                lobsters: frontmatter.lobsters,
-            });
-        }
+                Ok(Some(Blogpost {
+                    slug,
+                    title: smart_quotes(frontmatter.title),
+                    description: smart_quotes(frontmatter.description),
+                    location: smart_quotes(frontmatter.location),
+                    published: frontmatter.published,
+                    updated: frontmatter.updated,
+                    hidden: frontmatter.hidden,
+                    collections: frontmatter.collections,
+                    excerpt_html,
+                    content_html,
+                    hackernews: frontmatter.hackernews,
+                    lobsters: frontmatter.lobsters,
+                }))
+            })
+            .filter_map(|entry| entry.transpose())
+            .collect::<Result<Vec<Blogpost>>>()?;
 
         blog.sort_by(|a, b| b.published.cmp(&a.published));
 
@@ -370,97 +375,101 @@ impl Content {
     fn parse_home_screens(
         matter: &Matter<YAML>,
         markdown_context: &MarkdownContext,
-        mut dir: fs::ReadDir,
+        dir: fs::ReadDir,
     ) -> Result<Vec<HomeScreen>> {
-        let mut home_screens = Vec::new();
-        while let Some(entry) = dir.next().transpose()? {
-            if entry.file_type()?.is_dir() {
-                continue;
-            }
+        let mut home_screens = dir
+            .par_bridge()
+            .filter_map(|entry| entry.ok())
+            .map(|entry| {
+                if entry.file_type()?.is_dir() {
+                    return Ok(None);
+                }
 
-            if entry.file_name().to_string_lossy().starts_with('.')
-                || entry.path().extension().ok_or(anyhow!(
-                    "Failed to get file extension for {:?}",
-                    entry.path()
-                ))? != "md"
-            {
-                continue;
-            }
+                if entry.file_name().to_string_lossy().starts_with('.')
+                    || entry.path().extension().ok_or(anyhow!(
+                        "Failed to get file extension for {:?}",
+                        entry.path()
+                    ))? != "md"
+                {
+                    return Ok(None);
+                }
 
-            let slug = entry
-                .path()
-                .file_stem()
-                .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
-                .to_string_lossy()
-                .to_string();
+                let slug = entry
+                    .path()
+                    .file_stem()
+                    .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
+                    .to_string_lossy()
+                    .to_string();
 
-            let mut file = File::open(entry.path())?;
-            let mut contents = String::new();
-            file.read_to_string(&mut contents)?;
+                let mut file = File::open(entry.path())?;
+                let mut contents = String::new();
+                file.read_to_string(&mut contents)?;
 
-            #[derive(Debug, Deserialize)]
-            struct FrontmatterSource {
-                png: String,
-                avif: String,
-                alt: String,
-            }
+                #[derive(Debug, Deserialize)]
+                struct FrontmatterSource {
+                    png: String,
+                    avif: String,
+                    alt: String,
+                }
 
-            #[derive(Debug, Deserialize)]
-            struct Frontmatter {
-                pub title: String,
-                pub description: String,
-                pub location: String,
-                pub published: NaiveDate,
-                pub source: FrontmatterSource,
-            }
+                #[derive(Debug, Deserialize)]
+                struct Frontmatter {
+                    pub title: String,
+                    pub description: String,
+                    pub location: String,
+                    pub published: NaiveDate,
+                    pub source: FrontmatterSource,
+                }
 
-            let markdown = matter.parse(&contents);
-            let frontmatter: Frontmatter = markdown
-                .data
-                .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
-                .deserialize()
-                .context(format!(
-                    "Couldn't deserialize frontmatter for {:?}",
-                    entry.path()
-                ))?;
+                let markdown = matter.parse(&contents);
+                let frontmatter: Frontmatter = markdown
+                    .data
+                    .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
+                    .deserialize()
+                    .context(format!(
+                        "Couldn't deserialize frontmatter for {:?}",
+                        entry.path()
+                    ))?;
 
-            let excerpt_html: Option<String> = markdown
-                .content
-                .splitn(2, "<!-- more -->")
-                .collect::<Vec<_>>()
-                .first()
-                .map(|excerpt_markdown| -> Result<String> {
-                    let excerpt_html = markdown_to_html_with_plugins(
-                        &excerpt_markdown,
-                        &markdown_context.options,
-                        &markdown_context.plugins,
-                    );
-                    Ok(excerpt_html)
-                })
-                .transpose()?
-                .map(|excerpt_html| FOOTNOTE_REGEX.replace_all(&excerpt_html, "").to_string());
+                let excerpt_html: Option<String> = markdown
+                    .content
+                    .splitn(2, "<!-- more -->")
+                    .collect::<Vec<_>>()
+                    .first()
+                    .map(|excerpt_markdown| -> Result<String> {
+                        let excerpt_html = markdown_to_html_with_plugins(
+                            &excerpt_markdown,
+                            &markdown_context.options,
+                            &markdown_context.plugins,
+                        );
+                        Ok(excerpt_html)
+                    })
+                    .transpose()?
+                    .map(|excerpt_html| FOOTNOTE_REGEX.replace_all(&excerpt_html, "").to_string());
 
-            let content_html = markdown_to_html_with_plugins(
-                &markdown.content,
-                &markdown_context.options,
-                &markdown_context.plugins,
-            );
+                let content_html = markdown_to_html_with_plugins(
+                    &markdown.content,
+                    &markdown_context.options,
+                    &markdown_context.plugins,
+                );
 
-            home_screens.push(HomeScreen {
-                slug,
-                title: smart_quotes(frontmatter.title),
-                description: smart_quotes(frontmatter.description),
-                location: smart_quotes(frontmatter.location),
-                published: frontmatter.published,
-                excerpt_html,
-                content_html,
-                source: HomeScreenSource {
-                    png: frontmatter.source.png,
-                    avif: frontmatter.source.avif,
-                    alt: frontmatter.source.alt,
-                },
-            });
-        }
+                Ok(Some(HomeScreen {
+                    slug,
+                    title: smart_quotes(frontmatter.title),
+                    description: smart_quotes(frontmatter.description),
+                    location: smart_quotes(frontmatter.location),
+                    published: frontmatter.published,
+                    excerpt_html,
+                    content_html,
+                    source: HomeScreenSource {
+                        png: frontmatter.source.png,
+                        avif: frontmatter.source.avif,
+                        alt: frontmatter.source.alt,
+                    },
+                }))
+            })
+            .filter_map(|home_screen| home_screen.transpose())
+            .collect::<Result<Vec<HomeScreen>>>()?;
 
         home_screens.sort_by(|a, b| b.published.cmp(&a.published));
 
@@ -470,88 +479,92 @@ impl Content {
     fn parse_library(
         matter: &Matter<YAML>,
         markdown_context: &MarkdownContext,
-        mut dir: fs::ReadDir,
+        dir: fs::ReadDir,
     ) -> Result<Vec<Book>> {
-        let mut library = Vec::new();
-        while let Some(entry) = dir.next().transpose()? {
-            if entry.file_type()?.is_dir() {
-                continue;
-            }
+        let mut library = dir
+            .par_bridge()
+            .filter_map(|entry| entry.ok())
+            .map(|entry| {
+                if entry.file_type()?.is_dir() {
+                    return Ok(None);
+                }
 
-            if entry.file_name().to_string_lossy().starts_with('.')
-                || entry.path().extension().ok_or(anyhow!(
-                    "Failed to get file extension for {:?}",
-                    entry.path()
-                ))? != "md"
-            {
-                continue;
-            }
+                if entry.file_name().to_string_lossy().starts_with('.')
+                    || entry.path().extension().ok_or(anyhow!(
+                        "Failed to get file extension for {:?}",
+                        entry.path()
+                    ))? != "md"
+                {
+                    return Ok(None);
+                }
 
-            let slug = entry
-                .path()
-                .file_stem()
-                .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
-                .to_string_lossy()
-                .to_string();
+                let slug = entry
+                    .path()
+                    .file_stem()
+                    .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
+                    .to_string_lossy()
+                    .to_string();
 
-            let mut file = File::open(entry.path())?;
-            let mut contents = String::new();
-            file.read_to_string(&mut contents)?;
+                let mut file = File::open(entry.path())?;
+                let mut contents = String::new();
+                file.read_to_string(&mut contents)?;
 
-            #[derive(Debug, Deserialize)]
-            struct Frontmatter {
-                pub title: String,
-                pub author: String,
-                pub read: NaiveDate,
-                pub rating: u8,
-                pub location: String,
-                pub url: Option<Url>,
-            }
+                #[derive(Debug, Deserialize)]
+                struct Frontmatter {
+                    pub title: String,
+                    pub author: String,
+                    pub read: NaiveDate,
+                    pub rating: u8,
+                    pub location: String,
+                    pub url: Option<Url>,
+                }
 
-            let markdown = matter.parse(&contents);
-            let frontmatter: Frontmatter = markdown
-                .data
-                .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
-                .deserialize()
-                .context(format!(
-                    "Couldn't deserialize frontmatter for {:?}",
-                    entry.path()
-                ))?;
+                let markdown = matter.parse(&contents);
+                let frontmatter: Frontmatter = markdown
+                    .data
+                    .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
+                    .deserialize()
+                    .context(format!(
+                        "Couldn't deserialize frontmatter for {:?}",
+                        entry.path()
+                    ))?;
 
-            let excerpt_html: String = markdown
-                .content
-                .splitn(2, "<!-- more -->")
-                .collect::<Vec<_>>()
-                .first()
-                .map(|excerpt_markdown| -> Result<String> {
-                    let excerpt_html = markdown_to_html_with_plugins(
-                        excerpt_markdown,
-                        &markdown_context.options,
-                        &markdown_context.plugins,
-                    );
-                    Ok(excerpt_html)
-                })
-                .transpose()?
-                .ok_or(anyhow!("Couldn't parse excerpt for {:?}", entry.path()))?;
+                let excerpt_html: String = markdown
+                    .content
+                    .splitn(2, "<!-- more -->")
+                    .collect::<Vec<_>>()
+                    .first()
+                    .map(|excerpt_markdown| -> Result<String> {
+                        let excerpt_html = markdown_to_html_with_plugins(
+                            excerpt_markdown,
+                            &markdown_context.options,
+                            &markdown_context.plugins,
+                        );
+                        Ok(excerpt_html)
+                    })
+                    .transpose()?
+                    .ok_or(anyhow!("Couldn't parse excerpt for {:?}", entry.path()))?;
 
-            let content_html = markdown_to_html_with_plugins(
-                &markdown.content,
-                &markdown_context.options,
-                &markdown_context.plugins,
-            );
+                let content_html = markdown_to_html_with_plugins(
+                    &markdown.content,
+                    &markdown_context.options,
+                    &markdown_context.plugins,
+                );
 
-            library.push(Book {
-                slug,
-                title: smart_quotes(frontmatter.title),
-                author: smart_quotes(frontmatter.author),
-                read: frontmatter.read,
-                rating: frontmatter.rating,
-                location: smart_quotes(frontmatter.location),
-                url: frontmatter.url,
-                excerpt_html,
-                content_html,
-            });
-        }
+                Ok(Some(Book {
+                    slug,
+                    title: smart_quotes(frontmatter.title),
+                    author: smart_quotes(frontmatter.author),
+                    read: frontmatter.read,
+                    rating: frontmatter.rating,
+                    location: smart_quotes(frontmatter.location),
+                    url: frontmatter.url,
+                    excerpt_html,
+                    content_html,
+                }))
+            })
+            .filter_map(|book| book.transpose())
+            .collect::<Result<Vec<Book>>>()?;
 
         library.sort_by(|a, b| b.read.cmp(&a.read));
 
@@ -561,91 +574,95 @@ impl Content {
     fn parse_weekly(
         matter: &Matter<YAML>,
         markdown_context: &MarkdownContext,
-        mut dir: fs::ReadDir,
+        dir: fs::ReadDir,
     ) -> Result<Vec<WeeklyIssue>> {
-        let mut weekly_issues = Vec::new();
-        while let Some(entry) = dir.next().transpose()? {
-            if entry.file_type()?.is_dir() {
-                continue;
-            }
-
-            if entry.file_name().to_string_lossy().starts_with('.')
-                || entry.path().extension().ok_or(anyhow!(
-                    "Failed to get file extension for {:?}",
-                    entry.path()
-                ))? != "md"
-            {
-                continue;
-            }
-
-            let num = entry
-                .path()
-                .file_stem()
-                .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
-                .to_string_lossy()
-                .parse::<u16>()?;
-
-            let mut file = File::open(entry.path())?;
-            let mut contents = String::new();
-            file.read_to_string(&mut contents)?;
-
-            #[derive(Debug, Deserialize)]
-            #[serde(rename_all = "camelCase")]
-            struct Frontmatter {
-                pub title: String,
-                pub date: NaiveDate,
-                pub toot_of_the_week: Option<WeeklyTootOfTheWeek>,
-                pub tweet_of_the_week: Option<WeeklyTweetOfTheWeek>,
-                pub quote_of_the_week: Option<WeeklyQuoteOfTheWeek>,
-                pub skeet_of_the_week: Option<WeeklySkeetOfTheWeek>,
-                #[serde(default)]
-                pub categories: Vec<WeeklyCategory>,
-            }
-
-            let render_descriptions = |mut frontmatter: Frontmatter| -> Result<Frontmatter> {
-                for category in frontmatter.categories.iter_mut() {
-                    for story in category.stories.iter_mut() {
-                        story.description_html = markdown_to_html_with_plugins(
-                            &story.description,
-                            &markdown_context.options,
-                            &markdown_context.plugins,
-                        );
-                    }
+        let mut weekly_issues = dir
+            .par_bridge()
+            .filter_map(|entry| entry.ok())
+            .map(|entry| {
+                if entry.file_type()?.is_dir() {
+                    return Ok(None);
                 }
-                Ok(frontmatter)
-            };
 
-            let markdown = matter.parse(&contents);
+                if entry.file_name().to_string_lossy().starts_with('.')
+                    || entry.path().extension().ok_or(anyhow!(
+                        "Failed to get file extension for {:?}",
+                        entry.path()
+                    ))? != "md"
+                {
+                    return Ok(None);
+                }
 
-            let frontmatter: Frontmatter = markdown
-                .data
-                .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
-                .deserialize::<Frontmatter>()
-                .context(format!(
-                    "Couldn't deserialize frontmatter for {:?}",
-                    entry.path()
-                ))?;
-            let frontmatter = render_descriptions(frontmatter)?;
+                let num = entry
+                    .path()
+                    .file_stem()
+                    .ok_or(anyhow!("Couldn't get file stem for {:?}", entry.path()))?
+                    .to_string_lossy()
+                    .parse::<u16>()?;
 
-            let content_html = markdown_to_html_with_plugins(
-                &markdown.content,
-                &markdown_context.options,
-                &markdown_context.plugins,
-            );
+                let mut file = File::open(entry.path())?;
+                let mut contents = String::new();
+                file.read_to_string(&mut contents)?;
 
-            weekly_issues.push(WeeklyIssue {
-                num,
-                title: smart_quotes(frontmatter.title),
-                published: frontmatter.date, // TODO: Rename frontmatter to published
-                toot_of_the_week: frontmatter.toot_of_the_week,
-                tweet_of_the_week: frontmatter.tweet_of_the_week,
-                quote_of_the_week: frontmatter.quote_of_the_week,
-                skeet_of_the_week: frontmatter.skeet_of_the_week,
-                categories: frontmatter.categories,
-                content: markdown.content,
-                content_html,
-            });
-        }
+                #[derive(Debug, Deserialize)]
+                #[serde(rename_all = "camelCase")]
+                struct Frontmatter {
+                    pub title: String,
+                    pub date: NaiveDate,
+                    pub toot_of_the_week: Option<WeeklyTootOfTheWeek>,
+                    pub tweet_of_the_week: Option<WeeklyTweetOfTheWeek>,
+                    pub quote_of_the_week: Option<WeeklyQuoteOfTheWeek>,
+                    pub skeet_of_the_week: Option<WeeklySkeetOfTheWeek>,
+                    #[serde(default)]
+                    pub categories: Vec<WeeklyCategory>,
+                }
+
+                let render_descriptions = |mut frontmatter: Frontmatter| -> Result<Frontmatter> {
+                    for category in frontmatter.categories.iter_mut() {
+                        for story in category.stories.iter_mut() {
+                            story.description_html = markdown_to_html_with_plugins(
+                                &story.description,
+                                &markdown_context.options,
+                                &markdown_context.plugins,
+                            );
+                        }
+                    }
+                    Ok(frontmatter)
+                };
+
+                let markdown = matter.parse(&contents);
+
+                let frontmatter: Frontmatter = markdown
+                    .data
+                    .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
+                    .deserialize::<Frontmatter>()
+                    .context(format!(
+                        "Couldn't deserialize frontmatter for {:?}",
+                        entry.path()
+                    ))?;
+                let frontmatter = render_descriptions(frontmatter)?;
+
+                let content_html = markdown_to_html_with_plugins(
+                    &markdown.content,
+                    &markdown_context.options,
+                    &markdown_context.plugins,
+                );
+
+                Ok(Some(WeeklyIssue {
+                    num,
+                    title: smart_quotes(frontmatter.title),
+                    published: frontmatter.date, // TODO: Rename frontmatter to published
+                    toot_of_the_week: frontmatter.toot_of_the_week,
+                    tweet_of_the_week: frontmatter.tweet_of_the_week,
+                    quote_of_the_week: frontmatter.quote_of_the_week,
+                    skeet_of_the_week: frontmatter.skeet_of_the_week,
+                    categories: frontmatter.categories,
+                    content: markdown.content,
+                    content_html,
+                }))
+            })
+            .filter_map(|entry| entry.transpose())
+            .collect::<Result<Vec<WeeklyIssue>>>()?;
 
         weekly_issues.sort_by(|a, b| b.published.cmp(&a.published));
 
@@ -701,59 +718,63 @@ impl Content {
     fn parse_projects(
         matter: &Matter<YAML>,
         markdown_context: &MarkdownContext,
-        mut dir: fs::ReadDir,
+        dir: fs::ReadDir,
     ) -> Result<Vec<Project>> {
-        let mut projects = Vec::new();
-        while let Some(entry) = dir.next().transpose()? {
-            if entry.file_type()?.is_dir() {
-                continue;
-            }
+        let mut projects = dir
+            .par_bridge()
+            .filter_map(|entry| entry.ok())
+            .map(|entry| {
+                if entry.file_type()?.is_dir() {
+                    return Ok(None);
+                }
 
-            if entry.file_name().to_string_lossy().starts_with('.')
-                || entry.path().extension().ok_or(anyhow!(
-                    "Failed to get file extension for {:?}",
-                    entry.path()
-                ))? != "md"
-            {
-                continue;
-            }
+                if entry.file_name().to_string_lossy().starts_with('.')
+                    || entry.path().extension().ok_or(anyhow!(
+                        "Failed to get file extension for {:?}",
+                        entry.path()
+                    ))? != "md"
+                {
+                    return Ok(None);
+                }
 
-            let mut file = File::open(entry.path())?;
-            let mut contents = String::new();
-            file.read_to_string(&mut contents)?;
+                let mut file = File::open(entry.path())?;
+                let mut contents = String::new();
+                file.read_to_string(&mut contents)?;
 
-            #[derive(Debug, Deserialize)]
-            struct Frontmatter {
-                pub title: String,
-                pub url: Option<Url>,
-                pub from: u16,
-                pub to: Option<u16>,
-            }
+                #[derive(Debug, Deserialize)]
+                struct Frontmatter {
+                    pub title: String,
+                    pub url: Option<Url>,
+                    pub from: u16,
+                    pub to: Option<u16>,
+                }
 
-            let markdown = matter.parse(&contents);
-            let frontmatter: Frontmatter = markdown
-                .data
-                .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
-                .deserialize()
-                .context(format!(
-                    "Couldn't deserialize frontmatter for {:?}",
-                    entry.path()
-                ))?;
+                let markdown = matter.parse(&contents);
+                let frontmatter: Frontmatter = markdown
+                    .data
+                    .ok_or(anyhow!("Couldn't parse frontmatter for {:?}", entry.path()))?
+                    .deserialize()
+                    .context(format!(
+                        "Couldn't deserialize frontmatter for {:?}",
+                        entry.path()
+                    ))?;
 
-            let content_html = markdown_to_html_with_plugins(
-                &markdown.content,
-                &markdown_context.options,
-                &markdown_context.plugins,
-            );
+                let content_html = markdown_to_html_with_plugins(
+                    &markdown.content,
+                    &markdown_context.options,
+                    &markdown_context.plugins,
+                );
 
-            projects.push(Project {
-                title: smart_quotes(frontmatter.title),
-                url: frontmatter.url,
-                from: frontmatter.from,
-                to: frontmatter.to,
-                content_html,
-            });
-        }
+                Ok(Some(Project {
+                    title: smart_quotes(frontmatter.title),
+                    url: frontmatter.url,
+                    from: frontmatter.from,
+                    to: frontmatter.to,
+                    content_html,
+                }))
+            })
+            .filter_map(|project| project.transpose())
+            .collect::<Result<Vec<Project>>>()?;
 
         // No end date means the project is still active
         projects.sort_by(|a, b| match (a.to, b.to) {
