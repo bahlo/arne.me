@@ -28,5 +28,5 @@ tungstenite = "0.24"
 ureq = { version = "3.0", features = ["json"] }
 usvg = "0.45"
 url = { version = "2.5", features = ["serde"] }
-git2 = { version = "0.20.0", default-features = false }
+git2 = { version = "0.20.1", default-features = false }
 serde_json = "1"
