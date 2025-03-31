@@ -966,9 +966,9 @@ dependencies = [
 
 [[package]]
 name = "file-serve"
-version = "0.3.6"
+version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8a031d4e156aa1d76165989ec38283443017dab0443d6c3cb17d43c71ea8c69"
+checksum = "57dd94fc68f7e5f526eea9e5a7b9a033eb58bd29a270ebfca36d64d3aa23ce4e"
 dependencies = [
  "log",
  "mime",
@@ -1682,9 +1682,9 @@ checksum = "9374ef4228402d4b7e403e5838cb880d9ee663314b0a900d5a6aabf0c213552e"
 
 [[package]]
 name = "log"
-version = "0.4.22"
+version = "0.4.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a7a70ba024b9dc04c27ea2f0c0548feb474ec5c54bba33a7f72f873a39d07b24"
+checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
 
 [[package]]
 name = "lzma-rs"
