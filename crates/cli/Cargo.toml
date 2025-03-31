@@ -24,7 +24,7 @@ scraper = { version = "0.23", default-features = false, features = [
 ] }
 serde = { version = "1", features = ["derive"] }
 tiny-skia = "0.11"
-tungstenite = "0.24"
+tungstenite = "0.26"
 ureq = { version = "3.0", features = ["json"] }
 usvg = "0.45"
 url = { version = "2.5", features = ["serde"] }
