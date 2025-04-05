@@ -12,7 +12,13 @@ body {
     line-height: 1.5;
     padding-bottom: 1rem;
     font-family: "Rebond Grotesque", sans-serif;
-    font-feature-settings: "ss06" 1, "ss07" 1, "ss09" 1, "liga" 1, "calt" 1, "dlig" 1;
+    font-feature-settings:
+        "ss06" 1,
+        "ss07" 1,
+        "ss09" 1,
+        "liga" 1,
+        "calt" 1,
+        "dlig" 1;
     font-display: swap;
     color: $color-fg;
     @media (prefers-color-scheme: dark) {
@@ -157,6 +163,7 @@ input[type="submit"] {
     @include stack(1.5rem);
     background: $color-bg;
     padding: 1.5rem 0;
+    border-bottom: 1px solid $color-border;
     @media (prefers-color-scheme: dark) {
         background: invert($color-bg);
     }
@@ -230,7 +237,7 @@ main {
         max-width: 100%;
 
         @media (prefers-color-scheme: dark) {
-          opacity: .8;
+            opacity: 0.8;
         }
     }
 
@@ -366,7 +373,7 @@ footer {
 
     .arrow {
         text-decoration: none;
-        padding: .1rem;
+        padding: 0.1rem;
     }
 }
 
@@ -374,7 +381,7 @@ footer {
     &__hero {
         h1 {
             font-size: $font-size-large;
-            margin-bottom: .25rem;
+            margin-bottom: 0.25rem;
         }
     }
 }
