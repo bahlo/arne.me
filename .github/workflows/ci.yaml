@@ -59,21 +59,21 @@ jobs:
       - run: cargo run -p ssg -- --generate-missing-og-images
         env:
           FONT_ZIP_URL: "${{ secrets.FONT_ZIP_URL }}"
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
         id: commit-og-images
         with:
           commit_message: "Add missing OG images"
           file_pattern: "**/og-image.png"
           disable_globbing: true
-      - uses: nwtgck/actions-netlify@v3.0
+      - uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654 # v3.0.0
         with:
-          publish-dir: './dist'
+          publish-dir: "./dist"
           production-deploy: true
           enable-github-deployment: false
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      - uses: axiomhq/annotation-action@v0.1.0
+      - uses: axiomhq/annotation-action@403f688c009395bd13282b995ebd0bebe6df9443 # v0.1.0
         with:
           axiomToken: ${{ secrets.AXIOM_TOKEN}}
           datasets: netlify
