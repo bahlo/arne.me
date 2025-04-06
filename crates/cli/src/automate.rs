@@ -420,7 +420,7 @@ fn create_email_draft(weekly_issue: &WeeklyIssue) -> Result<String> {
         .send(serde_json::to_string(&ButtondownEmailRequest {
             subject: weekly_issue.title.clone(),
             body,
-            status: "draft".to_string(),
+            status: "about_to_send".to_string(),
         })?)?
         .into_body()
         .read_json::<ButtondownEmailResponse>()?;
