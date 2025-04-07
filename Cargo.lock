@@ -475,7 +475,7 @@ dependencies = [
  "git2",
  "html-escape",
  "notify-debouncer-mini",
- "quick-xml 0.37.3",
+ "quick-xml 0.37.4",
  "regex",
  "resvg",
  "scraper",
@@ -2130,9 +2130,9 @@ dependencies = [
 
 [[package]]
 name = "quick-xml"
-version = "0.37.3"
+version = "0.37.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf763ab1c7a3aa408be466efc86efe35ed1bd3dd74173ed39d6b0d0a6f0ba148"
+checksum = "a4ce8c88de324ff838700f36fb6ab86c96df0e3c4ab6ef3a9b2044465cce1369"
 dependencies = [
  "encoding_rs",
  "memchr",
@@ -2367,7 +2367,7 @@ dependencies = [
  "atom_syndication",
  "derive_builder",
  "never",
- "quick-xml 0.37.3",
+ "quick-xml 0.37.4",
 ]
 
 [[package]]
@@ -2674,7 +2674,7 @@ dependencies = [
  "clap",
  "grass",
  "maud",
- "quick-xml 0.37.3",
+ "quick-xml 0.37.4",
  "rayon",
  "rss",
  "serde",
