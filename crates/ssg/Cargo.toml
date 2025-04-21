@@ -7,7 +7,7 @@ publish = false
 [dependencies]
 anyhow = "1"
 arneos = { path = "../arneos" }
-blake3 = "1.8.1"
+blake3 = "1.8.2"
 chrono = { version = "0.4.40", default-features = false, features = [
     "std",
     "clock",
