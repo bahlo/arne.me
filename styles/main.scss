@@ -166,6 +166,7 @@ input[type="submit"] {
     border-bottom: 1px solid $color-border;
     @media (prefers-color-scheme: dark) {
         background: invert($color-bg);
+        border-color: invert($color-border);
     }
 }
 
