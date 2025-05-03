@@ -173,7 +173,7 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
                     (render_content(weekly_issue, None)?)
                 }
                 h2 { "Subscribe" }
-                p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans."}
+                p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans. I do sometimes feature projects of friends."}
                 (subscribe_form())
             }
         },
