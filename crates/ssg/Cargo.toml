@@ -8,7 +8,7 @@ publish = false
 anyhow = "1"
 arneos = { path = "../arneos" }
 blake3 = "1.8.2"
-chrono = { version = "0.4.40", default-features = false, features = [
+chrono = { version = "0.4.41", default-features = false, features = [
     "std",
     "clock",
     "serde",
