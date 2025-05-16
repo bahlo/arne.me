@@ -1,5 +1,5 @@
 ---
-title: "Careless Peopl"
+title: "Careless People"
 author: "Sarah Wynn-Williams"
 read: "2025-05-15"
 rating: 4
