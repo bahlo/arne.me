@@ -1,8 +1,9 @@
 use anyhow::Result;
 use chrono::Utc;
+use pichu::Markdown;
 use rss::{ChannelBuilder, Item, ItemBuilder};
 
-use crate::templates;
+use crate::weekly::{self, Issue};
 use arneos::content::Content;
 
 const RFC_822: &str = "%a, %d %b %Y %T %z";
@@ -42,22 +43,21 @@ pub fn render_blog(content: &Content) -> String {
         .to_string()
 }
 
-pub fn render_weekly(content: &Content) -> Result<String> {
-    let items = content
-        .weekly
+pub fn render_weekly(issues: &Vec<Markdown<Issue>>) -> Result<String> {
+    let items = issues
         .iter()
-        .map(|weekly_issue| {
+        .map(|issue| {
             Ok(ItemBuilder::default()
-                .title(weekly_issue.title.clone())
-                .link(format!("https://arne.me/weekly/{}", weekly_issue.num))
-                .description(format!("Issue #{} of Arne’s Weekly", weekly_issue.num))
+                .title(issue.frontmatter.title.clone())
+                .link(format!("https://arne.me/weekly/{}", issue.basename))
+                .description(format!("Issue #{} of Arne’s Weekly", issue.basename))
                 .author("Arne Bahlo".to_string())
                 .guid(rss::Guid {
-                    value: format!("https://arne.me/weekly/{}", weekly_issue.num),
+                    value: format!("https://arne.me/weekly/{}", issue.basename),
                     permalink: true,
                 })
-                .pub_date(weekly_issue.published.format(RFC_822_DATE).to_string())
-                .content(templates::weekly::render_content(weekly_issue, None)?.into_string())
+                .pub_date(issue.frontmatter.date.format(RFC_822_DATE).to_string())
+                .content(weekly::render_content(issue, None)?.into_string())
                 .build())
         })
         .collect::<Result<Vec<Item>>>()?;

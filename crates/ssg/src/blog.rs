@@ -36,10 +36,6 @@ pub fn render_all(layout: &Layout, blog_posts: &Vec<Markdown<Blogpost>>) -> Resu
             acc
         })
         .into_iter()
-        .map(|(year, mut blog_posts)| {
-            blog_posts.sort_by(|a, b| b.frontmatter.published.cmp(&a.frontmatter.published));
-            (year, blog_posts)
-        })
         .collect::<Vec<_>>();
     blog_posts_by_year.sort_by(|(a, _), (b, _)| b.cmp(a));
 

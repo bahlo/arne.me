@@ -10,6 +10,7 @@ mod rss;
 mod sitemap;
 mod templates;
 mod timer;
+mod weekly;
 
 use arneos::content::Content;
 
@@ -79,42 +80,27 @@ pub fn main() -> Result<()> {
 
     let _blog = pichu::glob("content/blog/*.md")?
         .parse_markdown::<blog::Blogpost>()?
+        .sort_by_key_reverse(|post| post.frontmatter.published)
         .render_each(
-            |blog_post| blog::render_single(&layout, blog_post),
-            |blog_post| format!("dist/blog/{}/index.html", blog_post.basename),
+            |post| blog::render_single(&layout, post),
+            |post| format!("dist/blog/{}/index.html", post.basename),
         )?
         .render_all(
             |blog_posts| blog::render_all(&layout, blog_posts),
             "dist/blog/index.html",
         )?;
 
-    // Generate weekly
-    fs::create_dir_all("dist/weekly")?;
-    fs::write(
-        "dist/weekly/index.html",
-        layout
-            .render(templates::weekly::render_index(&content)?)?
-            .into_string(),
-    )?;
-    fs::create_dir_all("static/weekly")?;
-    content
-        .weekly
-        .par_iter()
-        .map(|weekly_issue| {
-            fs::create_dir_all(format!("dist/weekly/{}", weekly_issue.num))?;
-            let html_path = format!("dist/weekly/{}/index.html", weekly_issue.num);
-            fs::write(
-                &html_path,
-                layout
-                    .render(templates::weekly::render(weekly_issue)?)?
-                    .into_string(),
-            )?;
-            let json_path = format!("dist/weekly/{}.json", weekly_issue.num);
-            fs::write(&json_path, serde_json::to_string(&weekly_issue)?)?;
-            fs::create_dir_all(format!("static/weekly/{}", weekly_issue.num))?;
-            Ok(())
-        })
-        .collect::<Result<()>>()?;
+    let weekly = pichu::glob("content/weekly/*.md")?
+        .parse_markdown::<weekly::Issue>()?
+        .sort_by_key_reverse(|issue| issue.frontmatter.date)
+        .render_each(
+            |issue| weekly::render_single(&layout, issue),
+            |issue| format!("dist/weekly/{}/index.html", issue.basename),
+        )?
+        .render_all(
+            |issues| weekly::render_all(&layout, issues),
+            "dist/weekly/index.html",
+        )?;
 
     // Generate book reviews
     fs::create_dir_all("dist/library")?;
@@ -205,7 +191,7 @@ pub fn main() -> Result<()> {
     // Generate RSS feeds
     let mut timer = Timer::new("Generating RSS feeds");
     fs::write("dist/blog/feed.xml", rss::render_blog(&content))?;
-    fs::write("dist/weekly/feed.xml", rss::render_weekly(&content)?)?;
+    pichu::write(rss::render_weekly(&weekly.items)?, "dist/weekly/feed.xml")?;
     fs::write("dist/library/feed.xml", rss::render_library(&content))?;
     timer.end();
 

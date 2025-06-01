@@ -7,7 +7,6 @@ pub mod layout;
 pub mod library;
 pub mod page;
 pub mod project;
-pub mod weekly;
 
 pub fn format_date(date: NaiveDate) -> Markup {
     html! {

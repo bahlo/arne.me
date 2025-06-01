@@ -24,8 +24,8 @@ pub enum Error {
     #[error("missing frontmatter in {0}")]
     MissingFrontmatter(PathBuf),
     #[cfg(feature = "markdown")]
-    #[error("failed to deserialize frontmatter: {0}")]
-    DeserializeFrontmatter(#[from] serde_json::error::Error),
+    #[error("failed to deserialize frontmatter for {0}: {1}")]
+    DeserializeFrontmatter(PathBuf, serde_json::error::Error),
     #[cfg(feature = "markdown")]
     #[error("no file stem for: {0}")]
     NoFileStem(PathBuf),
@@ -65,7 +65,7 @@ impl Glob {
             .paths
             .map(|path| parse_fn(path?))
             .collect::<Result<Vec<T>, Error>>()?;
-        Ok(Parsed { inner })
+        Ok(Parsed { items: inner })
     }
 
     #[cfg(feature = "markdown")]
@@ -87,7 +87,8 @@ impl Glob {
             let frontmatter: T = markdown
                 .data
                 .ok_or(Error::MissingFrontmatter(path.clone()))?
-                .deserialize()?;
+                .deserialize()
+                .map_err(|e| Error::DeserializeFrontmatter(path.clone(), e))?;
 
             let html = markdown_to_html_with_plugins(
                 &markdown.content,
@@ -108,7 +109,7 @@ impl Glob {
             })
         }
 
-        Ok(Parsed { inner: parsed })
+        Ok(Parsed { items: parsed })
     }
 }
 
@@ -122,22 +123,41 @@ pub struct Markdown<T> {
 
 #[derive(Debug, Clone)]
 pub struct Parsed<T> {
-    inner: Vec<T>,
+    pub items: Vec<T>,
 }
 
 impl<T> Parsed<T> {
+    pub fn sort_by_key<K, F>(mut self, f: F) -> Self
+    where
+        F: FnMut(&T) -> K,
+        K: Ord,
+    {
+        self.items.sort_by_key(f);
+        self
+    }
+
+    pub fn sort_by_key_reverse<K, F>(mut self, f: F) -> Self
+    where
+        F: FnMut(&T) -> K,
+        K: Ord,
+    {
+        self.items.sort_by_key(f);
+        self.items.reverse();
+        self
+    }
+
     pub fn render_each<
         P: AsRef<Path>,
         S: Into<String>,
         E: Into<Box<dyn std::error::Error + Send + Sync>>,
     >(
-        &self,
+        self,
         render_fn: impl Fn(&T) -> Result<S, E>,
         build_path_fn: impl Fn(&T) -> P,
-    ) -> Result<&Self, Error> {
+    ) -> Result<Self, Error> {
         // Render templates
         let rendered = self
-            .inner
+            .items
             .iter()
             .map(|item| Ok((item, render_fn(item)?)))
             .collect::<Result<Vec<_>, E>>()
@@ -153,11 +173,11 @@ impl<T> Parsed<T> {
     }
 
     pub fn render_all<S: Into<String>, E: Into<Box<dyn std::error::Error + Send + Sync>>>(
-        &self,
+        self,
         render_fn: impl Fn(&Vec<T>) -> Result<S, E>,
         dest_path: impl AsRef<Path>,
-    ) -> Result<&Self, Error> {
-        let content = render_fn(&self.inner).map_err(|e| Error::RenderFn(e.into()))?;
+    ) -> Result<Self, Error> {
+        let content = render_fn(&self.items).map_err(|e| Error::RenderFn(e.into()))?;
         write(content.into(), dest_path)?;
         Ok(self)
     }

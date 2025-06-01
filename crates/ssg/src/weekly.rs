@@ -1,12 +1,89 @@
 use anyhow::{anyhow, Result};
+use chrono::NaiveDate;
 use maud::{html, Markup, PreEscaped};
+use pichu::Markdown;
+use serde::{Deserialize, Serialize};
 use url::Url;
 
 use crate::templates::{
     format_date,
-    layout::{self, Context, Head, OgType},
+    layout::{self, Context, Head, Layout, OgType},
 };
-use arneos::content::{Content, WeeklyIssue};
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Serialize, Deserialize)]
+pub struct Issue {
+    pub title: String,
+    pub date: NaiveDate,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub toot_of_the_week: Option<WeeklyTootOfTheWeek>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub tweet_of_the_week: Option<WeeklyTweetOfTheWeek>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub quote_of_the_week: Option<WeeklyQuoteOfTheWeek>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub skeet_of_the_week: Option<WeeklySkeetOfTheWeek>,
+    #[serde(default)]
+    pub categories: Vec<WeeklyCategory>,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
+pub struct WeeklyCategory {
+    pub title: String,
+    pub stories: Vec<WeeklyStory>,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WeeklyStory {
+    pub title: String,
+    pub url: Url,
+    pub description: String,
+    #[serde(default)]
+    pub description_html: String,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
+pub struct WeeklyTootOfTheWeek {
+    pub text: String,
+    pub author: String,
+    pub url: Url,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
+pub struct WeeklySkeetOfTheWeek {
+    pub text: String,
+    pub author: String,
+    pub url: Url,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
+pub struct WeeklyTweetOfTheWeek {
+    pub text: String,
+    pub author: String,
+    pub url: Url,
+    pub media: Option<WeeklyTweetOfTheWeekMedia>,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WeeklyTweetOfTheWeekMedia {
+    pub alt: String,
+    pub image: String,
+    pub src_set: Vec<SrcSet>,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
+pub struct SrcSet {
+    pub src: String,
+    #[serde(rename = "type")]
+    pub typ: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, PartialOrd)]
+pub struct WeeklyQuoteOfTheWeek {
+    pub text: String,
+    pub author: String,
+}
 
 fn subscribe_form() -> Markup {
     html! {
@@ -25,8 +102,8 @@ fn subscribe_form() -> Markup {
     }
 }
 
-pub fn render_index(content: &Content) -> Result<Context> {
-    Ok(Context::new_with_options(
+pub fn render_all(layout: &Layout, issues: &Vec<Markdown<Issue>>) -> Result<Markup> {
+    layout.render(Context::new_with_options(
         Head {
             title: "Arne’s Weekly".to_string(),
             description: "A weekly newsletter with the best stories of the internet.".to_string(),
@@ -44,14 +121,14 @@ pub fn render_index(content: &Content) -> Result<Context> {
                 }
                 h2 { "Archive" }
                 .weekly__overview {
-                    @for weekly_issue in &content.weekly {
+                    @for issue in issues {
                         li.weekly__overview_issue {
-                            a href=(format!("/weekly/{}", weekly_issue.num)) {
-                                (weekly_issue.title)
+                            a href=(format!("/weekly/{}", issue.basename)) {
+                                (issue.frontmatter.title)
                             }
                             .divider {};
                             i.byline {
-                                time datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
+                                time datetime=(issue.frontmatter.date.format("%Y-%m-%d")) { (format_date(issue.frontmatter.date)) }
                             }
                         }
                     }
@@ -71,13 +148,13 @@ pub struct RenderOptions {
 }
 
 pub fn render_content(
-    weekly: &WeeklyIssue,
+    weekly: &Markdown<Issue>,
     opts: impl Into<Option<RenderOptions>>,
 ) -> Result<Markup> {
     let opts = opts.into().unwrap_or_default();
     Ok(html! {
-        (PreEscaped(weekly.content_html.clone()))
-        @if let Some(toot_of_the_week) = &weekly.toot_of_the_week {
+        (PreEscaped(weekly.html.clone()))
+        @if let Some(toot_of_the_week) = &weekly.frontmatter.toot_of_the_week {
             h2 { "Toot of the Week" }
             blockquote {
                 (toot_of_the_week.text)
@@ -87,7 +164,7 @@ pub fn render_content(
                 }
             }
         }
-        @if let Some(tweet_of_the_week) = &weekly.tweet_of_the_week {
+        @if let Some(tweet_of_the_week) = &weekly.frontmatter.tweet_of_the_week {
             h2 { "Tweet of the Week" }
             blockquote {
                 (tweet_of_the_week.text)
@@ -109,7 +186,7 @@ pub fn render_content(
                 }
             }
         }
-        @if let Some(quote_of_the_week) = &weekly.quote_of_the_week {
+        @if let Some(quote_of_the_week) = &weekly.frontmatter.quote_of_the_week {
             h2 { "Quote of the Week" }
             blockquote {
                 "“"
@@ -119,7 +196,7 @@ pub fn render_content(
                 (quote_of_the_week.author)
             }
         }
-        @if let Some(skeet_of_the_week) = &weekly.skeet_of_the_week {
+        @if let Some(skeet_of_the_week) = &weekly.frontmatter.skeet_of_the_week {
             h2 { "Skeet of the Week" }
             blockquote {
                 (skeet_of_the_week.text)
@@ -130,11 +207,11 @@ pub fn render_content(
             }
         }
         @if !opts.skip_stories {
-            @for category in weekly.categories.iter() {
+            @for category in &weekly.frontmatter.categories {
                 h2 { (category.title) }
                 ul {
                     @for story in &category.stories {
-                        @let host = story.url.host_str().ok_or(anyhow!("Failed to get host for {} in weekly issue #{}", story.url, weekly.num))?;
+                        @let host = story.url.host_str().ok_or(anyhow!("Failed to get host for {} in weekly issue #{}", story.url, weekly.basename))?;
 
                         li {
                             a href=(story.url) {
@@ -150,27 +227,27 @@ pub fn render_content(
     })
 }
 
-pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
-    Ok(Context::new_with_options(
+pub fn render_single(layout: &Layout, issue: &Markdown<Issue>) -> Result<Markup> {
+    layout.render(Context::new_with_options(
         Head {
-            title: weekly_issue.title.clone(),
-            description: format!("Arne's Weekly #{}", weekly_issue.num),
-            url: Url::parse(&format!("https://arne.me/weekly/{}", weekly_issue.num))?,
+            title: issue.frontmatter.title.clone(),
+            description: format!("Arne's Weekly #{}", issue.basename),
+            url: Url::parse(&format!("https://arne.me/weekly/{}", issue.basename))?,
             og_type: OgType::Article,
         },
         html! {
             article.weekly.h-entry {
                 div {
-                    h1.p-name.weekly__heading { (weekly_issue.title) }
-                    a.u-url hidden href=(format!("/weekly/{}", weekly_issue.num)) {}
-                    span.p-summary hidden { (format!("Arne's Weekly #{}", weekly_issue.num)) }
+                    h1.p-name.weekly__heading { (issue.frontmatter.title) }
+                    a.u-url hidden href=(format!("/weekly/{}", issue.basename)) {}
+                    span.p-summary hidden { (format!("Arne's Weekly #{}", issue.basename)) }
                     span.p-author hidden { "Arne Bahlo" }
                     i.byline {
-                        time.dt-published datetime=(weekly_issue.published.format("%Y-%m-%d")) { (format_date(weekly_issue.published)) }
+                        time.dt-published datetime=(issue.frontmatter.date.format("%Y-%m-%d")) { (format_date(issue.frontmatter.date)) }
                     }
                 }
                 .e-content {
-                    (render_content(weekly_issue, None)?)
+                    (render_content(issue, None)?)
                 }
                 h2 { "Subscribe" }
                 p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans. I do sometimes feature projects of friends."}
@@ -179,7 +256,7 @@ pub fn render(weekly_issue: &WeeklyIssue) -> Result<Context> {
         },
         layout::Options {
             navigation_item: layout::NavigationItem::Newsletter,
-            source_path: Some(format!("content/weekly/{}.md", weekly_issue.num)),
+            source_path: Some(format!("content/weekly/{}.md", issue.basename)),
         },
     ))
 }
