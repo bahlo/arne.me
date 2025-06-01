@@ -18,6 +18,7 @@ grass = { version = "0.13", default-features = false, features = [
     "random",
 ], optional = true }
 blake3 = { version = "1.8", optional = true }
+rayon = "1.10.0"
 
 [features]
 default = ["markdown", "sass"]

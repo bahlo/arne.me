@@ -30,3 +30,4 @@ usvg = "0.45"
 url = { version = "2.5", features = ["serde"] }
 git2 = { version = "0.20.2", default-features = false }
 serde_json = "1"
+rayon = "1.10.0"

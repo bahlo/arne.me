@@ -1,3 +1,4 @@
+use rayon::prelude::*;
 use std::{
     fs,
     path::{Path, PathBuf},
@@ -57,57 +58,61 @@ pub struct Glob {
 }
 
 impl Glob {
-    pub fn parse<T>(
+    pub fn parse<T: Send + Sync>(
         self,
         parse_fn: impl Fn(PathBuf) -> Result<T, Error>,
     ) -> Result<Parsed<T>, Error> {
         let inner = self
             .paths
+            .into_iter()
             .map(|path| parse_fn(path?))
             .collect::<Result<Vec<T>, Error>>()?;
         Ok(Parsed { items: inner })
     }
 
     #[cfg(feature = "markdown")]
-    pub fn parse_markdown<T: DeserializeOwned + fmt::Debug>(
+    pub fn parse_markdown<T: DeserializeOwned + fmt::Debug + Send + Sync>(
         self,
     ) -> Result<Parsed<Markdown<T>>, Error> {
         let syntect_adapter = SyntectAdapter::new(None);
         let markdown_context = MarkdownContext::new(&syntect_adapter);
         let matter = Matter::<YAML>::new();
 
-        let mut parsed = vec![];
-        for path in self.paths {
-            let path = path?;
-            let mut file = File::open(&path)?;
-            let mut contents = String::new();
-            file.read_to_string(&mut contents)?;
+        let parsed = self
+            .paths
+            .into_iter()
+            .map(|path| {
+                let path = path?;
+                let mut file = File::open(&path)?;
+                let mut contents = String::new();
+                file.read_to_string(&mut contents)?;
 
-            let markdown = matter.parse(&contents);
-            let frontmatter: T = markdown
-                .data
-                .ok_or(Error::MissingFrontmatter(path.clone()))?
-                .deserialize()
-                .map_err(|e| Error::DeserializeFrontmatter(path.clone(), e))?;
+                let markdown = matter.parse(&contents);
+                let frontmatter: T = markdown
+                    .data
+                    .ok_or(Error::MissingFrontmatter(path.clone()))?
+                    .deserialize()
+                    .map_err(|e| Error::DeserializeFrontmatter(path.clone(), e))?;
 
-            let html = markdown_to_html_with_plugins(
-                &markdown.content,
-                &markdown_context.options,
-                &markdown_context.plugins,
-            );
+                let html = markdown_to_html_with_plugins(
+                    &markdown.content,
+                    &markdown_context.options,
+                    &markdown_context.plugins,
+                );
 
-            let basename = path
-                .file_stem()
-                .ok_or_else(|| Error::NoFileStem(path.clone()))?
-                .to_string_lossy()
-                .to_string();
+                let basename = path
+                    .file_stem()
+                    .ok_or_else(|| Error::NoFileStem(path.clone()))?
+                    .to_string_lossy()
+                    .to_string();
 
-            parsed.push(Markdown {
-                frontmatter,
-                basename,
-                html,
+                Ok(Markdown {
+                    frontmatter,
+                    basename,
+                    html,
+                })
             })
-        }
+            .collect::<Result<Vec<Markdown<T>>, Error>>()?;
 
         Ok(Parsed { items: parsed })
     }
@@ -122,11 +127,11 @@ pub struct Markdown<T> {
 }
 
 #[derive(Debug, Clone)]
-pub struct Parsed<T> {
+pub struct Parsed<T: Send + Sync> {
     pub items: Vec<T>,
 }
 
-impl<T> Parsed<T> {
+impl<T: Send + Sync> Parsed<T> {
     pub fn sort_by_key<K, F>(mut self, f: F) -> Self
     where
         F: FnMut(&T) -> K,
@@ -148,27 +153,24 @@ impl<T> Parsed<T> {
 
     pub fn render_each<
         P: AsRef<Path>,
-        S: Into<String>,
-        E: Into<Box<dyn std::error::Error + Send + Sync>>,
+        S: Into<String> + Send,
+        E: Into<Box<dyn std::error::Error + Send + Sync>> + Send,
     >(
         self,
-        render_fn: impl Fn(&T) -> Result<S, E>,
-        build_path_fn: impl Fn(&T) -> P,
+        render_fn: impl Fn(&T) -> Result<S, E> + Send + Sync,
+        build_path_fn: impl Fn(&T) -> P + Send + Sync,
     ) -> Result<Self, Error> {
-        // Render templates
-        let rendered = self
-            .items
-            .iter()
-            .map(|item| Ok((item, render_fn(item)?)))
+        self.items
+            .par_iter()
+            .map(|item| {
+                let content = render_fn(&item)?;
+                Ok((item, content))
+            })
             .collect::<Result<Vec<_>, E>>()
-            .map_err(|e| Error::RenderFn(e.into()))?;
-
-        // Write to disk
-        rendered
-            .into_iter()
-            .map(|(item, content)| write(content.into(), build_path_fn(item)))
+            .map_err(|e| Error::RenderFn(e.into()))?
+            .into_par_iter()
+            .map(|(item, content)| write(content.into(), build_path_fn(&item)))
             .collect::<Result<Vec<_>, Error>>()?;
-
         Ok(self)
     }
 
