@@ -60,14 +60,7 @@ pub fn main() -> Result<()> {
 
     // Generate CSS
     let mut timer = Timer::new("Generating CSS");
-    let sass_options = grass::Options::default().load_path("styles/");
-    let css = grass::from_path("styles/main.scss", &sass_options)?;
-    let css_hash: String = blake3::hash(css.as_bytes())
-        .to_string()
-        .chars()
-        .take(16)
-        .collect();
-    fs::write("dist/main.css", css)?;
+    let css_hash = pichu::render_sass("styles/main.scss", "dist/main.css")?;
     timer.end();
 
     let mut timer = Timer::new("Generating HTML");

@@ -20,14 +20,20 @@ pub enum Error {
     GlobError(#[from] glob::GlobError),
     #[error("io error: {0}")]
     IO(#[from] std::io::Error),
+    #[cfg(feature = "markdown")]
     #[error("missing frontmatter in {0}")]
     MissingFrontmatter(PathBuf),
+    #[cfg(feature = "markdown")]
     #[error("failed to deserialize frontmatter: {0}")]
     DeserializeFrontmatter(#[from] serde_json::error::Error),
+    #[cfg(feature = "markdown")]
     #[error("no file stem for: {0}")]
     NoFileStem(PathBuf),
     #[error("render fn error: {0}")]
     RenderFn(#[from] Box<dyn std::error::Error + Send + Sync>),
+    #[cfg(feature = "sass")]
+    #[error("failed to compile sass: {0}")]
+    SassCompile(#[from] Box<grass::Error>),
 }
 
 pub fn glob(glob: impl AsRef<str>) -> Result<Glob, Error> {
@@ -190,4 +196,24 @@ impl<'a> MarkdownContext<'a> {
 
         Self { plugins, options }
     }
+}
+
+#[cfg(feature = "sass")]
+pub fn render_sass(
+    source: impl AsRef<Path>,
+    destination: impl AsRef<Path>,
+) -> Result<String, Error> {
+    let source = source.as_ref();
+    let options = match source.parent() {
+        Some(parent) => grass::Options::default().load_path(parent),
+        None => grass::Options::default(),
+    };
+    let css = grass::from_path(source, &options)?;
+    let hash: String = blake3::hash(css.as_bytes())
+        .to_string()
+        .chars()
+        .take(16)
+        .collect();
+    write(css, destination)?;
+    Ok(hash)
 }

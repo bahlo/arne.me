@@ -13,7 +13,13 @@ serde = { version = "1", features = ["derive"], optional = true }
 syntect = { version = "5.2", optional = true }
 comrak = { version = "0.39", optional = true }
 serde_json = { version = "1", optional = true }
+# sass
+grass = { version = "0.13", default-features = false, features = [
+    "random",
+], optional = true }
+blake3 = { version = "1.8", optional = true }
 
 [features]
-default = ["markdown"]
+default = ["markdown", "sass"]
 markdown = ["gray_matter", "serde", "syntect", "comrak", "serde_json"]
+sass = ["grass", "blake3"]

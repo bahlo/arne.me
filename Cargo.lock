@@ -1192,6 +1192,7 @@ dependencies = [
  "lasso",
  "once_cell",
  "phf",
+ "rand 0.8.5",
 ]
 
 [[package]]
@@ -2058,8 +2059,10 @@ dependencies = [
 name = "pichu"
 version = "0.1.0"
 dependencies = [
+ "blake3",
  "comrak",
  "glob",
+ "grass",
  "gray_matter",
  "serde",
  "serde_json",
@@ -2729,10 +2732,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "arneos",
- "blake3",
  "chrono",
  "clap",
- "grass",
  "maud",
  "pichu",
  "quick-xml 0.37.5",
