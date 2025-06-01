@@ -114,32 +114,6 @@ pub fn main() -> Result<()> {
             format!("dist/library/index.html"),
         );
 
-    // Generate home screens
-    fs::create_dir_all("dist/home-screens")?;
-    fs::write(
-        "dist/home-screens/index.html",
-        layout
-            .render(templates::home_screen::render_index(&content)?)?
-            .into_string(),
-    )?;
-    fs::create_dir_all("static/home-screens")?;
-    content
-        .home_screens
-        .par_iter()
-        .map(|home_screen| {
-            fs::create_dir_all(format!("dist/home-screens/{}", home_screen.slug))?;
-            let path = format!("dist/home-screens/{}/index.html", home_screen.slug);
-            fs::write(
-                &path,
-                layout
-                    .render(templates::home_screen::render(home_screen)?)?
-                    .into_string(),
-            )?;
-            fs::create_dir_all(format!("static/home-screens/{}", home_screen.slug))?;
-            Ok(())
-        })
-        .collect::<Result<()>>()?;
-
     // Generate pages
     content
         .pages

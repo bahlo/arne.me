@@ -41,14 +41,6 @@ pub struct Context {
 }
 
 impl Context {
-    pub fn new(head: Head, content: Markup) -> Self {
-        Self {
-            head,
-            content,
-            options: None,
-        }
-    }
-
     pub fn new_with_options(head: Head, content: Markup, options: Options) -> Self {
         Self {
             head,
