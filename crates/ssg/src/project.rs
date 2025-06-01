@@ -1,25 +1,34 @@
 use anyhow::Result;
 use maud::{html, Markup, PreEscaped};
+use pichu::Markdown;
+use serde::Deserialize;
 use url::Url;
 
-use crate::templates::layout::{self, Context, Head, OgType};
-use arneos::content::Project;
+use crate::templates::layout::{self, Context, Head, Layout, OgType};
 
-fn render_project(project: &Project) -> Markup {
+#[derive(Debug, Deserialize)]
+pub struct Project {
+    pub title: String,
+    pub url: Option<Url>,
+    pub from: u16,
+    pub to: Option<u16>,
+}
+
+fn render_project(project: &Markdown<Project>) -> Markup {
     html! {
-        details.project open[project.to.is_none()] {
+        details.project open[project.frontmatter.to.is_none()] {
             summary {
                 strong {
-                    @if let Some(url) = &project.url {
+                    @if let Some(url) = &project.frontmatter.url {
                         a href=(url) {
-                            (project.title)
+                            (project.frontmatter.title)
                         }
                     } @else {
-                        (project.title)
+                        (project.frontmatter.title)
                     }
                 }
-                " (" (project.from) (PreEscaped(" &ndash; "))
-                @if let Some(to) = &project.to {
+                " (" (project.frontmatter.from) (PreEscaped(" &ndash; "))
+                @if let Some(to) = &project.frontmatter.to {
                      (to)
                 } @else {
                     "Present"
@@ -28,14 +37,14 @@ fn render_project(project: &Project) -> Markup {
             }
 
             .project__description {
-                (PreEscaped(project.content_html.clone()))
+                (PreEscaped(project.html.clone()))
             }
         }
     }
 }
 
-pub fn render(project: &[Project]) -> Result<Context> {
-    Ok(Context::new_with_options(
+pub fn render_all(layout: &Layout, projects: &Vec<Markdown<Project>>) -> Result<Markup> {
+    layout.render(Context::new_with_options(
         Head {
             title: "Projects".to_string(),
             description: "Some projects I've worked on".to_string(),
@@ -48,12 +57,12 @@ pub fn render(project: &[Project]) -> Result<Context> {
                     h1 { "Projects" }
                 }
                 p { "Here are the projects I'm currently working on:" }
-                @for project in project.iter().filter(|project| project.to.is_none()) {
+                @for project in projects.iter().filter(|project| project.frontmatter.to.is_none()) {
                     (render_project(project))
                 }
 
                 h2 { "Inactive/Abandoned Projects" }
-                @for project in project.iter().filter(|project| project.to.is_some()) {
+                @for project in projects.iter().filter(|project| project.frontmatter.to.is_some()) {
                     (render_project(project))
                 }
             }

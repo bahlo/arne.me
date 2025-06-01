@@ -7,6 +7,7 @@ use timer::Timer;
 mod blog;
 mod library;
 mod page;
+mod project;
 mod rss;
 mod sitemap;
 mod templates;
@@ -124,15 +125,12 @@ pub fn main() -> Result<()> {
             },
         )?;
 
-    // Generate projects page
-    fs::create_dir_all("dist/projects")?;
-    fs::write(
-        "dist/projects/index.html",
-        layout
-            .render(templates::project::render(&content.projects)?)?
-            .into_string(),
-    )?;
-    fs::create_dir_all("static/projects")?;
+    let _projects = pichu::glob("content/projects/*.md")?
+        .parse_markdown::<project::Project>()?
+        .render_all(
+            |projects| project::render_all(&layout, projects),
+            "dist/projects/index.html",
+        );
 
     timer.end();
 
