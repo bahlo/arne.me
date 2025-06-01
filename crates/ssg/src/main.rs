@@ -5,6 +5,7 @@ use std::{cell::LazyCell, fs, path::Path, process::Command};
 use templates::layout::Layout;
 use timer::Timer;
 
+mod blog;
 mod rss;
 mod sitemap;
 mod templates;
@@ -83,31 +84,16 @@ pub fn main() -> Result<()> {
             .into_string(),
     )?;
 
-    // Generate blog
-    fs::create_dir_all("dist/blog")?;
-    fs::write(
-        "dist/blog/index.html",
-        layout
-            .render(templates::blog::render_page(&content)?)?
-            .into_string(),
-    )?;
-    fs::create_dir_all("static/blog")?;
-    content
-        .blog
-        .par_iter()
-        .map(|blogpost| {
-            fs::create_dir_all(format!("dist/blog/{}", blogpost.slug))?;
-            let path = format!("dist/blog/{}/index.html", blogpost.slug);
-            fs::write(
-                &path,
-                layout
-                    .render(templates::blog::render(blogpost)?)?
-                    .into_string(),
-            )?;
-            fs::create_dir_all(format!("static/blog/{}", blogpost.slug))?;
-            Ok(())
-        })
-        .collect::<Result<()>>()?;
+    let _blog = pichu::glob("content/blog/*.md")?
+        .parse_markdown::<blog::Blogpost>()?
+        .render_each(
+            |blog_post| blog::render_single(&layout, blog_post),
+            |blog_post| format!("dist/blog/{}/index.html", blog_post.basename),
+        )?
+        .render_all(
+            |blog_posts| blog::render_all(&layout, blog_posts),
+            "dist/blog/index.html",
+        )?;
 
     // Generate weekly
     fs::create_dir_all("dist/weekly")?;
