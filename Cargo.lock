@@ -2739,7 +2739,6 @@ dependencies = [
  "maud",
  "pichu",
  "quick-xml 0.37.5",
- "rayon",
  "rss",
  "serde",
  "serde_json",

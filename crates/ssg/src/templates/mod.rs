@@ -3,7 +3,6 @@ use maud::{html, Markup};
 
 pub mod index;
 pub mod layout;
-pub mod page;
 pub mod project;
 
 pub fn format_date(date: NaiveDate) -> Markup {

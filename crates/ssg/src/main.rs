@@ -1,12 +1,12 @@
 use anyhow::{bail, Result};
 use clap::Parser;
-use rayon::prelude::*;
 use std::{cell::LazyCell, fs, path::Path, process::Command};
 use templates::layout::Layout;
 use timer::Timer;
 
 mod blog;
 mod library;
+mod page;
 mod rss;
 mod sitemap;
 mod templates;
@@ -114,27 +114,15 @@ pub fn main() -> Result<()> {
             format!("dist/library/index.html"),
         );
 
-    // Generate pages
-    content
-        .pages
-        .par_iter()
-        .map(|page| {
-            let path = match page.slug.as_str() {
+    let _library = pichu::glob("content/*.md")?
+        .parse_markdown::<page::Page>()?
+        .render_each(
+            |page| page::render_each(&layout, page),
+            |page| match page.basename.as_str() {
                 "404" => "dist/404.html".to_string(),
-                _ => {
-                    fs::create_dir_all(format!("dist/{}", page.slug))?;
-                    format!("dist/{}/index.html", page.slug)
-                }
-            };
-
-            fs::write(
-                &path,
-                layout.render(templates::page::render(page)?)?.into_string(),
-            )?;
-            fs::create_dir_all(format!("static/{}", page.slug))?;
-            Ok(())
-        })
-        .collect::<Result<()>>()?;
+                _ => format!("dist/{}/index.html", page.basename),
+            },
+        )?;
 
     // Generate projects page
     fs::create_dir_all("dist/projects")?;
