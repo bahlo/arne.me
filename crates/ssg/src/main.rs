@@ -6,6 +6,7 @@ use templates::layout::Layout;
 use timer::Timer;
 
 mod blog;
+mod library;
 mod rss;
 mod sitemap;
 mod templates;
@@ -102,31 +103,16 @@ pub fn main() -> Result<()> {
             "dist/weekly/index.html",
         )?;
 
-    // Generate book reviews
-    fs::create_dir_all("dist/library")?;
-    fs::write(
-        "dist/library/index.html",
-        layout
-            .render(templates::library::render_index(&content)?)?
-            .into_string(),
-    )?;
-    fs::create_dir_all("static/library")?;
-    content
-        .library
-        .par_iter()
-        .map(|book| {
-            fs::create_dir_all(format!("dist/library/{}", book.slug))?;
-            let path = format!("dist/library/{}/index.html", book.slug);
-            fs::write(
-                &path,
-                layout
-                    .render(templates::library::render(book)?)?
-                    .into_string(),
-            )?;
-            fs::create_dir_all(format!("static/library/{}", book.slug))?;
-            Ok(())
-        })
-        .collect::<Result<()>>()?;
+    let _library = pichu::glob("content/library/*.md")?
+        .parse_markdown::<library::Book>()?
+        .render_each(
+            |book| library::render_single(&layout, book),
+            |book| format!("dist/library/{}/index.html", book.basename),
+        )?
+        .render_all(
+            |books| library::render_all(&layout, books),
+            format!("dist/library/index.html"),
+        );
 
     // Generate home screens
     fs::create_dir_all("dist/home-screens")?;

@@ -4,7 +4,6 @@ use maud::{html, Markup};
 pub mod home_screen;
 pub mod index;
 pub mod layout;
-pub mod library;
 pub mod page;
 pub mod project;
 
