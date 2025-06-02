@@ -54,9 +54,9 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: cargo-ssg-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
-          restore-keys: cargo-ssg-
-      - run: cargo run -p ssg -- --generate-missing-og-images
+          key: cargo-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('crates/**') }}
+          restore-keys: cargo-
+      - run: cargo run -- build --generate-missing-og-images
         env:
           FONT_ZIP_URL: "${{ secrets.FONT_ZIP_URL }}"
       - uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
