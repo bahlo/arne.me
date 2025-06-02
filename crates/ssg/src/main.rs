@@ -1,17 +1,17 @@
 use anyhow::{bail, Result};
 use clap::Parser;
+use layout::Layout;
 use std::{cell::LazyCell, fs, path::Path, process::Command};
-use templates::layout::Layout;
 use timer::Timer;
 
 mod blog;
 mod index;
+mod layout;
 mod library;
 mod page;
 mod project;
 mod rss;
 mod sitemap;
-mod templates;
 mod timer;
 mod weekly;
 

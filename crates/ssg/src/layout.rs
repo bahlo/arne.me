@@ -1,11 +1,24 @@
 use anyhow::{anyhow, Result};
-use chrono::Utc;
+use chrono::{Datelike, NaiveDate, Utc};
 use maud::{html, Markup, PreEscaped, DOCTYPE};
 use std::{fmt::Display, fs, path::Path};
 use url::Url;
 
 use crate::{GIT_SHA, GIT_SHA_SHORT};
 use arneos::{content::smart_quotes, og};
+
+pub fn format_date(date: NaiveDate) -> Markup {
+    html! {
+        (date.format("%B %e").to_string())
+        @match date.day() {
+            1 | 21 | 31 => sup { "st" },
+            2 | 22 => sup { "nd" },
+            3 | 23 => sup { "rd" },
+            _ => sup { "th" },
+        }
+        (date.format(", %Y").to_string())
+    }
+}
 
 #[derive(Debug)]
 pub struct Head {
@@ -146,7 +159,7 @@ impl Layout {
                     a.skip-link href="#main" { "Skip to content" }
                     .sitewrapper {
                         header {
-                            (PreEscaped(include_str!("../../../../static/arne.svg")))
+                            (PreEscaped(include_str!("../../../static/arne.svg")))
                             br;
                             nav {
                                 a.active[options.navigation_item == NavigationItem::Home] href="/" { "Home" }

@@ -4,7 +4,7 @@ use pichu::Markdown;
 use serde::Deserialize;
 use url::Url;
 
-use crate::templates::layout::{self, Context, Head, Layout, OgType};
+use crate::layout::{self, Context, Head, Layout, OgType};
 
 #[derive(Debug, Deserialize)]
 pub struct Project {

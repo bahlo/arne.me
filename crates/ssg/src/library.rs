@@ -5,10 +5,7 @@ use pichu::Markdown;
 use serde::Deserialize;
 use url::Url;
 
-use crate::templates::{
-    format_date,
-    layout::{self, Context, Head, Layout, OgType},
-};
+use crate::layout::{self, format_date, Context, Head, Layout, OgType};
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Deserialize)]
 pub struct Book {

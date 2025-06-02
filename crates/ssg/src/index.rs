@@ -5,8 +5,8 @@ use url::Url;
 
 use crate::{
     blog::Blogpost,
+    layout::{self, Context, Head, Layout, OgType},
     library::Book,
-    templates::layout::{self, Context, Head, Layout, OgType},
     weekly::Issue,
 };
 
