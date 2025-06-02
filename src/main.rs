@@ -4,20 +4,17 @@ use layout::Layout;
 use std::{cell::LazyCell, fs, path::Path, process::Command};
 use timer::Timer;
 
+use crate::content::*;
+
 mod automate;
-mod blog;
+mod content;
 mod fonts;
-mod index;
 mod layout;
-mod library;
 mod og;
-mod page;
-mod project;
 mod rss;
 mod sitemap;
 mod timer;
 mod watch;
-mod weekly;
 
 pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
     let output = Command::new("git")

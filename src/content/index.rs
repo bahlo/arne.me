@@ -4,10 +4,8 @@ use pichu::Markdown;
 use url::Url;
 
 use crate::{
-    blog::Blogpost,
+    content::{blog::Blogpost, library::Book, weekly::Issue},
     layout::{self, Context, Head, Layout, OgType},
-    library::Book,
-    weekly::Issue,
 };
 
 pub fn render(
