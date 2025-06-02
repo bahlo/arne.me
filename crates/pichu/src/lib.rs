@@ -183,6 +183,10 @@ impl<T: Send + Sync> Parsed<T> {
         write(content.into(), dest_path)?;
         Ok(self)
     }
+
+    pub fn into_vec(self) -> Vec<T> {
+        self.items
+    }
 }
 
 #[cfg(feature = "markdown")]

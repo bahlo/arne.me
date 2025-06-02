@@ -3,28 +3,36 @@ use chrono::Utc;
 use pichu::Markdown;
 use rss::{ChannelBuilder, Item, ItemBuilder};
 
-use crate::weekly::{self, Issue};
-use arneos::content::Content;
+use crate::{
+    blog::Blogpost,
+    library::Book,
+    weekly::{self, Issue},
+};
 
 const RFC_822: &str = "%a, %d %b %Y %T %z";
 const RFC_822_DATE: &str = "%a, %d %b %Y 00:00:00 +0000";
 
-pub fn render_blog(content: &Content) -> String {
-    let items: Vec<Item> = content
-        .blog
+pub fn render_blog(blogposts: &Vec<Markdown<Blogpost>>) -> String {
+    let items: Vec<Item> = blogposts
         .iter()
         .map(|blogpost| {
             ItemBuilder::default()
-                .title(blogpost.title.clone())
-                .link(format!("https://arne.me/blog/{}", blogpost.slug))
-                .description(blogpost.description.clone())
+                .title(blogpost.frontmatter.title.clone())
+                .link(format!("https://arne.me/blog/{}", blogpost.basename))
+                .description(blogpost.frontmatter.description.clone())
                 .author("Arne Bahlo".to_string())
                 .guid(rss::Guid {
-                    value: format!("https://arne.me/blog/{}", blogpost.slug),
+                    value: format!("https://arne.me/blog/{}", blogpost.basename),
                     permalink: true,
                 })
-                .pub_date(blogpost.published.format(RFC_822_DATE).to_string())
-                .content(blogpost.content_html.clone())
+                .pub_date(
+                    blogpost
+                        .frontmatter
+                        .published
+                        .format(RFC_822_DATE)
+                        .to_string(),
+                )
+                .content(blogpost.html.clone())
                 .build()
         })
         .collect();
@@ -76,22 +84,27 @@ pub fn render_weekly(issues: &Vec<Markdown<Issue>>) -> Result<String> {
         .to_string())
 }
 
-pub fn render_library(content: &Content) -> String {
-    let items: Vec<Item> = content
-        .library
+pub fn render_library(books: &Vec<Markdown<Book>>) -> String {
+    let items: Vec<Item> = books
         .iter()
         .map(|book| {
             ItemBuilder::default()
-                .title(format!("{} by {}", book.title, book.author))
-                .link(format!("https://arne.me/library/{}", book.slug))
-                .description(format!("I read {} by {}", book.title, book.author))
+                .title(format!(
+                    "{} by {}",
+                    book.frontmatter.title, book.frontmatter.author
+                ))
+                .link(format!("https://arne.me/library/{}", book.basename))
+                .description(format!(
+                    "I read {} by {}",
+                    book.frontmatter.title, book.frontmatter.author
+                ))
                 .author("Arne Bahlo".to_string())
                 .guid(rss::Guid {
-                    value: format!("https://arne.me/library/{}", book.slug),
+                    value: format!("https://arne.me/library/{}", book.basename),
                     permalink: true,
                 })
-                .pub_date(book.read.format(RFC_822_DATE).to_string())
-                .content(book.content_html.clone())
+                .pub_date(book.frontmatter.read.format(RFC_822_DATE).to_string())
+                .content(book.html.clone())
                 .build()
         })
         .collect();

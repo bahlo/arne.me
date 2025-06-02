@@ -17,6 +17,7 @@ pub struct Blogpost {
     pub title: String,
     pub description: String,
     pub location: String,
+    pub updated: Option<NaiveDate>,
     pub published: NaiveDate,
     #[serde(default)]
     pub hidden: bool,
