@@ -3,9 +3,7 @@ use chrono::Utc;
 use clap::Parser;
 use std::{env, fs, path::Path, process::Command};
 
-mod automate;
 mod watch;
-mod webmentions;
 
 use arneos::content::Content;
 use automate::{automate_before_sha, automate_path};

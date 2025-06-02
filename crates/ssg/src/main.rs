@@ -4,7 +4,9 @@ use layout::Layout;
 use std::{cell::LazyCell, fs, path::Path, process::Command};
 use timer::Timer;
 
+mod automate;
 mod blog;
+mod fonts;
 mod index;
 mod layout;
 mod library;
@@ -13,6 +15,7 @@ mod project;
 mod rss;
 mod sitemap;
 mod timer;
+mod webmentions;
 mod weekly;
 
 pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
@@ -25,22 +28,53 @@ pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
 pub const GIT_SHA_SHORT: LazyCell<String> = LazyCell::new(|| GIT_SHA.chars().take(7).collect());
 
 #[derive(Debug, Parser)]
-struct Ssg {
-    #[clap(long)]
-    websocket_port: Option<u16>,
-    #[clap(long, default_value = "false")]
-    generate_missing_og_images: bool,
+struct Cli {
+    #[command(subcommand)]
+    command: Commands,
 }
 
-pub fn main() -> Result<()> {
-    let ssg = Ssg::parse();
+#[derive(Debug, Parser)]
+enum Commands {
+    #[clap(name = "build")]
+    Build {
+        #[clap(long)]
+        websocket_port: Option<u16>,
+        #[clap(long, default_value = "false")]
+        generate_missing_og_images: bool,
+    },
+    #[clap(name = "send-webmentions")]
+    SendWebmentions {
+        path: String,
+        #[clap(long, short, default_value = "false")]
+        dry_run: bool,
+    },
+    #[clap(name = "automate")]
+    Automate {
+        #[clap(long, short, group = "subject")]
+        before_sha: String,
+    },
+}
 
+fn main() -> Result<()> {
+    let cli = Cli::parse();
+
+    match cli.command {
+        Commands::Build {
+            websocket_port,
+            generate_missing_og_images,
+        } => build(websocket_port, generate_missing_og_images),
+        Commands::SendWebmentions { path, dry_run } => webmentions::send_webmentions(path, dry_run),
+        Commands::Automate { before_sha } => automate::automate_before_sha(before_sha),
+    }
+}
+
+fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Result<()> {
     // Download fonts if we have to
     // TODO: Instead of checking if a specific font exists, check that _any_
     //       dir exists.
     if !Path::new("static/fonts/rebond-grotesque").exists() {
         let mut timer = Timer::new("Downloading fonts");
-        arneos::fonts::download_fonts()?;
+        fonts::download_fonts()?;
         timer.end();
     }
 
@@ -63,7 +97,7 @@ pub fn main() -> Result<()> {
     let mut timer = Timer::new("Generating HTML");
 
     // Create layout
-    let layout = Layout::new(css_hash, ssg.websocket_port, ssg.generate_missing_og_images);
+    let layout = Layout::new(css_hash, websocket_port, generate_missing_og_images);
 
     let blog = pichu::glob("content/blog/*.md")?
         .parse_markdown::<blog::Blogpost>()?

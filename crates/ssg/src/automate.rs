@@ -12,6 +12,7 @@ use std::{
 };
 use url::Url;
 
+use crate::fonts;
 use arneos::{
     content::{Content, WeeklyIssue},
     og,
@@ -63,7 +64,7 @@ pub fn automate_before_sha(before_sha: String) -> Result<()> {
     //       dir exists.
     if !Path::new("static/fonts/rebond-grotesque").exists() {
         println!("Downloading fonts...");
-        arneos::fonts::download_fonts()?;
+        fonts::download_fonts()?;
     }
 
     let repo = Repository::open(".")?;

@@ -2736,13 +2736,19 @@ dependencies = [
  "arneos",
  "chrono",
  "clap",
+ "git2",
  "maud",
  "pichu",
  "quick-xml 0.37.5",
+ "regex",
  "rss",
+ "scraper",
  "serde",
  "serde_json",
+ "tempdir",
+ "ureq",
  "url",
+ "zip",
 ]
 
 [[package]]
