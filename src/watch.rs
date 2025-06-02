@@ -17,8 +17,6 @@ pub fn watch() -> Result<()> {
     // Run once at the start
     Command::new("cargo")
         .arg("run")
-        .arg("-p")
-        .arg("ssg")
         .arg("--")
         .arg("build")
         .args(&["--websocket-port", &websocket_port.to_string()])
@@ -39,9 +37,8 @@ pub fn watch() -> Result<()> {
                 Ok(_events) => {
                     let mut child = match Command::new("cargo")
                         .arg("run")
-                        .arg("-p")
-                        .arg("ssg")
                         .arg("--")
+                        .arg("build")
                         .args(&["--websocket-port", &websocket_port.to_string()])
                         .stdout(Stdio::inherit())
                         .stderr(Stdio::inherit())
@@ -117,7 +114,7 @@ pub fn watch() -> Result<()> {
         .watch(Path::new("./content"), RecursiveMode::Recursive)?;
     debouncer
         .watcher()
-        .watch(Path::new("./crates/ssg/src"), RecursiveMode::Recursive)?;
+        .watch(Path::new("./src"), RecursiveMode::Recursive)?;
     debouncer
         .watcher()
         .watch(Path::new("./static"), RecursiveMode::Recursive)?;

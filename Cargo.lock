@@ -126,6 +126,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "arne-me"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "clap",
+ "crowbook-text-processing",
+ "file-serve",
+ "git2",
+ "html-escape",
+ "maud",
+ "notify-debouncer-mini",
+ "pichu",
+ "quick-xml 0.37.5",
+ "regex",
+ "resvg",
+ "rss",
+ "scraper",
+ "serde",
+ "serde_json",
+ "tempdir",
+ "tiny-skia",
+ "tungstenite",
+ "ureq",
+ "url",
+ "usvg",
+ "zip",
+]
+
+[[package]]
 name = "arraydeque"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1849,6 +1879,8 @@ dependencies = [
 [[package]]
 name = "pichu"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df6e96e138aec62a0fc8ecbe55f93b019e190eef4e7d7e2b0b1b66562c8af9d5"
 dependencies = [
  "blake3",
  "comrak",
@@ -2465,36 +2497,6 @@ name = "smallvec"
 version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3c5e1a9a646d36c3599cd173a41282daf47c44583ad367b8e6837255952e5c67"
-
-[[package]]
-name = "ssg"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "chrono",
- "clap",
- "crowbook-text-processing",
- "file-serve",
- "git2",
- "html-escape",
- "maud",
- "notify-debouncer-mini",
- "pichu",
- "quick-xml 0.37.5",
- "regex",
- "resvg",
- "rss",
- "scraper",
- "serde",
- "serde_json",
- "tempdir",
- "tiny-skia",
- "tungstenite",
- "ureq",
- "url",
- "usvg",
- "zip",
-]
 
 [[package]]
 name = "stable_deref_trait"

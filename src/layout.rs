@@ -163,7 +163,7 @@ impl Layout {
                     a.skip-link href="#main" { "Skip to content" }
                     .sitewrapper {
                         header {
-                            (PreEscaped(include_str!("../../../static/arne.svg")))
+                            (PreEscaped(include_str!("../static/arne.svg")))
                             br;
                             nav {
                                 a.active[options.navigation_item == NavigationItem::Home] href="/" { "Home" }

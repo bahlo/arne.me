@@ -1,7 +1,35 @@
-[workspace]
-members = ["crates/ssg", "crates/pichu"]
-resolver = "2"
-default-members = ["crates/ssg"]
+[package]
+name = "arne-me"
+version = "0.1.0"
+edition = "2021"
+publish = false
 
-[profile.dev.build-override]
-opt-level = 3
+[dependencies]
+anyhow = "1"
+pichu = "0.1"
+chrono = { version = "0.4", default-features = false, features = [
+    "std",
+    "clock",
+    "serde",
+] }
+clap = { version = "4", features = ["derive"] }
+maud = { version = "0.27" }
+quick-xml = { version = "0.37", features = ["serialize"] }
+rss = "2"
+serde = { version = "1", features = ["derive"] }
+url = { version = "2.5", features = ["serde"] }
+serde_json = "1"
+zip = "4.0"
+tempdir = "0.3"
+ureq = { version = "3.0", features = ["json"] }
+regex = "1"
+scraper = { version = "0.23", default-features = false, features = ["errors"] }
+git2 = { version = "0.20", default-features = false }
+tiny-skia = "0.11"
+usvg = "0.45"
+crowbook-text-processing = "1"
+html-escape = "0.2"
+resvg = "0.45"
+notify-debouncer-mini = "0.6"
+tungstenite = "0.26"
+file-serve = "0.3"
