@@ -5,6 +5,7 @@ use templates::layout::Layout;
 use timer::Timer;
 
 mod blog;
+mod index;
 mod library;
 mod page;
 mod project;
@@ -71,15 +72,6 @@ pub fn main() -> Result<()> {
     // Create layout
     let layout = Layout::new(css_hash, ssg.websocket_port, ssg.generate_missing_og_images);
 
-    // Generate index
-    fs::create_dir_all("dist")?;
-    fs::write(
-        "dist/index.html",
-        layout
-            .render(templates::index::render(&content)?)?
-            .into_string(),
-    )?;
-
     let blog = pichu::glob("content/blog/*.md")?
         .parse_markdown::<blog::Blogpost>()?
         .sort_by_key_reverse(|post| post.frontmatter.published)
@@ -136,6 +128,11 @@ pub fn main() -> Result<()> {
             "dist/projects/index.html",
         )?
         .into_vec();
+
+    pichu::write(
+        index::render(&layout, &blog, &weekly, &library)?,
+        "dist/index.html",
+    )?;
 
     timer.end();
 

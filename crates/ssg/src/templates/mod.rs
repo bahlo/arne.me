@@ -1,7 +1,6 @@
 use chrono::{Datelike, NaiveDate};
 use maud::{html, Markup};
 
-pub mod index;
 pub mod layout;
 
 pub fn format_date(date: NaiveDate) -> Markup {

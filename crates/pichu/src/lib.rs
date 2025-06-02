@@ -42,13 +42,13 @@ pub fn glob(glob: impl AsRef<str>) -> Result<Glob, Error> {
     Ok(Glob { paths })
 }
 
-pub fn write(contents: impl AsRef<str>, to: impl AsRef<Path>) -> Result<(), Error> {
+pub fn write(contents: impl Into<String>, to: impl AsRef<Path>) -> Result<(), Error> {
     // Create directory tree
     if let Some(parent) = to.as_ref().parent() {
         fs::create_dir_all(parent)?;
     }
 
-    fs::write(to.as_ref(), contents.as_ref())?;
+    fs::write(to.as_ref(), contents.into())?;
     Ok(())
 }
 

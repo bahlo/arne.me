@@ -1,18 +1,25 @@
 use anyhow::{anyhow, Result};
-use maud::html;
+use maud::{html, Markup};
+use pichu::Markdown;
 use url::Url;
 
-use crate::templates::layout::{self, Context, Head, OgType};
-use arneos::content::Content;
+use crate::{
+    blog::Blogpost,
+    library::Book,
+    templates::layout::{self, Context, Head, Layout, OgType},
+    weekly::Issue,
+};
 
-pub fn render(content: &Content) -> Result<Context> {
-    let last_blogpost = content.blog.first().ok_or(anyhow!("No blogposts found"))?;
-    let last_weekly = content
-        .weekly
-        .first()
-        .ok_or(anyhow!("No weekly issues found"))?;
-    let last_book = content.library.first().ok_or(anyhow!("No books found"))?;
-    Ok(Context::new_with_options(
+pub fn render(
+    layout: &Layout,
+    blog: &Vec<Markdown<Blogpost>>,
+    weekly: &Vec<Markdown<Issue>>,
+    books: &Vec<Markdown<Book>>,
+) -> Result<Markup> {
+    let last_blogpost = blog.first().ok_or(anyhow!("No blogposts found"))?;
+    let last_weekly = weekly.first().ok_or(anyhow!("No weekly issues found"))?;
+    let last_book = books.first().ok_or(anyhow!("No books found"))?;
+    layout.render(Context::new_with_options(
         Head {
             title: "Arne Bahlo".into(),
             description: "This is my personal website.".into(),
@@ -40,14 +47,14 @@ pub fn render(content: &Content) -> Result<Context> {
             }
             p {
               "The last blog post is titled "
-              a href=(format!("/blog/{}", last_blogpost.slug)) { (last_blogpost.title) }
+              a href=(format!("/blog/{}", last_blogpost.basename)) { (last_blogpost.frontmatter.title) }
               ", the last newsletter issue is "
-              a href=(format!("/weekly/{}", last_weekly.num)) { (last_weekly.title) }
+              a href=(format!("/weekly/{}", last_weekly.basename)) { (last_weekly.frontmatter.title) }
               " and the last book I've read is "
-              a href=(format!("/library/{}", last_book.slug)) {
-                  (last_book.title)
+              a href=(format!("/library/{}", last_book.basename)) {
+                  (last_book.frontmatter.title)
                   " by "
-                  (last_book.author)
+                  (last_book.frontmatter.author)
               }
               "."
             }
