@@ -16,6 +16,7 @@ mod project;
 mod rss;
 mod sitemap;
 mod timer;
+mod watch;
 mod weekly;
 
 pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
@@ -42,6 +43,8 @@ enum Commands {
         #[clap(long, default_value = "false")]
         generate_missing_og_images: bool,
     },
+    #[clap(name = "watch")]
+    Watch,
     #[clap(name = "automate")]
     Automate {
         #[clap(long, short, group = "subject")]
@@ -57,6 +60,7 @@ fn main() -> Result<()> {
             websocket_port,
             generate_missing_og_images,
         } => build(websocket_port, generate_missing_og_images),
+        Commands::Watch => watch::watch(),
         Commands::Automate { before_sha } => automate::automate_before_sha(before_sha),
     }
 }

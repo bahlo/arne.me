@@ -1,7 +1,7 @@
 [workspace]
-members = ["crates/cli", "crates/ssg", "crates/pichu"]
+members = ["crates/ssg", "crates/pichu"]
 resolver = "2"
-default-members = ["crates/cli"]
+default-members = ["crates/ssg"]
 
 [profile.dev.build-override]
 opt-level = 3
