@@ -20,6 +20,7 @@ pub fn watch() -> Result<()> {
         .arg("-p")
         .arg("ssg")
         .arg("--")
+        .arg("build")
         .args(&["--websocket-port", &websocket_port.to_string()])
         .stdout(Stdio::inherit())
         .stderr(Stdio::inherit())

@@ -6,7 +6,6 @@ publish = false
 
 [dependencies]
 anyhow = "1"
-arneos = { path = "../arneos" }
 chrono = { version = "0.4", default-features = false, features = [
     "std",
     "clock",
@@ -19,9 +18,7 @@ notify-debouncer-mini = "0.6"
 quick-xml = { version = "0.37", features = ["serialize"] }
 regex = "1"
 resvg = "0.45"
-scraper = { version = "0.23", default-features = false, features = [
-    "errors",
-] }
+scraper = { version = "0.23", default-features = false, features = ["errors"] }
 serde = { version = "1", features = ["derive"] }
 tiny-skia = "0.11"
 tungstenite = "0.26"

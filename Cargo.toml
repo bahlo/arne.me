@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/arneos", "crates/cli", "crates/ssg", "crates/pichu"]
+members = ["crates/cli", "crates/ssg", "crates/pichu"]
 resolver = "2"
 default-members = ["crates/cli"]
 

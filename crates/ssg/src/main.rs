@@ -10,12 +10,12 @@ mod fonts;
 mod index;
 mod layout;
 mod library;
+mod og;
 mod page;
 mod project;
 mod rss;
 mod sitemap;
 mod timer;
-mod webmentions;
 mod weekly;
 
 pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
@@ -42,12 +42,6 @@ enum Commands {
         #[clap(long, default_value = "false")]
         generate_missing_og_images: bool,
     },
-    #[clap(name = "send-webmentions")]
-    SendWebmentions {
-        path: String,
-        #[clap(long, short, default_value = "false")]
-        dry_run: bool,
-    },
     #[clap(name = "automate")]
     Automate {
         #[clap(long, short, group = "subject")]
@@ -63,7 +57,6 @@ fn main() -> Result<()> {
             websocket_port,
             generate_missing_og_images,
         } => build(websocket_port, generate_missing_og_images),
-        Commands::SendWebmentions { path, dry_run } => webmentions::send_webmentions(path, dry_run),
         Commands::Automate { before_sha } => automate::automate_before_sha(before_sha),
     }
 }

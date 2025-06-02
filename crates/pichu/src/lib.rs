@@ -109,6 +109,7 @@ impl Glob {
                 Ok(Markdown {
                     frontmatter,
                     basename,
+                    markdown: markdown.content,
                     html,
                 })
             })
@@ -123,6 +124,7 @@ impl Glob {
 pub struct Markdown<T> {
     pub frontmatter: T,
     pub basename: String,
+    pub markdown: String,
     pub html: String,
 }
 
@@ -186,6 +188,10 @@ impl<T: Send + Sync> Parsed<T> {
 
     pub fn into_vec(self) -> Vec<T> {
         self.items
+    }
+
+    pub fn first(&self) -> Option<&T> {
+        self.items.first()
     }
 }
 

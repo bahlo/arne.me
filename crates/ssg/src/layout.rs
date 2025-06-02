@@ -1,11 +1,15 @@
 use anyhow::{anyhow, Result};
 use chrono::{Datelike, NaiveDate, Utc};
+use crowbook_text_processing::clean;
 use maud::{html, Markup, PreEscaped, DOCTYPE};
 use std::{fmt::Display, fs, path::Path};
 use url::Url;
 
-use crate::{GIT_SHA, GIT_SHA_SHORT};
-use arneos::{content::smart_quotes, og};
+use crate::{og, GIT_SHA, GIT_SHA_SHORT};
+
+pub fn smart_quotes(text: impl Into<String>) -> String {
+    clean::quotes(text.into()).to_string()
+}
 
 pub fn format_date(date: NaiveDate) -> Markup {
     html! {
