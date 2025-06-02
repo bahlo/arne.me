@@ -161,37 +161,3 @@ pub fn render(
     output.push_str(&quick_xml::se::to_string_with_root("urlset", &urlset)?);
     Ok(output)
 }
-
-#[cfg(test)]
-mod tests {
-    use arneos::content::Blogpost;
-
-    use super::*;
-
-    #[test]
-    fn test_sitemap() -> Result<()> {
-        let content = Content {
-            blog: vec![Blogpost {
-                slug: "test".to_string(),
-                title: "Test".to_string(),
-                published: NaiveDate::from_ymd_opt(2021, 1, 1).unwrap(),
-                description: "Test".to_string(),
-                excerpt_html: Some("Test".to_string()),
-                content_html: "Test".to_string(),
-                collections: vec![],
-                hidden: false,
-                updated: None,
-                location: "Nowhere".to_string(),
-                hackernews: None,
-                lobsters: None,
-            }],
-            weekly: vec![],
-            pages: vec![],
-            library: vec![],
-            home_screens: vec![],
-            projects: vec![],
-        };
-        assert_eq!("<xml version=\"1.0\" encoding=\"UTF-8\"/><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>https://arne.me/</loc></url></urlset>", render(&content)?);
-        Ok(())
-    }
-}

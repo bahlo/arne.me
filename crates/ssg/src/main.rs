@@ -15,8 +15,6 @@ mod templates;
 mod timer;
 mod weekly;
 
-use arneos::content::Content;
-
 pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
     let output = Command::new("git")
         .args(&["rev-parse", "HEAD"])
@@ -45,11 +43,6 @@ pub fn main() -> Result<()> {
         arneos::fonts::download_fonts()?;
         timer.end();
     }
-
-    // Parse content
-    let mut timer = Timer::new("Parsing content");
-    let content = Content::parse(fs::read_dir("content")?)?;
-    timer.end();
 
     // Recreate dir
     let mut timer = Timer::new("Recreating dist/");
