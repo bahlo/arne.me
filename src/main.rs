@@ -1,4 +1,4 @@
-use anyhow::{bail, Result};
+use anyhow::Result;
 use clap::Parser;
 use layout::Layout;
 use std::{cell::LazyCell, fs, path::Path, process::Command};
@@ -80,7 +80,7 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
 
     // Copy static files
     let mut timer = Timer::new("Copying static files");
-    copy_dir("static", "dist/")?;
+    pichu::copy_dir("static", "dist/")?;
     timer.end();
 
     // Generate CSS
@@ -171,38 +171,6 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
         "dist/sitemap.xml",
     )?;
     timer.end();
-
-    Ok(())
-}
-
-fn copy_dir<F, T>(from: F, to: T) -> Result<()>
-where
-    F: AsRef<Path> + Send + Sync,
-    T: AsRef<Path> + Send,
-{
-    // TODO: Turn this into functional code
-    let mut dir = fs::read_dir(&from)?;
-    while let Some(item) = dir.next().transpose()? {
-        let file_name = item.file_name();
-
-        let file_name_str = file_name.to_string_lossy();
-        if file_name_str.starts_with('.') && file_name_str != ".well-known" {
-            continue;
-        }
-
-        let new_path = to.as_ref().join(file_name);
-        if new_path.exists() {
-            bail!("File or directory already exists: {:?}", new_path)
-        }
-
-        if item.path().is_dir() {
-            fs::create_dir(&new_path)?;
-            copy_dir(item.path(), &new_path)?;
-        } else {
-            let path = item.path();
-            fs::copy(path, new_path)?;
-        }
-    }
 
     Ok(())
 }

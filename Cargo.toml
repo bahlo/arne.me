@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 anyhow = "1"
-pichu = "0.1"
+pichu = "0.2"
 chrono = { version = "0.4", default-features = false, features = [
     "std",
     "clock",
