@@ -1878,9 +1878,9 @@ dependencies = [
 
 [[package]]
 name = "pichu"
-version = "0.2.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "84ef4ac2af4428b95f78da47cb57a4080f79b3ee02b83a40fff64ca6dbefea78"
+checksum = "571b631dd9c70b5e1421e5cab15f2d73b82a6d3672b9213d8b2343a8b89d4226"
 dependencies = [
  "blake3",
  "comrak",

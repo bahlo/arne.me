@@ -1,6 +1,7 @@
 use anyhow::Result;
 use clap::Parser;
 use layout::Layout;
+use maud::Markup;
 use std::{cell::LazyCell, fs, path::Path, process::Command};
 use timer::Timer;
 
@@ -96,12 +97,18 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
     let blog = pichu::glob("content/blog/*.md")?
         .parse_markdown::<blog::Blogpost>()?
         .sort_by_key_reverse(|post| post.frontmatter.published)
-        .render_each(
-            |post| blog::render_single(&layout, post),
+        .try_render_each(
+            |post| -> Result<Markup> {
+                let html = blog::render_single(&layout, post)?;
+                Ok(html)
+            },
             |post| format!("dist/blog/{}/index.html", post.basename),
         )?
-        .render_all(
-            |blog_posts| blog::render_all(&layout, blog_posts),
+        .try_render_all(
+            |blog_posts| -> Result<Markup> {
+                let html = blog::render_all(&layout, blog_posts)?;
+                Ok(html)
+            },
             "dist/blog/index.html",
         )?
         .into_vec();
@@ -109,32 +116,47 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
     let weekly = pichu::glob("content/weekly/*.md")?
         .parse_markdown::<weekly::Issue>()?
         .sort_by_key_reverse(|issue| issue.frontmatter.date)
-        .render_each(
-            |issue| weekly::render_single(&layout, issue),
+        .try_render_each(
+            |issue| -> Result<Markup> {
+                let html = weekly::render_single(&layout, issue)?;
+                Ok(html)
+            },
             |issue| format!("dist/weekly/{}/index.html", issue.basename),
         )?
-        .render_all(
-            |issues| weekly::render_all(&layout, issues),
+        .try_render_all(
+            |issues| -> Result<Markup> {
+                let html = weekly::render_all(&layout, issues)?;
+                Ok(html)
+            },
             "dist/weekly/index.html",
         )?
         .into_vec();
 
     let library = pichu::glob("content/library/*.md")?
         .parse_markdown::<library::Book>()?
-        .render_each(
-            |book| library::render_single(&layout, book),
+        .try_render_each(
+            |book| -> Result<Markup> {
+                let html = library::render_single(&layout, book)?;
+                Ok(html)
+            },
             |book| format!("dist/library/{}/index.html", book.basename),
         )?
-        .render_all(
-            |books| library::render_all(&layout, books),
+        .try_render_all(
+            |books| -> Result<Markup> {
+                let html = library::render_all(&layout, books)?;
+                Ok(html)
+            },
             format!("dist/library/index.html"),
         )?
         .into_vec();
 
     let pages = pichu::glob("content/*.md")?
         .parse_markdown::<page::Page>()?
-        .render_each(
-            |page| page::render_each(&layout, page),
+        .try_render_each(
+            |page| -> Result<Markup> {
+                let html = page::render_each(&layout, page)?;
+                Ok(html)
+            },
             |page| match page.basename.as_str() {
                 "404" => "dist/404.html".to_string(),
                 _ => format!("dist/{}/index.html", page.basename),
@@ -144,31 +166,34 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
 
     let _projects = pichu::glob("content/projects/*.md")?
         .parse_markdown::<project::Project>()?
-        .render_all(
-            |projects| project::render_all(&layout, projects),
+        .try_render_all(
+            |projects| -> Result<Markup> {
+                let html = project::render_all(&layout, projects)?;
+                Ok(html)
+            },
             "dist/projects/index.html",
         )?
         .into_vec();
 
     pichu::write(
-        index::render(&layout, &blog, &weekly, &library)?,
         "dist/index.html",
+        index::render(&layout, &blog, &weekly, &library)?.into_string(),
     )?;
 
     timer.end();
 
     // Generate RSS feeds
     let mut timer = Timer::new("Generating RSS feeds");
-    pichu::write(rss::render_blog(&blog), "dist/blog/feed.xml")?;
-    pichu::write(rss::render_weekly(&weekly)?, "dist/weekly/feed.xml")?;
-    pichu::write(rss::render_library(&library), "dist/library/feed.xml")?;
+    pichu::write("dist/blog/feed.xml", rss::render_blog(&blog))?;
+    pichu::write("dist/weekly/feed.xml", rss::render_weekly(&weekly)?)?;
+    pichu::write("dist/library/feed.xml", rss::render_library(&library))?;
     timer.end();
 
     // Generate sitemap.xml
     let mut timer = Timer::new("Generating sitemap...");
     pichu::write(
-        sitemap::render(&blog, &weekly, &library, &pages)?,
         "dist/sitemap.xml",
+        sitemap::render(&blog, &weekly, &library, &pages)?,
     )?;
     timer.end();
 
