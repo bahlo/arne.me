@@ -8,6 +8,7 @@ use url::Url;
 use crate::layout::{self, format_date, Context, Head, Layout, OgType};
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Issue {
     pub title: String,
     pub date: NaiveDate,

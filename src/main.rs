@@ -1,7 +1,9 @@
 use anyhow::Result;
 use clap::Parser;
+use comrak::markdown_to_html;
 use layout::Layout;
 use maud::Markup;
+use pichu::{Markdown, MarkdownError};
 use std::{cell::LazyCell, fs, path::Path, process::Command};
 use timer::Timer;
 
@@ -114,7 +116,27 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
         .into_vec();
 
     let weekly = pichu::glob("content/weekly/*.md")?
-        .parse_markdown::<weekly::Issue>()?
+        .try_parse::<Markdown<weekly::Issue>, MarkdownError>(|path| {
+            let mut markdown = pichu::parse_markdown::<weekly::Issue>(path)?;
+            markdown.frontmatter.categories = markdown
+                .frontmatter
+                .categories
+                .into_iter()
+                .map(|mut category| {
+                    category.stories = category
+                        .stories
+                        .into_iter()
+                        .map(|mut story| {
+                            story.description_html =
+                                markdown_to_html(&story.description, &comrak::Options::default());
+                            story
+                        })
+                        .collect();
+                    category
+                })
+                .collect();
+            Ok(markdown)
+        })?
         .sort_by_key_reverse(|issue| issue.frontmatter.date)
         .try_render_each(
             |issue| -> Result<Markup> {

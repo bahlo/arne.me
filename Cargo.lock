@@ -132,6 +132,7 @@ dependencies = [
  "anyhow",
  "chrono",
  "clap",
+ "comrak",
  "crowbook-text-processing",
  "file-serve",
  "git2",
@@ -1878,9 +1879,9 @@ dependencies = [
 
 [[package]]
 name = "pichu"
-version = "0.3.1"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "571b631dd9c70b5e1421e5cab15f2d73b82a6d3672b9213d8b2343a8b89d4226"
+checksum = "e6600f9288d3948418b4f386565237954b287b5491dd65df75a331eec995f691"
 dependencies = [
  "blake3",
  "comrak",
