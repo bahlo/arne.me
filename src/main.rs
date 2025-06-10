@@ -156,6 +156,7 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
 
     let library = pichu::glob("content/library/*.md")?
         .parse_markdown::<library::Book>()?
+        .sort_by_key_reverse(|issue| issue.frontmatter.read)
         .try_render_each(
             |book| -> Result<Markup> {
                 let html = library::render_single(&layout, book)?;
