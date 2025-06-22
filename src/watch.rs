@@ -1,70 +1,16 @@
 use anyhow::Result;
-use notify_debouncer_mini::{new_debouncer, notify::RecursiveMode};
 use std::{
     io,
     net::{TcpListener, TcpStream},
-    path::Path,
-    process::{Command, Stdio},
-    sync::{mpsc, Arc, Mutex},
+    sync::{Arc, Mutex},
     thread,
-    time::Duration,
 };
+
+use crate::build;
 
 pub fn watch() -> Result<()> {
     let websocket_server = TcpListener::bind("127.0.0.1:0")?;
     let websocket_port = websocket_server.local_addr()?.port();
-
-    // Run once at the start
-    Command::new("cargo")
-        .arg("run")
-        .arg("--")
-        .arg("build")
-        .args(&["--websocket-port", &websocket_port.to_string()])
-        .stdout(Stdio::inherit())
-        .stderr(Stdio::inherit())
-        .spawn()?
-        .wait()?;
-
-    let (notify_tx, notify_rx) = mpsc::channel();
-
-    let mut debouncer = new_debouncer(Duration::from_millis(500), notify_tx)?;
-
-    let (build_tx, build_rx) = mpsc::channel();
-
-    let build_thread = thread::spawn(move || {
-        for rx in notify_rx {
-            match rx {
-                Ok(_events) => {
-                    let mut child = match Command::new("cargo")
-                        .arg("run")
-                        .arg("--")
-                        .arg("build")
-                        .args(&["--websocket-port", &websocket_port.to_string()])
-                        .stdout(Stdio::inherit())
-                        .stderr(Stdio::inherit())
-                        .spawn()
-                    {
-                        Ok(child) => child,
-                        Err(e) => {
-                            eprintln!("Error: {:?}", e);
-                            return;
-                        }
-                    };
-
-                    match child.wait() {
-                        Ok(status) if status.success() => {
-                            build_tx.send(()).unwrap();
-                        }
-                        Ok(status) => {
-                            eprintln!("Error: Received status {:?}", status);
-                        }
-                        Err(e) => eprintln!("Error: {:?}", e),
-                    }
-                }
-                Err(e) => println!("Error: {:?}", e),
-            }
-        }
-    });
 
     let sockets: Arc<Mutex<Vec<tungstenite::WebSocket<TcpStream>>>> =
         Arc::new(Mutex::new(Vec::new()));
@@ -76,69 +22,53 @@ pub fn watch() -> Result<()> {
         }
     });
 
-    let reload_thread = thread::spawn(move || {
-        while build_rx.recv().is_ok() {
-            let mut sockets = sockets_clone.lock().unwrap();
-            let mut broken = vec![];
+    let dist_dir = std::env::current_dir()?.join("dist");
+    let serve_thread = thread::spawn(move || {
+        let server = file_serve::ServerBuilder::new(&dist_dir)
+            .hostname("0.0.0.0")
+            .build();
+        println!("Running on http://{}", server.addr());
+        println!("Hit CTRL-C to stop");
+        server.serve().expect("Server error");
+    });
 
-            for (i, socket) in sockets.iter_mut().enumerate() {
-                match socket.send("reload".into()) {
-                    Ok(_) => {}
-                    Err(tungstenite::error::Error::Io(e)) => {
-                        if e.kind() == io::ErrorKind::BrokenPipe {
-                            broken.push(i);
-                        }
-                    }
-                    Err(e) => {
-                        eprintln!("Error: {:?}", e);
+    pichu::watch(["content", "styles"], |_paths| {
+        if let Err(e) = build(websocket_port.into(), false) {
+            eprintln!("Build failed: {e}");
+        }
+
+        let mut sockets = sockets_clone.lock().unwrap();
+        let mut broken = vec![];
+
+        for (i, socket) in sockets.iter_mut().enumerate() {
+            match socket.send("reload".into()) {
+                Ok(_) => {}
+                Err(tungstenite::error::Error::Io(e)) => {
+                    if e.kind() == io::ErrorKind::BrokenPipe {
+                        broken.push(i);
                     }
                 }
-            }
-
-            for i in broken.into_iter().rev() {
-                sockets.remove(i);
-            }
-
-            // Close all but the last 10 connections
-            let len = sockets.len();
-            if len > 10 {
-                for mut socket in sockets.drain(0..len - 10) {
-                    socket.close(None).ok();
+                Err(e) => {
+                    eprintln!("Error: {:?}", e);
                 }
             }
         }
-    });
 
-    debouncer
-        .watcher()
-        .watch(Path::new("./content"), RecursiveMode::Recursive)?;
-    debouncer
-        .watcher()
-        .watch(Path::new("./src"), RecursiveMode::Recursive)?;
-    debouncer
-        .watcher()
-        .watch(Path::new("./static"), RecursiveMode::Recursive)?;
-    debouncer
-        .watcher()
-        .watch(Path::new("./styles"), RecursiveMode::Recursive)?;
-    debouncer
-        .watcher()
-        .watch(Path::new("./Cargo.toml"), RecursiveMode::NonRecursive)?;
-    debouncer
-        .watcher()
-        .watch(Path::new("./Cargo.lock"), RecursiveMode::NonRecursive)?;
+        for i in broken.into_iter().rev() {
+            sockets.remove(i);
+        }
 
-    let dist = std::env::current_dir()?.join("dist");
-    let server = file_serve::ServerBuilder::new(&dist)
-        .hostname("0.0.0.0")
-        .build();
-    println!("Running on http://{}", server.addr());
-    println!("Hit CTRL-C to stop");
-    server.serve()?;
+        // Close all but the last 10 connections
+        let len = sockets.len();
+        if len > 10 {
+            for mut socket in sockets.drain(0..len - 10) {
+                socket.close(None).ok();
+            }
+        }
+    })?;
 
-    build_thread.join().unwrap();
-    reload_thread.join().unwrap();
     websocket_thread.join().unwrap();
+    serve_thread.join().unwrap();
 
     Ok(())
 }
