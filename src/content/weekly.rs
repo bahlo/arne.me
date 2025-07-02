@@ -22,6 +22,8 @@ pub struct Issue {
     pub skeet_of_the_week: Option<WeeklySkeetOfTheWeek>,
     #[serde(default)]
     pub categories: Vec<WeeklyCategory>,
+    #[serde(rename = "noSubscribeForm")]
+    pub no_subscribe_form: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Eq, PartialOrd, Serialize)]
@@ -247,9 +249,11 @@ pub fn render_single(layout: &Layout, issue: &Markdown<Issue>) -> Result<Markup>
                 .e-content {
                     (render_content(issue, None)?)
                 }
-                h2 { "Subscribe" }
-                p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans. I do sometimes feature projects of friends."}
-                (subscribe_form())
+                @if !issue.frontmatter.no_subscribe_form.unwrap_or_default() {
+                    h2 { "Subscribe" }
+                    p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans. I do sometimes feature projects of friends."}
+                    (subscribe_form())
+                }
             }
         },
         layout::Options {
