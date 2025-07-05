@@ -66,7 +66,7 @@ It doesn't _spark joy_.
 Because of this, I'm spending my time a lot more intentional.
 
 That being said, sometimes I spend a little too much time on YouTube (at least
-that's longform content) and I should probable delete the Slack app to not check
+that's longform content) and I should probably delete the Slack app to not check
 the work chat when I'm not at my desk.
 
 ## We deserve more humane tech
