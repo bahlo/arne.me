@@ -442,7 +442,7 @@ fn create_email_draft(issue: &Markdown<Issue>) -> Result<String> {
         .send(serde_json::to_string(&ButtondownEmailRequest {
             subject: issue.frontmatter.title.clone(),
             body,
-            status: "about_to_send".to_string(),
+            status: "draft".to_string(),
         })?)?
         .into_body()
         .read_json::<ButtondownEmailResponse>()?;
