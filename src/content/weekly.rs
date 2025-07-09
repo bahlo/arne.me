@@ -85,23 +85,6 @@ pub struct WeeklyQuoteOfTheWeek {
     pub author: String,
 }
 
-fn subscribe_form() -> Markup {
-    html! {
-        form.weekly__subscribe_form action="https://buttondown.email/api/emails/embed-subscribe/arnesweekly" method="post" {
-            label for="email" { "Email address:" }
-            br;
-            input required type="email" name="email" id="email" placeholder="you@example.org";
-            input type="submit" value="Subscribe";
-            br;
-            small {
-                "Subscription is one click and you can unsubscribe at any time. Your email address will be sent to "
-                a href="https://buttondown.email" { "Buttondown" }
-                ", the service I use to send out emails."
-            }
-        }
-    }
-}
-
 pub fn render_all(layout: &Layout, issues: &Vec<Markdown<Issue>>) -> Result<Markup> {
     layout.render(Context::new_with_options(
         Head {
@@ -116,8 +99,7 @@ pub fn render_all(layout: &Layout, issues: &Vec<Markdown<Issue>>) -> Result<Mark
                     h1 { "Arne’s Weekly" }
                     p { "A weekly newsletter with the best stories of the internet. There’s an "
                         a href="/weekly/feed.xml" { "RSS Feed" }
-                        " available, but you should really subscribe:" }
-                    (subscribe_form())
+                        " available." }
                 }
                 h2 { "Archive" }
                 .weekly__overview {
@@ -248,11 +230,6 @@ pub fn render_single(layout: &Layout, issue: &Markdown<Issue>) -> Result<Markup>
                 }
                 .e-content {
                     (render_content(issue, None)?)
-                }
-                @if !issue.frontmatter.no_subscribe_form.unwrap_or_default() {
-                    h2 { "Subscribe" }
-                    p { "Get Arne's Weekly in your inbox every Sunday. No ads, no shenanigans. I do sometimes feature projects of friends."}
-                    (subscribe_form())
                 }
             }
         },
