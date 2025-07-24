@@ -169,7 +169,7 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
                 let html = library::render_all(&layout, books)?;
                 Ok(html)
             },
-            format!("dist/library/index.html"),
+            "dist/library/index.html",
         )?
         .into_vec();
 

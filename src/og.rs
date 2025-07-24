@@ -52,7 +52,7 @@ pub fn generate(title: impl Into<String>, output_file: impl AsRef<Path>) -> Resu
     let mut pixmap = Pixmap::new(WIDTH, HEIGHT).ok_or(anyhow!("Pixmap allocation error"))?;
     let mut options = usvg::Options::default();
     options.fontdb_mut().load_font_data(font_data);
-    let tree = usvg::Tree::from_str(&svg, &mut options)?;
+    let tree = usvg::Tree::from_str(&svg, &options)?;
     resvg::render(&tree, usvg::Transform::identity(), &mut pixmap.as_mut());
     let png_data = pixmap.encode_png()?;
     fs::write(output_file.as_ref(), png_data)?;

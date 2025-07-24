@@ -41,10 +41,10 @@ impl LocUrl {
 }
 
 pub fn render(
-    blog: &Vec<Markdown<Blogpost>>,
-    weekly: &Vec<Markdown<Issue>>,
-    books: &Vec<Markdown<Book>>,
-    pages: &Vec<Markdown<Page>>,
+    blog: &[Markdown<Blogpost>],
+    weekly: &[Markdown<Issue>],
+    books: &[Markdown<Book>],
+    pages: &[Markdown<Page>],
 ) -> Result<String> {
     let static_urls = vec![
         LocUrl {
@@ -150,10 +150,10 @@ pub fn render(
         xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9".to_string(),
         url: static_urls
             .into_iter()
-            .chain(page_urls.into_iter())
-            .chain(blogpost_urls.into_iter())
-            .chain(weekly_urls.into_iter())
-            .chain(book_review_urls.into_iter())
+            .chain(page_urls)
+            .chain(blogpost_urls)
+            .chain(weekly_urls)
+            .chain(book_review_urls)
             .collect::<Vec<LocUrl>>(),
     };
 

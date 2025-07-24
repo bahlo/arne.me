@@ -122,7 +122,7 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             }
             println!("Posting on Bluesky...");
             post_to_bluesky(
-                &format!(
+                format!(
                     "📬 Arne’s Weekly #{num} has been sent out, check your inbox or read it online"
                 ),
                 BlueskyMeta {
@@ -150,7 +150,7 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             let slug = &blogpost.basename;
             println!("Posting on Mastodon...");
             let toot_url =
-                post_to_mastodon(&format!("📝 {title} https://arne.me/blog/{slug}"), &path)?;
+                post_to_mastodon(format!("📝 {title} https://arne.me/blog/{slug}"), &path)?;
             println!("{toot_url}");
             // Since these are mostly generated on CI, this automate job runs
             // without them. It's fine, we're not in a hurry, generate it.
@@ -166,7 +166,7 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             }
             println!("Posting on Bluesky...");
             post_to_bluesky(
-                &format!("📝 {title}"),
+                format!("📝 {title}"),
                 BlueskyMeta {
                     uri: &format!("https://arne.me/blog/{slug}"),
                     title,
@@ -185,10 +185,10 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
 
             let slug = &book.basename;
             let title = &book.frontmatter.title;
-            let author = &book.frontmatter.title;
+            let author = &book.frontmatter.author;
             println!("Posting on Mastodon...");
             let toot_url = post_to_mastodon(
-                &format!(
+                format!(
                     "📚 I read {title} by {author}: https://arne.me/library/{slug} #bookstodon"
                 ),
                 &path,
@@ -204,11 +204,11 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
                     .parent()
                     .ok_or(anyhow!("og image path has no parent: {:?}", og_image_path))?;
                 fs::create_dir_all(parent_dir)?;
-                og::generate(&format!("I read {} by {}", title, author), og_image_path)?;
+                og::generate(format!("I read {} by {}", title, author), og_image_path)?;
             }
             println!("Posting on Bluesky...");
             post_to_bluesky(
-                &format!("📚 I read {title} by {author}"),
+                format!("📚 I read {title} by {author}"),
                 BlueskyMeta {
                     uri: &format!("https://arne.me/library/{slug}"),
                     title,
@@ -256,12 +256,12 @@ struct MastodonStatus {
 
 fn post_to_mastodon(status: impl AsRef<str>, idempotency_key: impl AsRef<str>) -> Result<Url> {
     let base_url = match env::var("MASTODON_URL") {
-        Ok(host) if host != "" => host,
+        Ok(host) if !host.is_empty() => host,
         Err(e) => bail!("Failed to look up MASTODON_URL: {}", e),
         _ => bail!("Missing or empty MASTODON_URL"),
     };
     let token = match env::var("MASTODON_TOKEN") {
-        Ok(token) if token != "" => token,
+        Ok(token) if !token.is_empty() => token,
         Err(e) => bail!("Failed to look up MASTODON_TOKEN: {}", e),
         _ => bail!("Missing or empty MASTODON_TOKEN"),
     };
@@ -353,12 +353,12 @@ struct BlueskyBlob {
 // https://docs.bsky.app/docs/advanced-guides/posts
 fn post_to_bluesky(status: impl AsRef<str>, meta: BlueskyMeta) -> Result<()> {
     let identifier = match env::var("BLUESKY_IDENTIFIER") {
-        Ok(identifier) if identifier != "" => identifier,
+        Ok(identifier) if !identifier.is_empty() => identifier,
         Err(e) => bail!("Failed to look up BLUESKY_IDENTIFIER: {}", e),
         _ => bail!("Missing or empty BLUESKY_IDENTIFIER"),
     };
     let app_password = match env::var("BLUESKY_APP_PASSWORD") {
-        Ok(app_password) if app_password != "" => app_password,
+        Ok(app_password) if !app_password.is_empty() => app_password,
         Err(e) => bail!("Failed to look up BLUESKY_APP_PASSWORD: {}", e),
         _ => bail!("Missing or empty BLUESKY_APP_PASSWORD"),
     };
@@ -427,7 +427,7 @@ struct ButtondownEmailResponse {
 
 fn create_email_draft(issue: &Markdown<Issue>) -> Result<String> {
     let buttondown_api_key = match env::var("BUTTONDOWN_API_KEY") {
-        Ok(api_key) if api_key != "" => api_key,
+        Ok(api_key) if !api_key.is_empty() => api_key,
         Err(e) => bail!("Failed to look up BUTTONDOWN_API_KEY: {}", e),
         _ => bail!("Missing or empty BUTTONDOWN_API_KEY"),
     };
@@ -453,7 +453,7 @@ fn weekly_to_buttondown_markdown(issue: &Markdown<Issue>) -> Result<String> {
     let mut builder = "<!-- buttondown-editor-mode: plaintext -->\n".to_string();
 
     builder.push_str(&issue.markdown);
-    builder.push_str("\n");
+    builder.push('\n');
 
     if let Some(quote_of_the_week) = &issue.frontmatter.quote_of_the_week {
         builder.push_str("## Quote of the Week\n");
@@ -511,7 +511,7 @@ fn send_webmentions_weekly(dry_run: bool, issue: &Markdown<Issue>) {
         for story in category.stories.iter() {
             send_webmention(
                 dry_run,
-                &format!("https://arne.me/weekly/{}", issue.basename),
+                format!("https://arne.me/weekly/{}", issue.basename),
                 &story.url,
             )
             .unwrap_or_else(|e| eprintln!("Failed to send webmention for {}: {}", &story.url, e))

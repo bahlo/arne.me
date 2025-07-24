@@ -43,7 +43,7 @@ fn render_project(project: &Markdown<Project>) -> Markup {
     }
 }
 
-pub fn render_all(layout: &Layout, projects: &Vec<Markdown<Project>>) -> Result<Markup> {
+pub fn render_all(layout: &Layout, projects: &[Markdown<Project>]) -> Result<Markup> {
     layout.render(Context::new_with_options(
         Head {
             title: "Projects".to_string(),

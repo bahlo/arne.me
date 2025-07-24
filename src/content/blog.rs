@@ -22,7 +22,7 @@ pub struct Blogpost {
     pub lobsters: Option<Url>,
 }
 
-pub fn render_all(layout: &Layout, blog_posts: &Vec<Markdown<Blogpost>>) -> Result<Markup> {
+pub fn render_all(layout: &Layout, blog_posts: &[Markdown<Blogpost>]) -> Result<Markup> {
     let mut blog_posts_by_year = blog_posts
         .iter()
         .filter(|blog_post| !blog_post.frontmatter.hidden)
