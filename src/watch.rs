@@ -36,7 +36,11 @@ pub fn watch() -> Result<()> {
         server.serve().expect("Server error");
     });
 
-    pichu::watch(["content", "styles"], |_paths| {
+    if let Err(e) = build(websocket_port.into(), false) {
+        eprintln!("Build failed: {e}");
+    }
+
+    pichu::watch(["content", "styles", "static"], |_paths| {
         if let Err(e) = build(websocket_port.into(), false) {
             eprintln!("Build failed: {e}");
         }
