@@ -16,9 +16,13 @@ pub fn watch() -> Result<()> {
         Arc::new(Mutex::new(Vec::new()));
     let sockets_clone = sockets.clone();
     let websocket_thread = thread::spawn(move || {
-        for stream in websocket_server.incoming() {
-            let websocket = tungstenite::accept(stream.unwrap()).unwrap();
-            sockets.lock().unwrap().push(websocket);
+        for stream in websocket_server.incoming().flatten() {
+            let websocket =
+                tungstenite::accept(stream).expect("Failed to accept stream as websocket");
+            sockets
+                .lock()
+                .expect("Failed to lock sockets")
+                .push(websocket);
         }
     });
 
@@ -37,19 +41,19 @@ pub fn watch() -> Result<()> {
             eprintln!("Build failed: {e}");
         }
 
-        let mut sockets = sockets_clone.lock().unwrap();
+        let mut sockets = sockets_clone.lock().expect("Failed to lock sockets");
         let mut broken = vec![];
 
         for (i, socket) in sockets.iter_mut().enumerate() {
             match socket.send("reload".into()) {
-                Ok(_) => {}
+                Ok(()) => {}
                 Err(tungstenite::error::Error::Io(e)) => {
                     if e.kind() == io::ErrorKind::BrokenPipe {
                         broken.push(i);
                     }
                 }
                 Err(e) => {
-                    eprintln!("Error: {:?}", e);
+                    eprintln!("Error: {e}");
                 }
             }
         }
@@ -67,8 +71,10 @@ pub fn watch() -> Result<()> {
         }
     })?;
 
-    websocket_thread.join().unwrap();
-    serve_thread.join().unwrap();
+    websocket_thread
+        .join()
+        .expect("Failed to join websocket thread");
+    serve_thread.join().expect("Failed to join serve thread");
 
     Ok(())
 }

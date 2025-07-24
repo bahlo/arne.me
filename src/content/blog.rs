@@ -27,9 +27,9 @@ pub fn render_all(layout: &Layout, blog_posts: &[Markdown<Blogpost>]) -> Result<
         .iter()
         .filter(|blog_post| !blog_post.frontmatter.hidden)
         .fold(HashMap::new(), |mut acc, blogpost| {
-            let posts = acc
+            let posts: &mut Vec<&Markdown<Blogpost>> = acc
                 .entry(blogpost.frontmatter.published.year())
-                .or_insert(vec![]);
+                .or_default();
             posts.push(blogpost);
             acc
         })

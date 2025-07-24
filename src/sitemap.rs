@@ -40,6 +40,7 @@ impl LocUrl {
     }
 }
 
+#[allow(clippy::too_many_lines)]
 pub fn render(
     blog: &[Markdown<Blogpost>],
     weekly: &[Markdown<Issue>],
