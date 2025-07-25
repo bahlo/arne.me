@@ -132,7 +132,7 @@ dependencies = [
  "anyhow",
  "chrono",
  "clap",
- "comrak",
+ "comrak 0.40.0",
  "crowbook-text-processing",
  "file-serve",
  "git2",
@@ -458,6 +458,20 @@ dependencies = [
  "typed-arena",
  "unicode_categories",
  "xdg",
+]
+
+[[package]]
+name = "comrak"
+version = "0.40.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "32c3278f396e5707769a68bc0943e9b8f84a172836b173827810918279621747"
+dependencies = [
+ "caseless",
+ "entities",
+ "memchr",
+ "slug",
+ "typed-arena",
+ "unicode_categories",
 ]
 
 [[package]]
@@ -1866,7 +1880,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "139c431af1e9ae39a92bd06f4e14f0e9d1e2405cd645d5a75d34f49562bbb584"
 dependencies = [
  "blake3",
- "comrak",
+ "comrak 0.39.1",
  "glob",
  "grass",
  "gray_matter",
