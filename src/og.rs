@@ -15,7 +15,7 @@ pub fn generate(title: impl Into<String>, output_file: impl AsRef<Path>) -> Resu
     println!("Generating {:?}", output_file.as_ref());
     let title = title.into();
     let tspans = title
-        .split(" ")
+        .split(' ')
         .fold(vec![], |mut lines, word| {
             match lines.last_mut() {
                 None => {
@@ -27,7 +27,7 @@ pub fn generate(title: impl Into<String>, output_file: impl AsRef<Path>) -> Resu
                     lines.push(word.to_string());
                 }
                 Some(line) => {
-                    *line = format!("{} {}", line, word);
+                    *line = format!("{line} {word}");
                 }
             }
             lines
@@ -35,6 +35,8 @@ pub fn generate(title: impl Into<String>, output_file: impl AsRef<Path>) -> Resu
         .iter()
         .enumerate()
         .map(|(pos, line)| {
+            #[allow(clippy::cast_precision_loss)]
+            #[allow(clippy::cast_possible_truncation)]
             let dy = (pos as f32 * 96.0 * 1.2) as i32; // 96px font-size, 1.2 line-height
             let line = html_escape::encode_text(line);
             format!(r#"<tspan x="64" y="152.1" dy="{dy}">{line}</tspan>"#)
@@ -52,7 +54,7 @@ pub fn generate(title: impl Into<String>, output_file: impl AsRef<Path>) -> Resu
     let mut pixmap = Pixmap::new(WIDTH, HEIGHT).ok_or(anyhow!("Pixmap allocation error"))?;
     let mut options = usvg::Options::default();
     options.fontdb_mut().load_font_data(font_data);
-    let tree = usvg::Tree::from_str(&svg, &mut options)?;
+    let tree = usvg::Tree::from_str(&svg, &options)?;
     resvg::render(&tree, usvg::Transform::identity(), &mut pixmap.as_mut());
     let png_data = pixmap.encode_png()?;
     fs::write(output_file.as_ref(), png_data)?;

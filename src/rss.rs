@@ -12,7 +12,7 @@ use crate::{
 const RFC_822: &str = "%a, %d %b %Y %T %z";
 const RFC_822_DATE: &str = "%a, %d %b %Y 00:00:00 +0000";
 
-pub fn render_blog(blogposts: &Vec<Markdown<Blogpost>>) -> String {
+pub fn render_blog(blogposts: &[Markdown<Blogpost>]) -> String {
     let items: Vec<Item> = blogposts
         .iter()
         .map(|blogpost| {
@@ -51,7 +51,7 @@ pub fn render_blog(blogposts: &Vec<Markdown<Blogpost>>) -> String {
         .to_string()
 }
 
-pub fn render_weekly(issues: &Vec<Markdown<Issue>>) -> Result<String> {
+pub fn render_weekly(issues: &[Markdown<Issue>]) -> Result<String> {
     let items = issues
         .iter()
         .map(|issue| {
@@ -84,7 +84,7 @@ pub fn render_weekly(issues: &Vec<Markdown<Issue>>) -> Result<String> {
         .to_string())
 }
 
-pub fn render_library(books: &Vec<Markdown<Book>>) -> String {
+pub fn render_library(books: &[Markdown<Book>]) -> String {
     let items: Vec<Item> = books
         .iter()
         .map(|book| {

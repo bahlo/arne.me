@@ -10,9 +10,9 @@ use crate::{
 
 pub fn render(
     layout: &Layout,
-    blog: &Vec<Markdown<Blogpost>>,
-    weekly: &Vec<Markdown<Issue>>,
-    books: &Vec<Markdown<Book>>,
+    blog: &[Markdown<Blogpost>],
+    weekly: &[Markdown<Issue>],
+    books: &[Markdown<Book>],
 ) -> Result<Markup> {
     let last_blogpost = blog.first().ok_or(anyhow!("No blogposts found"))?;
     let last_weekly = weekly.first().ok_or(anyhow!("No weekly issues found"))?;
@@ -60,7 +60,7 @@ pub fn render(
         },
         layout::Options {
             navigation_item: layout::NavigationItem::Home,
-            source_path: Some(format!("crates/ssg/src/templates/index.rs")),
+            source_path: Some("crates/ssg/src/templates/index.rs".to_string()),
         },
     ))
 }

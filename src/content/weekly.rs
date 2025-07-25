@@ -151,7 +151,7 @@ pub fn render_content(
             blockquote {
                 (tweet_of_the_week.text)
                 @if let Some(media) = &tweet_of_the_week.media {
-                    @if media.src_set.len() > 0 {
+                    @if !media.src_set.is_empty() {
                         picture {
                             @for source in &media.src_set {
                                 source srcset=(source.src) type=(source.typ);

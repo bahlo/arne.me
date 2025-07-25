@@ -1,13 +1,15 @@
+#![deny(warnings)]
+#![deny(clippy::pedantic, clippy::unwrap_used)]
 use anyhow::Result;
 use clap::Parser;
 use comrak::markdown_to_html;
 use layout::Layout;
 use maud::Markup;
 use pichu::{Markdown, MarkdownError};
-use std::{cell::LazyCell, fs, path::Path, process::Command};
+use std::{fs, path::Path, process::Command, sync::LazyLock};
 use timer::Timer;
 
-use crate::content::*;
+use crate::content::{blog, index, library, page, project, weekly};
 
 mod automate;
 mod content;
@@ -19,14 +21,14 @@ mod sitemap;
 mod timer;
 mod watch;
 
-pub const GIT_SHA: LazyCell<String> = LazyCell::new(|| {
+pub static GIT_SHA: LazyLock<String> = LazyLock::new(|| {
     let output = Command::new("git")
-        .args(&["rev-parse", "HEAD"])
+        .args(["rev-parse", "HEAD"])
         .output()
         .expect("Failed to eecute git command");
     String::from_utf8(output.stdout).expect("Failed to parse git output")
 });
-pub const GIT_SHA_SHORT: LazyCell<String> = LazyCell::new(|| GIT_SHA.chars().take(7).collect());
+pub static GIT_SHA_SHORT: LazyLock<String> = LazyLock::new(|| GIT_SHA.chars().take(7).collect());
 
 #[derive(Debug, Parser)]
 struct Cli {
@@ -61,7 +63,7 @@ fn main() -> Result<()> {
             generate_missing_og_images,
         } => build(websocket_port, generate_missing_og_images),
         Commands::Watch => watch::watch(),
-        Commands::Automate { before_sha } => automate::automate_before_sha(before_sha),
+        Commands::Automate { before_sha } => automate::automate_before_sha(&before_sha),
     }
 }
 
@@ -169,7 +171,7 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
                 let html = library::render_all(&layout, books)?;
                 Ok(html)
             },
-            format!("dist/library/index.html"),
+            "dist/library/index.html",
         )?
         .into_vec();
 

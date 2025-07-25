@@ -102,6 +102,7 @@ impl Layout {
         }
     }
 
+    #[allow(clippy::too_many_lines)]
     pub fn render(&self, context: Context) -> Result<Markup> {
         let head = context.head;
         let options = context.options.unwrap_or_default();

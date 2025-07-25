@@ -6,11 +6,12 @@ use regex::Regex;
 use scraper::{Html, Selector};
 use serde::{Deserialize, Serialize};
 use std::{
-    cell::LazyCell,
     env,
+    fmt::Write,
     fs::{self, File},
     io::Read,
     path::Path,
+    sync::LazyLock,
     thread::sleep,
     time::Duration,
 };
@@ -18,13 +19,13 @@ use url::Url;
 
 use crate::{blog::Blogpost, fonts, library::Book, og, weekly::Issue};
 
-pub const SELECTOR: LazyCell<Selector> = LazyCell::new(|| {
+pub static SELECTOR: LazyLock<Selector> = LazyLock::new(|| {
     Selector::parse(r#"link[rel="webmention"]"#).expect("Failed to parse webmention selector")
 });
-pub const LINK_REGEX: LazyCell<Regex> =
-    LazyCell::new(|| Regex::new(r#"(https?://[^"]+)"#).expect("Failed to parse link regex"));
+pub static LINK_REGEX: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r#"(https?://[^"]+)"#).expect("Failed to parse link regex"));
 
-pub fn automate_before_sha(before_sha: String) -> Result<()> {
+pub fn automate_before_sha(before_sha: &str) -> Result<()> {
     // TODO: Instead of checking if a specific font exists, check that _any_
     //       dir exists.
     if !Path::new("static/fonts/rebond-grotesque").exists() {
@@ -37,7 +38,7 @@ pub fn automate_before_sha(before_sha: String) -> Result<()> {
     let head = repo.head()?;
     let head_tree = head.peel_to_tree()?;
 
-    let before_commit_oid = Oid::from_str(&before_sha)?;
+    let before_commit_oid = Oid::from_str(before_sha)?;
     let before_commit = repo.find_commit(before_commit_oid)?;
     let before_commit_tree = before_commit.tree()?;
 
@@ -48,20 +49,18 @@ pub fn automate_before_sha(before_sha: String) -> Result<()> {
     Ok(())
 }
 
+#[allow(clippy::needless_pass_by_value)] // Signature is required for diff.foreach call
 fn syndicate_diff_cb(diff_delta: DiffDelta<'_>, _i: f32) -> bool {
     if diff_delta.status() != Delta::Added {
         return true; // continue
     }
 
-    let filepath = match diff_delta.new_file().path() {
-        Some(filepath) => filepath,
-        None => {
-            eprintln!(
-                "Failed to get the path of one of the new files: {:?}",
-                diff_delta.new_file()
-            );
-            return true;
-        }
+    let Some(filepath) = diff_delta.new_file().path() else {
+        eprintln!(
+            "Failed to get the path of one of the new files: {:?}",
+            diff_delta.new_file()
+        );
+        return true;
     };
 
     if filepath.extension().and_then(|s| s.to_str()) != Some("md") {
@@ -82,11 +81,12 @@ fn syndicate_diff_cb(diff_delta: DiffDelta<'_>, _i: f32) -> bool {
 
     if let Err(e) = automate_path(slug.to_string_lossy()) {
         eprintln!("Failed to syndicate {slug:?}: {e}");
-    };
+    }
 
     true // continue
 }
 
+#[allow(clippy::too_many_lines)]
 pub fn automate_path(slug: impl Into<String>) -> Result<()> {
     let path = slug.into();
 
@@ -94,7 +94,7 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
     wait_for_200(&path)?;
 
     let (kind, slug) = path
-        .split_once("/")
+        .split_once('/')
         .ok_or(anyhow!("no / in path, can't determine kind"))?;
     match kind {
         "weekly" => {
@@ -122,10 +122,10 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             }
             println!("Posting on Bluesky...");
             post_to_bluesky(
-                &format!(
+                format!(
                     "📬 Arne’s Weekly #{num} has been sent out, check your inbox or read it online"
                 ),
-                BlueskyMeta {
+                &BlueskyMeta {
                     uri: &format!("https://arne.me/weekly/{num}"),
                     title: &issue.frontmatter.title,
                     description: &format!("Arne's Weekly #{num}"),
@@ -150,7 +150,7 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             let slug = &blogpost.basename;
             println!("Posting on Mastodon...");
             let toot_url =
-                post_to_mastodon(&format!("📝 {title} https://arne.me/blog/{slug}"), &path)?;
+                post_to_mastodon(format!("📝 {title} https://arne.me/blog/{slug}"), &path)?;
             println!("{toot_url}");
             // Since these are mostly generated on CI, this automate job runs
             // without them. It's fine, we're not in a hurry, generate it.
@@ -166,8 +166,8 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
             }
             println!("Posting on Bluesky...");
             post_to_bluesky(
-                &format!("📝 {title}"),
-                BlueskyMeta {
+                format!("📝 {title}"),
+                &BlueskyMeta {
                     uri: &format!("https://arne.me/blog/{slug}"),
                     title,
                     description: &blogpost.frontmatter.description,
@@ -185,10 +185,10 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
 
             let slug = &book.basename;
             let title = &book.frontmatter.title;
-            let author = &book.frontmatter.title;
+            let author = &book.frontmatter.author;
             println!("Posting on Mastodon...");
             let toot_url = post_to_mastodon(
-                &format!(
+                format!(
                     "📚 I read {title} by {author}: https://arne.me/library/{slug} #bookstodon"
                 ),
                 &path,
@@ -204,12 +204,12 @@ pub fn automate_path(slug: impl Into<String>) -> Result<()> {
                     .parent()
                     .ok_or(anyhow!("og image path has no parent: {:?}", og_image_path))?;
                 fs::create_dir_all(parent_dir)?;
-                og::generate(&format!("I read {} by {}", title, author), og_image_path)?;
+                og::generate(format!("I read {title} by {author}"), og_image_path)?;
             }
             println!("Posting on Bluesky...");
             post_to_bluesky(
-                &format!("📚 I read {title} by {author}"),
-                BlueskyMeta {
+                format!("📚 I read {title} by {author}"),
+                &BlueskyMeta {
                     uri: &format!("https://arne.me/library/{slug}"),
                     title,
                     description: &format!("I read {title} by {author}"),
@@ -233,15 +233,14 @@ pub fn wait_for_200(slug: impl AsRef<str>) -> Result<()> {
             Ok(res) => {
                 if res.status() == 200 {
                     return Ok(());
-                } else {
-                    eprintln!("Received HTTP {}, retrying in 1s ({i}/300)", res.status());
                 }
+                eprintln!("Received HTTP {}, retrying in 1s ({i}/300)", res.status());
             }
             Err(e) => {
                 eprintln!("Request failed: {e}, retrying in 1s ({i}/300)");
             }
-        };
-        sleep(Duration::from_secs(1))
+        }
+        sleep(Duration::from_secs(1));
     }
 
     bail!("Failed to reach {url} in 5 minutes")
@@ -256,12 +255,12 @@ struct MastodonStatus {
 
 fn post_to_mastodon(status: impl AsRef<str>, idempotency_key: impl AsRef<str>) -> Result<Url> {
     let base_url = match env::var("MASTODON_URL") {
-        Ok(host) if host != "" => host,
+        Ok(host) if !host.is_empty() => host,
         Err(e) => bail!("Failed to look up MASTODON_URL: {}", e),
         _ => bail!("Missing or empty MASTODON_URL"),
     };
     let token = match env::var("MASTODON_TOKEN") {
-        Ok(token) if token != "" => token,
+        Ok(token) if !token.is_empty() => token,
         Err(e) => bail!("Failed to look up MASTODON_TOKEN: {}", e),
         _ => bail!("Missing or empty MASTODON_TOKEN"),
     };
@@ -351,14 +350,14 @@ struct BlueskyBlob {
 }
 
 // https://docs.bsky.app/docs/advanced-guides/posts
-fn post_to_bluesky(status: impl AsRef<str>, meta: BlueskyMeta) -> Result<()> {
+fn post_to_bluesky(status: impl AsRef<str>, meta: &BlueskyMeta) -> Result<()> {
     let identifier = match env::var("BLUESKY_IDENTIFIER") {
-        Ok(identifier) if identifier != "" => identifier,
+        Ok(identifier) if !identifier.is_empty() => identifier,
         Err(e) => bail!("Failed to look up BLUESKY_IDENTIFIER: {}", e),
         _ => bail!("Missing or empty BLUESKY_IDENTIFIER"),
     };
     let app_password = match env::var("BLUESKY_APP_PASSWORD") {
-        Ok(app_password) if app_password != "" => app_password,
+        Ok(app_password) if !app_password.is_empty() => app_password,
         Err(e) => bail!("Failed to look up BLUESKY_APP_PASSWORD: {}", e),
         _ => bail!("Missing or empty BLUESKY_APP_PASSWORD"),
     };
@@ -427,7 +426,7 @@ struct ButtondownEmailResponse {
 
 fn create_email_draft(issue: &Markdown<Issue>) -> Result<String> {
     let buttondown_api_key = match env::var("BUTTONDOWN_API_KEY") {
-        Ok(api_key) if api_key != "" => api_key,
+        Ok(api_key) if !api_key.is_empty() => api_key,
         Err(e) => bail!("Failed to look up BUTTONDOWN_API_KEY: {}", e),
         _ => bail!("Missing or empty BUTTONDOWN_API_KEY"),
     };
@@ -453,53 +452,56 @@ fn weekly_to_buttondown_markdown(issue: &Markdown<Issue>) -> Result<String> {
     let mut builder = "<!-- buttondown-editor-mode: plaintext -->\n".to_string();
 
     builder.push_str(&issue.markdown);
-    builder.push_str("\n");
+    builder.push('\n');
 
     if let Some(quote_of_the_week) = &issue.frontmatter.quote_of_the_week {
         builder.push_str("## Quote of the Week\n");
-        quote_of_the_week.text.split("\n").for_each(|line| {
-            builder.push_str(&format!("> {}\n", line));
+        quote_of_the_week.text.split('\n').for_each(|line| {
+            let _ = writeln!(builder, "> {line}");
         });
-        builder.push_str(&format!("> — {}\n", quote_of_the_week.author));
+        let _ = writeln!(builder, "> — {}", quote_of_the_week.author);
     } else if let Some(toot_of_the_week) = &issue.frontmatter.toot_of_the_week {
         builder.push_str("## Toot of the Week\n");
-        toot_of_the_week.text.split("\n").for_each(|line| {
-            builder.push_str(&format!("> {}\n", line));
+        toot_of_the_week.text.split('\n').for_each(|line| {
+            let _ = writeln!(builder, "> {line}");
         });
-        builder.push_str(&format!(
-            "> — [{}]({})\n",
+        let _ = writeln!(
+            builder,
+            "> — [{}]({})",
             toot_of_the_week.author, toot_of_the_week.url
-        ));
+        );
     } else if let Some(skeet_of_the_week) = &issue.frontmatter.skeet_of_the_week {
         builder.push_str("## Skeet of the Week\n");
-        skeet_of_the_week.text.split("\n").for_each(|line| {
-            builder.push_str(&format!("> {}\n", line));
+        skeet_of_the_week.text.split('\n').for_each(|line| {
+            let _ = writeln!(builder, "> {line}");
         });
-        builder.push_str(&format!(
+        let _ = writeln!(
+            builder,
             "> — [{}]({})\n",
             skeet_of_the_week.author, skeet_of_the_week.url
-        ));
+        );
     } else if let Some(tweet_of_the_week) = &issue.frontmatter.tweet_of_the_week {
         builder.push_str("## Tweet of the Week\n");
-        tweet_of_the_week.text.split("\n").for_each(|line| {
-            builder.push_str(&format!("> {}\n", line));
+        tweet_of_the_week.text.split('\n').for_each(|line| {
+            let _ = writeln!(builder, "> {line}");
         });
-        builder.push_str(&format!(
-            "> — [{}]({})\n",
+        let _ = writeln!(
+            builder,
+            "> — [{}]({})",
             tweet_of_the_week.author, tweet_of_the_week.url,
-        ));
+        );
     }
-    for category in issue.frontmatter.categories.iter() {
-        builder.push_str(&format!("\n## {}\n", category.title));
-        for story in category.stories.iter() {
+    for category in &issue.frontmatter.categories {
+        let _ = writeln!(builder, "\n## {}", category.title);
+        for story in &category.stories {
             let host = story
                 .url
                 .host()
                 .ok_or(anyhow!("Failed to get host from url"))?
                 .to_string();
             let host = host.trim_start_matches("www.");
-            builder.push_str(&format!("- [{}]({}) ({})\n", story.title, story.url, host));
-            builder.push_str(&format!("  {}", story.description));
+            let _ = writeln!(builder, "- [{}]({}) ({})", story.title, story.url, host);
+            let _ = write!(builder, "  {}", story.description);
         }
     }
 
@@ -507,14 +509,14 @@ fn weekly_to_buttondown_markdown(issue: &Markdown<Issue>) -> Result<String> {
 }
 
 fn send_webmentions_weekly(dry_run: bool, issue: &Markdown<Issue>) {
-    for category in issue.frontmatter.categories.iter() {
-        for story in category.stories.iter() {
+    for category in &issue.frontmatter.categories {
+        for story in &category.stories {
             send_webmention(
                 dry_run,
-                &format!("https://arne.me/weekly/{}", issue.basename),
+                format!("https://arne.me/weekly/{}", issue.basename),
                 &story.url,
             )
-            .unwrap_or_else(|e| eprintln!("Failed to send webmention for {}: {}", &story.url, e))
+            .unwrap_or_else(|e| eprintln!("Failed to send webmention for {}: {}", &story.url, e));
         }
     }
 }
@@ -523,13 +525,16 @@ fn send_webmentions_blogpost(dry_run: bool, blogpost: &Markdown<Blogpost>) {
     LINK_REGEX
         .captures_iter(&blogpost.html)
         .for_each(|capture| {
-            let url = capture.get(1).unwrap().as_str();
+            let url = capture
+                .get(1)
+                .expect("Expected one group in capture")
+                .as_str();
             send_webmention(
                 dry_run,
                 format!("https://arne.me/blog/{}", blogpost.basename),
                 url,
             )
-            .unwrap_or_else(|e| println!("Failed to send webmention for {}: {}", url, e));
+            .unwrap_or_else(|e| println!("Failed to send webmention for {url}: {e}"));
         });
 }
 
