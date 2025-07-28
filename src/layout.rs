@@ -171,8 +171,6 @@ impl Layout {
                                 " "
                                 a.active[options.navigation_item == NavigationItem::Blog] href="/blog" { "Blog" }
                                 " "
-                                a.active[options.navigation_item == NavigationItem::Newsletter] href="/weekly" { "Newsletter" }
-                                " "
                                 a.active[options.navigation_item == NavigationItem::BookReviews] href="/library" { "Library" }
                             }
                         }
@@ -188,6 +186,8 @@ impl Layout {
                             a href="/now" { "/now" }
                             (PreEscaped(" &middot; "))
                             a href="/blogroll" { "Blogroll" }
+                            br;
+                            a href="/weekly" { "Arne’s Weekly" }
                             br;
                             a href="/projects" { "Projects" }
                             (PreEscaped(" &middot; "))
