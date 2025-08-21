@@ -7,11 +7,6 @@ use url::Url;
 use crate::{blog::Blogpost, library::Book, page::Page, weekly::Issue};
 
 #[derive(Debug, Serialize)]
-pub struct Sitemap {
-    pub urlset: Urlset,
-}
-
-#[derive(Debug, Serialize)]
 pub struct Urlset {
     #[serde(rename = "@xmlns")]
     pub xmlns: String,
