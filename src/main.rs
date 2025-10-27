@@ -1,12 +1,23 @@
 #![deny(warnings)]
 #![deny(clippy::pedantic, clippy::unwrap_used)]
 use anyhow::Result;
+use chrono::Utc;
 use clap::Parser;
 use comrak::markdown_to_html;
+use inquire::{validator::Validation, DateSelect, Select, Text};
 use layout::Layout;
 use maud::Markup;
 use pichu::{Markdown, MarkdownError};
-use std::{fs, path::Path, process::Command, sync::LazyLock};
+use regex::Regex;
+use std::{
+    fmt::Debug,
+    fs::{self, File},
+    io::{self, Write},
+    path::Path,
+    process::Command,
+    sync::LazyLock,
+};
+use tempdir::TempDir;
 use timer::Timer;
 
 use crate::content::{blog, index, library, page, project, weekly};
@@ -52,6 +63,17 @@ enum Commands {
         #[clap(long, short, group = "subject")]
         before_sha: String,
     },
+    #[clap(name = "new")]
+    New {
+        #[command(subcommand)]
+        new: New,
+    },
+}
+
+#[derive(Debug, Parser)]
+enum New {
+    #[clap(name = "book")]
+    Book,
 }
 
 fn main() -> Result<()> {
@@ -64,6 +86,9 @@ fn main() -> Result<()> {
         } => build(websocket_port, generate_missing_og_images),
         Commands::Watch => watch::watch(),
         Commands::Automate { before_sha } => automate::automate_before_sha(&before_sha),
+        Commands::New { new } => match new {
+            New::Book => new_book(),
+        },
     }
 }
 
@@ -221,6 +246,125 @@ fn build(websocket_port: Option<u16>, generate_missing_og_images: bool) -> Resul
         sitemap::render(&blog, &weekly, &library, &pages)?,
     )?;
     timer.end();
+
+    Ok(())
+}
+
+fn new_book() -> Result<()> {
+    // validators
+    let non_empty_validator = |input: &str| {
+        if input.is_empty() {
+            return Ok(Validation::Invalid("Input cannot be empty".into()));
+        }
+
+        Ok(Validation::Valid)
+    };
+    let uri_scheme_validator = |input: &str| {
+        // good enough
+        if !input.starts_with("file://")
+            && !input.starts_with("http://")
+            && !input.starts_with("https://")
+        {
+            return Ok(Validation::Invalid(
+                "Url has to start with file://, http:// or https://".into(),
+            ));
+        }
+
+        Ok(Validation::Valid)
+    };
+
+    // gather info
+    let title = Text::new("Title:")
+        .with_validator(non_empty_validator)
+        .prompt()?;
+    let author = Text::new("Author(s):")
+        .with_validator(non_empty_validator)
+        .prompt()?;
+    let read = DateSelect::new("Read:")
+        .with_starting_date(Utc::now().date_naive())
+        .prompt()?;
+    let location = Text::new("Location:")
+        .with_validator(non_empty_validator)
+        .prompt()?;
+    let rating = Select::new("Rating:", vec![1, 2, 3, 4, 5]).prompt()?;
+    let cover_uri = Text::new("Image URI (file:// or http(s)://):")
+        .with_validator(uri_scheme_validator)
+        .prompt()?;
+
+    // build slug
+    let le_title = title.to_lowercase();
+    let slug_suggestion = {
+        let safe_title_re = Regex::new(r"[\s:\.]")?;
+        safe_title_re.replace_all(&le_title, "-")
+    };
+    let slug = Text::new("Slug:")
+        .with_initial_value(&slug_suggestion)
+        .with_validator(non_empty_validator)
+        .prompt()?;
+
+    // write markdown
+    let markdown = format!(
+        r#"---
+title: "{title}"
+author: "{author}"
+read: "{read}"
+location: "{location}"
+rating: {rating}
+---
+"#
+    );
+    let mut file = File::create(format!("content/library/{slug}.md"))?;
+    file.write_all(markdown.as_bytes())?;
+
+    // create static dir and cover_dest
+    let static_dir = &format!("static/library/{slug}");
+    let static_dir_path = Path::new(static_dir);
+    fs::create_dir_all(static_dir)?;
+    let cover_dest = static_dir_path.join("cover.jpg");
+    let cover_avif_dest = static_dir_path.join("cover.avif");
+    let cover_small_dest = static_dir_path.join("cover-small.jpg");
+    let cover_small_avif_dest = static_dir_path.join("cover-small.avif");
+
+    // download image if necessary
+    let tmp_dir = TempDir::new(&slug)?;
+    let cover_src = if cover_uri.starts_with("file://") {
+        cover_uri
+    } else {
+        // download image
+        let mut reader = ureq::get(cover_uri).call()?.into_body().into_reader();
+
+        let file_path = tmp_dir.into_path().join("cover"); // no ext
+        let mut file = File::create(&file_path)?;
+
+        io::copy(&mut reader, &mut file)?;
+        file_path.to_string_lossy().into_owned()
+    };
+
+    // convert image to jpg & avif
+    for path in &[cover_dest, cover_avif_dest] {
+        Command::new("magick")
+            .args([
+                &cover_src,
+                "-strip", // remove metadata
+                &path.to_string_lossy(),
+            ])
+            .spawn()?
+            .wait()?;
+    }
+
+    // convert image to jpg & avif and resize
+    for path in &[cover_small_dest, cover_small_avif_dest] {
+        Command::new("magick")
+            .args([
+                &cover_src,
+                "-strip", // remove metadata
+                "-resize",
+                "256x", // resize width to 256
+                &path.to_string_lossy(),
+            ])
+            .spawn()?
+            .wait()?;
+    }
 
     Ok(())
 }
