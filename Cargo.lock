@@ -126,7 +126,7 @@ dependencies = [
  "anyhow",
  "chrono",
  "clap",
- "comrak 0.41.1",
+ "comrak 0.47.0",
  "crowbook-text-processing",
  "file-serve",
  "git2",
@@ -458,14 +458,13 @@ dependencies = [
 
 [[package]]
 name = "comrak"
-version = "0.41.1"
+version = "0.47.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a45df55bc7f91b899160098a7c9b35d6e575dfb4fe22100f014b41a171af2c6"
+checksum = "a13263e1b6ee0147fb4dce60678f8b9634deac47c9b87c3dd5cdb959cc0334d3"
 dependencies = [
  "caseless",
  "entities",
- "memchr",
- "slug",
+ "jetscii",
  "typed-arena",
  "unicode_categories",
 ]
@@ -883,7 +882,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.59.0",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
@@ -1459,6 +1458,12 @@ name = "itoa"
 version = "1.0.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49f1f14873335454500d59611f1cf4a4b0f786f9ac11f4312a78e4cf2566695b"
+
+[[package]]
+name = "jetscii"
+version = "0.5.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "47f142fe24a9c9944451e8349de0a56af5f3e7226dc46f3ed4d4ecc0b85af75e"
 
 [[package]]
 name = "jobserver"
@@ -2363,7 +2368,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys 0.11.0",
- "windows-sys 0.59.0",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]

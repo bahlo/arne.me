@@ -32,5 +32,5 @@ html-escape = "0.2"
 resvg = "0.45"
 tungstenite = "0.27"
 file-serve = "0.3"
-comrak = { version = "0.41.1", default-features = false }
+comrak = { version = "0.47.0", default-features = false }
 inquire = { version = "0.9", features = ["chrono", "date"] }
