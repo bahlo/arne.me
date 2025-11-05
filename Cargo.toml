@@ -30,7 +30,7 @@ usvg = "0.45"
 crowbook-text-processing = "1"
 html-escape = "0.2"
 resvg = "0.45"
-tungstenite = "0.27"
+tungstenite = "0.28"
 file-serve = "0.3"
 comrak = { version = "0.47.0", default-features = false }
 inquire = { version = "0.9", features = ["chrono", "date"] }
